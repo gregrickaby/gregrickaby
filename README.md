@@ -1,5 +1,7 @@
 ![screenshot](https://gregrickaby.com/wp-content/uploads/2020/06/20191128-20191128-rickaby-family-fall-2019-1438x1080.jpg)
 
+![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)
+
 Hello! I’m the Director of Engineering at [WebDevStudios](https://webdevstudios.com/), where we partner with enterprise level corporations like Microsoft, Dell, Viacom, News Corporation, Campbell’s Soup Company, and the NBA to help them publish with [WordPress](https://wordpress.org/).
 
 Over the years, I’ve also [contributed](https://profiles.wordpress.org/gregrickaby/) to various areas of the WordPress ecosystem, such as core, plugins, themes, Gutenberg, and BuddyPress, as well as speaking at WordCamp Milwaukee and Birmingham. I also contribute to other open-source projects including [GatsbyJS](https://gatsbyjs.org), and [Next.js](https://nextjs.org), as well as dozens of [my own projects on Github](https://github.com/gregrickaby?tab=repositories).
