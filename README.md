@@ -1,4 +1,4 @@
-![screenshot](https://gregrickaby.com/wp-content/uploads/2020/06/20191128-20191128-rickaby-family-fall-2019-1438x1080.jpg)
+![screenshot](https://gregrickaby.com/wp-content/uploads/2020/07/grd-social-share-default.png)
 
 [![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)](https://twitter.com/gregrickaby)
 
@@ -11,3 +11,5 @@ On the side, I contract with [Wiley](https://www.wiley.com/en-us/) and have auth
 I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. Right now, I’m “all in” on [photography](https://gregrickaby.com/category/photos).
 
 When I’m not at work? I enjoy being a dad and hanging out with family. I also serve my community at [Wiregrass Church](https://wiregrasschurch.org).
+
+If you’re looking for help with WordPress or technical writing and editorial services, I’m available for gigs on [Fiverr](https://www.fiverr.com/gregrickaby).
