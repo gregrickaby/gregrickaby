@@ -8,8 +8,4 @@ Over the years, I’ve also [contributed](https://profiles.wordpress.org/gregric
 
 On the side, I contract with [Wiley](https://www.wiley.com/en-us/) and have authored a children’s book titled, [_Creating a Website for Dummies, Jr._](http://gregslink.co/create-a-website-am) and serve as Technical Editor on three other books, _[WordPress for Dummies 9E](https://smile.amazon.com/gp/product/1119696976/ref=pe_41006280_506051420_pe_re_csr_ea_lm)_ (January 2021), _[WordPress All-In-One For Dummies, 4E](https://amzn.to/37MMDLp)_ and _[Professional WordPress Plugin Development, 2E](https://amzn.to/2BgCg7i)_.
 
-I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. Right now, I’m “all in” on [photography](https://gregrickaby.com/category/photos).
-
-When I’m not at work? I enjoy being a dad and hanging out with family. I also serve my community at [Wiregrass Church](https://wiregrasschurch.org).
-
-If you’re looking for help with WordPress or technical writing and editorial services, I’m available for gigs on [Fiverr](https://www.fiverr.com/gregrickaby).
+I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. Right now, I’m “all in” on [photography](https://gregrickaby.com/category/photos). When I’m not at work I enjoy being a dad and hanging out with family. I also serve my community at [Wiregrass Church](https://wiregrasschurch.org).
