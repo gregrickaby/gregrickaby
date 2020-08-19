@@ -1,5 +1,3 @@
-![screenshot](https://gregrickaby.com/wp-content/uploads/2020/07/grd-social-share-default.png)
-
 [![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)](https://twitter.com/gregrickaby)
 
 ## About Me
