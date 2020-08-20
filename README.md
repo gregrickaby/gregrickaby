@@ -1,12 +1,12 @@
-[![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)](https://twitter.com/gregrickaby)
-
 ## About Me
 
 Hello! I'm a servant leader and the Director of Engineering at [WebDevStudios](https://webdevstudios.com/), where we partner with enterprise level corporations like Microsoft, Dell, Viacom, News Corporation, Campbell’s Soup Company, and the NBA to help them publish with [WordPress](https://wordpress.org/). 
 
 I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. Right now, I’m “all in” on [photography](https://gregrickaby.com/category/photos). When I’m not at work, I enjoy being a dad and hangin' with the family. I also serve my community at [Wiregrass Church](https://wiregrasschurch.org).
 
-Learn more about my professional credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/) and follow [my blog](https://gregrickaby.com).
+Learn more about my professional credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/) and check out [my blog](https://gregrickaby.com).
+
+[![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)](https://twitter.com/gregrickaby)
 
 ## Contributions
 
