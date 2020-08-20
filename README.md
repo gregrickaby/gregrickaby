@@ -1,3 +1,8 @@
+[![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)](https://twitter.com/gregrickaby)
+<a href="https://dev.to/gregrickaby">
+  <img src="https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg" alt="Greg Rickaby's DEV Profile" height="30" width="30">
+</a>
+
 ## About Me
 
 Hello! I'm a servant leader and the Director of Engineering at [WebDevStudios](https://webdevstudios.com/), where we partner with enterprise level corporations like Microsoft, Dell, Viacom, News Corporation, Campbell’s Soup Company, and the NBA to help them publish with [WordPress](https://wordpress.org/). 
@@ -13,6 +18,3 @@ Over the years, I’ve also [contributed](https://profiles.wordpress.org/gregric
 ## Books
 
 On the side, I contract with [Wiley](https://www.wiley.com/en-us/) and have authored a children’s book titled, [_Creating a Website for Dummies, Jr._](http://gregslink.co/create-a-website-am) and serve as Technical Editor on three other books, _[WordPress for Dummies 9E](https://smile.amazon.com/gp/product/1119696976/ref=pe_41006280_506051420_pe_re_csr_ea_lm)_ (January 2021), _[WordPress All-In-One For Dummies, 4E](https://amzn.to/37MMDLp)_ and _[Professional WordPress Plugin Development, 2E](https://amzn.to/2BgCg7i)_.
-
-[![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)](https://twitter.com/gregrickaby)
-[![Greg Rickaby's DEV Profile](https://d2fltix0v2e0sb.cloudfront.net/dev-badge.svg)](https://dev.to/gregrickaby)
