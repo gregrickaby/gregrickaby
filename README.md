@@ -4,13 +4,11 @@
 
 ### 👨‍💻 About
 
-I'm a servant leader and the Director of Engineering at [WebDevStudios](https://webdevstudios.com/), where we partner with enterprise level corporations like Microsoft, Dell, Viacom, News Corporation, Campbell’s Soup Company, and the NBA to help them publish with [WordPress](https://wordpress.org/). I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. When I’m not at work, I enjoy being a dad and hangin' with the family. I also serve my community at [Wiregrass Church](https://wiregrasschurch.org).
-
-Learn more about my professional credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/) and check out [my blog](https://gregrickaby.com).
+I'm a servant leader and the Director of Engineering at [WebDevStudios](https://webdevstudios.com/), where we partner with enterprise level corporations like Microsoft, Dell, Viacom, News Corporation, Campbell’s Soup Company, and the NBA to help them publish with [WordPress](https://wordpress.org/). I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. When I’m not at work, I enjoy being a dad and hangin' with the family. Learn more about my professional credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/) and check out [my blog](https://gregrickaby.com).
 
 ### :octocat: Contributions
 
-Over the years, I’ve also [contributed](https://profiles.wordpress.org/gregrickaby/) to various areas of the WordPress ecosystem, such as core, plugins, themes, Gutenberg, and BuddyPress, as well as speaking at WordCamp Milwaukee and Birmingham. I also contribute to other open-source projects including [GatsbyJS](https://gatsbyjs.org), and [Next.js](https://nextjs.org), [StorybookJS](https://github.com/storybookjs/storybook), as well as dozens of [my own projects on Github](https://github.com/gregrickaby?tab=repositories).
+Over the years, I’ve also [contributed](https://profiles.wordpress.org/gregrickaby/) to various areas of the WordPress ecosystem, such as core, plugins, themes, Gutenberg, and BuddyPress, as well as speaking at WordCamp Milwaukee and Birmingham. I also contribute to other open-source projects including [GatsbyJS](https://gatsbyjs.org), and [Next.js](https://nextjs.org), [StorybookJS](https://github.com/storybookjs/storybook), as well as dozens of [my own projects on Github](https://github.com/gregrickaby?tab=repositories). I also serve my community at [Wiregrass Church](https://wiregrasschurch.org).
 
 ### 📚 Books 
 
