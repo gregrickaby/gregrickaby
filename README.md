@@ -2,9 +2,12 @@
 
 [![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)](https://twitter.com/gregrickaby)
 
-### 👨‍💻 About
+### About Me
+Just an ordinary father of 3 with a job in tech. I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. When I’m not at work, I enjoy hangin' with the family. Check out [my blog](https://gregrickaby.com) to learn more.
 
-I'm a servant leader and the Director of Engineering at [WebDevStudios](https://webdevstudios.com/), where we partner with enterprise level corporations like Microsoft, Dell, Viacom, News Corporation, Campbell’s Soup Company, and the NBA to help them publish with [WordPress](https://wordpress.org/). I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. When I’m not at work, I enjoy being a dad and hangin' with the family. Learn more about my professional credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/) and check out [my blog](https://gregrickaby.com).
+### 👨‍💻 At Work
+
+A servant leader to the engineering department at [WebDevStudios](https://webdevstudios.com/), as Director of Engineering I oversee staffing, policy, wellness, continuing education, and technical guidance. I also help support the Project Management office with resource allocation, the Business Development and Strategy departments as sales engineering, and assist both the CEO and COO with planning and execution of engineering department goals. Learn more about my professional credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/)
 
 ### :octocat: Contributions
 
