@@ -7,7 +7,7 @@ Just an ordinary father of 3 with a job in tech. I’m always trying to learn so
 
 ### 👨‍💻 At Work
 
-A servant leader to the engineering department at [WebDevStudios](https://webdevstudios.com/), as Director of Engineering I oversee staffing, policy, wellness, continuing education, and technical guidance. I also help support the Project Management office with resource allocation, the Business Development and Strategy departments as sales engineering, and assist both the CEO and COO with planning and execution of engineering department goals. Learn more about my professional credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/)
+A servant leader to the engineering department at [WebDevStudios](https://webdevstudios.com/). As Director of Engineering I oversee staffing, policy, wellness, continuing education, and technical guidance. I also help support the Project Management office with resource allocation, the Business Development and Strategy departments as sales engineering, and assist both the CEO and COO with planning and execution of engineering department goals. Learn more about my professional credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/)
 
 ### :octocat: Contributions
 
