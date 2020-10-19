@@ -2,7 +2,7 @@
 
 [![twitter](https://img.shields.io/twitter/follow/gregrickaby?style=social)](https://twitter.com/gregrickaby)
 
-### About Me
+### 👨‍👩‍👧‍👦 About Me
 Just an ordinary father of 3 with a job in tech. I’m always trying to learn something new, everything from leadership skills, or mastering new technology, to playing music. When I’m not at work, I enjoy hangin' with the family. Check out [my blog](https://gregrickaby.com) to learn more.
 
 ### 👨‍💻 At Work
