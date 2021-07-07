@@ -1,6 +1,6 @@
 # Photos
 
-<div>
+<div class="photo-grid">
     {% for image in site.static_files reversed %}
         {% if image.path contains 'assets/photos' and image.extname == '.jpg' %}
         <a href="{{ site.url }}{{ image.path }}">
@@ -9,6 +9,7 @@
                 <source type="image/webp" srcSet="{{ site.baseurl }}/assets/photos/{{ image.basename }}.webp" />
                 <img
                     alt=""
+                    class="photo"
                     decoding="async"
                     loading="lazy"
                     src="{{ site.baseurl }}{{ image.path }}"
