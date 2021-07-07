@@ -1,6 +1,8 @@
----
-layout: default
----
+<nav>
+    {{% for menu in site.pages %}}
+    <a href="{{ menu.url | relative_url }}">{{ menu.title }}</a>
+    {{% endfor %}}
+</nav>
 
 # Hey y'all, I'm Greg 👋🏻
 
