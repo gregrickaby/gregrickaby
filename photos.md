@@ -11,7 +11,7 @@
                 {% if image.extname == '.webp' %}
                     <source type="image/webp" srcSet="{{ site.baseurl }}{{ image.path }}" />
                 {% endif %}
-                {if image.extname == '.jpg' %}
+                {%if image.extname == '.jpg' %}
                     <img
                         alt=""
                         decoding="async"
