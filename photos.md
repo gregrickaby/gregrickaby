@@ -4,13 +4,13 @@
     {% for image in site.static_files %}
         {% if image.path contains 'assets/photos' %}
         <picture>
-        {% if image.path contains '.avif' %}
+        {% if file.extname contains '.avif' %}
             <source type="image/avif" srcSet="{{ site.baseurl }}{{ image.path }}" />
         {% endif %}
-        {% if image.path contains '.webp' %}
+        {% if file.extname contains '.webp' %}
             <source type="image/webp" srcSet="{{ site.baseurl }}{{ image.path }}" />
         {% endif %}
-        {if image.path contains '.jpg' %}
+        {if file.extname contains '.jpg' %}
             <img
                 alt=""
                 decoding="async"
