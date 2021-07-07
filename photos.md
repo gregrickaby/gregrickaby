@@ -1,7 +1,7 @@
 # Photos
 
 <div>
-    {% for image in site.static_files %}
+    {% for image in site.static_files reversed %}
         {% if image.path contains 'assets/photos' and image.extname == '.jpg' %}
         <a href="{{ site.url }}{{ image.path }}">
             <picture>
