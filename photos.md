@@ -16,7 +16,7 @@
                 decoding="async"
                 height="722"
                 loading="lazy"
-                src="{{ site.baseurl }}{{ image.path }"
+                src="{{ site.baseurl }}{{ image.path }}"
                 width="962"
             />
         {% endif %}
