@@ -19,6 +19,11 @@
             </a>
             <h2>{{ site.description | default: site.github.project_tagline }}</h2>
         </div>
+        <nav>
+            {{% for menu in site.pages %}}
+            <a href="{{ menu.url | relative_url }}">{{ menu.title }}</a>
+            {{% endfor %}}
+        </nav>
     </header>
 
     <div class="container">
