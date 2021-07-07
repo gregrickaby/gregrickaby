@@ -1,37 +1,28 @@
-## Welcome to GitHub Pages
+# Hey y'all, I'm Greg 👋🏻
 
-You can use the [editor on GitHub](https://github.com/gregrickaby/gregrickaby/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+![rickaby family in 2019](assets/rickaby-family-2019.webp)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+I live in southeast Alabama with my beautiful wife [Tara](https://tararickaby.com) and our three kids-- Chase, Chloe, and Wyatt. I'm into [photography](https://gregrickaby.com/photos), the [Packers](https://www.packers.com/), [Disney](https://www.disney.com/), [WordPress](https://wordpress.org/), and [JavaScript](https://en.wikipedia.org/wiki/JavaScript). From the time I built my first website in the late 90's, I’ve been passionate about the web! Learn more about my credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/).
 
-### Markdown
+## At Work
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+I'm the Director of Engineering at [WebDevStudios](https://webdevstudios.com/) where I oversee staffing, policy, wellness, continuing education, and provide technical guidance to our sales and marketing teams. I also help support the Project Management Office with resource allocation, and assist both the CEO and COO with planning and execution of engineering department goals.
 
-```markdown
-Syntax highlighted code block
+## Books
 
-# Header 1
-## Header 2
-### Header 3
+I contract with [Wiley Global](https://www.wiley.com/en-us/) and in 2016 I wrote a children’s book titled, [_Creating a Website for Dummies, Jr._](https://amzn.to/34QAxAQ) I'm also the Technical Editor for _[WordPress for Dummies](https://amzn.to/37XCflU)_, _[Professional WordPress Plugin Development](https://amzn.to/2BgCg7i)_, and _[WordPress All-In-One For Dummies](https://amzn.to/37MMDLp)_.
 
-- Bulleted
-- List
+## Contributions
 
-1. Numbered
-2. List
+Since discovering open source in the early 2000's, I've contributed several parts of the [WordPress ecosystem](https://profiles.wordpress.org/gregrickaby/), including speaking at [WordCamps](https://central.wordcamp.org/). I've also contributed code to [Next.js](https://nextjs.org), [Storybook](https://github.com/storybookjs/storybook), and [Gatsby](https://gatsbyjs.org).
 
-**Bold** and _Italic_ and `Code` text
+Thanks for reading! Stay safe! 🍻
 
-[Link](url) and ![Image](src)
-```
+## Connect
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/gregrickaby/gregrickaby/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+- [CodePen](https://codepen.io/gregrickaby)
+- [Dev](https://dev.to/gregrickaby)
+- [Github](https://github.com/gregrickaby)
+- [LinkedIn](https://www.linkedin.com/in/gregrickaby/)
+- [Twitter](https://twitter.com/gregrickaby)
+- [YouTube](https://www.youtube.com/c/GregRickaby)
