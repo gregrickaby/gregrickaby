@@ -1,3 +1,7 @@
+---
+layout: main
+---
+
 # Hey y'all, I'm Greg 👋🏻
 
 ![rickaby family in 2019](assets/images/rickaby-family-2019.webp)
