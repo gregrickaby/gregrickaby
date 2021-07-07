@@ -4,16 +4,22 @@
     {% for image in site.static_files %}
         {% if image.path contains 'assets/photos' %}
         <picture>
-            <source type="image/avif" srcSet="{{ site.baseurl }}{{ image.path }}" />
-            <source type="image/webp" srcSet="{{ site.baseurl }}{{ image.path }}" />
+        {% if file.name contains 'avif' %}
+            <source type="image/avif" srcSet="{{ site.baseurl }}/assets/photos/{{file.name}}" />
+        {% endif %}
+        {% if file.name contains 'webp' %}
+            <source type="image/webp" srcSet="{{ site.baseurl }}/assets/photos/{{file.name}}" />
+        {% endif %}
+        {if file.name contains 'jpg' %}
             <img
-            alt=""
-            decoding="async"
-            height="722"
-            loading="lazy"
-            src="{{ site.baseurl }}{{ image.path }}"
-            width="962"
+                alt=""
+                decoding="async"
+                height="722"
+                loading="lazy"
+                src="{{ site.baseurl }}{{ image.path }}"
+                width="962"
             />
+        {% endif %}
         </picture>
         {% endif %}
 {% endfor %}
