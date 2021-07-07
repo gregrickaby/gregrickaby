@@ -3,7 +3,7 @@
 <div>
     {% for image in site.static_files %}
         {% if image.path contains 'assets/photos' and image.extname == '.jpg' %}
-        <a href="{{ image.path }}">
+        <a href="{{ site.baseurl }}{{ image.path }}">
             <picture>
                 <source type="image/avif" srcSet="{{ site.baseurl }}/assets/photos/{{ image.basename }}.avif" />
                 <source type="image/webp" srcSet="{{ site.baseurl }}/assets/photos/{{ image.basename }}.webp" />
