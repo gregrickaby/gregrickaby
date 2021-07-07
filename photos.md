@@ -5,10 +5,10 @@
         {% if image.path contains 'assets/photos' %}
         <picture>
         {% if image.path contains '.avif' %}
-            <source type="image/avif" srcSet="{{ site.baseurl }}/assets/photos/{{file.name}}" />
+            <source type="image/avif" srcSet="{{ site.baseurl }}{{ image.path }}" />
         {% endif %}
         {% if image.path contains '.webp' %}
-            <source type="image/webp" srcSet="{{ site.baseurl }}/assets/photos/{{file.name}}" />
+            <source type="image/webp" srcSet="{{ site.baseurl }}{{ image.path }}" />
         {% endif %}
         {if image.path contains '.jpg' %}
             <img
