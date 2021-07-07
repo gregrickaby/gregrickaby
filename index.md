@@ -1,5 +1,5 @@
 ---
-layout: layouts/main.html
+layout: _layouts/main.html
 ---
 
 # Hey y'all, I'm Greg 👋🏻
