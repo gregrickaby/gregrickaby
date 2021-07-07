@@ -1,0 +1,9 @@
+# Photos
+
+<div>
+    {% for image in site.static_files %}
+        {% if image.path contains 'assets/photos' %}
+            <img src="{{ site.baseurl }}{{ image.path }}" alt="image" loading="lazy" />
+        {% endif %}
+{% endfor %}
+</div>
