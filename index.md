@@ -6,10 +6,10 @@
             alt="rickaby family in 2019"
             class="photo"
             decoding="async"
-            height="722"
+            height="541"
             loading="eager"
             src="/assets/images/rickaby-family-2019.jpg"
-            width="962"
+            width="722"
         />
     </picture>
 </a>
