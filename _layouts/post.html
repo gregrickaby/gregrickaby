@@ -2,16 +2,26 @@
 layout: default
 ---
 
-<small>{{ page.date | date: "%-d %B %Y" }}</small>
-<h1>{{ page.title }}</h1>
+<article>
 
-<p class="view">by {{ page.author | default: site.author }}</p>
+    <header>
+        <p class="byline">by {{ page.author | default: site.author }} on <time>{{ page.date | date: "%B %-d, %Y"}}</time>
+        </p>
 
-{{content}}
+        <h1 class="entry-title">{{ page.title }}</h1>
+    </header>
 
-{% if page.tags %}
-<small>tags: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
-{% endif %}
+    <main>
+        {{content}}
+    </main>
+
+    <footer>
+        {% if page.tags %}
+        <small>tagged with: <em>{{ page.tags | join: "</em> - <em>" }}</em></small>
+        {% endif %}
+    </footer>
+
+</article>
 
 <div class="page-navigation">
     {% if page.previous.url %}
