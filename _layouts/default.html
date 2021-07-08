@@ -18,12 +18,14 @@
                 <h1>{{ site.title | default: site.github.repository_name }}</h1>
             </a>
             <h2>{{ site.description | default: site.github.project_tagline }}</h2>
+
+            <nav>
+                <a href="/posts">Articles</a>
+                <a href="/developer-resources">Dev Resources</a>
+                <a href="/photos">Photos</a>
+                <a href="/contact">Contact</a>
+            </nav>
         </div>
-        <nav>
-            {{% for menu in site.pages %}}
-            <a href="{{ menu.url | relative_url }}">{{ menu.title }}</a>
-            {{% endfor %}}
-        </nav>
     </header>
 
     <div class="container">
