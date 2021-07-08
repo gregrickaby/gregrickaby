@@ -4,7 +4,7 @@ layout: default
 
 <article>
     <h1 class="entry-title">{{ page.title }}</h1>
-    <p class="byline">by {{ page.author | default: site.author }} on <time>{{ page.date | date: "%B %-d, %Y"}}</time></p>
+    <small class="byline">by {{ page.author | default: site.author }} on <time>{{ page.date | date: "%B %-d, %Y"}}</time></small>
 
     {{content}}
 
