@@ -22,19 +22,8 @@ footer {
   width: 100%;
 }
 
-.page-nav {
-  display: block;
-  width: auto;
-  overflow: hidden;
-}
-
-.page-nav a {
-  display: block;
-  width: 50%;
-  float: left;
-  margin: 1em 0;
-}
-
-.page-nav .next {
-  text-align: right;
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0 0;
 }
