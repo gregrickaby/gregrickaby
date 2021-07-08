@@ -1,7 +1,7 @@
 <a href="assets/images/rickaby-family-2019.jpg">
     <picture>
-        <source type="image/avif" srcSet="/assets/images/rickaby-family-2019.avif" />
-        <source type="image/webp" srcSet="/assets/images/rickaby-family-2019.webp" />
+        <source type="image/avif" srcset="/assets/images/rickaby-family-2019.avif" />
+        <source type="image/webp" srcset="/assets/images/rickaby-family-2019.webp" />
         <img
             alt="rickaby family in 2019"
             class="photo"
