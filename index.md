@@ -1,8 +1,4 @@
-<nav>
-    {{% for menu in site.pages %}}
-    <a href="{{ menu.url | relative_url }}">{{ menu.title }}</a>
-    {{% endfor %}}
-</nav>
+{% include nav.html %}
 
 # Hey y'all, I'm Greg 👋🏻
 
