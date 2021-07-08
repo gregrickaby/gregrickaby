@@ -7,7 +7,7 @@
             class="photo"
             decoding="async"
             height="722"
-            loading="lazy"
+            loading="eager"
             src="/assets/images/rickaby-family-2019.jpg"
             width="962"
         />
