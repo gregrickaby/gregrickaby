@@ -2,3 +2,10 @@ title: Greg Rickaby
 description: Full-Stack Developer
 theme: jekyll-theme-hacker
 google_analytics: UA-1212017-5
+
+domain: gregrickaby.com
+url: https://gregrickaby.com
+github: [metadata]
+timezone: America/Chicago
+plugins:
+  - jekyll-feed
