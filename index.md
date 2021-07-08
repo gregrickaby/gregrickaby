@@ -1,8 +1,20 @@
-{% include nav.html %}
+<a href="assets/images/rickaby-family-2019.jpg">
+    <picture>
+        <source type="image/avif" srcSet="/assets/images/rickaby-family-2019.avif" />
+        <source type="image/webp" srcSet="/assets/images/rickaby-family-2019.webp" />
+        <img
+            alt="rickaby family in 2019"
+            class="photo"
+            decoding="async"
+            height="722"
+            loading="lazy"
+            src="/assets/images/rickaby-family-2019.jpg"
+            width="962"
+        />
+    </picture>
+</a>
 
 # Hey y'all, I'm Greg 👋🏻
-
-![rickaby family in 2019](assets/images/rickaby-family-2019.webp)
 
 I live in southeast Alabama with my beautiful wife [Tara](https://tararickaby.com) and our three kids-- Chase, Chloe, and Wyatt. I'm into [photography](https://gregrickaby.com/photos), the [Packers](https://www.packers.com/), [Disney](https://www.disney.com/), [WordPress](https://wordpress.org/), and [JavaScript](https://en.wikipedia.org/wiki/JavaScript). From the time I built my first website in the late 90's, I’ve been passionate about the web! Learn more about my credentials on [LinkedIn](https://www.linkedin.com/in/gregrickaby/).
 
