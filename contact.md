@@ -1,6 +1,6 @@
 # Contact
 
-Email: gregrickaby@gmail.com
+gregrickaby@gmail.com
 
 Other ways to connect:
 
