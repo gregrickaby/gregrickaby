@@ -12,14 +12,17 @@
 
 <body>
 
-    <header>
+    <header class="site-header">
         <div class="container">
-            <a id="a-title" href="{{ '/' | relative_url }}">
-                <h1>{{ site.title | default: site.github.repository_name }}</h1>
-            </a>
-            <h2>{{ site.description | default: site.github.project_tagline }}</h2>
 
-            <nav>
+            <div class="site-branding">
+                <a id="a-title" href="{{ '/' | relative_url }}">
+                    <h1>{{ site.title | default: site.github.repository_name }}</h1>
+                </a>
+                <h2>{{ site.description | default: site.github.project_tagline }}</h2>
+            </div>
+
+            <nav class="site-navigation">
                 <a href="/posts">Articles</a>
                 <a href="/developer-resources">Dev Resources</a>
                 <a href="/photos">Photos</a>
@@ -28,13 +31,13 @@
         </div>
     </header>
 
-    <main class="container">
-        <section id="main_content">
+    <main id="main_content" class="container site-main">
+        <section>
             {{ content }}
         </section>
     </main>
 
-    <footer>
+    <footer class="site-footer">
         <div class="container">
             &copy; 2008-{{ site.time | date: '%Y' }} {{ site.title | default: site.github.repository_name }}
         </div>

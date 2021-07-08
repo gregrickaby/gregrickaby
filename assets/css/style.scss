@@ -9,6 +9,11 @@
   margin: 0 auto;
 }
 
+.site-header .container {
+  display: flex;
+  justify-content: space-between;
+}
+
 footer {
   background: rgba(0, 0, 0, 0.1);
   width: 100%;
