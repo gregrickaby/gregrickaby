@@ -3,6 +3,10 @@
 
 @import "{{ site.theme }}";
 
+hr {
+  margin: 32px 0;
+}
+
 .container {
   margin: 0 auto;
   width: 90%;
@@ -24,9 +28,10 @@ footer {
   width: 100%;
 }
 
-.photo {
+.photo,
+section img {
   height: auto;
-  width: 100%;
+  max-width: 100%;
 }
 
 .entry-title {
@@ -45,7 +50,46 @@ footer {
   margin: 20px 0 0;
 }
 
-@media (min-width: 768px) {
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.grid-cols-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.full-width {
+  margin-bottom: 16px;
+  position: relative;
+
+  @media (min-width: 1024px) {
+    left: -64px;
+    width: calc(100% + 128px);
+  }
+
+  @media (min-width: 1280px) {
+    left: -256px;
+    width: calc(100% + 512px);
+  }
+}
+
+.wide {
+  margin-bottom: 16px;
+  position: relative;
+
+  @media (min-width: 1024px) {
+    left: -115px;
+    width: calc(100% + 240px);
+  }
+}
+
+@media screen and (min-width: 768px) {
   .site-header .container {
     align-items: unset;
     flex-direction: row;
@@ -54,5 +98,22 @@ footer {
 
   .site-navigation {
     margin-top: 5px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .align-left {
+    float: left;
+    margin: 5px 16px 5px -100px;
+  }
+
+  .align-right {
+    float: right;
+    margin: 5px -100px 5px 16px;
+  }
+
+  .align-center {
+    margin: 0 auto 16px;
+    text-align: center;
   }
 }
