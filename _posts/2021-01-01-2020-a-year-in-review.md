@@ -20,7 +20,7 @@ It was quite a year as a family unit. We've been doing our part by staying home,
     decode="async"
     alt="wyatt fishing"
     height="288"
-    src="/assets/images/2020-07-07-13.35.03.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/wyatt-fishing.jpg"
     width="384"
   />
 </div>
@@ -37,7 +37,7 @@ He still loves dinosaurs, heavy machinery, helping me in the yard, and "Mando" f
     decode="async"
     alt="chloe being sweet"
     height="384"
-    src="/assets/images/2020-05-14-08.09.47.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/chloe-being-sweet.jpg"
     width="384"
   />
 </div>
@@ -56,7 +56,7 @@ Tara and I decided to homeschool her this year; we just felt like it was the rig
     decode="async"
     alt="chase in the telephone booth"
     height="511"
-    src="/assets/images/20201208-_1170694.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/chase-phone-booth.jpg"
     width="384"
   />
 </div>
@@ -77,7 +77,7 @@ Chase also grew his hair out and is taller than me (good for him!). He did manag
     decode="async"
     alt="tara on sand lake in wisconsin"
     height="222"
-    src="/assets/images/tara-is-beautiful.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/tara-is-beautiful.jpg"
     width="384"
   />
 </div>
@@ -88,58 +88,43 @@ This past November, we celebrated our 11th wedding anniversary! Tara is truly wo
 
 On the side, Tara is still crocheting plushies (including Bernie's Mittens), blankets, and hats for [Crochet Creations](https://tararickaby.com). In terms of sales, 2020 was her biggest year yet.
 
-<div class="align-center">
-  <a href="https://tararickaby.com/shop/plushies/bernies-mittens-crochet-doll/">
-    <img
-      loading="lazy"
-      decode="async"
-      alt="bernie’s mittens crochet doll"
-      height="493"
-      src="/assets/images/bernies-mittens-crochet-creations.jpg"
-      width="640"
-    />
-  </a>
-</div>
-
 ### Gramps
 
 On May 24 we lost Gramps to cancer. He was 88. In all my life I've never known kinder soul and we all miss him dearly. [Rest in peace](https://www.tributearchive.com/obituaries/14749102/James-B-Rickaby), Gramps.
 
 <div class="grid grid-cols-3">
+  <div class="align-center">
+    <img
+      loading="lazy"
+      decode="async"
+      alt="gramps high school graduation 1950"
+      height="585"
+      src="/assets/images/blog/2020-a-year-in-review/gramps-class-of-50.jpg"
+      width="384"
+    />
+  </div>
 
-<div class="align-center">
-  <img
-    loading="lazy"
-    decode="async"
-    alt="gramps high school graduation 1950"
-    height="585"
-    src="/assets/images/gramps-class-of-50.jpg"
-    width="384"
-  />
-</div>
+  <div class="align-center">
+    <img
+      loading="lazy"
+      decode="async"
+      alt="gramps coast guard alameda california 1951"
+      height="585"
+      src="/assets/images/blog/2020-a-year-in-review/gramps-coast-guard-1951.jpg"
+      width="384"
+    />
+  </div>
 
-<div class="align-center">
-  <img
-    loading="lazy"
-    decode="async"
-    alt="gramps coast guard alameda california 1951"
-    height="585"
-    src="/assets/images/gramps-coast-guard-1951.jpg"
-    width="384"
-  />
-</div>
-
-<div class="align-center">
-  <img
-    loading="lazy"
-    decode="async"
-    alt="gramps at a wedding before his death 2020"
-    height="585"
-    src="/assets/images/gramps-at-wedding-2020.jpg"
-    width="384"
-  />
-</div>
-
+  <div class="align-center">
+    <img
+      loading="lazy"
+      decode="async"
+      alt="gramps at a wedding before his death 2020"
+      height="585"
+      src="/assets/images/blog/2020-a-year-in-review/gramps-at-wedding-2020.jpg"
+      width="384"
+    />
+  </div>
 </div>
 
 <hr />
@@ -152,8 +137,7 @@ On May 24 we lost Gramps to cancer. He was 88. In all my life I've never known k
     decode="async"
     alt="frosty sunrise"
     height="696"
-    layout="responsive"
-    src="/assets/photos/20201228-APC_0784.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/frosty-sunrise.jpg"
     width="928"
   />
 </div>
@@ -186,7 +170,7 @@ I also contributed to Next.js...specifically the docs, and the WordPress and Blo
     decode="async"
     alt="my github contributions in 2020"
     height="202"
-    src="/assets/images/github-contributions-2020.png"
+    src="/assets/images/blog/2020-a-year-in-review/github-contributions-2020.png"
     width="923"
   />
 </div>
@@ -225,7 +209,7 @@ As a family, we continued to volunteer at Wiregrass Church until the lock-down. 
     decode="async"
     alt="volunteering in our community"
     height="481"
-    src="/assets/images/2020-09-25-17.43.19.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/volunteering-in-our-community.jpg"
     width="640"
   />
 </div>
@@ -238,7 +222,7 @@ We got to meet a lot of nice people and one special pup, Jake the K-9!
     decode="async"
     alt="lt. billy, jake, chloe and wyatt"
     height="480"
-    src="/assets/images/2020-10-23-18.01.34.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/lt-bill-jake-chloe-wyatt.jpg"
     width="640"
   />
 </div>
@@ -282,7 +266,7 @@ I was fortunate enough to be asked to provide technical editing services on not 
         decode="async"
         alt="wordpress for dummies cover"
         height="160"
-        src="/assets/images/wpfd9e.jpg"
+        src="/assets/images/blog/2020-a-year-in-review/wordpress-for-dummies-9e.jpg"
         width="128"
       />
     </a>
@@ -294,7 +278,7 @@ I was fortunate enough to be asked to provide technical editing services on not 
         decode="async"
         alt="professional wordpress plugin development cover"
         height="160"
-        src="/assets/images/professional-wordpress-plugin-dev.jpg"
+        src="/assets/images/blog/2020-a-year-in-review/professional-wordpress-plugin-dev.jpg"
         width="128"
       />
     </a>
@@ -312,10 +296,9 @@ I was fortunate enough to be asked to provide technical editing services on not 
     loading="lazy"
     decode="async"
     alt="our home at dusk"
-    height="800"
-    layout="responsive"
-    src="/assets/photos/20201115-_1170229-HDR.jpg"
-    width="1080"
+    height="687"
+    src="/assets/images/blog/2020-a-year-in-review/our-home-at-dusk.jpg"
+    width="928"
   />
 </div>
 
@@ -326,7 +309,7 @@ When we moved in 3 years ago this place was a mess. A foreclosed house on 5 over
     decode="async"
     alt="yard before and after"
     height="1080"
-    src="/assets/images/yard-before-after.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/yard-before-after.jpg"
     width="1080"
   />
 
@@ -345,8 +328,7 @@ Even though I didn't travel for work, **we did travel plenty as a family.** All 
     decode="async"
     alt="biloxi beach"
     height="698"
-    layout="responsive"
-    src="/assets/images/biloxi-beach-2020-1672x1080.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/biloxi-beach.jpg"
     width="1080"
   />
 
@@ -359,7 +341,7 @@ The company did really great, coming in 2nd to a dance company from New Orleans.
     decode="async"
     alt="bailey, ellie, and chloe at elite dance cup in biloxi, ms"
     height="720"
-    src="/assets/images/2020-08-01-17.22.44.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/bailey-ellie-chloe-elite-dance.jpg"
     width="1080"
   />
 
@@ -370,8 +352,7 @@ The company did really great, coming in 2nd to a dance company from New Orleans.
     decode="async"
     alt="keys lake florence wisconsin"
     height="721"
-    layout="responsive"
-    src="/assets/images/keys-lake-florence-wi.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/keys-lake-florence-wi.jpg"
     width="1080"
   />
 
@@ -382,10 +363,9 @@ We visited Escanaba, MI, went fishing, made some amazing meals, visited several 
 <img
     loading="lazy"
     decode="async"
-    alt="in the boat on keys lake"
+    alt="rickaby family on keys lake"
     height="811"
-    layout="responsive"
-    src="/assets/images/2020-07-10-15.06.46.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/rickaby-family-on-keys-lake.jpg"
     width="1080"
   />
 
@@ -398,10 +378,9 @@ It was both Clint and Chase's first time duck hunting, so it was a real thrill f
 <img
     loading="lazy"
     decode="async"
-    alt="myself, chase, and clint in front of our ducks"
+    alt="duck camp 2020"
     height="923"
-    layout="responsive"
-    src="/assets/images/2020-10-29-09.13.25-1.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/duck-camp-2020.jpg"
     width="1080"
   />
 
@@ -416,8 +395,7 @@ We visited Magic Kingdom, Epcot, and Hollywood Studios. With the lower crowds, w
     decode="async"
     alt="drinking the blue milk"
     height="811"
-    layout="responsive"
-    src="/assets/images/20201209-_1170766.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/drinking-the-blue-milk.jpg"
     width="1080"
   />
 
@@ -445,7 +423,7 @@ Here are a few things I'd like to work on in 2021:
     decode="async"
     alt="rickaby family 2021"
     height="485"
-    src="/assets/images/rickaby-family-2021.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/rickaby-family-2021.jpg"
     width="384"
   />
 </div>
