@@ -1,7 +1,25 @@
 <a href="assets/images/rickaby-family-2019.jpg">
     <picture>
-        <source type="image/avif" srcset="/assets/images/rickaby-family-2019.avif" />
-        <source type="image/webp" srcset="/assets/images/rickaby-family-2019.webp" />
+        <source
+            type="image/avif"
+            media="(max-width: 600px)"
+            srcset="/assets/images/rickaby-family-2019-400.avif"
+        />
+        <source
+            type="image/webp"
+            media="(max-width: 600px)"
+            srcset="/assets/images/rickaby-family-2019-400.webp"
+        />
+        <source
+            type="image/avif"
+            media="(min-width: 601px)"
+            srcset="/assets/images/rickaby-family-2019.avif"
+        />
+        <source
+            type="image/webp"
+            media="(min-width: 601px)"
+            srcset="/assets/images/rickaby-family-2019.webp"
+        />
         <img
             alt="rickaby family in 2019"
             class="photo"
@@ -9,6 +27,7 @@
             height="541"
             loading="eager"
             src="/assets/images/rickaby-family-2019.jpg"
+            style="height: auto; width: 100%;"
             width="722"
         />
     </picture>
