@@ -5,9 +5,10 @@
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preload" as="style"
+        href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="preload" as="image" href="/assets/images/rickaby-family-2019.avif">
     <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-    <link rel="preload" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}"
-        as="style">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 
     {% seo %}
@@ -45,6 +46,13 @@
             &copy; 2008-{{ site.time | date: '%Y' }} {{ site.title | default: site.github.repository_name }}
         </div>
     </footer>
+
+    <script>
+        window.lazyLoadOptions = {
+            threshold: 0,
+        };
+    </script>
+    <script async src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.4.0/dist/lazyload.min.js"></script>
 
     {% if site.google_analytics %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1212017-5"></script>
