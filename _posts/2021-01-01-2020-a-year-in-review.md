@@ -15,14 +15,32 @@ It was quite a year as a family unit. We've been doing our part by staying home,
 ### Wyatt (4)
 
 <div class="align-left">
-  <img
-    loading="lazy"
-    decode="async"
-    alt="wyatt fishing"
-    height="288"
-    src="/assets/images/blog/2020-a-year-in-review/wyatt-fishing.jpg"
-    width="384"
-  />
+  <picture>
+    <source
+      type="image/webp"
+      media="(max-width: 600px)"
+      srcset="/assets/images/blog/2020-a-year-in-review/wyatt-fishing-400.webp"
+    />
+    <source
+      type="image/webp"
+      media="(min-width: 601px) and (max-width: 1023px)"
+      srcset="/assets/images/blog/2020-a-year-in-review/wyatt-fishing.webp"
+    />
+    <source
+      type="image/webp"
+      media="(min-width: 1024px)"
+      srcset="/assets/images/blog/2020-a-year-in-review/wyatt-fishing-400.webp"
+    />
+    <img
+      alt="wyatt fishing"
+      decode="async"
+      height="300"
+      loading="eager"
+      src="/assets/images/blog/2020-a-year-in-review/wyatt-fishing.jpg"
+      style="height: auto; width: 100%;"
+      width="400"
+    />
+  </picture>
 </div>
 
 Still rambunctious as ever, **2020 was the year Wyatt was finally potty trained!!**
