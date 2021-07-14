@@ -8,7 +8,6 @@ The sum of my knoweldge about working with web-based images.
   - [Simple resize](#simple-resize)
   - [Use as a script](#use-as-a-script)
 - [Squoosh CLI](#squoosh-cli)
-  - [Simple resize](#simple-resize-1)
   - [Simple convert](#simple-convert)
   - [Resize, optimize, and convert](#resize-optimize-and-convert)
 - [Lazy-loading images](#lazy-loading-images)
@@ -72,14 +71,6 @@ heroimage() {
 ## Squoosh CLI
 
 Prefer to use Node for processing images? Check out Google's [Sqoosh CLI](https://github.com/GoogleChromeLabs/squoosh). Unlike ImageMagick, Squoosh will always preserve the original image.
-
-### Simple resize
-
-Resize all `.jpg` images to 400px wide. Append `_400` to the filename:
-
-```bash
-npx @squoosh/cli *.jpg --resize {width:400} --suffix _400
-```
 
 ### Simple convert
 
