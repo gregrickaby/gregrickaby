@@ -4,23 +4,29 @@ The sum of my knoweldge about working with web-based images.
 
 ## Table of Contents <!-- omit in toc -->
 
-- [ImageMagick](#imagemagick)
-  - [Simple resize](#simple-resize)
-  - [Use as a script](#use-as-a-script)
-- [Squoosh CLI](#squoosh-cli)
-  - [Simple convert](#simple-convert)
-  - [Resize, optimize, and convert](#resize-optimize-and-convert)
+- [Tools](#tools)
+  - [ImageMagick](#imagemagick)
+    - [Simple resize](#simple-resize)
+    - [Use as a script](#use-as-a-script)
+  - [Squoosh](#squoosh)
+    - [Simple convert](#simple-convert)
+    - [Resize, optimize, and convert](#resize-optimize-and-convert)
+  - [Desktop Apps](#desktop-apps)
+  - [WordPress Plugins](#wordpress-plugins)
+  - [Hosted, On-demand Image Manipulation](#hosted-on-demand-image-manipulation)
 - [Lazy-loading images](#lazy-loading-images)
   - [Browser based](#browser-based)
   - [Intersection Observer](#intersection-observer)
 - [Serve images in modern formats](#serve-images-in-modern-formats)
 - [Art direction](#art-direction)
 
-## ImageMagick
+## Tools
+
+### ImageMagick
 
 [ImageMagick](http://www.imagemagick.org/) is the original CLI-based image processing tool and the defacto library on most web servers. It's _very_ powerful, but the documentation is difficult to understand and the syntax is cumbersome. That said, here are some commands that I've used...
 
-### Simple resize
+#### Simple resize
 
 Resize all `.jpg` images to 400px wide, set the quality to 70%, append `-400` to the end of the filename:
 
@@ -28,7 +34,7 @@ Resize all `.jpg` images to 400px wide, set the quality to 70%, append `-400` to
 convert *.jpg -resize 400x -quality 70% -set filename:area "%t-%w" "%[filename:area].jpg"
 ```
 
-### Use as a script
+#### Use as a script
 
 Where ImageMagick really shines is when it's used in scripts. Below is a bash function to create some images for a hero component that I want to upload to a website. It requires the [ImageOptim-CLI](https://github.com/JamieMason/ImageOptim-CLI).
 
@@ -68,11 +74,11 @@ heroimage() {
 
 ---
 
-## Squoosh CLI
+### Squoosh
 
-Prefer to use Node for processing images? Check out Google's [Sqoosh CLI](https://github.com/GoogleChromeLabs/squoosh). Unlike ImageMagick, Squoosh will always preserve the original image.
+Google has an open-source web app for optimizing images at <https://squoosh.app/> Google also offers the Node-based [Sqoosh CLI](https://github.com/GoogleChromeLabs/squoosh) which is really elegant.
 
-### Simple convert
+#### Simple convert
 
 Convert all `.jpg` images to `.webp` and `.avif`:
 
@@ -80,7 +86,7 @@ Convert all `.jpg` images to `.webp` and `.avif`:
 npx @squoosh/cli *.jpg --avif --webp
 ```
 
-### Resize, optimize, and convert
+#### Resize, optimize, and convert
 
 Convert, resize, auto-optimize, and append `_400` to the filename:
 
@@ -89,6 +95,27 @@ npx @squoosh/cli *.jpg --webp --avif auto --resize {width:400} --suffix _400
 ```
 
 ---
+
+### Desktop Apps
+
+- [ImageOptim](https://imageoptim.com/versions.html)
+
+---
+
+### WordPress Plugins
+
+- [EWWW](https://wordpress.org/plugins/ewww-image-optimizer/) (Free)
+- [ReSmush.it](https://resmush.it/) (Free for images up to 5MB)
+- [Cloudinary](https://wordpress.org/plugins/cloudinary-image-management-and-manipulation-in-the-cloud-cdn/) (Offers free tier)
+- [Jetpack's CDN](https://jetpack.com/features/design/content-delivery-network/) (Free, but requires WordPress.com account. No image optimization)
+
+---
+
+### Hosted, On-demand Image Manipulation
+
+- [Cloudinary](https://cloudinary.com) (Offers free tier)
+- [Thumbor](https://github.com/thumbor/thumbor) (Open-source, Cloudinary alternative)
+- [Cloudflare](https://cloudflare.com) (Free teir doesn't include image optimization)
 
 ## Lazy-loading images
 
