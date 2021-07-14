@@ -36,7 +36,7 @@ It was quite a year as a family unit. We've been doing our part by staying home,
       decode="async"
       height="300"
       loading="eager"
-      src="/assets/images/blog/2020-a-year-in-review/wyatt-fishing.jpg"
+      src="/assets/images/blog/2020-a-year-in-review/wyatt-fishing.webp"
       style="height: auto; width: 100%;"
       width="400"
     />
@@ -55,7 +55,8 @@ He still loves dinosaurs, heavy machinery, helping me in the yard, and "Mando" f
     decode="async"
     alt="chloe being sweet"
     height="384"
-    src="/assets/images/blog/2020-a-year-in-review/chloe-being-sweet.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/chloe-being-sweet.webp"
+    style="height: auto; width: 100%;"
     width="384"
   />
 </div>
@@ -74,7 +75,8 @@ Tara and I decided to homeschool her this year; we just felt like it was the rig
     decode="async"
     alt="chase in the telephone booth"
     height="511"
-    src="/assets/images/blog/2020-a-year-in-review/chase-phone-booth.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/chase-phone-booth.webp"
+    style="height: auto; width: 100%;"
     width="384"
   />
 </div>
@@ -95,7 +97,8 @@ Chase also grew his hair out and is taller than me (good for him!). He did manag
     decode="async"
     alt="tara on sand lake in wisconsin"
     height="222"
-    src="/assets/images/blog/2020-a-year-in-review/tara-is-beautiful.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/tara-is-beautiful.webp"
+    style="height: auto; width: 100%;"
     width="384"
   />
 </div>
@@ -117,7 +120,8 @@ On May 24 we lost Gramps to cancer. He was 88. In all my life I've never known k
       decode="async"
       alt="gramps high school graduation 1950"
       height="585"
-      src="/assets/images/blog/2020-a-year-in-review/gramps-class-of-50.jpg"
+      src="/assets/images/blog/2020-a-year-in-review/gramps-class-of-50.webp"
+      style="height: auto; width: 100%;"
       width="384"
     />
   </div>
@@ -128,7 +132,8 @@ On May 24 we lost Gramps to cancer. He was 88. In all my life I've never known k
       decode="async"
       alt="gramps coast guard alameda california 1951"
       height="585"
-      src="/assets/images/blog/2020-a-year-in-review/gramps-coast-guard-1951.jpg"
+      src="/assets/images/blog/2020-a-year-in-review/gramps-coast-guard-1951.webp"
+      style="height: auto; width: 100%;"
       width="384"
     />
   </div>
@@ -139,7 +144,8 @@ On May 24 we lost Gramps to cancer. He was 88. In all my life I've never known k
       decode="async"
       alt="gramps at a wedding before his death 2020"
       height="585"
-      src="/assets/images/blog/2020-a-year-in-review/gramps-at-wedding-2020.jpg"
+      src="/assets/images/blog/2020-a-year-in-review/gramps-at-wedding-2020.webp"
+      style="height: auto; width: 100%;"
       width="384"
     />
   </div>
@@ -155,7 +161,8 @@ On May 24 we lost Gramps to cancer. He was 88. In all my life I've never known k
     decode="async"
     alt="frosty sunrise"
     height="696"
-    src="/assets/images/blog/2020-a-year-in-review/frosty-sunrise.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/frosty-sunrise.webp"
+    style="height: auto; width: 100%;"
     width="928"
   />
 </div>
@@ -189,6 +196,7 @@ I also contributed to Next.js...specifically the docs, and the WordPress and Blo
     alt="my github contributions in 2020"
     height="202"
     src="/assets/images/blog/2020-a-year-in-review/github-contributions-2020.png"
+    style="height: auto; width: 100%;"
     width="923"
   />
 </div>
@@ -227,7 +235,8 @@ As a family, we continued to volunteer at Wiregrass Church until the lock-down. 
     decode="async"
     alt="volunteering in our community"
     height="481"
-    src="/assets/images/blog/2020-a-year-in-review/volunteering-in-our-community.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/volunteering-in-our-community.webp"
+    style="height: auto; width: 100%;"
     width="640"
   />
 </div>
@@ -240,7 +249,8 @@ We got to meet a lot of nice people and one special pup, Jake the K-9!
     decode="async"
     alt="lt. billy, jake, chloe and wyatt"
     height="480"
-    src="/assets/images/blog/2020-a-year-in-review/lt-bill-jake-chloe-wyatt.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/lt-bill-jake-chloe-wyatt.webp"
+    style="height: auto; width: 100%;"
     width="640"
   />
 </div>
@@ -284,7 +294,8 @@ I was fortunate enough to be asked to provide technical editing services on not 
         decode="async"
         alt="wordpress for dummies cover"
         height="160"
-        src="/assets/images/blog/2020-a-year-in-review/wordpress-for-dummies-9e.jpg"
+        src="/assets/images/blog/2020-a-year-in-review/wordpress-for-dummies-9e.webp"
+        style="height: auto; width: 100%;"
         width="128"
       />
     </a>
@@ -296,7 +307,8 @@ I was fortunate enough to be asked to provide technical editing services on not 
         decode="async"
         alt="professional wordpress plugin development cover"
         height="160"
-        src="/assets/images/blog/2020-a-year-in-review/professional-wordpress-plugin-dev.jpg"
+        src="/assets/images/blog/2020-a-year-in-review/professional-wordpress-plugin-dev.webp"
+        style="height: auto; width: 100%;"
         width="128"
       />
     </a>
@@ -315,7 +327,8 @@ I was fortunate enough to be asked to provide technical editing services on not 
     decode="async"
     alt="our home at dusk"
     height="687"
-    src="/assets/images/blog/2020-a-year-in-review/our-home-at-dusk.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/our-home-at-dusk.webp"
+    style="height: auto; width: 100%;"
     width="928"
   />
 </div>
@@ -327,7 +340,8 @@ When we moved in 3 years ago this place was a mess. A foreclosed house on 5 over
     decode="async"
     alt="yard before and after"
     height="1080"
-    src="/assets/images/blog/2020-a-year-in-review/yard-before-after.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/yard-before-after.webp"
+    style="height: auto; width: 100%;"
     width="1080"
   />
 
@@ -346,7 +360,8 @@ Even though I didn't travel for work, **we did travel plenty as a family.** All 
     decode="async"
     alt="biloxi beach"
     height="698"
-    src="/assets/images/blog/2020-a-year-in-review/biloxi-beach.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/biloxi-beach.webp"
+    style="height: auto; width: 100%;"
     width="1080"
   />
 
@@ -359,7 +374,8 @@ The company did really great, coming in 2nd to a dance company from New Orleans.
     decode="async"
     alt="bailey, ellie, and chloe at elite dance cup in biloxi, ms"
     height="720"
-    src="/assets/images/blog/2020-a-year-in-review/bailey-ellie-chloe-elite-dance.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/bailey-ellie-chloe-elite-dance.webp"
+    style="height: auto; width: 100%;"
     width="1080"
   />
 
@@ -370,7 +386,8 @@ The company did really great, coming in 2nd to a dance company from New Orleans.
     decode="async"
     alt="keys lake florence wisconsin"
     height="721"
-    src="/assets/images/blog/2020-a-year-in-review/keys-lake-florence-wi.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/keys-lake-florence-wi.webp"
+    style="height: auto; width: 100%;"
     width="1080"
   />
 
@@ -383,7 +400,8 @@ We visited Escanaba, MI, went fishing, made some amazing meals, visited several 
     decode="async"
     alt="rickaby family on keys lake"
     height="811"
-    src="/assets/images/blog/2020-a-year-in-review/rickaby-family-on-keys-lake.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/rickaby-family-on-keys-lake.webp"
+    style="height: auto; width: 100%;"
     width="1080"
   />
 
@@ -398,7 +416,8 @@ It was both Clint and Chase's first time duck hunting, so it was a real thrill f
     decode="async"
     alt="duck camp 2020"
     height="923"
-    src="/assets/images/blog/2020-a-year-in-review/duck-camp-2020.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/duck-camp-2020.webp"
+    style="height: auto; width: 100%;"
     width="1080"
   />
 
@@ -413,7 +432,8 @@ We visited Magic Kingdom, Epcot, and Hollywood Studios. With the lower crowds, w
     decode="async"
     alt="drinking the blue milk"
     height="811"
-    src="/assets/images/blog/2020-a-year-in-review/drinking-the-blue-milk.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/drinking-the-blue-milk.webp"
+    style="height: auto; width: 100%;"
     width="1080"
   />
 
@@ -441,7 +461,8 @@ Here are a few things I'd like to work on in 2021:
     decode="async"
     alt="rickaby family 2021"
     height="485"
-    src="/assets/images/blog/2020-a-year-in-review/rickaby-family-2021.jpg"
+    src="/assets/images/blog/2020-a-year-in-review/rickaby-family-2021.webp"
+    style="height: auto; width: 100%;"
     width="384"
   />
 </div>
