@@ -1,37 +1,16 @@
-<a href="assets/images/rickaby-family-2019.jpg">
-    <picture>
-        <source
-            type="image/avif"
-            media="(max-width: 600px)"
-            srcset="/assets/images/rickaby-family-2019-400.avif"
-        />
-        <source
-            type="image/webp"
-            media="(max-width: 600px)"
-            srcset="/assets/images/rickaby-family-2019-400.webp"
-        />
-        <source
-            type="image/avif"
-            media="(min-width: 601px)"
-            srcset="/assets/images/rickaby-family-2019.avif"
-        />
-        <source
-            type="image/webp"
-            media="(min-width: 601px)"
-            srcset="/assets/images/rickaby-family-2019.webp"
-        />
-        <img
-            alt="rickaby family in 2019"
-            class="photo"
-            decoding="async"
-            height="541"
-            loading="eager"
-            src="/assets/images/rickaby-family-2019.jpg"
-            style="height: auto; width: 100%;"
-            width="722"
-        />
-    </picture>
-</a>
+<img
+    alt="rickaby family in 2019"
+    class="photo"
+    decoding="async"
+    height="541"
+    loading="lazy"
+    sizes="(max-width: 600px) 400px, 768px"
+    srcset="/assets/images/rickaby-family-2019-400.webp 400w,
+            /assets/images/rickaby-family-2019.webp 768w"
+    src="/assets/images/rickaby-family-2019.webp"
+    style="height: auto; width: 100%;"
+    width="722"
+/>
 
 # Hey y'all, I'm Greg 👋🏻
 
