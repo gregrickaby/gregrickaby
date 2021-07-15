@@ -2,62 +2,62 @@
 <html lang="{{ site.lang | default: " en-US" }}">
 
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preload" as="style"
-        href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
-    <link rel="preload" as="image" href="/assets/images/rickaby-family-2019.avif">
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preload" as="style"
+    href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+  <link rel="preload" as="image" href="/assets/images/rickaby-family-2019.webp">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
 
-    {% seo %}
+  {% seo %}
 </head>
 
 <body>
 
-    <header class="site-header">
-        <div class="container">
+  <header class="site-header">
+    <div class="container">
 
-            <div class="site-branding">
-                <a id="a-title" href="{{ '/' | relative_url }}">
-                    <h1>{{ site.title | default: site.github.repository_name }}</h1>
-                </a>
-                <h2>{{ site.description | default: site.github.project_tagline }}</h2>
-            </div>
+      <div class="site-branding">
+        <a id="a-title" href="{{ '/' | relative_url }}">
+          <h1>{{ site.title | default: site.github.repository_name }}</h1>
+        </a>
+        <h2>{{ site.description | default: site.github.project_tagline }}</h2>
+      </div>
 
-            <nav class="site-navigation">
-                <a href="/posts">Articles</a>
-                <a href="/developer-resources">Resources</a>
-                <a href="/photos">Photos</a>
-                <a href="/contact">Contact</a>
-            </nav>
-        </div>
-    </header>
+      <nav class="site-navigation">
+        <a href="/posts">Articles</a>
+        <a href="/developer-resources">Resources</a>
+        <a href="/photos">Photos</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-    <main class="container site-main">
-        <section id="main_content">
-            {{ content }}
-        </section>
-    </main>
+  <main class="container site-main">
+    <section id="main_content">
+      {{ content }}
+    </section>
+  </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            &copy; 2008-{{ site.time | date: '%Y' }} {{ site.title | default: site.github.repository_name }}
-        </div>
-    </footer>
+  <footer class="site-footer">
+    <div class="container">
+      &copy; 2008-{{ site.time | date: '%Y' }} {{ site.title | default: site.github.repository_name }}
+    </div>
+  </footer>
 
-    {% if site.google_analytics %}
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1212017-5"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+  {% if site.google_analytics %}
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-1212017-5"></script>
+  <script async="false">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-        gtag('config', '{{ site.google_analytics }}');
-    </script>
+    gtag('config', '{{ site.google_analytics }}');
+  </script>
 
-    {% endif %}
+  {% endif %}
 </body>
 
 </html>
