@@ -1,5 +1,5 @@
 ---
-title: "2020: A Year In Review"
+title: '2020: A Year In Review'
 author: Greg Rickaby
 tags: family
 ---
