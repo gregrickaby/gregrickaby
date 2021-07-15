@@ -5,7 +5,7 @@ pre-commit:
   commands:
     stylelint:
       glob: '*.{css,scss}'
-      run: npx stylelint {staged_files} --fix
+      run: npx stylelint {staged_files} --syntax scss --fix
     prettier:
       glob: '*.{md,html,json,yml}'
       run: npx prettier {staged_files} --write

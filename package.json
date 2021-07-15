@@ -2,7 +2,7 @@
   "scripts": {
     "format": "npx prettier '**/*.{js,jsx,ts,tsx,md,mdx,html,css,scss,json,yml}' --write || true",
     "lint": "npm run format && npm run lint:css && npm run lint:md",
-    "lint:css": "npx stylelint '**/*.{scss,css}' --fix || true",
+    "lint:css": "npx stylelint '**/*.{scss,css}' --syntax scss --fix || true",
     "lint:md": "npx markdownlint '**/*.md' --fix"
   },
   "devDependencies": {
