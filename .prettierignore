@@ -1,0 +1,4 @@
+*.min.*
+_layouts/default.html
+_site/
+node_modules/

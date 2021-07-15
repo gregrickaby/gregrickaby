@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "format": "npx prettier '**/*.{js,jsx,ts,tsx,md,mdx,html,css,scss,json,yml}' --write || true",
+    "lint": "npm run format && npm run lint:css && npm run lint:md",
+    "lint:css": "npx stylelint '**/*.{scss,css}' --fix || true",
+    "lint:md": "npx markdownlint '**/*.md' --fix"
+  },
+  "devDependencies": {
+    "@arkweid/lefthook": "^0.7.6",
+    "markdownlint": "^0.23.1",
+    "markdownlint-cli": "^0.27.1",
+    "prettier": "^2.3.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-recommended": "^5.0.0",
+    "stylelint-scss": "^3.19.0"
+  }
+}

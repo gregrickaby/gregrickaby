@@ -1,7 +1,8 @@
 {
-  "MD003": { "style": "atx" },
-  "MD007": { "indent": 4 },
-  "MD025": { "front_matter_title": "" },
+  "MD003": {"style": "atx"},
+  "MD007": {"indent": 4},
+  "MD025": {"front_matter_title": ""},
+  "MD041": false,
   "default": true,
   "line-length": false,
   "no-duplicate-heading": false,
