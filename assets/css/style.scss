@@ -463,6 +463,14 @@ footer {
   }
 }
 
+.photo {
+  margin-bottom: 2rem;
+}
+
+img:not([src]):not([srcset]) {
+  visibility: hidden;
+}
+
 @media screen and (min-width: 768px) {
   .site-header .container {
     align-items: unset;
