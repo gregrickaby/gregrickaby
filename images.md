@@ -141,7 +141,7 @@ Example:
     <link rel="preload" as="image" href="/hero-image.webp" />
   </head>
   <body>
-    <img alt="A hero image" src="my-image.webp" loading="eager" />
+    <img alt="A hero image" src="hero-image.webp" loading="eager" />
   </body>
 </html>
 ```
