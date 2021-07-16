@@ -20,7 +20,8 @@ The sum of my knoweldge about working with web-based images.
     - [Browser-level Gotchas](#browser-level-gotchas)
   - [Intersection Observer](#intersection-observer)
 - [Responsive Images](#responsive-images)
-- [Serve images in modern formats](#serve-images-in-modern-formats)
+- [Serve Images in Modern Formats](#serve-images-in-modern-formats)
+  - [Gotchas](#gotchas)
 - [Art direction](#art-direction)
 
 ## Image Formats
@@ -225,7 +226,9 @@ Further reading:
 
 ---
 
-## Serve images in modern formats
+## Serve Images in Modern Formats
+
+The example below uses `<picture>` to serve images in the newsest formats while gracefully falling back to a `.jpg`.
 
 ```html
 <picture>
@@ -245,7 +248,12 @@ Further reading:
 </picture>
 ```
 
-> Chances are the `.jpg` from the `<img>` tag wont load (unless it's an old browser), you still need to set the attributes!
+> You can only set image attributes on the `<img>` tag!
+
+### Gotchas
+
+- The net gain is smaller images sizes, but at the expense of excessive DOM size.Don't be surprised if Lighthouse barks at you!
+- You're probably better off with using `.webp` with the [responsive image systax](#responsive-images)
 
 Further reading: <https://web.dev/uses-webp-images/>
 
