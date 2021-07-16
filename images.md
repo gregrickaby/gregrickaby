@@ -14,8 +14,9 @@ The sum of my knoweldge about working with web-based images.
   - [Desktop Apps](#desktop-apps)
   - [WordPress Plugins](#wordpress-plugins)
   - [Hosted, On-demand Image Manipulation](#hosted-on-demand-image-manipulation)
-- [Lazy-loading images](#lazy-loading-images)
-  - [Browser based](#browser-based)
+- [Lazy-loading](#lazy-loading)
+  - [Browser level](#browser-level)
+    - [Browser-level Gotchas](#browser-level-gotchas)
   - [Intersection Observer](#intersection-observer)
 - [Serve images in modern formats](#serve-images-in-modern-formats)
 - [Art direction](#art-direction)
@@ -117,13 +118,35 @@ npx @squoosh/cli *.jpg --webp --avif auto --resize {width:400} --suffix _400
 - [Thumbor](https://github.com/thumbor/thumbor) (Open-source, Cloudinary alternative)
 - [Cloudflare](https://cloudflare.com) (Free teir doesn't include image optimization)
 
-## Lazy-loading images
+## Lazy-loading
 
-### Browser based
+<https://web.dev/fast/#lazy-load-images-and-video>
+
+### Browser level
 
 ```html
-<img alt="A lazy loading image" src="my-image.jpg" loading="lazy" />
+<img alt="A lazy loading image" src="my-image.webp" loading="lazy" />
 ```
+
+#### Browser-level Gotchas
+
+- If the image is an above-the-fold-hero, be sure to preload it.
+- Don't use `loading="lazy"` if the image is above the fold (it increases LCP score)
+
+Example:
+
+```html
+<html>
+  <head>
+    <link rel="preload" as="image" href="/hero-image.webp" />
+  </head>
+  <body>
+    <img alt="A hero image" src="my-image.webp" loading="eager" />
+  </body>
+</html>
+```
+
+See <https://web.dev/lcp-lazy-loading/> and <https://make.wordpress.org/core/2021/07/15/refining-wordpress-cores-lazy-loading-implementation/>
 
 ### Intersection Observer
 
