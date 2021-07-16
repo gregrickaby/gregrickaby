@@ -5,35 +5,63 @@ The sum of my knoweldge about working with web-based images.
 ## Table of Contents <!-- omit in toc -->
 
 - [Image Formats](#image-formats)
-- [Tools](#tools)
-  - [ImageMagick](#imagemagick)
-    - [Simple resize](#simple-resize)
-    - [Use as a script](#use-as-a-script)
-  - [Squoosh](#squoosh)
+- [Optimization Tools](#optimization-tools)
+  - [ImageOptim (Mac/Node/CLI/Web)](#imageoptim-macnodecliweb)
+  - [Squoosh (Node/CLI/Web)](#squoosh-nodecliweb)
     - [Simple convert](#simple-convert)
     - [Resize, optimize, and convert](#resize-optimize-and-convert)
-  - [Desktop Apps](#desktop-apps)
+  - [ImageMagick (CLI)](#imagemagick-cli)
+    - [Simple resize](#simple-resize)
+    - [Use as a script](#use-as-a-script)
   - [WordPress Plugins](#wordpress-plugins)
   - [Hosted, On-demand Image Manipulation](#hosted-on-demand-image-manipulation)
 - [Lazy-loading](#lazy-loading)
   - [Browser level](#browser-level)
     - [Browser-level Gotchas](#browser-level-gotchas)
   - [Intersection Observer](#intersection-observer)
+- [Responsive Images](#responsive-images)
 - [Serve images in modern formats](#serve-images-in-modern-formats)
 - [Art direction](#art-direction)
-- [Responsive Images](#responsive-images)
 
 ## Image Formats
 
-- `AVIF` Newest format. Better than `WEBP` in all respects, but has limited browser support. (Chrome/Opera)
-- `WEBP` Newer format. Supported in all modern browsers and WordPress 5.8 and above. **This should be your default format.**
-- `JPG` Old and bloated. Only use as fallback or if IE11 support is required.
+- `AVIF` - Newest format. Better than `WEBP` in all respects, but has limited browser support. (Chrome/Opera)
+- `WEBP` - Newer format. Supported in all modern browsers and WordPress 5.8 and above. **This should be your default format.**
+- `JPG` - Old and bloated. Only use as fallback or if IE11 support is required.
+- `SVG` - For simple geometric shapes and logos.
+- `PNG` - For when transparency and/or lossless quality is required.
 
-## Tools
+## Optimization Tools
 
-### ImageMagick
+### ImageOptim (Mac/Node/CLI/Web)
 
-[ImageMagick](http://www.imagemagick.org/) is the original CLI-based image processing tool and the defacto library on most web servers. It's _very_ powerful, but the documentation is difficult to understand and the syntax is cumbersome. That said, here are some commands that I've used...
+[ImageOptim](https://imageoptim.com/versions.html) is a great choice for optimizing PNG and JPGs. There's even a [ImageOptim-CLI](https://github.com/JamieMason/ImageOptim-CLI) and [online version](https://imageoptim.com/online) available.
+
+### Squoosh (Node/CLI/Web)
+
+[Squoosh](https://squoosh.app) is an open-source image compression app from Google. There's also a node-based [Sqoosh CLI](https://github.com/GoogleChromeLabs/squoosh) which is really elegant.
+
+#### Simple convert
+
+Convert all `.jpg` images to `.webp` and `.avif`:
+
+```bash
+npx @squoosh/cli *.jpg --avif --webp
+```
+
+#### Resize, optimize, and convert
+
+Convert, resize, auto-optimize, and append `_400` to the filename:
+
+```bash
+npx @squoosh/cli *.jpg --webp --avif auto --resize {width:400} --suffix _400
+```
+
+> Using `auto` will increase the quality, but also the file size.
+
+### ImageMagick (CLI)
+
+[ImageMagick](http://www.imagemagick.org/) is a free and open-source CLI-based image processing tool written in C. I'd argue it's the defacto library on most web servers. It's _very_ powerful, but the documentation is difficult to understand and the syntax is cumbersome. That said, here are some commands that I've used...
 
 #### Simple resize
 
@@ -83,36 +111,6 @@ heroimage() {
 
 ---
 
-### Squoosh
-
-Google has an open-source web app for optimizing images at <https://squoosh.app/> Google also offers the Node-based [Sqoosh CLI](https://github.com/GoogleChromeLabs/squoosh) which is really elegant.
-
-#### Simple convert
-
-Convert all `.jpg` images to `.webp` and `.avif`:
-
-```bash
-npx @squoosh/cli *.jpg --avif --webp
-```
-
-#### Resize, optimize, and convert
-
-Convert, resize, auto-optimize, and append `_400` to the filename:
-
-```bash
-npx @squoosh/cli *.jpg --webp --avif auto --resize {width:400} --suffix _400
-```
-
-> Using `auto` will increase the quality, but also the file size.
-
----
-
-### Desktop Apps
-
-- [ImageOptim](https://imageoptim.com/versions.html)
-
----
-
 ### WordPress Plugins
 
 - [EWWW](https://wordpress.org/plugins/ewww-image-optimizer/) (Free)
@@ -126,7 +124,7 @@ npx @squoosh/cli *.jpg --webp --avif auto --resize {width:400} --suffix _400
 
 - [Cloudinary](https://cloudinary.com) (Offers free tier)
 - [Thumbor](https://github.com/thumbor/thumbor) (Open-source, Cloudinary alternative)
-- [Cloudflare](https://cloudflare.com) (Free teir doesn't include image optimization)
+- [Cloudflare](https://cloudflare.com) (Free tier doesn't include image optimization)
 
 ## Lazy-loading
 
@@ -203,6 +201,30 @@ Further reading: <https://web.dev/lazy-loading-images/>
 
 ---
 
+## Responsive Images
+
+The example below will display a 400px version of the image on mobile devices, and the full size image for tablet and desktop.
+
+```html
+<img
+  alt="an image of a thing"
+  decoding="async"
+  height="567"
+  loading="lazy"
+  sizes="(max-width: 600px) 400px, 768px"
+  srcset="my-image.jpg-400.webp 400w, my-image.webp 768w"
+  src="my-image.jpg.webp"
+  width="755"
+/>
+```
+
+Further reading:
+
+- <https://web.dev/serve-responsive-images/>
+- <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images>
+
+---
+
 ## Serve images in modern formats
 
 ```html
@@ -270,29 +292,5 @@ Display a different image based on the viewport width:
 > Chances are the `.jpg` from the `<img>` tag wont load (unless it's an old browser), you still need to set the attributes!
 
 Further reading: <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#art_direction>
-
----
-
-## Responsive Images
-
-The example below will display a 400px version of the image on mobile devices, and the full size image for tablet and desktop.
-
-```html
-<img
-  alt="an image of a thing"
-  decoding="async"
-  height="567"
-  loading="lazy"
-  sizes="(max-width: 600px) 400px, 768px"
-  srcset="my-image.jpg-400.webp 400w, my-image.webp 768w"
-  src="my-image.jpg.webp"
-  width="755"
-/>
-```
-
-Further reading:
-
-- <https://web.dev/serve-responsive-images/>
-- <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images>
 
 ---
