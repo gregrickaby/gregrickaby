@@ -3,7 +3,6 @@
     class="photo"
     decoding="async"
     height="541"
-    loading="lazy"
     sizes="(max-width: 600px) 400px, 768px"
     srcset="/assets/images/rickaby-family-2019-400.webp 400w,
             /assets/images/rickaby-family-2019.webp 768w"
