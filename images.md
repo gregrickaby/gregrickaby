@@ -132,7 +132,7 @@ heroimage() {
 ### Browser level
 
 ```html
-<img alt="A lazy loading image" src="my-image.webp" loading="lazy" />
+<img alt="A lazy loading image" src="image.webp" loading="lazy" />
 ```
 
 #### Gotchas
@@ -161,11 +161,11 @@ Further reading: <https://web.dev/fast/#lazy-load-images-and-video>
 
 ```html
 <img
-  class="lazy"
-  src="placeholder-image.webp"
-  data-src="image-to-lazy-load-1x.webp"
-  data-srcset="image-to-lazy-load-2x.webp 2x, image-to-lazy-load-1x.webp 1x"
   alt="I'm an image!"
+  class="lazy"
+  data-src="image-1x.webp"
+  data-srcset="image-2x.webp 2x, image-1x.webp 1x"
+  src="placeholder-image.webp"
 />
 ```
 
@@ -213,8 +213,8 @@ The example below will display a 400px version of the image on mobile devices, a
   height="567"
   loading="lazy"
   sizes="(max-width: 600px) 400px, 768px"
-  srcset="my-image.jpg-400.webp 400w, my-image.webp 768w"
-  src="my-image.jpg.webp"
+  srcset="image-400.webp 400w, image.webp 768w"
+  src="image.webp"
   width="755"
 />
 ```
@@ -233,16 +233,16 @@ The example below uses `<picture>` to serve images in the newsest formats while 
 ```html
 <picture>
   <!-- Try and load the .avif image -->
-  <source type="image/avif" srcset="my-image.avif" />
+  <source type="image/avif" srcset="image.avif" />
   <!-- If .avif isn't supported, load the .webp image -->
-  <source type="image/webp" srcset="my-image.webp" />
+  <source type="image/webp" srcset="image.webp" />
   <!-- If neither .avif nor .webp are supported, load the .jpg image -->
   <img
     alt="an image of a thing"
     decoding="async"
     height="300"
     loading="lazy"
-    src="my-image.jpg"
+    src="image.jpg"
     width="400"
   />
 </picture>
@@ -270,19 +270,19 @@ Display a different image based on the viewport width:
     <source
       type="image/webp"
       media="(max-width: 600px)"
-      srcset="my-image-400.webp"
+      srcset="image-400.webp"
     />
     <!-- on tablets, continue to center and stack, but display a higher resolution image -->
     <source
       type="image/webp"
       media="(min-width: 601px) and (max-width: 1023px)"
-      srcset="my-image.webp"
+      srcset="image.webp"
     />
     <!-- on desktops, align the image left, and display the 400px image again -->
     <source
       type="image/webp"
       media="(min-width: 1024px)"
-      srcset="my-image-400.webp"
+      srcset="image-400.webp"
     />
     <!-- for older browsers, just display a .JPG -->
     <img
@@ -290,7 +290,7 @@ Display a different image based on the viewport width:
       decode="async"
       height="300"
       loading="lazy"
-      src="my-image.jpg"
+      src="image.jpg"
       width="400"
     />
   </picture>
