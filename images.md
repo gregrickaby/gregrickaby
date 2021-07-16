@@ -137,6 +137,7 @@ heroimage() {
 
 #### Gotchas
 
+- Safari 14 and 15 have support for `loading="lazy"`, however it must be enabled by the user (Develop --> Experimental Features --> Enable Lazy Loading Images)
 - If the image is an above-the-fold-hero, be sure to preload it.
 - Don't use `loading="lazy"` if the image is above the fold. ([it increases LCP score](https://make.wordpress.org/core/2021/07/15/refining-wordpress-cores-lazy-loading-implementation/))
 
