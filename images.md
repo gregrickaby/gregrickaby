@@ -137,18 +137,18 @@ heroimage() {
 #### Browser-level Gotchas
 
 - If the image is an above-the-fold-hero, be sure to preload it.
-- Don't use `loading="lazy"` if the image is above the fold (it increases LCP score)
+- Don't use `loading="lazy"` if the image is above the fold. ([it increases LCP score](https://make.wordpress.org/core/2021/07/15/refining-wordpress-cores-lazy-loading-implementation/))
 
-> Source <https://web.dev/lcp-lazy-loading/> and <https://make.wordpress.org/core/2021/07/15/refining-wordpress-cores-lazy-loading-implementation/>
-
-Example:
+The example below would help decrease the LCP score for hero images above the fold.
 
 ```html
 <html>
   <head>
+    <!-- Instruct the web browser to download this image ASAP! -->
     <link rel="preload" as="image" href="/hero-image.webp" />
   </head>
   <body>
+    <!-- Instruct the web browser to display this image ASAP! -->
     <img alt="A hero image" src="hero-image.webp" loading="eager" />
   </body>
 </html>
