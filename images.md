@@ -308,7 +308,7 @@ Display a different image based on the viewport width:
 
 ### Gotchas
 
-- Like with [Serving Images in Modern Formats](#serve-images-in-modern-formats), Art Direction introduces a lot of extra HTML in the form of nested DOM elements. Lighthouse is likely to bark at you for this.
+- Like with [Serving Images in Modern Formats](#serve-images-in-modern-formats), Art Direction introduces a lot of extra HTML in the form of nested DOM elements. Lighthouse is likely to bark at you for this, so use sparingly!
 
 Further reading: <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#art_direction>
 
