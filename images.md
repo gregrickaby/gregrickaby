@@ -4,6 +4,7 @@ The sum of my knoweldge about working with web-based images.
 
 ## Table of Contents <!-- omit in toc -->
 
+- [Image Formats](#image-formats)
 - [Tools](#tools)
   - [ImageMagick](#imagemagick)
     - [Simple resize](#simple-resize)
@@ -20,6 +21,13 @@ The sum of my knoweldge about working with web-based images.
   - [Intersection Observer](#intersection-observer)
 - [Serve images in modern formats](#serve-images-in-modern-formats)
 - [Art direction](#art-direction)
+- [Responsive Images](#responsive-images)
+
+## Image Formats
+
+- `AVIF` Newest format. Better than `WEBP` in all respects, but has limited browser support. (Chrome/Opera)
+- `WEBP` Newer format. Supported in all modern browsers and WordPress 5.8 and above. **This should be your default format.**
+- `JPG` Old and bloated. Only use as fallback or if IE11 support is required.
 
 ## Tools
 
@@ -95,6 +103,8 @@ Convert, resize, auto-optimize, and append `_400` to the filename:
 npx @squoosh/cli *.jpg --webp --avif auto --resize {width:400} --suffix _400
 ```
 
+> Using `auto` will increase the quality, but also the file size.
+
 ---
 
 ### Desktop Apps
@@ -120,8 +130,6 @@ npx @squoosh/cli *.jpg --webp --avif auto --resize {width:400} --suffix _400
 
 ## Lazy-loading
 
-<https://web.dev/fast/#lazy-load-images-and-video>
-
 ### Browser level
 
 ```html
@@ -132,6 +140,8 @@ npx @squoosh/cli *.jpg --webp --avif auto --resize {width:400} --suffix _400
 
 - If the image is an above-the-fold-hero, be sure to preload it.
 - Don't use `loading="lazy"` if the image is above the fold (it increases LCP score)
+
+> Source <https://web.dev/lcp-lazy-loading/> and <https://make.wordpress.org/core/2021/07/15/refining-wordpress-cores-lazy-loading-implementation/>
 
 Example:
 
@@ -146,7 +156,7 @@ Example:
 </html>
 ```
 
-See <https://web.dev/lcp-lazy-loading/> and <https://make.wordpress.org/core/2021/07/15/refining-wordpress-cores-lazy-loading-implementation/>
+Further reading: <https://web.dev/fast/#lazy-load-images-and-video>
 
 ### Intersection Observer
 
@@ -208,7 +218,6 @@ Further reading: <https://web.dev/lazy-loading-images/>
     height="300"
     loading="lazy"
     src="my-image.jpg"
-    style="height: auto; width: 100%;"
     width="400"
   />
 </picture>
@@ -222,7 +231,7 @@ Further reading: <https://web.dev/uses-webp-images/>
 
 ## Art direction
 
-Display a different image based on the viewport:
+Display a different image based on the viewport width:
 
 ```html
 <div class="align-left">
@@ -252,7 +261,6 @@ Display a different image based on the viewport:
       height="300"
       loading="lazy"
       src="my-image.jpg"
-      style="height: auto; width: 100%;"
       width="400"
     />
   </picture>
@@ -262,5 +270,29 @@ Display a different image based on the viewport:
 > Chances are the `.jpg` from the `<img>` tag wont load (unless it's an old browser), you still need to set the attributes!
 
 Further reading: <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#art_direction>
+
+---
+
+## Responsive Images
+
+The example below will display a 400px version of the image on mobile devices, and the full size image for tablet and desktop.
+
+```html
+<img
+  alt="an image of a thing"
+  decoding="async"
+  height="567"
+  loading="lazy"
+  sizes="(max-width: 600px) 400px, 768px"
+  srcset="my-image.jpg-400.webp 400w, my-image.webp 768w"
+  src="my-image.jpg.webp"
+  width="755"
+/>
+```
+
+Further reading:
+
+- <https://web.dev/serve-responsive-images/>
+- <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images>
 
 ---
