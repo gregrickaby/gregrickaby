@@ -12,7 +12,7 @@
                     class="photo"
                     decoding="async"
                     loading="lazy"
-                    style="max-width: 722px;"
+                    style="height: auto; width: 100%;"
                     src="{{ site.baseurl }}{{ image.path }}"
                 />
             </picture>
