@@ -17,11 +17,11 @@ The sum of my knoweldge about working with web-based images.
   - [Hosted, On-demand Image Manipulation](#hosted-on-demand-image-manipulation)
 - [Lazy-loading](#lazy-loading)
   - [Browser level](#browser-level)
-    - [Browser-level Gotchas](#browser-level-gotchas)
+    - [Gotchas](#gotchas)
   - [Intersection Observer](#intersection-observer)
 - [Responsive Images](#responsive-images)
 - [Serve Images in Modern Formats](#serve-images-in-modern-formats)
-  - [Gotchas](#gotchas)
+  - [Gotchas](#gotchas-1)
 - [Art direction](#art-direction)
 
 ## Image Formats
@@ -135,7 +135,7 @@ heroimage() {
 <img alt="A lazy loading image" src="my-image.webp" loading="lazy" />
 ```
 
-#### Browser-level Gotchas
+#### Gotchas
 
 - If the image is an above-the-fold-hero, be sure to preload it.
 - Don't use `loading="lazy"` if the image is above the fold. ([it increases LCP score](https://make.wordpress.org/core/2021/07/15/refining-wordpress-cores-lazy-loading-implementation/))
