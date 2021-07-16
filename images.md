@@ -253,6 +253,7 @@ The example below uses `<picture>` to serve images in the newsest formats while 
 ### Gotchas
 
 - The net gain is smaller images sizes, but at the expense of excessive DOM size. Don't be surprised if Lighthouse barks at you for having too much HTML!
+- You're also now juggling 3 different image formats for the same image. This can increase exponentially if you have multiple image sizes for each image.
 - You're better off using the [responsive image systax](#responsive-images) with `webp`.
 
 Further reading: <https://web.dev/uses-webp-images/>
