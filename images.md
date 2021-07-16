@@ -32,6 +32,8 @@ The sum of my knoweldge about working with web-based images.
 - [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) - For simple geometric shapes, like icons and logos.
 - [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics) - For when transparency and/or lossless quality is required.
 
+---
+
 ## Optimization Tools
 
 ### ImageOptim (Mac/Node/CLI/Web)
@@ -110,8 +112,6 @@ heroimage() {
 }
 ```
 
----
-
 ### WordPress Plugins
 
 - [EWWW](https://wordpress.org/plugins/ewww-image-optimizer/) (Free)
@@ -119,13 +119,13 @@ heroimage() {
 - [Cloudinary](https://wordpress.org/plugins/cloudinary-image-management-and-manipulation-in-the-cloud-cdn/) (Offers free tier)
 - [Jetpack's CDN](https://jetpack.com/features/design/content-delivery-network/) (Free, but requires WordPress.com account. No image optimization)
 
----
-
 ### Hosted, On-demand Image Manipulation
 
 - [Cloudinary](https://cloudinary.com) (Offers free tier)
 - [Thumbor](https://github.com/thumbor/thumbor) (Open-source, Cloudinary alternative)
 - [Cloudflare](https://cloudflare.com) (Free tier doesn't include image optimization)
+
+---
 
 ## Lazy-loading
 
