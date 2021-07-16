@@ -25,6 +25,7 @@ The sum of my knoweldge about working with web-based images.
 - [Serve Images in Modern Formats](#serve-images-in-modern-formats)
   - [Gotchas](#gotchas-1)
 - [Art direction](#art-direction)
+  - [Gotchas](#gotchas-2)
 
 ---
 
@@ -304,6 +305,10 @@ Display a different image based on the viewport width:
 ```
 
 > Chances are the `.jpg` from the `<img>` tag wont load (unless it's an old browser), you still need to set the attributes!
+
+### Gotchas
+
+- Like with [Serving Images in Modern Formats](#serve-images-in-modern-formats), Art Direction introduces a lot of extra HTML in the form of nested DOM elements. Lighthouse is likely to bark at you for this.
 
 Further reading: <https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images#art_direction>
 
