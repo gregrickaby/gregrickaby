@@ -25,8 +25,8 @@ The sum of my knoweldge about working with web-based images.
 
 ## Image Formats
 
+- **[WEBP](https://en.wikipedia.org/wiki/WebP) - Newer format. Supported in all modern browsers and WordPress 5.8 and above. This should be your default format.**
 - [AVIF](<https://en.wikipedia.org/wiki/AV1#AV1_Image_File_Format_(AVIF)>) - Newest format. Better than `WEBP` in all respects, but has limited browser support. (Chrome/Opera)
-- [WEBP](https://en.wikipedia.org/wiki/WebP) - Newer format. Supported in all modern browsers and WordPress 5.8 and above. **This should be your default format.**
 - [JPG](https://en.wikipedia.org/wiki/JPEG) - Old and bloated. Only use as fallback or if IE11 support is required.
 - [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics) - For simple geometric shapes, like icons and logos.
 - [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics) - For when transparency and/or lossless quality is required.
