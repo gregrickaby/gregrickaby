@@ -45,7 +45,7 @@ convert *.jpg -resize 400x -quality 70% -set filename:area "%t-%w" "%[filename:a
 
 #### Use as a script
 
-Where ImageMagick really shines is when it's used in scripts. Below is a bash function to create some images for a hero component that I want to upload to a website. It requires the [ImageOptim-CLI](https://github.com/JamieMason/ImageOptim-CLI).
+ImageMagick really shines when it's used for scripting. Below is a bash function to create some images for a hero component that I want to upload to a website. It requires the [ImageOptim-CLI](https://github.com/JamieMason/ImageOptim-CLI).
 
 1. Add the following to `~/.bashrc` or `~/.zshrc`
 2. Restart your terminal
