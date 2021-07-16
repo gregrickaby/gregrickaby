@@ -2,6 +2,8 @@
 
 The sum of my knoweldge about working with web-based images.
 
+---
+
 ## Table of Contents <!-- omit in toc -->
 
 - [Image Formats](#image-formats)
@@ -23,6 +25,8 @@ The sum of my knoweldge about working with web-based images.
 - [Serve Images in Modern Formats](#serve-images-in-modern-formats)
   - [Gotchas](#gotchas-1)
 - [Art direction](#art-direction)
+
+---
 
 ## Image Formats
 
