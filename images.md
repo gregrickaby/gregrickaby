@@ -161,9 +161,9 @@ Further reading: <https://web.dev/fast/#lazy-load-images-and-video>
 ```html
 <img
   class="lazy"
-  src="placeholder-image.jpg"
-  data-src="image-to-lazy-load-1x.jpg"
-  data-srcset="image-to-lazy-load-2x.jpg 2x, image-to-lazy-load-1x.jpg 1x"
+  src="placeholder-image.webp"
+  data-src="image-to-lazy-load-1x.webp"
+  data-srcset="image-to-lazy-load-2x.webp 2x, image-to-lazy-load-1x.webp 1x"
   alt="I'm an image!"
 />
 ```
