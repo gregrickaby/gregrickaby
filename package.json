@@ -1,0 +1,29 @@
+{
+  "name": "my-naked-website",
+  "version": "1.0.0",
+  "description": "My website...but naked!",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregrickaby/my-naked-website.git"
+  },
+  "keywords": [],
+  "author": "Greg Rickaby",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gregrickaby/my-naked-website/issues"
+  },
+  "homepage": "https://github.com/gregrickaby/my-naked-website#readme",
+  "scripts": {
+    "lint": "npx prettier *.html --write"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "useTabs": false
+  }
+}
