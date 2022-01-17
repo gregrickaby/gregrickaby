@@ -1,0 +1,64 @@
+{
+  "redirects": [
+    {
+      "source": "/blog",
+      "destination": "https://blog.gregrickaby.com/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/reddit-image-viewer",
+      "destination": "https://blog.gregrickaby.com/article/reddit-image-viewer",
+      "permanent": true
+    },
+    {
+      "source": "/blog/swr-examples",
+      "destination": "https://blog.gregrickaby.com/article/swr-examples",
+      "permanent": true
+    },
+    {
+      "source": "/blog/displaying-exif-data-in-wordpress",
+      "destination": "https://blog.gregrickaby.com/article/displaying-exif-data-in-wordpress",
+      "permanent": true
+    },
+    {
+      "source": "/blog/using-the-golden-ratio-and-rems",
+      "destination": "https://blog.gregrickaby.com/article/using-the-golden-ratio-and-rems",
+      "permanent": true
+    },
+    {
+      "source": "/blog/podcasting-sound-like-a-radio-dj",
+      "destination": "https://blog.gregrickaby.com/article/podcasting-sound-like-a-radio-dj",
+      "permanent": true
+    },
+    {
+      "source": "/blog/genesis-code-snippets",
+      "destination": "https://blog.gregrickaby.com/article/genesis-code-snippets",
+      "permanent": true
+    },
+    {
+      "source": "/blog/remove-woocommerce-styles-and-scripts",
+      "destination": "https://blog.gregrickaby.com/article/remove-woocommerce-styles-and-scripts",
+      "permanent": true
+    },
+    {
+      "source": "/blog/create-mu-plugin-for-wordpress",
+      "destination": "https://blog.gregrickaby.com/article/create-mu-plugin-for-wordpress",
+      "permanent": true
+    },
+    {
+      "source": "/contact",
+      "destination": "https://blog.gregrickaby.com/contact",
+      "permanent": true
+    },
+    {
+      "source": "/media",
+      "destination": "https://blog.gregrickaby.com/media",
+      "permanent": true
+    },
+    {
+      "source": "/resources",
+      "destination": "https://blog.gregrickaby.com/resources",
+      "permanent": true
+    }
+  ]
+}
