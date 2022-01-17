@@ -1,3 +1,5 @@
 # My Naked Website
 
-No JavaScript frameworks. No server side rendering. No styles. No images.
+<https://gregrickaby.com>
+
+No JavaScript frameworks. No server side rendering. No CSS frameworks. No libraries.
