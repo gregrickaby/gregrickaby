@@ -5,8 +5,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="dns-prefetch" href="//www.google-analytics.com" />
-  <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+  <link rel="preconnect" href="//www.google-analytics.com" />
+  <link rel="preconnect" href="//www.googletagmanager.com" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <title>Greg Rickaby - Full Stack Developer</title>
   <meta name="description"
@@ -149,7 +149,7 @@
     </p>
   </footer>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-1212017-5"></script>
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-1212017-5"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -196,25 +196,25 @@
       `;
 
       const newHeader = `
-        <img src="retro/welcome.gif" alt="Welcome to my retro homepage!" />
+        <img src="retro/welcome.gif" alt="Welcome to my retro homepage!" loading="eager" />
         <div>
-          <img src="retro/earth.gif" alt="" />
+          <img src="retro/earth.gif" alt="" loading="eager" />
           <marquee width="350px" behavior="SCROLL" bgcolor="yellow" loop="100">🏈 Go Pack Go! 🏈</marquee>
-          <img src="retro/earth.gif" alt="" />
+          <img src="retro/earth.gif" alt="" loading="eager" />
         </div>
         `;
 
       const postMain = `
-        <img src="retro/hasselhoff.webp" alt="" />
-        <img src="retro/flames.gif" alt="" />
+        <img src="retro/hasselhoff.webp" alt="" loading="lazy" />
+        <img src="retro/flames.gif" alt="" loading="lazy" />
       `;
 
       const newFooter = `
         <p>
-          <img src="retro/counter.gif" alt="" />
-          <img src="retro/netscape.gif" alt="" />
-          <img src="retro/ie.gif" alt="" />
-          <img src="retro/notepad.gif" alt="" />
+          <img src="retro/counter.gif" alt="" loading="lazy" />
+          <img src="retro/netscape.gif" alt="" loading="lazy" />
+          <img src="retro/ie.gif" alt="" loading="lazy" />
+          <img src="retro/notepad.gif" alt="" loading="lazy" />
         </p>
         <audio src="retro/hot-rod-lincoln.mp3" autoplay loop />
       `;
