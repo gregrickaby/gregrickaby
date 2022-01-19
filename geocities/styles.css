@@ -11,20 +11,42 @@
     inset 2px 2px var(--button-face);
   --scroll-size: 1rem;
   --ms-font: "MS Sans Serif", sans-serif;
-  --comic-font: "Comic Sans MS", cursive;
+  --comic-font: "Comic Sans", sans-serif;
   --window-frame: #0a0a0a;
 }
 
 @font-face {
   font-family: "MS Sans Serif";
-  src: url("ms_sans_serif.woff2");
+  src:
+    local("MS Sans Serif"),
+    url("ms_sans_serif.woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "MS Sans Serif";
-  src: url("ms_sans_serif_bold.woff2");
+  src:
+    local("MS Sans Serif"),
+    url("ms_sans_serif_bold.woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Comic Sans";
+  src:
+    local("Comic Sans"),
+    url("comic_sans.woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Comic Sans";
+  src:
+    local("Comic Sans"),
+    url("comic_sans_bold.woff2");
   font-weight: bold;
   font-style: normal;
 }
@@ -68,7 +90,7 @@
 }
 
 body {
-  background: url("background.webp") fixed;
+  background: url("background.webp") repeat fixed;
   color: white;
   font-family: var(--comic-font);
   text-align: center;
@@ -83,6 +105,7 @@ h3 {
 
 button {
   font-family: var(--ms-font);
+  color: black;
 }
 
 a:link,
