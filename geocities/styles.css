@@ -68,7 +68,7 @@
 }
 
 body {
-  background-image: url("background.webp");
+  background: url("background.webp") fixed;
   color: white;
   font-family: var(--comic-font);
   text-align: center;
