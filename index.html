@@ -154,12 +154,28 @@
 
   <script defer src="https://www.googletagmanager.com/gtag/js?id=UA-1212017-5"></script>
   <script>
+
+    // Set global state.
+    let isRetro = false;
+
+    /**
+     * Google Analytics
+     */
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
     gtag('config', 'UA-1212017-5');
 
+    /**
+     * Retro theme!
+     */
     function retro() {
+
+      // Toggle the state.
+      if (isRetro) {
+        isRetro = false;
+        return window.location.reload(true)
+      }
 
       const styles = `
           body {
@@ -207,7 +223,7 @@
         </div>
         `;
 
-      const postMain = `
+      const flamingHoff = `
         <img src="retro/hasselhoff.webp" alt="" loading="lazy" />
         <img src="retro/flames.gif" alt="" loading="lazy" />
       `;
@@ -226,8 +242,9 @@
       style.innerHTML = styles;
       document.head.appendChild(style);
       document.querySelector('header').innerHTML = newHeader;
-      document.querySelector('main').innerHTML += postMain;
+      document.querySelector('main').innerHTML += flamingHoff;
       document.querySelector('footer').innerHTML += newFooter;
+      isRetro = true;
     }
   </script>
 </body>
