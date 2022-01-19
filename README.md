@@ -2,4 +2,4 @@
 
 <https://gregrickaby.com>
 
-No libraries. No JavaScript or CSS frameworks. No server side rendering. Just HTML, CSS, and JavaScript.
+No libraries. No JS or CSS frameworks. No server side rendering. Just plain 'ol HTML, CSS, and JavaScript.
