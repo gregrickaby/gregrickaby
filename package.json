@@ -15,15 +15,51 @@
   },
   "homepage": "https://github.com/gregrickaby/my-naked-website#readme",
   "scripts": {
-    "lint": "npx prettier *.html --write"
+    "format": "npx prettier '**/*.{js,md,html,css,json,yml}' --write || true",
+    "lint": "npm run format && npm run lint:css && npm run lint:js",
+    "lint:css": "npx stylelint '**/*.css' --fix || true",
+    "lint:js": "npx eslint '**/*.js' --fix || true"
   },
   "devDependencies": {
-    "prettier": "^2.5.1"
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-recommended": "^4.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^24.0.0"
   },
   "prettier": {
     "printWidth": 80,
     "singleQuote": true,
     "tabWidth": 2,
     "useTabs": false
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "no-descending-specificity": null
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es6": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2021,
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-unused-vars": 0
+    }
   }
 }
