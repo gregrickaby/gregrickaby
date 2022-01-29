@@ -1,11 +1,6 @@
 {
   "redirects": [
     {
-      "source": "/blog",
-      "destination": "https://blog.gregrickaby.com/",
-      "permanent": true
-    },
-    {
       "source": "/blog/reddit-image-viewer",
       "destination": "https://blog.gregrickaby.com/article/reddit-image-viewer",
       "permanent": true
@@ -46,6 +41,41 @@
       "permanent": true
     },
     {
+      "source": "/blog/microphone-shootout-behringer-b-1-vs-neumann-tlm-103",
+      "destination": "https://blog.gregrickaby.com/article/microphone-shootout-behringer-b-1-vs-neumann-tlm-103",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gregs-homemade-pizza-recipe",
+      "destination": "https://blog.gregrickaby.com/article/gregs-homemade-pizza-recipe",
+      "permanent": true
+    },
+    {
+      "source": "/blog/set-up-localhost-on-virtualbox",
+      "destination": "https://blog.gregrickaby.com/article/set-up-localhost-on-virtualbox",
+      "permanent": true
+    },
+    {
+      "source": "/blog/set-up-localhost-on-virtualbox",
+      "destination": "https://blog.gregrickaby.com/article/set-up-localhost-on-virtualbox",
+      "permanent": true
+    },
+    {
+      "source": "/blog/modify-wordpress-custom-post-type",
+      "destination": "https://blog.gregrickaby.com/article/modify-wordpress-custom-post-type",
+      "permanent": true
+    },
+    {
+      "source": "/blog/the-perfect-apc-configuration",
+      "destination": "https://blog.gregrickaby.com/article/the-perfect-apc-configuration",
+      "permanent": true
+    },
+    {
+      "source": "/blog/how-to-install-lamp-on-ubuntu",
+      "destination": "https://blog.gregrickaby.com/article/how-to-install-lamp-on-ubuntu",
+      "permanent": true
+    },
+    {
       "source": "/contact",
       "destination": "https://blog.gregrickaby.com/contact",
       "permanent": true
@@ -56,8 +86,18 @@
       "permanent": true
     },
     {
+      "source": "/books",
+      "destination": "https://blog.gregrickaby.com/books",
+      "permanent": true
+    },
+    {
       "source": "/resources",
       "destination": "https://blog.gregrickaby.com/resources",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "https://blog.gregrickaby.com/",
       "permanent": true
     }
   ]
