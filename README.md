@@ -2,6 +2,6 @@
 
 <https://gregrickaby.com>
 
-No libraries, no frameworks, and no builds. Just plain 'ol HTML, CSS and JavaScript (With some linting and an Easter 🥚!)
+No libraries, frameworks, or builds. Just plain 'ol HTML, CSS and JavaScript (with some linting and an Easter egg! 😉)
 
 ---
