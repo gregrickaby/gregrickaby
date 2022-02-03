@@ -1,4 +1,4 @@
-# My Naked Website
+# My Homepage
 
 <https://gregrickaby.com>
 
