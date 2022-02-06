@@ -1,19 +1,19 @@
 {
-  "name": "my-naked-website",
+  "name": "homepage",
   "version": "1.0.0",
-  "description": "My website...but naked!",
+  "description": "My homepage.",
   "main": "index.html",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gregrickaby/my-naked-website.git"
+    "url": "git+https://github.com/gregrickaby/homepage.git"
   },
   "keywords": [],
-  "author": "Greg Rickaby",
+  "author": "Greg Rickaby <gregrickaby@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gregrickaby/my-naked-website/issues"
+    "url": "https://github.com/gregrickaby/homepage/issues"
   },
-  "homepage": "https://github.com/gregrickaby/my-naked-website#readme",
+  "homepage": "https://github.com/gregrickaby/homepage#readme",
   "scripts": {
     "format": "npx prettier '**/*.{js,md,html,css,json,yml}' --write || true",
     "lint": "npm run format && npm run lint:css && npm run lint:js",
