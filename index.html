@@ -13,13 +13,16 @@
     />
     <style>
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-          'Oxygen', 'Ubuntu', 'Helvetica Neue', Arial, sans-serif;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+          Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
         font-size: 1.125rem;
+        font-smooth: always;
         line-height: 1.625;
         margin: 0 auto;
         max-width: 40rem;
         padding: 2rem;
+        -webkit-font-smoothing: antialiased;
       }
 
       h1 {
@@ -87,7 +90,7 @@
 
       @media (prefers-color-scheme: dark) {
         body {
-          background: #0a0a0a;
+          background: #18181b;
           color: #fff;
         }
 
