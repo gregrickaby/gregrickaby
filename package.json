@@ -1,5 +1,5 @@
 {
-  "name": "homepage",
+  "name": "@gregrickaby/homepage",
   "version": "1.0.0",
   "description": "My homepage.",
   "main": "index.html",
@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/gregrickaby/homepage/issues"
   },
-  "homepage": "https://github.com/gregrickaby/homepage#readme",
+  "homepage": "https://gregrickaby.com",
   "scripts": {
     "format": "npx prettier '**/*.{js,md,html,css,json,yml}' --write || true",
     "lint": "npm run format && npm run lint:css && npm run lint:js",
