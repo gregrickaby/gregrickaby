@@ -31,7 +31,7 @@
     "stylelint-config-standard": "^25.0.0"
   },
   "prettier": {
-    "printWidth": 80,
+    "printWidth": 120,
     "singleQuote": true,
     "tabWidth": 2,
     "useTabs": false
