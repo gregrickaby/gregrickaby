@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <title>Greg Rickaby &mdash; Full-Stack Developer</title>
+    <link rel="preload" href="images/rickaby-family.webp" as="image" type="image/webp" />
     <meta
       name="description"
       content="Greg is a husband, father, published author, technical editor, and open-source contributor who's been developing websites since the late 90s."
@@ -22,6 +23,11 @@
         max-width: 40rem;
         padding: 2rem;
         -webkit-font-smoothing: antialiased;
+      }
+
+      img {
+        height: auto;
+        max-width: 100%;
       }
 
       h1 {
@@ -122,6 +128,17 @@
     <a class="sr-only" href="#main">Skip to Main Content</a>
 
     <main id="main" tabindex="-1">
+      <image
+        alt="Greg Rickaby and family."
+        decoding="async"
+        height="480"
+        loading="eager"
+        sizes="(max-width: 600px) 400px, 768px"
+        src="images/rickaby-family.webp"
+        srcset="images/rickaby-family-375.webp 400w, images/rickaby-family.webp 768w"
+        width="640"
+      />
+
       <h2>About</h2>
       <p>
         I live in sleepy south Alabama with my beautiful wife
