@@ -3,40 +3,38 @@
   --button-face: #dfdfdf;
   --button-shadow: #808080;
   --link-blue: #00f;
-  --border-raised-outer: inset -1px -1px var(--window-frame),
-    inset 1px 1px var(--button-highlight);
-  --border-raised-inner: inset -2px -2px var(--button-shadow),
-    inset 2px 2px var(--button-face);
+  --border-raised-outer: inset -1px -1px var(--window-frame), inset 1px 1px var(--button-highlight);
+  --border-raised-inner: inset -2px -2px var(--button-shadow), inset 2px 2px var(--button-face);
   --scroll-size: 1rem;
-  --ms-font: 'MS Sans Serif', sans-serif;
-  --comic-font: 'Comic Sans', sans-serif;
+  --ms-font: "MS Sans Serif", sans-serif;
+  --comic-font: "Comic Sans", sans-serif;
   --window-frame: #0a0a0a;
 }
 
 @font-face {
-  font-family: 'MS Sans Serif';
-  src: local('MS Sans Serif'), url('ms_sans_serif.woff2');
+  font-family: "MS Sans Serif";
+  src: local("MS Sans Serif"), url("ms_sans_serif.woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MS Sans Serif';
-  src: local('MS Sans Serif'), url('ms_sans_serif_bold.woff2');
+  font-family: "MS Sans Serif";
+  src: local("MS Sans Serif"), url("ms_sans_serif_bold.woff2");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Comic Sans';
-  src: local('Comic Sans'), url('comic_sans.woff2');
+  font-family: "Comic Sans";
+  src: local("Comic Sans"), url("comic_sans.woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Comic Sans';
-  src: local('Comic Sans'), url('comic_sans_bold.woff2');
+  font-family: "Comic Sans";
+  src: local("Comic Sans"), url("comic_sans_bold.woff2");
   font-weight: bold;
   font-style: normal;
 }
@@ -54,7 +52,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-image: url('scrollbar-background.svg');
+  background-image: url("scrollbar-background.svg");
 }
 
 ::-webkit-scrollbar-thumb {
@@ -70,17 +68,17 @@
 }
 
 ::-webkit-scrollbar-button:vertical:start {
-  background-image: url('button-up.svg');
+  background-image: url("button-up.svg");
   height: var(--scroll-size);
 }
 
 ::-webkit-scrollbar-button:vertical:end {
-  background-image: url('button-down.svg');
+  background-image: url("button-down.svg");
   height: var(--scroll-size);
 }
 
 body {
-  background: url('background.webp') repeat fixed;
+  background: url("background.webp") repeat fixed;
   color: white;
   font-family: var(--comic-font);
   text-align: center;
