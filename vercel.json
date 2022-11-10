@@ -40,6 +40,11 @@
       "source": "/resources",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/feed",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
