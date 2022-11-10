@@ -1,4 +1,4 @@
-# My Homepage On The Web
+# My homepage on the interwebs
 
 <https://gregrickaby.com>
 
