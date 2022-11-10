@@ -1,0 +1,15 @@
+{
+  "short_name": "Greg Rickaby",
+  "name": "Greg Rickaby - Building Websites Since 1997",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/index.html",
+  "background_color": "#111111",
+  "display": "standalone",
+  "theme_color": "#111111"
+}
