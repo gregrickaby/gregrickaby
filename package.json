@@ -21,14 +21,14 @@
     "lint:js": "npx eslint '**/*.js' --fix || true"
   },
   "devDependencies": {
-    "eslint": "^8.16.0",
+    "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-recommended": "^4.1.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.6.2",
-    "stylelint": "^14.8.3",
-    "stylelint-config-prettier": "^9.0.3",
-    "stylelint-config-standard": "^25.0.0"
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "stylelint": "^14.14.1",
+    "stylelint-config-prettier": "^9.0.4",
+    "stylelint-config-standard": "^29.0.0"
   },
   "prettier": {
     "printWidth": 120,
