@@ -11,9 +11,10 @@
     <link
       as="image"
       href="images/rickaby-family.webp"
-      imagesizes="50vw"
-      imagesrcset="images/rickaby-family-375.webp 375w, images/rickaby-family.webp 768w"
+      imagesizes="(max-width: 300px) 100vw, (max-width: 768px) 50vw, 700px"
+      imagesrcset="images/rickaby-family_300.webp 300w, images/rickaby-family_700.webp 700w"
       rel="preload"
+      type="image/webp"
     />
     <link rel="canonical" href="https://gregrickaby.com" />
     <style>
@@ -79,6 +80,7 @@
 
       header {
         margin-bottom: 2rem;
+        text-align: center;
       }
 
       footer {
@@ -121,6 +123,7 @@
         ]
       }
     </script>
+    <script defer src="geocities/script.js"></script>
   </head>
 
   <body>
@@ -136,9 +139,9 @@
         decoding="async"
         height="480"
         loading="eager"
-        sizes="50vw"
+        sizes="(max-width: 300px) 100vw, (max-width: 768px) 50vw, 700px"
         src="images/rickaby-family.webp"
-        srcset="images/rickaby-family-375.webp 375w, images/rickaby-family.webp 768w"
+        srcset="images/rickaby-family_300.webp 300w, images/rickaby-family_700.webp 700w"
         width="640"
       />
 
@@ -218,7 +221,5 @@
         <a href="https://profiles.wordpress.org/gregrickaby/" rel="author">WordPress</a>
       </p>
     </footer>
-
-    <script defer src="geocities/script.js"></script>
   </body>
 </html>

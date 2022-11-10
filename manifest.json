@@ -3,8 +3,8 @@
   "name": "Greg Rickaby - Building Websites Since 1997",
   "icons": [
     {
-      "src": "/images/logo.png",
-      "type": "image/png",
+      "src": "/images/logo.webp",
+      "type": "image/webp",
       "sizes": "192x192"
     }
   ],
