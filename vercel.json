@@ -2,103 +2,43 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/blog/reddit-image-viewer",
-      "destination": "https://gregrickaby.blog/article/reddit-image-viewer",
+      "source": "/2020/06/16/reddit-image-viewer",
+      "destination": "https://reddit-image-viewer.vercel.app",
       "permanent": true
     },
     {
-      "source": "/blog/swr-examples",
-      "destination": "https://gregrickaby.blog/article/swr-examples",
+      "source": "/2020/06/24/displaying-exif-data-in-wordpress",
+      "destination": "https://github.com/gregrickaby/wordpress-display-exif",
       "permanent": true
     },
     {
-      "source": "/blog/displaying-exif-data-in-wordpress",
-      "destination": "https://gregrickaby.blog/article/displaying-exif-data-in-wordpress",
+      "source": "/2020/03/21/next-js-github-pages",
+      "destination": "https://github.com/gregrickaby/nextjs-github-pages",
       "permanent": true
     },
     {
-      "source": "/blog/using-the-golden-ratio-and-rems",
-      "destination": "https://gregrickaby.blog/article/using-the-golden-ratio-and-rems",
+      "source": "/2013/05/19/web-typography-using-the-golden-ratio-and-rems",
+      "destination": "/",
       "permanent": true
     },
     {
-      "source": "/blog/podcasting-sound-like-a-radio-dj",
-      "destination": "https://gregrickaby.blog/article/podcasting-sound-like-a-radio-dj",
-      "permanent": true
-    },
-    {
-      "source": "/blog/genesis-code-snippets",
-      "destination": "https://gregrickaby.blog/article/genesis-code-snippets",
-      "permanent": true
-    },
-    {
-      "source": "/blog/remove-woocommerce-styles-and-scripts",
-      "destination": "https://gregrickaby.blog/article/remove-woocommerce-styles-and-scripts",
-      "permanent": true
-    },
-    {
-      "source": "/blog/create-mu-plugin-for-wordpress",
-      "destination": "https://gregrickaby.blog/article/create-mu-plugin-for-wordpress",
-      "permanent": true
-    },
-    {
-      "source": "/blog/microphone-shootout-behringer-b-1-vs-neumann-tlm-103",
-      "destination": "https://gregrickaby.blog/article/microphone-shootout-behringer-b-1-vs-neumann-tlm-103",
-      "permanent": true
-    },
-    {
-      "source": "/blog/gregs-homemade-pizza-recipe",
-      "destination": "https://gregrickaby.blog/article/gregs-homemade-pizza-recipe",
-      "permanent": true
-    },
-    {
-      "source": "/blog/set-up-localhost-on-virtualbox",
-      "destination": "https://gregrickaby.blog/article/set-up-localhost-on-virtualbox",
-      "permanent": true
-    },
-    {
-      "source": "/blog/set-up-localhost-on-virtualbox",
-      "destination": "https://gregrickaby.blog/article/set-up-localhost-on-virtualbox",
-      "permanent": true
-    },
-    {
-      "source": "/blog/modify-wordpress-custom-post-type",
-      "destination": "https://gregrickaby.blog/article/modify-wordpress-custom-post-type",
-      "permanent": true
-    },
-    {
-      "source": "/blog/the-perfect-apc-configuration",
-      "destination": "https://gregrickaby.blog/article/the-perfect-apc-configuration",
-      "permanent": true
-    },
-    {
-      "source": "/blog/how-to-install-lamp-on-ubuntu",
-      "destination": "https://gregrickaby.blog/article/how-to-install-lamp-on-ubuntu",
+      "source": "/articles",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/contact",
-      "destination": "https://gregrickaby.blog/contact",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/media",
-      "destination": "https://gregrickaby.blog/media",
-      "permanent": true
-    },
-    {
-      "source": "/books",
-      "destination": "https://gregrickaby.blog/books",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/resources",
-      "destination": "https://gregrickaby.blog/resources",
-      "permanent": true
-    },
-    {
-      "source": "/blog",
-      "destination": "https://gregrickaby.blog/",
+      "destination": "/",
       "permanent": true
     }
   ]
