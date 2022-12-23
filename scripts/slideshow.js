@@ -8,6 +8,7 @@ async function getPhotos() {
     // Attempt to fetch all photos from Cloudinary.
     const response = await fetch('https://api.cloudinary.com/v1_1/gregrickaby/resources/search', {
       method: 'GET',
+      cache: 'no-cache',
       headers: {
         Authorization: 'Basic ' + btoa(`${KEY}:${SECRET}`),
       },
