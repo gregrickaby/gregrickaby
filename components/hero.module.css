@@ -1,0 +1,62 @@
+.hero {
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
+}
+
+.background {
+  filter: brightness(0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.image {
+  height: 100vh;
+  object-fit: cover;
+  opacity: 1;
+  position: absolute;
+  transition: opacity 1s ease-in-out;
+  width: 100vw;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.content {
+  color: #fff;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  z-index: 2;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 0.8;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.subtitle {
+  font-size: 24px;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.button {
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
