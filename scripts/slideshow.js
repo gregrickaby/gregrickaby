@@ -1,14 +1,15 @@
 import { gsap } from './esm_modules/gsap/esm/index.js';
 
+const KEY = '767446665668985';
+const SECRET = 'w7vZzTRWCOM5s2D11YiypaV6bEU';
+
 async function getPhotos() {
   try {
     // Attempt to fetch all photos from Cloudinary.
-    const response = await fetch(`https://api.cloudinary.com/v1_1/gregrickaby/resources/search`, {
+    const response = await fetch('https://api.cloudinary.com/v1_1/gregrickaby/resources/search', {
       method: 'GET',
-      cache: 'no-cache',
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Basic NzY3NDQ2NjY1NjY4OTg1Onc3dlp6VFJXQ09NNXMyRDExWWl5cGFWNmJFVQ==',
+        Authorization: 'Basic ' + btoa(`${KEY}:${SECRET}`),
       },
     });
 
