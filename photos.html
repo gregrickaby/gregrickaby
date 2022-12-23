@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- 👋🏻 https://github.com/gregrickaby/homepage -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Greg Rickaby - Building websites since 1997</title>
+    <meta name="description" content="Building websites since 1997" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="canonical" href="https://gregrickaby.com" />
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue,
+          Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        font-size: 1.125rem;
+        line-height: 1.625;
+        margin: 0 auto;
+      }
+
+      main {
+        -webkit-overflow-scrolling: touch;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      img {
+        height: auto;
+        max-width: 100%;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      button {
+        background: #c0c0c0;
+        border-radius: 0;
+        border: none;
+        box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+        box-sizing: border-box;
+        cursor: pointer;
+        font-size: 0.8rem;
+        min-height: 1.5rem;
+        min-width: 5rem;
+        padding: 0 0.75rem;
+      }
+
+      button:hover {
+        box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+      }
+
+      button:focus {
+        box-shadow: inset -1px 1px #cee7ff, inset 1px 2px #98b8ea, inset -2px 2px #bcd4f6, inset 1px -1px #89ade4,
+          inset 2px -2px #89ade4;
+        outline: 1px dotted #000;
+        outline-offset: -4px;
+      }
+
+      .sr-only {
+        height: 1px;
+        left: -10000px;
+        overflow: hidden;
+        position: absolute;
+        top: auto;
+        width: 1px;
+      }
+
+      svg {
+        position: fixed;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #18181b;
+          color: #fff;
+        }
+
+        a {
+          color: #fff;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Greg Rickaby",
+        "url": "https://gregrickaby.com",
+        "sameAs": [
+          "https://github.com/gregrickaby/",
+          "https://linkedin.com/in/gregrickaby/",
+          "https://profiles.wordpress.org/gregrickaby/",
+          "https://gregrickaby.smugmug.com/",
+          "https://https://www.instagram.com/gregoryrickaby/",
+          "https://twitter.com/GregRickaby"
+        ]
+      }
+    </script>
+    <script fetchpriority="high" src="scripts/main.js" type="module"></script>
+  </head>
+
+  <body>
+    <main>
+      <svg width="100%" height="100%">
+        <mask id="m">
+          <circle id="c1" cx="40" cy="40" r="0" fill="#fff" />
+          <circle id="c0" cx="40" cy="40" r="0" fill="#fff" opacity="0.5" />
+        </mask>
+
+        <g id="imgFg"></g>
+        <g id="imgBg" mask="url(#m)"></g>
+      </svg>
+    </main>
+  </body>
+</html>
