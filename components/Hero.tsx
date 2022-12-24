@@ -2,7 +2,7 @@
 import cx from "classnames";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import styles from "./hero.module.css";
+import styles from "./Hero.module.css";
 
 /**
  * Hero component. (client)
