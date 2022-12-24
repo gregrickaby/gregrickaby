@@ -92,10 +92,11 @@ export default function About() {
 
       <h3>Contributions</h3>
       <p>
-        I've been part of the WordPress community since 2008. I've made
-        contributions to core, documentation, plugins, and themes. I've also
-        spoken at WordCamps and meet-ups. I'm also a contributor to other
-        open-source projects like Next.js, Storybook, and Gatsby.
+        I&apos;ve been part of the WordPress community since 2008. I&apos;ve
+        made contributions to core, documentation, plugins, and themes.
+        I&apos;ve also spoken at WordCamps and meet-ups. I&apos;m also a
+        contributor to other open-source projects like Next.js, Storybook, and
+        Gatsby.
       </p>
       <p>
         Outside of tech, I volunteer my time and efforts at local community
