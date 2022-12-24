@@ -41,11 +41,18 @@ export default function Hero(photos: any) {
       <div className={styles.content}>
         <h1 className={styles.title}>Greg Rickaby</h1>
         <p className={styles.subtitle}>
-          Building websites since 1997. Taking photos since 2019.
+          Tech Lead at AmericanEagle.com. Published Author. Photographer.
         </p>
-        <a className={styles.button} href="#">
+        <button
+          className={styles.button}
+          onClick={() => {
+            document
+              .getElementById("about")
+              .scrollIntoView({ behavior: "smooth" });
+          }}
+        >
           About
-        </a>
+        </button>
       </div>
     </section>
   );

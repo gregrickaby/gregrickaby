@@ -1,8 +1,7 @@
-import { Raleway } from "@next/font/google";
-import cx from "classnames";
-import styles from "./layout.module.css";
+import { Open_Sans } from "@next/font/google";
+import "./global.css";
 
-const font = Raleway({ subsets: ["latin"] });
+const font = Open_Sans({ subsets: ["latin"] });
 
 /**
  * The root layout for the app.
@@ -18,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body className={cx(styles.body, font.className)}>{children}</body>
+      <body className={font.className}>{children}</body>
     </html>
   );
 }

@@ -1,3 +1,5 @@
+import About from "../components/About";
+import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import { getPhotos } from "../lib/functions";
 
@@ -15,6 +17,8 @@ export default async function Homepage() {
   return (
     <>
       <Hero {...photos} />
+      <About />
+      <Footer />
     </>
   );
 }
