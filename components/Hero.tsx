@@ -46,6 +46,7 @@ export default function Hero(photos: any) {
         <button
           className={styles.button}
           onClick={() => {
+            // @ts-ignore
             document
               .getElementById("about")
               .scrollIntoView({ behavior: "smooth" });
