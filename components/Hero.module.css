@@ -34,6 +34,10 @@
   z-index: 2;
 }
 
+.avatar {
+  border-radius: 50%;
+}
+
 .title {
   font-size: 48px;
   font-weight: 500;
