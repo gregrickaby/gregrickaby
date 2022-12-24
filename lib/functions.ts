@@ -32,3 +32,21 @@ export async function getPhotos() {
     console.error(error);
   }
 }
+
+export async function getAuthor() {
+  try {
+    const response = await fetch(
+      `https://www.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json`
+    );
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const data = await response.json();
+
+    return data.entry[0];
+  } catch (error) {
+    console.error(error);
+  }
+}

@@ -11,7 +11,8 @@ import styles from "./Hero.module.css";
  * @param photos
  * @returns The hero component.
  */
-export default function Hero(photos: any) {
+export default function Hero(props: any) {
+  const { avatar, bio, name, photos } = props;
   const [visible, setVisible] = useState(0);
 
   useEffect(() => {
@@ -39,10 +40,15 @@ export default function Hero(photos: any) {
         })}
       </div>
       <div className={styles.content}>
-        <h1 className={styles.title}>Greg Rickaby</h1>
-        <p className={styles.subtitle}>
-          Tech Lead at AmericanEagle.com. Published Author. Photographer.
-        </p>
+        <Image
+          alt={name}
+          className={styles.avatar}
+          height={84}
+          src={`${avatar}?s=84`}
+          width={84}
+        />
+        <h1 className={styles.title}>{name}</h1>
+        <p className={styles.subtitle}>{bio}</p>
         <button
           className={styles.button}
           onClick={() => {
