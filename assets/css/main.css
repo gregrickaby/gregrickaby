@@ -15,7 +15,6 @@ body {
   font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
   font-size: 1.125rem;
   line-height: 1.625;
-  overflow-y: auto;
 }
 
 aside {
@@ -31,8 +30,6 @@ main {
   align-items: end;
   display: flex;
   flex-direction: column;
-  height: 85vh;
-  justify-content: end;
   padding: 2rem;
 }
 
@@ -71,16 +68,12 @@ a:hover {
 }
 
 @media screen and (min-width: 600px) {
-  main {
-    height: 95vh;
-  }
-
   h1,
   p {
     text-align: right;
   }
 
   footer {
-    margin: 2rem 0;
+    margin: 2rem 0 0;
   }
 }
