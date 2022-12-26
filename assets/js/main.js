@@ -1,5 +1,6 @@
 import { gsap } from './gsap/index.js';
 
+// https://codepen.io/creativeocean/pen/YzvoMRg
 const stage = document.querySelector('.hero');
 const imgFg = document.querySelector('.foreground');
 const imgBg = document.querySelector('.background');
@@ -117,4 +118,4 @@ gsap.fromTo(
 const loop = gsap
   .timeline({ repeatRefresh: true, repeat: -1 })
   .add(maskConstrict, 3)
-  .add(nextImg, 3.15);
+  .add(nextImg, 6);
