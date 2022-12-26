@@ -118,4 +118,4 @@ gsap.fromTo(
 const loop = gsap
   .timeline({ repeatRefresh: true, repeat: -1 })
   .add(maskConstrict, 3)
-  .add(nextImg, 6);
+  .add(nextImg, 10);

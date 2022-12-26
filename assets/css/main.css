@@ -30,7 +30,7 @@ main {
   align-items: end;
   display: flex;
   flex-direction: column;
-  height: 95vh;
+  height: 85vh;
   justify-content: end;
   padding: 2rem;
 }
@@ -70,6 +70,10 @@ a:hover {
 }
 
 @media screen and (min-width: 600px) {
+  main {
+    height: 95vh;
+  }
+
   h1,
   p {
     text-align: right;
