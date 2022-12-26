@@ -9,12 +9,13 @@ p {
 
 body {
   -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
   color: #fff;
   cursor: pointer;
   font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
   font-size: 1.125rem;
   line-height: 1.625;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 aside {
