@@ -5,11 +5,9 @@ const stage = document.querySelector('.hero');
 const imgFg = document.querySelector('.foreground');
 const imgBg = document.querySelector('.background');
 const imgs = [
-  'https://res.cloudinary.com/gregrickaby/image/upload/c_scale,w_1920,f_auto/v1671890296/portfolio/DSC4730.jpg',
-  'https://res.cloudinary.com/gregrickaby/image/upload/c_scale,w_1920,f_auto/v1671890296/portfolio/DSC02796.jpg',
-  'https://res.cloudinary.com/gregrickaby/image/upload/c_scale,w_1920,f_auto/v1671890296/portfolio/P1000785.jpg',
-  'https://res.cloudinary.com/gregrickaby/image/upload/c_scale,w_1920,f_auto/v1671890296/portfolio/DSC03286.jpg',
-  'https://res.cloudinary.com/gregrickaby/image/upload/c_scale,w_1920,f_auto/v1671890296/portfolio/DSC00177.jpg',
+  '/assets/images/hero/3.webp',
+  '/assets/images/hero/2.webp',
+  '/assets/images/hero/1.webp',
 ];
 const pos = { x: innerWidth / 2, y: innerHeight / 2 };
 
@@ -118,4 +116,4 @@ gsap.fromTo(
 const loop = gsap
   .timeline({ repeatRefresh: true, repeat: -1 })
   .add(maskConstrict, 3)
-  .add(nextImg, 10);
+  .add(nextImg, 6);
