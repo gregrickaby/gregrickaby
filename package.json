@@ -1,6 +1,6 @@
 {
   "name": "@gregrickaby/homepage",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "My homepage on the web",
   "main": "index.html",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "git+https://github.com/gregrickaby/homepage.git"
   },
   "keywords": [],
-  "author": "Greg Rickaby <gregrickaby@gmail.com>",
+  "author": "Greg Rickaby <greg@gregrickaby.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gregrickaby/homepage/issues"
@@ -31,7 +31,6 @@
     "stylelint-config-standard": "^29.0.0"
   },
   "prettier": {
-    "printWidth": 120,
     "singleQuote": true,
     "tabWidth": 2,
     "useTabs": false
