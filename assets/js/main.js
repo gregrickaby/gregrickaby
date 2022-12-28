@@ -5,9 +5,9 @@ const stage = document.querySelector('.hero');
 const imgFg = document.querySelector('.foreground');
 const imgBg = document.querySelector('.background');
 const imgs = [
-  '/assets/images/hero/3.webp',
-  '/assets/images/hero/2.webp',
-  '/assets/images/hero/1.webp',
+  'assets/images/hero/3.webp',
+  'assets/images/hero/2.webp',
+  'assets/images/hero/1.webp',
 ];
 const pos = { x: innerWidth / 2, y: innerHeight / 2 };
 

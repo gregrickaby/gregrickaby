@@ -6,58 +6,66 @@
  * Subject to the terms at https://greensock.com/standard-license or for
  * Club GreenSock members, the agreement issued with that membership.
  * @author: Jack Doyle, jack@greensock.com
-*/
+ */
 
 /* eslint-disable */
-import { emojiSafeSplit, getText, splitInnerHTML } from "./utils/strings.js";
+import { emojiSafeSplit, getText, splitInnerHTML } from './utils/strings.js';
 
 var gsap,
-    _tempDiv,
-    _getGSAP = function _getGSAP() {
-  return gsap || typeof window !== "undefined" && (gsap = window.gsap) && gsap.registerPlugin && gsap;
-};
+  _tempDiv,
+  _getGSAP = function _getGSAP() {
+    return (
+      gsap ||
+      (typeof window !== 'undefined' &&
+        (gsap = window.gsap) &&
+        gsap.registerPlugin &&
+        gsap)
+    );
+  };
 
 export var TextPlugin = {
-  version: "3.11.4",
-  name: "text",
+  version: '3.11.4',
+  name: 'text',
   init: function init(target, value, tween) {
-    typeof value !== "object" && (value = {
-      value: value
-    });
+    typeof value !== 'object' &&
+      (value = {
+        value: value,
+      });
 
     var i = target.nodeName.toUpperCase(),
-        data = this,
-        _value = value,
-        newClass = _value.newClass,
-        oldClass = _value.oldClass,
-        preserveSpaces = _value.preserveSpaces,
-        rtl = _value.rtl,
-        delimiter = data.delimiter = value.delimiter || "",
-        fillChar = data.fillChar = value.fillChar || (value.padSpace ? "&nbsp;" : ""),
-        _short,
-        text,
-        original,
-        j,
-        condensedText,
-        condensedOriginal,
-        aggregate,
-        s;
+      data = this,
+      _value = value,
+      newClass = _value.newClass,
+      oldClass = _value.oldClass,
+      preserveSpaces = _value.preserveSpaces,
+      rtl = _value.rtl,
+      delimiter = (data.delimiter = value.delimiter || ''),
+      fillChar = (data.fillChar =
+        value.fillChar || (value.padSpace ? '&nbsp;' : '')),
+      _short,
+      text,
+      original,
+      j,
+      condensedText,
+      condensedOriginal,
+      aggregate,
+      s;
 
-    data.svg = target.getBBox && (i === "TEXT" || i === "TSPAN");
+    data.svg = target.getBBox && (i === 'TEXT' || i === 'TSPAN');
 
-    if (!("innerHTML" in target) && !data.svg) {
+    if (!('innerHTML' in target) && !data.svg) {
       return false;
     }
 
     data.target = target;
 
-    if (!("value" in value)) {
-      data.text = data.original = [""];
+    if (!('value' in value)) {
+      data.text = data.original = [''];
       return;
     }
 
     original = splitInnerHTML(target, delimiter, false, preserveSpaces);
-    _tempDiv || (_tempDiv = document.createElement("div"));
+    _tempDiv || (_tempDiv = document.createElement('div'));
     _tempDiv.innerHTML = value.value;
     text = splitInnerHTML(_tempDiv, delimiter, false, preserveSpaces);
     data.from = tween._from;
@@ -83,11 +91,11 @@ export var TextPlugin = {
       _short.push(fillChar);
     }
 
-    if (value.type === "diff") {
+    if (value.type === 'diff') {
       j = 0;
       condensedText = [];
       condensedOriginal = [];
-      aggregate = "";
+      aggregate = '';
 
       for (i = 0; i < text.length; i++) {
         s = text[i];
@@ -97,7 +105,7 @@ export var TextPlugin = {
         } else {
           condensedText[j] = aggregate + s;
           condensedOriginal[j++] = aggregate + original[i];
-          aggregate = "";
+          aggregate = '';
         }
       }
 
@@ -110,12 +118,18 @@ export var TextPlugin = {
       }
     }
 
-    value.speed && tween.duration(Math.min(0.05 / value.speed * _short.length, value.maxDuration || 9999));
+    value.speed &&
+      tween.duration(
+        Math.min(
+          (0.05 / value.speed) * _short.length,
+          value.maxDuration || 9999
+        )
+      );
     data.rtl = rtl;
     data.original = original;
     data.text = text;
 
-    data._props.push("text");
+    data._props.push('text');
   },
   render: function render(ratio, data) {
     if (ratio > 1) {
@@ -129,35 +143,48 @@ export var TextPlugin = {
     }
 
     var text = data.text,
-        hasClass = data.hasClass,
-        newClass = data.newClass,
-        oldClass = data.oldClass,
-        delimiter = data.delimiter,
-        target = data.target,
-        fillChar = data.fillChar,
-        original = data.original,
-        rtl = data.rtl,
-        l = text.length,
-        i = (rtl ? 1 - ratio : ratio) * l + 0.5 | 0,
-        applyNew,
-        applyOld,
-        str;
+      hasClass = data.hasClass,
+      newClass = data.newClass,
+      oldClass = data.oldClass,
+      delimiter = data.delimiter,
+      target = data.target,
+      fillChar = data.fillChar,
+      original = data.original,
+      rtl = data.rtl,
+      l = text.length,
+      i = ((rtl ? 1 - ratio : ratio) * l + 0.5) | 0,
+      applyNew,
+      applyOld,
+      str;
 
     if (hasClass && ratio) {
       applyNew = newClass && i;
       applyOld = oldClass && i !== l;
-      str = (applyNew ? "<span class='" + newClass + "'>" : "") + text.slice(0, i).join(delimiter) + (applyNew ? "</span>" : "") + (applyOld ? "<span class='" + oldClass + "'>" : "") + delimiter + original.slice(i).join(delimiter) + (applyOld ? "</span>" : "");
+      str =
+        (applyNew ? "<span class='" + newClass + "'>" : '') +
+        text.slice(0, i).join(delimiter) +
+        (applyNew ? '</span>' : '') +
+        (applyOld ? "<span class='" + oldClass + "'>" : '') +
+        delimiter +
+        original.slice(i).join(delimiter) +
+        (applyOld ? '</span>' : '');
     } else {
-      str = text.slice(0, i).join(delimiter) + delimiter + original.slice(i).join(delimiter);
+      str =
+        text.slice(0, i).join(delimiter) +
+        delimiter +
+        original.slice(i).join(delimiter);
     }
 
     if (data.svg) {
       //SVG text elements don't have an "innerHTML" in Microsoft browsers.
       target.textContent = str;
     } else {
-      target.innerHTML = fillChar === "&nbsp;" && ~str.indexOf("  ") ? str.split("  ").join("&nbsp;&nbsp;") : str;
+      target.innerHTML =
+        fillChar === '&nbsp;' && ~str.indexOf('  ')
+          ? str.split('  ').join('&nbsp;&nbsp;')
+          : str;
     }
-  }
+  },
 };
 TextPlugin.splitInnerHTML = splitInnerHTML;
 TextPlugin.emojiSafeSplit = emojiSafeSplit;
