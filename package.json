@@ -1,7 +1,7 @@
 {
   "name": "@gregrickaby/homepage",
   "version": "2.0.0",
-  "description": "My homepage on the web",
+  "description": "A homepage",
   "main": "index.html",
   "repository": {
     "type": "git",

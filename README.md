@@ -1,5 +1,7 @@
-# My homepage on the web
+# A homepage
 
-<https://gregrickaby.com>
+No frameworks or build tools. Just HTML, CSS, and JavaScript.
+
+<https://gregrickaby.github.io/homepage/>
 
 ---
