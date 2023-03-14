@@ -1,17 +1,17 @@
 {
-  "name": "@gregrickaby/homepage",
+  "name": "@gregrickaby/gregrickaby",
   "version": "2.0.0",
-  "description": "A homepage",
+  "description": "My personal website.",
   "main": "index.html",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gregrickaby/homepage.git"
+    "url": "git+https://github.com/gregrickaby/gregrickaby.git"
   },
   "keywords": [],
   "author": "Greg Rickaby <greg@gregrickaby.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gregrickaby/homepage/issues"
+    "url": "https://github.com/gregrickaby/gregrickaby/issues"
   },
   "homepage": "https://gregrickaby.com",
   "scripts": {
