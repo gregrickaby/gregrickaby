@@ -1,5 +1,3 @@
-import { gsap } from './gsap/index.js';
-
 // https://codepen.io/creativeocean/pen/YzvoMRg
 const stage = document.querySelector('.hero');
 const imgFg = document.querySelector('.foreground');

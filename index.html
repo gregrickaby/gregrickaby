@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <meta name="robots" content="index, follow" />
     <title>Greg Rickaby - Building websites since 1997</title>
     <meta name="title" content="Greg Rickaby - Building websites since 1997" />
     <meta
@@ -41,8 +41,9 @@
       property="twitter:image"
       content="https://gregrickaby.com/assets/images/rickaby-family-fall-2019_1175.webp"
     />
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com/" />
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
-    <meta name="robots" content="index, follow" />
     <link rel="manifest" href="manifest.json" />
     <link rel="canonical" href="https://gregrickaby.com" />
     <link rel="preload" href="assets/css/main.css" as="style" />
@@ -72,11 +73,6 @@
         ]
       }
     </script>
-    <script
-      crossorigin="same-site"
-      src="assets/js/main.js"
-      type="module"
-    ></script>
   </head>
   <body>
     <main>
@@ -158,5 +154,14 @@
         /></a>
       </footer>
     </main>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"
+    ></script>
+    <script
+      crossorigin="same-site"
+      src="assets/js/main.js"
+      type="module"
+    ></script>
   </body>
 </html>
