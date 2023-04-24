@@ -21,12 +21,12 @@
     "lint:js": "npx eslint '**/*.js' --fix || true"
   },
   "devDependencies": {
-    "eslint": "^8.38.0",
+    "eslint": "^8.39.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-recommended": "^4.1.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.7",
-    "stylelint": "^15.5.0",
+    "prettier": "^2.8.8",
+    "stylelint": "^15.6.0",
     "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard": "^33.0.0"
   },
