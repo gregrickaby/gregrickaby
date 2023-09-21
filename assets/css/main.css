@@ -12,7 +12,11 @@ body {
   -webkit-overflow-scrolling: touch;
   color: #fff;
   cursor: pointer;
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    sans-serif;
   font-size: 1.125rem;
   line-height: 1.625;
   text-shadow: 0 0 0.2rem rgb(0 0 0 / 50%);
@@ -68,7 +72,7 @@ a:hover {
   background-color: #b1b1b1;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (width >= 600px) {
   h1,
   p {
     text-align: right;
