@@ -1,117 +1,190 @@
-// https://codepen.io/creativeocean/pen/YzvoMRg
-const stage = document.querySelector('.hero');
-const imgFg = document.querySelector('.foreground');
-const imgBg = document.querySelector('.background');
-const imgs = [
-  'assets/images/hero/3.webp',
-  'assets/images/hero/2.webp',
-  'assets/images/hero/1.webp',
-];
-const pos = { x: innerWidth / 2, y: innerHeight / 2 };
+/**
+ * HeroAnimation class for animating the hero section.
+ */
+class HeroAnimation {
+  /**
+   * Initializes the HeroAnimation with default values and event listeners.
+   */
+  constructor() {
+    this.stage = document.querySelector('.hero');
+    this.imgFg = document.querySelector('.foreground');
+    this.imgBg = document.querySelector('.background');
+    this.imgs = [
+      'assets/images/hero/3.webp',
+      'assets/images/hero/2.webp',
+      'assets/images/hero/1.webp',
+    ];
+    this.pos = { x: innerWidth / 2, y: innerHeight / 2 };
 
-for (let i = 0; i < imgs.length; i++) {
-  const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-  imgBg.appendChild(img);
-  gsap.set(img, {
-    attr: {
-      x: '-5%',
-      y: '-5%',
-      width: '110%',
-      height: '110%',
-      href: imgs[i],
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  });
-}
+    this.initImages();
+    this.addEventListeners();
+    this.initializeAnimations();
+  }
 
-window.addEventListener('resize', () => {
-  pos.x = innerWidth / 2;
-  pos.y = innerHeight / 2;
-  gsap.set('circle', { duration: 0.3, attr: { cx: pos.x, cy: pos.y } });
-});
+  /**
+   * Populates the background with images.
+   */
+  initImages() {
+    for (let i = 0; i < this.imgs.length; i++) {
+      const img = document.createElementNS(
+        'http://www.w3.org/2000/svg',
+        'image',
+      );
+      this.imgBg.appendChild(img);
+      gsap.set(img, {
+        attr: {
+          x: '-5%',
+          y: '-5%',
+          width: '110%',
+          height: '110%',
+          href: this.imgs[i],
+          preserveAspectRatio: 'xMidYMid slice',
+        },
+      });
+    }
+  }
 
-stage.addEventListener('mouseenter', (e) => {
-  loop.pause();
-  stage.addEventListener('mousemove', mouseFollow);
-  mouseClickOn();
-});
+  /**
+   * Adds necessary event listeners.
+   */
+  addEventListeners() {
+    window.addEventListener('resize', this.handleResize.bind(this));
+    this.stage.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
+    this.stage.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
+  }
 
-stage.addEventListener('mouseleave', (e) => {
-  mouseClickOff();
-  stage.removeEventListener('mousemove', mouseFollow);
-  pos.x = innerWidth / 2;
-  pos.y = innerHeight / 2;
-  gsap.to('circle', {
-    attr: { cx: pos.x, cy: pos.y },
-    ease: 'power2.inOut',
-  });
-  gsap.to(imgFg.children[0], { attr: { x: '-5%', y: '-5%' } });
-  loop.play(0);
-});
+  /**
+   * Handler for the window resize event.
+   */
+  handleResize() {
+    this.pos.x = innerWidth / 2;
+    this.pos.y = innerHeight / 2;
+    gsap.set('circle', {
+      duration: 0.3,
+      attr: { cx: this.pos.x, cy: this.pos.y },
+    });
+  }
 
-function mouseClickOn() {
-  stage.addEventListener('mousedown', maskConstrict);
-  stage.addEventListener('mouseup', nextImg);
-}
+  /**
+   * Handler for the stage mouseenter event.
+   * @param {Event} e - The mouseenter event.
+   */
+  handleMouseEnter(e) {
+    this.loop.pause();
+    this.stage.addEventListener('mousemove', this.mouseFollow.bind(this));
+    this.mouseClickOn();
+  }
 
-function mouseClickOff() {
-  stage.removeEventListener('mousedown', maskConstrict);
-  stage.removeEventListener('mouseup', nextImg);
-}
+  /**
+   * Handler for the stage mouseleave event.
+   * @param {Event} e - The mouseleave event.
+   */
+  handleMouseLeave(e) {
+    this.mouseClickOff();
+    this.pos.x = innerWidth / 2;
+    this.pos.y = innerHeight / 2;
+    gsap.to('circle', {
+      attr: { cx: this.pos.x, cy: this.pos.y },
+      ease: 'power2.inOut',
+    });
+    gsap.to(this.imgFg.children[0], { attr: { x: '-5%', y: '-5%' } });
+    this.loop.play(0);
+  }
 
-function mouseFollow(e) {
-  pos.x = e.pageX;
-  pos.y = e.pageY;
-  gsap.to('circle', { duration: 0.3, attr: { cx: pos.x, cy: pos.y } });
-  gsap.to(imgFg.children[0], {
-    attr: {
-      x: gsap.utils.interpolate('0%', '-10%', pos.x / innerWidth),
-      y: gsap.utils.interpolate('0%', '-10%', pos.y / innerHeight),
-    },
-  });
-}
+  /**
+   * Attach mousedown and mouseup event listeners to the stage.
+   */
+  mouseClickOn() {
+    this.stage.addEventListener('mousedown', this.maskConstrict.bind(this));
+    this.stage.addEventListener('mouseup', this.nextImg.bind(this));
+  }
 
-function maskConstrict(e) {
-  gsap.to('circle', { duration: 0.3, attr: { r: (i) => [30, 50][i] } });
-}
+  /**
+   * Remove mousedown and mouseup event listeners from the stage.
+   */
+  mouseClickOff() {
+    this.stage.removeEventListener('mousedown', this.maskConstrict);
+    this.stage.removeEventListener('mouseup', this.nextImg);
+  }
 
-function nextImg() {
-  mouseClickOff();
-  gsap
-    .timeline()
-    .to('circle', {
-      duration: 0.4,
-      attr: { r: innerWidth },
-      ease: 'power3.in',
-      stagger: -0.1,
-    })
-    .add(() => {
-      imgFg.append(imgBg.children[imgBg.children.length - 1]);
-      imgBg.prepend(imgFg.children[0]);
-      gsap.set('circle', { attr: { r: 0 } });
-    })
-    .fromTo(
-      'circle',
-      { attr: { r: 0, cx: pos.x, cy: pos.y } },
-      {
-        attr: { r: (i) => [35, 45][i] },
-        ease: 'power2.inOut',
-        stagger: -0.1,
+  /**
+   * Handler for the stage mousemove event. Moves the image and the circle.
+   * @param {Event} e - The mousemove event.
+   */
+  mouseFollow(e) {
+    this.pos.x = e.pageX;
+    this.pos.y = e.pageY;
+    gsap.to('circle', {
+      duration: 0.3,
+      attr: { cx: this.pos.x, cy: this.pos.y },
+    });
+    gsap.to(this.imgFg.children[0], {
+      attr: {
+        x: gsap.utils.interpolate('0%', '-10%', this.pos.x / innerWidth),
+        y: gsap.utils.interpolate('0%', '-10%', this.pos.y / innerHeight),
       },
-      0.5
-    )
-    .add(mouseClickOn);
+    });
+  }
+
+  /**
+   * Handler for the stage mousedown event. Constricts the mask size.
+   * @param {Event} e - The mousedown event.
+   */
+  maskConstrict(e) {
+    gsap.to('circle', { duration: 0.3, attr: { r: (i) => [30, 50][i] } });
+  }
+
+  /**
+   * Transitions to the next image.
+   */
+  nextImg() {
+    this.mouseClickOff();
+    gsap
+      .timeline()
+      .to('circle', {
+        duration: 0.4,
+        attr: { r: innerWidth },
+        ease: 'power3.in',
+        stagger: -0.1,
+      })
+      .add(() => {
+        this.imgFg.append(this.imgBg.children[this.imgBg.children.length - 1]);
+        this.imgBg.prepend(this.imgFg.children[0]);
+        gsap.set('circle', { attr: { r: 0 } });
+      })
+      .fromTo(
+        'circle',
+        { attr: { r: 0, cx: this.pos.x, cy: this.pos.y } },
+        {
+          attr: { r: (i) => [35, 45][i] },
+          ease: 'power2.inOut',
+          stagger: -0.1,
+        },
+        0.5,
+      )
+      .add(this.mouseClickOn.bind(this));
+  }
+
+  /**
+   * Initializes the initial animations and loops.
+   */
+  initializeAnimations() {
+    this.imgFg.append(this.imgBg.children[this.imgBg.children.length - 1]);
+
+    gsap.fromTo(
+      'circle',
+      { attr: { cx: this.pos.x, cy: this.pos.y } },
+      { attr: { r: (i) => [35, 45][i] }, ease: 'power2.inOut' },
+    );
+
+    this.loop = gsap
+      .timeline({ repeatRefresh: true, repeat: -1 })
+      .add(this.maskConstrict.bind(this), 3)
+      .add(this.nextImg.bind(this), 6);
+  }
 }
 
-imgFg.append(imgBg.children[imgBg.children.length - 1]);
-
-gsap.fromTo(
-  'circle',
-  { attr: { cx: pos.x, cy: pos.y } },
-  { attr: { r: (i) => [35, 45][i] }, ease: 'power2.inOut' }
-);
-
-const loop = gsap
-  .timeline({ repeatRefresh: true, repeat: -1 })
-  .add(maskConstrict, 3)
-  .add(nextImg, 6);
+// Initialize the HeroAnimation once the DOM is fully loaded.
+document.addEventListener('DOMContentLoaded', () => {
+  new HeroAnimation();
+});
