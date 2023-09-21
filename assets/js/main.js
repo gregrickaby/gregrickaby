@@ -10,6 +10,10 @@ class HeroAnimation {
     this.imgFg = document.querySelector('.foreground');
     this.imgBg = document.querySelector('.background');
     this.imgs = [
+      'assets/images/hero/7.webp',
+      'assets/images/hero/6.webp',
+      'assets/images/hero/5.webp',
+      'assets/images/hero/4.webp',
       'assets/images/hero/3.webp',
       'assets/images/hero/2.webp',
       'assets/images/hero/1.webp',
