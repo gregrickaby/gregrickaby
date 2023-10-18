@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- 👋🏻 https://github.com/gregrickaby/gregrickaby -->
     <meta charset="utf-8" />
     <title>Greg Rickaby - Building websites since 1997</title>
     <meta
@@ -9,19 +8,6 @@
       content="Greg's expertise in building websites spans over two decades, and he channels his passion for technology, literature, and photography in everything he does."
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link rel="preconnect" href="https://static.cloudflareinsights.com" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preload" href="assets/css/main.css" as="style" />
-    <link rel="preload" href="assets/js/main.js" as="script" crossorigin />
-    <link
-      rel="preload"
-      href="assets/images/hero/1.webp"
-      as="image"
-      type="image/webp"
-    />
-
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://gregrickaby.com/" />
     <meta
@@ -34,7 +20,7 @@
     />
     <meta
       property="og:image"
-      content="https://gregrickaby.com/assets/images/rickaby-family-fall-2019_1175.webp"
+      content="https://gregrickaby.com/images/rickaby-family-fall-2019_1175.webp"
     />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://gregrickaby.com/" />
@@ -48,15 +34,16 @@
     />
     <meta
       property="twitter:image"
-      content="https://gregrickaby.com/assets/images/rickaby-family-fall-2019_1175.webp"
+      content="https://gregrickaby.com/images/rickaby-family-fall-2019_1175.webp"
     />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"
-    />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" />
+    <link rel="preload" href="/css/main.css" as="style" />
+    <link rel="preload" href="/images/logo.webp" as="image" type="image/webp" />
+    <link rel="preload" href="/images/hero.jpg" as="image" type="image/jpg" />
+
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <link rel="manifest" href="manifest.json" />
     <link rel="canonical" href="https://gregrickaby.com" />
     <meta name="theme-color" content="#111111" />
@@ -74,94 +61,237 @@
           "https://github.com/gregrickaby/",
           "https://linkedin.com/in/gregrickaby/",
           "https://profiles.wordpress.org/gregrickaby/",
-          "https://twitter.com/GregRickaby",
-          "https://www.facebook.com/gregrickaby",
-          "https://www.instagram.com/gregoryrickaby/",
-          "https://www.youtube.com/@GregRickaby",
-          "https://www.goodreads.com/author/show/16999736.Greg_Rickaby",
           "https://www.amazon.com/author/gregrickaby"
+          "https://www.facebook.com/gregrickaby",
+          "https://www.goodreads.com/author/show/16999736.Greg_Rickaby",
+          "https://www.instagram.com/gregoryrickaby/",
+          "https://www.threads.net/@gregoryrickaby",
+          "https://www.youtube.com/@GregRickaby",
         ]
       }
     </script>
   </head>
+
   <body>
+    <header>
+      <img
+        alt="Greg Rickaby"
+        class="logo"
+        height="96"
+        loading="eager"
+        src="/images/logo.webp"
+        width="96"
+      />
+      <h1 class="title">Greg Rickaby</h1>
+      <p class="description">
+        #1 Dad. Photographer. Published Author. Dev Team Lead at WPForms
+      </p>
+    </header>
     <main>
-      <aside>
-        <svg class="hero">
-          <mask id="m">
-            <circle id="c1" cx="40" cy="40" r="0" />
-            <circle id="c0" cx="40" cy="40" r="0" opacity="0.5" />
-          </mask>
-          <g class="foreground"></g>
-          <g class="background" mask="url(#m)"></g>
+      <a
+        href="https://www.instagram.com/gregoryrickaby/"
+        aria-label="View Greg's Instagram feed"
+        rel="author"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-brand-instagram"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path
+            d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"
+          ></path>
+          <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+          <path d="M16.5 7.5l0 .01"></path>
         </svg>
-      </aside>
-      <header>
-        <h1>Greg Rickaby</h1>
-        <p>#1 Dad. Photographer. Published Author. Dev Team Lead at WPForms</p>
-      </header>
-      <footer>
-        <a
-          href="https://www.instagram.com/gregoryrickaby/"
-          aria-label="View Greg's Instagram feed"
-          rel="author"
+      </a>
+      <a
+        href="https://github.com/gregrickaby"
+        aria-label="View Greg's Github stats"
+        rel="author"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-brand-github-filled"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <i class="ti ti-brand-instagram"></i>
-        </a>
-        <a
-          href="https://github.com/gregrickaby"
-          aria-label="View Greg's Github stats"
-          rel="author"
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path
+            d="M5.315 2.1c.791 -.113 1.9 .145 3.333 .966l.272 .161l.16 .1l.397 -.083a13.3 13.3 0 0 1 4.59 -.08l.456 .08l.396 .083l.161 -.1c1.385 -.84 2.487 -1.17 3.322 -1.148l.164 .008l.147 .017l.076 .014l.05 .011l.144 .047a1 1 0 0 1 .53 .514a5.2 5.2 0 0 1 .397 2.91l-.047 .267l-.046 .196l.123 .163c.574 .795 .93 1.728 1.03 2.707l.023 .295l.007 .272c0 3.855 -1.659 5.883 -4.644 6.68l-.245 .061l-.132 .029l.014 .161l.008 .157l.004 .365l-.002 .213l-.003 3.834a1 1 0 0 1 -.883 .993l-.117 .007h-6a1 1 0 0 1 -.993 -.883l-.007 -.117v-.734c-1.818 .26 -3.03 -.424 -4.11 -1.878l-.535 -.766c-.28 -.396 -.455 -.579 -.589 -.644l-.048 -.019a1 1 0 0 1 .564 -1.918c.642 .188 1.074 .568 1.57 1.239l.538 .769c.76 1.079 1.36 1.459 2.609 1.191l.001 -.678l-.018 -.168a5.03 5.03 0 0 1 -.021 -.824l.017 -.185l.019 -.12l-.108 -.024c-2.976 -.71 -4.703 -2.573 -4.875 -6.139l-.01 -.31l-.004 -.292a5.6 5.6 0 0 1 .908 -3.051l.152 -.222l.122 -.163l-.045 -.196a5.2 5.2 0 0 1 .145 -2.642l.1 -.282l.106 -.253a1 1 0 0 1 .529 -.514l.144 -.047l.154 -.03z"
+            stroke-width="0"
+            fill="currentColor"
+          ></path>
+        </svg>
+      </a>
+      <a
+        href="https://codepen.io/gregrickaby"
+        aria-label="View Greg's Codepen"
+        rel="author"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-brand-codepen"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <i class="ti ti-brand-github-filled"></i>
-        </a>
-        <a
-          href="https://codepen.io/gregrickaby"
-          aria-label="View Greg's Codepen"
-          rel="author"
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M3 15l9 6l9 -6l-9 -6l-9 6"></path>
+          <path d="M3 9l9 6l9 -6l-9 -6l-9 6"></path>
+          <path d="M3 9l0 6"></path>
+          <path d="M21 9l0 6"></path>
+          <path d="M12 3l0 6"></path>
+          <path d="M12 15l0 6"></path>
+        </svg>
+      </a>
+      <a
+        href="https://www.facebook.com/gregrickaby/"
+        aria-label="View Greg's Facebook feed"
+        rel="author"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-brand-facebook-filled"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <i class="ti ti-brand-codepen"></i>
-        </a>
-        <a
-          href="https://www.facebook.com/gregrickaby/"
-          aria-label="View Greg's Facebook feed"
-          rel="author"
-          ><i class="ti ti-brand-facebook-filled"></i
-        ></a>
-        <a
-          href="https://www.linkedin.com/in/gregrickaby/"
-          aria-label="View Greg's Linkedin profile"
-          rel="author"
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path
+            d="M18 2a1 1 0 0 1 .993 .883l.007 .117v4a1 1 0 0 1 -.883 .993l-.117 .007h-3v1h3a1 1 0 0 1 .991 1.131l-.02 .112l-1 4a1 1 0 0 1 -.858 .75l-.113 .007h-2v6a1 1 0 0 1 -.883 .993l-.117 .007h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-6h-2a1 1 0 0 1 -.993 -.883l-.007 -.117v-4a1 1 0 0 1 .883 -.993l.117 -.007h2v-1a6 6 0 0 1 5.775 -5.996l.225 -.004h3z"
+            stroke-width="0"
+            fill="currentColor"
+          ></path>
+        </svg>
+      </a>
+      <a
+        href="https://www.linkedin.com/in/gregrickaby/"
+        aria-label="View Greg's Linkedin profile"
+        rel="author"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-brand-linkedin"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <i class="ti ti-brand-linkedin"></i>
-        </a>
-        <a
-          href="https://twitter.com/gregrickaby"
-          aria-label="View Greg's Twitter feed"
-          rel="author"
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path
+            d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
+          ></path>
+          <path d="M8 11l0 5"></path>
+          <path d="M8 8l0 .01"></path>
+          <path d="M12 16l0 -5"></path>
+          <path d="M16 16v-3a2 2 0 0 0 -4 0"></path>
+        </svg>
+      </a>
+      <a
+        href="https://www.threads.net/@gregoryrickaby"
+        aria-label="View Greg's Threads feed"
+        rel="author"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-brand-threads"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <i class="ti ti-brand-twitter-filled"></i>
-        </a>
-        <a
-          href="https://profiles.wordpress.org/gregrickaby/"
-          aria-label="View Greg's WordPress profile"
-          rel="author"
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path
+            d="M19 7.5c-1.333 -3 -3.667 -4.5 -7 -4.5c-5 0 -8 2.5 -8 9s3.5 9 8 9s7 -3 7 -5s-1 -5 -7 -5c-2.5 0 -3 1.25 -3 2.5c0 1.5 1 2.5 2.5 2.5c2.5 0 3.5 -1.5 3.5 -5s-2 -4 -3 -4s-1.833 .333 -2.5 1"
+          ></path>
+        </svg>
+      </a>
+      <a
+        href="https://profiles.wordpress.org/gregrickaby/"
+        aria-label="View Greg's WordPress profile"
+        rel="author"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-brand-wordpress"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <i class="ti ti-brand-wordpress"></i>
-        </a>
-        <a
-          href="https://www.youtube.com/@GregRickaby"
-          aria-label="View Greg's YouTube channel"
-          rel="author"
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path d="M9.5 9h3"></path>
+          <path d="M4 9h2.5"></path>
+          <path d="M11 9l3 11l4 -9"></path>
+          <path d="M5.5 9l3.5 11l3 -7"></path>
+          <path
+            d="M18 11c.177 -.528 1 -1.364 1 -2.5c0 -1.78 -.776 -2.5 -1.875 -2.5c-.898 0 -1.125 .812 -1.125 1.429c0 1.83 2 2.058 2 3.571z"
+          ></path>
+          <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+        </svg>
+      </a>
+      <a
+        href="https://www.youtube.com/@GregRickaby"
+        aria-label="View Greg's YouTube channel"
+        rel="author"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-tabler icon-tabler-brand-youtube-filled"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <i class="ti ti-brand-youtube-filled"></i>
-        </a>
-      </footer>
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+          <path
+            d="M18 3a5 5 0 0 1 5 5v8a5 5 0 0 1 -5 5h-12a5 5 0 0 1 -5 -5v-8a5 5 0 0 1 5 -5zm-9 6v6a1 1 0 0 0 1.514 .857l5 -3a1 1 0 0 0 0 -1.714l-5 -3a1 1 0 0 0 -1.514 .857z"
+            stroke-width="0"
+            fill="currentColor"
+          ></path>
+        </svg>
+      </a>
     </main>
-    <script
-      defer
-      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
-    ></script>
-    <script defer crossorigin="same-site" src="assets/js/main.js"></script>
   </body>
 </html>
