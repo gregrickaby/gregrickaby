@@ -1,0 +1,75 @@
+:root {
+  --text-color: #fff;
+  --link-color: #111;
+  --link-hover-color: #b1b1b1;
+}
+
+html,
+body,
+.title,
+.description {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-image: url('/images/hero.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  color: var(--text-color);
+  cursor: pointer;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-size: 18px;
+  height: 100vh;
+  line-height: 1.625;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 0;
+
+  .logo {
+    border-radius: 100%;
+    height: 96px;
+    margin: 0 auto;
+    width: 96px;
+  }
+
+  .title {
+    font-size: 36px;
+    line-height: 0;
+  }
+}
+
+main {
+  text-align: center;
+
+  .icon {
+    background-color: var(--text-color);
+    border-radius: 100%;
+    color: var(--link-color);
+    display: inline-flex;
+    padding: 10px;
+    text-decoration: none;
+    text-shadow: none;
+    margin: 0 5px;
+
+    &:hover {
+      background-color: var(--link-hover-color);
+    }
+  }
+}
