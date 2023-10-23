@@ -24,4 +24,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_PATH }}
-          EXCLUDE: '.git/.github/,.vscode/,node_modules/,.editorconfig,.gitignore,.nojekyll,.nvmrc,package-lock.json,package.json'
+          EXCLUDE: '.git/,.github/,.vscode/,node_modules/,.editorconfig,.gitignore,.nojekyll,.nvmrc,package-lock.json,package.json'
