@@ -70,6 +70,22 @@ main {
 
     &:hover {
       background-color: var(--link-hover-color);
+      cursor: pointer;
     }
+  }
+}
+
+.button {
+  background: var(--text-color);
+  border-radius: 5px;
+  color: var(--link-color);
+  margin: 0 auto;
+  padding: 10px 20px;
+  text-decoration: none;
+  width: 250px;
+
+  &:hover {
+    background: var(--link-hover-color);
+    cursor: pointer;
   }
 }
