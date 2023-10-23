@@ -1,0 +1,27 @@
+name: Deploy to Prod
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy to Prod
+        uses: easingthemes/ssh-deploy@v2
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.REMOTE_PRIVATE_KEY }}
+          ARGS: '-av'
+          SOURCE: './'
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_PATH }}
+          EXCLUDE: '.github/,.vscode/,node_modules/,.editorconfig,.gitignore,.nojekyll,.nvmrc,package-lock.json,package.json'
