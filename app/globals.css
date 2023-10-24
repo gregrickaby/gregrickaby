@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-[url('/hero.jpg')] bg-cover bg-center bg-no-repeat text-white;
+    @apply min-h-screen bg-[url('/bg.jpg')] bg-cover bg-center bg-no-repeat text-white;
   }
 }
