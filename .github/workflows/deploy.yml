@@ -28,12 +28,6 @@ jobs:
         run: npm run build
 
       - name: Deploy to Prod
-        uses: easingthemes/ssh-deploy@v2
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.REMOTE_PRIVATE_KEY }}
-          ARGS: '-av'
-          SOURCE: './'
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.REMOTE_PATH }}
-          EXCLUDE: '.git/,.github/,.vscode/,node_modules/,.editorconfig,.gitignore,.nojekyll,.nvmrc,package-lock.json,package.json'
+        run: |
+          set -e
+          rsync -avz --exclude-from='.rsync-exclude' ./out/ ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:${{ secrets.REMOTE_PATH }}
