@@ -1,27 +1,18 @@
+/**
+ * Header component.
+ */
 export default function Header() {
   return (
-    <>
-      <header className="flex flex-col gap-8 justify-center text-center px-0 py-8">
-        <img
-          alt="Greg Rickaby"
-          className="h-24 w-24 mx-auto my-0 rounded-[100%]"
-          height={96}
-          loading="eager"
-          src="/logo.webp"
-          width={96}
-        />
-        <h1 className="text-4xl leading-[0]">Greg Rickaby</h1>
-        <p>
-          Disney Dad. Photographer. Published Author. Dev Team Lead at WPForms
-        </p>
-        <a
-          aria-label="Read Greg's blog"
-          className="button"
-          href="https://gregrickaby.com/blog"
-        >
-          Read my blog
-        </a>
-      </header>
-    </>
+    <header className="flex flex-col justify-center gap-8 text-center">
+      <img
+        alt="Greg Rickaby"
+        className="mx-auto h-24 w-24 rounded-full shadow-lg"
+        height={96}
+        loading="eager"
+        src="/logo.webp"
+        width={96}
+      />
+      <h1 className="text-4xl font-bold leading-none">Greg Rickaby</h1>
+    </header>
   )
 }
