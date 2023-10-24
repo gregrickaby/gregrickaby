@@ -19,6 +19,7 @@ jobs:
         env:
           PRIVATE_KEY: ${{ secrets.REMOTE_PRIVATE_KEY }}
         run: |
+          mkdir -p ~/.ssh
           echo "$PRIVATE_KEY" > private_key.pem
           chmod 600 private_key.pem
           ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
