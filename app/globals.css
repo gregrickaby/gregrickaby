@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-family: var(--font-inter);
+}
+
+:root {
+  --text-color: #fff;
+  --link-color: #111;
+  --link-hover-color: #b1b1b1;
+}
+
+body {
+  @apply bg-[url("/hero.jpg")] bg-cover bg-fixed text-[color:var(--text-color)] cursor-pointer text-lg h-screen leading-relaxed relative overflow-hidden p-8;
+}
+
+a {
+  @apply no-underline;
+}
+
+main {
+  @apply text-center;
+}
+
+.icon {
+  @apply bg-[color:var(--text-color)] text-[color:var(--link-color)] inline-flex no-underline mx-[5px] my-0 p-2.5 rounded-[100%] hover:bg-[color:var(--link-hover-color)] hover:cursor-pointer;
+
+  text-shadow: none;
+}
+
+.button {
+  @apply text-[color:var(--link-color)] no-underline max-w-[250px] mx-auto my-0 px-5 py-2.5 rounded-[5px] hover:cursor-pointer;
+
+  background: var(--text-color);
+}
+
+.button:hover {
+  background: var(--link-hover-color);
+}
