@@ -25,6 +25,7 @@ const googleFont = Fira_Sans({
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#basic-fields
  */
 export const metadata: Metadata = {
+  metadataBase: new URL(config.siteUrl),
   title: config.siteName,
   description: config.siteDescription,
   robots: 'follow, index',
