@@ -29,6 +29,9 @@ export const metadata: Metadata = {
   title: config.siteName,
   description: config.siteDescription,
   robots: 'follow, index',
+  alternates: {
+    canonical: config.siteUrl
+  },
   openGraph: {
     title: config.siteName,
     description: config.siteDescription,
