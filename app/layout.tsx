@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import Meta from '@/components/JsonLd'
+import {PreloadResources} from '@/components/PreloadResources'
 import config from '@/lib/config'
 import type {Metadata} from 'next'
 import {Fira_Sans} from 'next/font/google'
@@ -52,6 +53,7 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
+      <PreloadResources />
       <body
         className={`container mx-auto space-y-8 p-12 ${googleFont.className}`}
       >
