@@ -20,9 +20,14 @@ const config = {
   siteOgImage: '/rickaby-family-fall-2019_1175.webp',
   socials: [
     {
-      name: 'CodePen',
-      url: 'https://codepen.io/gregrickaby',
-      icon: FaCodepen
+      name: 'Instagram',
+      url: 'https://www.instagram.com/gregoryrickaby/',
+      icon: FaInstagram
+    },
+    {
+      name: 'Threads',
+      url: 'https://www.threads.net/@gregoryrickaby',
+      icon: FaThreads
     },
     {
       name: 'GitHub',
@@ -60,14 +65,9 @@ const config = {
       icon: FaGoodreadsG
     },
     {
-      name: 'Instagram',
-      url: 'https://www.instagram.com/gregoryrickaby/',
-      icon: FaInstagram
-    },
-    {
-      name: 'Threads',
-      url: 'https://www.threads.net/@gregoryrickaby',
-      icon: FaThreads
+      name: 'CodePen',
+      url: 'https://codepen.io/gregrickaby',
+      icon: FaCodepen
     },
     {
       name: 'YouTube',
