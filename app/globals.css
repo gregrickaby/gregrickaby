@@ -3,10 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply min-h-screen bg-[url('/bg.jpg')] bg-cover bg-center bg-no-repeat text-white;
-  }
-
   a {
     @apply underline hover:no-underline;
   }
