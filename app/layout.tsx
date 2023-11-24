@@ -75,7 +75,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           <div className="absolute inset-0 mx-auto space-y-8 p-12">
             <Header />
             {children}
-            <Footer />B
+            <Footer />
           </div>
         </div>
       </body>
