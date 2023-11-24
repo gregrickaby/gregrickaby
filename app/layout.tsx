@@ -1,9 +1,10 @@
+import Background from '@/components/Background'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import Meta from '@/components/JsonLd'
 import {PreloadResources} from '@/components/PreloadResources'
 import config from '@/lib/config'
-import type {Metadata} from 'next'
+import type {Metadata, Viewport} from 'next'
 import {Fira_Sans} from 'next/font/google'
 import './globals.css'
 
@@ -47,8 +48,17 @@ export const metadata: Metadata = {
     locale: 'en_US',
     type: 'website'
   },
-  themeColor: '#111111',
   manifest: '/manifest.json'
+}
+
+/**
+ * Setup viewport.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-viewport#the-viewport-object
+ */
+export const viewport: Viewport = {
+  colorScheme: 'dark',
+  themeColor: '#111111'
 }
 
 /**
@@ -58,13 +68,16 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <PreloadResources />
-      <body
-        className={`container mx-auto space-y-8 p-12 ${googleFont.className}`}
-      >
+      <body className={`${googleFont.className}`}>
         <Meta />
-        <Header />
-        {children}
-        <Footer />
+        <div className="relative h-screen w-screen">
+          <Background />
+          <div className="absolute inset-0 mx-auto space-y-8 p-12">
+            <Header />
+            {children}
+            <Footer />B
+          </div>
+        </div>
       </body>
     </html>
   )
