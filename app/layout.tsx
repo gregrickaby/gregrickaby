@@ -38,15 +38,16 @@ export const metadata: Metadata = {
     description: config.siteDescription,
     url: config.siteUrl,
     siteName: config.siteName,
+    locale: 'en_US',
+    type: 'website',
     images: [
       {
         url: config.siteOgImage,
         width: 1175,
-        height: 882
+        height: 882,
+        alt: config.siteName
       }
-    ],
-    locale: 'en_US',
-    type: 'website'
+    ]
   },
   manifest: '/manifest.json'
 }
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
  */
 export const viewport: Viewport = {
   colorScheme: 'dark',
-  themeColor: '#111111'
+  themeColor: '#18181b'
 }
 
 /**
