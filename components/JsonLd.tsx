@@ -1,4 +1,4 @@
-import config from '@/app/lib/config'
+import config from '@/lib/config'
 
 /**
  * JsonLD component.

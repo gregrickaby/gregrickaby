@@ -1,4 +1,4 @@
-import SocialLinks from '@/app/components/SocialLinks'
+import SocialLinks from '@/components/SocialLinks'
 
 /**
  * Footer component.
