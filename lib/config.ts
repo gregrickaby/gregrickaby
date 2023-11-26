@@ -18,6 +18,7 @@ const config = {
   siteUrl: 'https://gregrickaby.com',
   siteLogo: '/logo.webp',
   siteOgImage: '/rickaby-family-fall-2019_1175.webp',
+  gravatarUrl: 'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
   socials: [
     {
       name: 'Instagram',
