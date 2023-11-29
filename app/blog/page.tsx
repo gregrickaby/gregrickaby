@@ -1,5 +1,7 @@
+import config from '@/lib/config'
 import getAllPosts from '@/lib/queries/getAllPosts'
 import {Post} from '@/lib/types'
+import type {Metadata} from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
@@ -9,7 +11,19 @@ import {notFound} from 'next/navigation'
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
+export const dynamic = 'force-dynamic'
 export const revalidate = 3600
+
+/**
+ * Setup metadata.
+ *
+ * @see https://nextjs.org/docs/app/building-your-application/optimizing/metadata
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#basic-fields
+ */
+export const metadata: Metadata = {
+  title: `${config.siteName} - Blog Archive`,
+  description: 'The latest posts from the blog.'
+}
 
 /**
  * The blog archive route.
@@ -26,7 +40,7 @@ export default async function Archive() {
   }
 
   return (
-    <main className="flex flex-col gap-8">
+    <main className="container m-auto flex flex-col gap-8">
       <aside>
         <h2>Latest Posts</h2>
         <div className="flex flex-wrap gap-8">
