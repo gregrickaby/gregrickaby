@@ -3,6 +3,7 @@
  */
 const nextConfig = {
   images: {
+    domains: ['blog.gregrickaby.com'],
     formats: ['image/avif', 'image/webp']
   }
 }
