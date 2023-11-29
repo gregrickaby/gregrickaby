@@ -3,7 +3,12 @@
  */
 const nextConfig = {
   images: {
-    domains: ['blog.gregrickaby.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'blog.gregrickaby.com'
+      }
+    ],
     formats: ['image/avif', 'image/webp']
   }
 }
