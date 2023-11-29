@@ -8,9 +8,9 @@ export default function JsonLD() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Greg Rickaby',
-    jobTitle: 'Development Team Lead at WPForms',
-    url: 'https://gregrickaby.com',
+    name: config.siteName,
+    jobTitle: config.jobTitle,
+    url: config.siteUrl,
     sameAs: config.socials.map((social) => {
       return social.url
     })

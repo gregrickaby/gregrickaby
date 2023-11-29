@@ -16,8 +16,11 @@ const config = {
   siteDescription: 'Building websites since 1997.',
   siteUrl: 'https://gregrickaby.com',
   siteLogo: '/logo.webp',
-  siteOgImage: '/rickaby-family-fall-2019_1175.webp',
+  siteOgImage: '/og.webp',
   gravatarUrl: 'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
+  jobTitle: 'Development Team Lead at WPForms',
+  intro:
+    'Disney Dad. Photographer. Published Author. Dev Team Lead at WPForms.',
   socials: [
     {
       name: 'Instagram',
