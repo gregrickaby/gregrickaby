@@ -21,7 +21,7 @@ export default function NotFound() {
         className="mx-auto"
         height="160"
         loading="eager"
-        src="/thor.gif"
+        src="/404.webp"
         width="160"
       />
     </main>
