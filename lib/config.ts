@@ -6,6 +6,7 @@ import {
   FaGoodreadsG,
   FaInstagram,
   FaLinkedin,
+  FaRegFileLines,
   FaThreads,
   FaWordpress,
   FaYoutube
@@ -23,6 +24,11 @@ const config = {
   gravatarApiUrl:
     'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
   socials: [
+    {
+      name: 'Blog',
+      url: '/blog/',
+      icon: FaRegFileLines
+    },
     {
       name: 'Instagram',
       url: 'https://www.instagram.com/gregoryrickaby/',
