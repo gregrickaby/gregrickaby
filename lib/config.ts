@@ -6,7 +6,6 @@ import {
   FaGoodreadsG,
   FaInstagram,
   FaLinkedin,
-  FaRegFileLines,
   FaThreads,
   FaWordpress,
   FaYoutube
@@ -34,11 +33,6 @@ const config = {
       name: 'GitHub',
       url: 'https://github.com/gregrickaby/',
       icon: FaGithub
-    },
-    {
-      name: 'Blog',
-      url: 'https://gregrickaby.com/blog/',
-      icon: FaRegFileLines
     },
     {
       name: 'LinkedIn',
