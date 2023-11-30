@@ -1,12 +1,21 @@
 import CommentForm from '@/components/CommentForm'
-import getAllPosts from '@/lib/queries/getAllPosts'
+import config from '@/lib/config'
 import getPostBySlug from '@/lib/queries/getPostBySlug'
+import getPosts from '@/lib/queries/getPosts'
+import {Post} from '@/lib/types'
 import {Metadata} from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import {notFound} from 'next/navigation'
 
+/**
+ * Route segment config.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+ */
 export const dynamicParams = true
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 /**
  * Generate the static routes at build time.
@@ -14,8 +23,8 @@ export const revalidate = 60
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-static-params
  */
 export async function generateStaticParams() {
-  // Get all blog posts.
-  const posts = await getAllPosts()
+  // Get blog posts.
+  const posts = await getPosts()
 
   // No posts? Bail...
   if (!posts) {
@@ -47,8 +56,24 @@ export async function generateMetadata({
   }
 
   return {
-    title: post.title,
-    description: post.excerpt
+    title: `${post.title} - ${config.siteName}`,
+    description: post.excerpt,
+    openGraph: {
+      title: `${post.title} - ${config.siteName}`,
+      description: post.excerpt,
+      url: `${config.siteUrl}/blog/${params.slug}`,
+      siteName: config.siteName,
+      locale: 'en_US',
+      type: 'website',
+      images: [
+        {
+          url: post?.featuredImage?.node?.mediaDetails?.sizes[0]?.sourceUrl,
+          width: post?.featuredImage?.node?.mediaDetails?.sizes[0]?.width,
+          height: post?.featuredImage?.node?.mediaDetails?.sizes[0]?.height,
+          alt: post.title
+        }
+      ]
+    }
   }
 }
 
@@ -61,20 +86,29 @@ export default async function Post({params}: {params: {slug: string}}) {
   // Fetch a single post from WordPress.
   const post = await getPostBySlug(params.slug)
 
+  // Get blog posts.
+  const posts = await getPosts(2)
+
   // No post? Bail...
   if (!post) {
     notFound()
   }
 
   return (
-    <article>
+    <article className="container m-auto max-w-3xl space-y-8">
       <header>
-        <h2 dangerouslySetInnerHTML={{__html: post.title}} />
-        <p className="italic">
+        <h1
+          className="m-0 p-0 text-2xl font-bold leading-none"
+          dangerouslySetInnerHTML={{__html: post.title}}
+        />
+        <p className="mt-4 italic">
           By {post.author.node.name} on <time>{post.date}</time>
         </p>
       </header>
-      <div dangerouslySetInnerHTML={{__html: post.content}} />
+      <div
+        className="space-y-8 text-lg"
+        dangerouslySetInnerHTML={{__html: post.content}}
+      />
       <footer className="flex items-center justify-between gap-4 pb-4">
         <div>
           <h3>Categories</h3>
@@ -98,8 +132,8 @@ export default async function Post({params}: {params: {slug: string}}) {
           </ul>
         </div>
       </footer>
-      <section className="border-t-2">
-        <h3>Comments</h3>
+      <section className="border-t-2 pt-4">
+        <h3 className="text-xl font-bold">Comments</h3>
         {post.comments.nodes.map((comment) => (
           <article key={comment.databaseId}>
             <header className="flex items-center gap-2">
@@ -124,6 +158,33 @@ export default async function Post({params}: {params: {slug: string}}) {
         ))}
       </section>
       <CommentForm postID={post.databaseId} />
+      <aside>
+        <h2>Recent Posts</h2>
+        <div className="flex flex-wrap gap-8">
+          {posts.map((post: Post) => (
+            <article className="w-72" key={post.databaseId}>
+              {post.featuredImage?.node?.mediaDetails?.sizes?.[0] && (
+                <Link href={`/blog/${post.slug}`}>
+                  <Image
+                    alt={post.featuredImage.node.altText}
+                    height={
+                      post.featuredImage.node.mediaDetails.sizes[0].height
+                    }
+                    src={
+                      post.featuredImage.node.mediaDetails.sizes[0].sourceUrl
+                    }
+                    width={post.featuredImage.node.mediaDetails.sizes[0].width}
+                    priority={true}
+                  />
+                </Link>
+              )}
+              <Link href={`/blog/${post.slug}`}>
+                <h2 dangerouslySetInnerHTML={{__html: post.title}} />
+              </Link>
+            </article>
+          ))}
+        </div>
+      </aside>
     </article>
   )
 }
