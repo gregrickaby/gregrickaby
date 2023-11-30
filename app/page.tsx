@@ -1,7 +1,5 @@
-import getPosts from '@/lib/queries/getPosts'
-import {Post} from '@/lib/types'
+import getPageBySlug from '@/lib/queries/getPageBySlug'
 import Image from 'next/image'
-import Link from 'next/link'
 import {notFound} from 'next/navigation'
 
 /**
@@ -13,55 +11,34 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 3600
 
 /**
- * The blog archive.
+ * The homepage route.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
-export default async function Blog() {
-  // Fetch posts from WordPress.
-  const posts = await getPosts()
+export default async function Home() {
+  // Fetch page from WordPress.
+  const page = await getPageBySlug('about')
 
-  // No data? Bail...
-  if (!posts || !posts.length) {
+  // No page? Throw a 404.
+  if (!page) {
     notFound()
   }
 
   return (
-    <main className="flex flex-col gap-8">
-      <aside>
-        <h2>Latest Posts</h2>
-        <div className="flex flex-wrap gap-8">
-          {posts.map((post: Post) => (
-            <article className="w-72" key={post.databaseId}>
-              {post.featuredImage?.node?.mediaDetails?.sizes?.[0] && (
-                <Link href={`/blog/${post.slug}`}>
-                  <Image
-                    alt={post.featuredImage.node.altText}
-                    height={
-                      post.featuredImage.node.mediaDetails.sizes[0].height
-                    }
-                    src={
-                      post.featuredImage.node.mediaDetails.sizes[0].sourceUrl
-                    }
-                    width={post.featuredImage.node.mediaDetails.sizes[0].width}
-                    priority={true}
-                  />
-                </Link>
-              )}
-              <Link href={`/blog/${post.slug}`}>
-                <h2 dangerouslySetInnerHTML={{__html: post.title}} />
-              </Link>
-              <p className="text-sm text-gray-500">
-                {post.commentCount > 0 ? post.commentCount : 0} comments
-              </p>
-              <div dangerouslySetInnerHTML={{__html: post.excerpt}} />
-              <Link className="button" href={`/blog/${post.slug}`}>
-                View Post
-              </Link>
-            </article>
-          ))}
-        </div>
-      </aside>
+    <main className="mx-auto flex max-w-3xl flex-col gap-8">
+      <article>
+        {page.featuredImage?.node?.mediaDetails?.sizes?.[0] && (
+          <Image
+            alt={page.featuredImage.node.altText}
+            height="400"
+            src={page.featuredImage.node.mediaDetails.sizes[0].sourceUrl}
+            width="768"
+            priority={true}
+          />
+        )}
+        <h1 dangerouslySetInnerHTML={{__html: page.title}} />
+        <div dangerouslySetInnerHTML={{__html: page.content}} />
+      </article>
     </main>
   )
 }
