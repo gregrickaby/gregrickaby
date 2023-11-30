@@ -1,8 +1,6 @@
-import Background from '@/components/Background'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import Meta from '@/components/JsonLd'
-import {Preload} from '@/components/Preload'
 import config from '@/lib/config'
 import type {Metadata, Viewport} from 'next'
 import {Fira_Sans} from 'next/font/google'
@@ -68,17 +66,11 @@ export const viewport: Viewport = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-      <Preload />
       <body className={`${googleFont.className}`}>
         <Meta />
-        <div className="relative h-screen w-screen">
-          <Background />
-          <div className="absolute inset-0 mx-auto space-y-8 p-12">
-            <Header />
-            {children}
-            <Footer />
-          </div>
-        </div>
+        <Header />
+        {children}
+        <Footer />
       </body>
     </html>
   )
