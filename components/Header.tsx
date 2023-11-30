@@ -25,7 +25,7 @@ export default async function Header() {
               {config.siteName}
             </h1>
           </Link>
-          <p className="m-0 max-w-sm p-0 text-lg">{config.intro}</p>
+          <p className="m-0 max-w-sm p-0 text-lg">{config.siteDescription}</p>
         </div>
       </div>
       <nav className="flex justify-center gap-8 text-center text-xl">

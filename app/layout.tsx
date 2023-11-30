@@ -25,15 +25,15 @@ const googleFont = Fira_Sans({
  */
 export const metadata: Metadata = {
   metadataBase: new URL(config.siteUrl),
-  title: config.siteName,
-  description: config.siteDescription,
+  title: `${config.siteName} - ${config.siteDescription}`,
+  description: config.intro,
   robots: 'follow, index',
   alternates: {
     canonical: config.siteUrl
   },
   openGraph: {
     title: config.siteName,
-    description: config.siteDescription,
+    description: config.intro,
     url: config.siteUrl,
     siteName: config.siteName,
     locale: 'en_US',
