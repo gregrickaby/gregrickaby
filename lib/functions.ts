@@ -53,3 +53,16 @@ export async function fetchGraphQL<T = any>(
     throw error
   }
 }
+
+/**
+ * Format a date.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
+ */
+export function formatDate(date: string) {
+  return new Intl.DateTimeFormat('en-US', {
+    dateStyle: 'full',
+    timeStyle: 'short',
+    timeZone: 'America/Chicago'
+  }).format(new Date(date))
+}
