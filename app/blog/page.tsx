@@ -1,7 +1,5 @@
+import LatestPosts from '@/components/LatestPosts'
 import getPosts from '@/lib/queries/getPosts'
-import {Post} from '@/lib/types'
-import Image from 'next/image'
-import Link from 'next/link'
 import {notFound} from 'next/navigation'
 
 /**
@@ -21,41 +19,10 @@ export default async function Blog() {
   // Fetch posts from WordPress.
   const posts = await getPosts(15)
 
-  // No data? Bail...
-  if (!posts || !posts.length) {
+  // No posts? Throw a 404.
+  if (!posts) {
     notFound()
   }
 
-  return (
-    <main className="flex flex-col gap-8">
-      <h2 className="m-0 text-3xl">Latest Posts</h2>
-      <div className="flex flex-wrap gap-8">
-        {posts.map((post: Post) => (
-          <article className="max-w-[309px]" key={post.databaseId}>
-            {post.featuredImage?.node?.mediaDetails?.sizes?.[0] && (
-              <Link href={`/blog/${post.slug}`}>
-                <Image
-                  alt={post.featuredImage.node.altText}
-                  height={post.featuredImage.node.mediaDetails.sizes[0].height}
-                  src={post.featuredImage.node.mediaDetails.sizes[0].sourceUrl}
-                  width={post.featuredImage.node.mediaDetails.sizes[0].width}
-                  priority={true}
-                />
-              </Link>
-            )}
-            <Link href={`/blog/${post.slug}`}>
-              <h2 dangerouslySetInnerHTML={{__html: post.title}} />
-            </Link>
-            <p className="text-sm text-gray-500">
-              {post.commentCount > 0 ? post.commentCount : 0} comments
-            </p>
-            <div dangerouslySetInnerHTML={{__html: post.excerpt}} />
-            <Link className="button" href={`/blog/${post.slug}`}>
-              View Post
-            </Link>
-          </article>
-        ))}
-      </div>
-    </main>
-  )
+  return <LatestPosts posts={posts} />
 }
