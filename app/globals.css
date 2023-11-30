@@ -4,8 +4,8 @@
 
 @layer base {
   body {
-    @apply relative mx-auto space-y-8 px-4 antialiased;
-    @apply prose prose-zinc dark:prose-invert max-w-5xl;
+    @apply relative mx-auto space-y-8 px-8 antialiased lg:px-0;
+    @apply prose prose-zinc max-w-4xl dark:prose-invert;
     @apply dark:bg-zinc-900;
   }
 
