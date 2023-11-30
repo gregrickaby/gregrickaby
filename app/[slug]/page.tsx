@@ -3,7 +3,7 @@ import config from '@/lib/config'
 import getPageBySlug from '@/lib/queries/getPageBySlug'
 import getPages from '@/lib/queries/getPages'
 import {Metadata} from 'next'
-import {notFound, redirect} from 'next/navigation'
+import {notFound} from 'next/navigation'
 
 /**
  * Route segment config.
@@ -80,11 +80,6 @@ export async function generateMetadata({
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
 export default async function Page({params}: {params: {slug: string}}) {
-  // If the route is the RSS feed, redirect.
-  if (params.slug === 'feed.xml') {
-    redirect('/feed')
-  }
-
   // Fetch a page from WordPress.
   const page = await getPageBySlug(params.slug)
 

@@ -6,10 +6,24 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'blog.gregrickaby.com'
+        hostname: '*.gregrickaby.com'
       }
     ],
     formats: ['image/avif', 'image/webp']
+  },
+  async redirects() {
+    return [
+      {
+        source: '/feed.xml',
+        destination: '/feed',
+        permanent: true
+      },
+      {
+        source: '/:year(\\d{4})/:month(\\d{2})/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true
+      }
+    ]
   }
 }
 
