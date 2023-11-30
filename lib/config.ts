@@ -18,6 +18,7 @@ const config = {
   siteLogo: '/logo.webp',
   siteOgImage: '/og.webp',
   jobTitle: 'Development Team Lead at WPForms',
+  email: 'greg@gregrickaby.com',
   intro:
     'Disney Dad. Photographer. Published Author. Dev Team Lead at WPForms.',
   gravatarApiUrl:

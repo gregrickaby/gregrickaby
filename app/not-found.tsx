@@ -15,6 +15,7 @@ export default function NotFound() {
         loading="eager"
         src="/404.webp"
         width="160"
+        priority={true}
       />
       <p>
         The missing page might be on the{' '}
