@@ -6,7 +6,7 @@ import Link from 'next/link'
  */
 export default function NotFound() {
   return (
-    <main className="flex flex-col space-y-8 text-center">
+    <div className="text-center">
       <h1 className="text-3xl font-bold">404 - Not Found</h1>
       <Image
         alt=""
@@ -24,6 +24,6 @@ export default function NotFound() {
         .
       </p>
       <Link href="/">Return Home</Link>
-    </main>
+    </div>
   )
 }
