@@ -16,7 +16,7 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
     <article>
       <header>
         <h1
-          className="m-0 p-0 text-2xl font-bold leading-none"
+          className="m-0 p-0 leading-none"
           dangerouslySetInnerHTML={{__html: post.title}}
         />
         <p className="mt-4 italic">

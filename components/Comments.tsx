@@ -11,8 +11,11 @@ interface CommentsProps {
 export default function Comments({post}: CommentsProps) {
   return (
     <>
-      <section className="border-b-2 border-t-2 border-zinc-500 pt-4">
+      <section className="border-t-2 border-zinc-500 py-4">
         <h3 className="text-3xl font-bold">Comments</h3>
+        {!post.comments.nodes.length && (
+          <p className="italic">No comments yet.</p>
+        )}
         {post.comments.nodes.map((comment) => (
           <article key={comment.databaseId}>
             <header className="flex items-center gap-2">

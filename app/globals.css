@@ -5,7 +5,8 @@
 @layer base {
   body {
     @apply relative mx-auto space-y-8 px-8 antialiased lg:px-0;
-    @apply prose prose-zinc max-w-4xl bg-white dark:prose-invert lg:prose-xl dark:bg-zinc-900;
+    @apply prose prose-zinc max-w-4xl lg:prose-xl;
+    @apply bg-white dark:prose-invert dark:bg-zinc-900;
   }
 
   input {

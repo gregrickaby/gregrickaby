@@ -12,7 +12,7 @@ interface LatestPostsProps {
 export default function LatestPosts({posts}: LatestPostsProps) {
   return (
     <>
-      <h2 className="font-3xl m-0">Latest Posts</h2>
+      <h3>Latest Posts</h3>
       <div className="grid gap-8 md:grid-cols-3">
         {posts.map((post: Post) => (
           <article key={post.databaseId}>

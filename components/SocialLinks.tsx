@@ -6,7 +6,7 @@ import React from 'react'
  */
 export default function SocialLinks() {
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="flex flex-wrap justify-center gap-4 pb-4">
       {config.socials.map((social) => (
         <a
           aria-label={`View Greg's ${social.name}`}
