@@ -30,7 +30,6 @@ export default async function Header() {
       </div>
       <nav className="flex justify-center gap-8 text-center text-xl">
         <Link href="/">Home</Link>
-        <Link href="/about">About</Link>
         <Link href="/blog">Blog</Link>
         <Link href="/contact">Contact</Link>
       </nav>
