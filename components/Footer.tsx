@@ -5,8 +5,19 @@ import SocialLinks from '@/components/SocialLinks'
  */
 export default function Footer() {
   return (
-    <footer className="pt-2">
+    <footer className="mx-auto my-12 max-w-2xl border-t border-zinc-500 pt-12">
       <SocialLinks />
+      <p className="text-center text-xs">
+        Unless otherwise noted, all content on this website is licensed under{' '}
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+          CC BY-NC-ND 4.0
+        </a>
+        .
+      </p>
+
+      <p className="text-center text-sm">
+        &copy; 2008 - {new Date().getFullYear()} Greg Rickaby
+      </p>
     </footer>
   )
 }
