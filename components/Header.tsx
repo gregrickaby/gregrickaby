@@ -32,6 +32,7 @@ export default async function Header() {
         <Link href="/">Home</Link>
         <Link href="/blog">Blog</Link>
         <Link href="/contact">Contact</Link>
+        <Link href="/feed">RSS</Link>
       </nav>
     </header>
   )
