@@ -2,12 +2,12 @@ import {fetchGraphQL} from '@/lib/functions'
 import {Page} from '@/lib/types'
 
 /**
- * Fetch all pages.
+ * Fetch pages.
  */
-export default async function getAllPages() {
+export default async function getPages(limit = 100) {
   const query = `
-    query GetAllPages {
-      pages(where: {status: PUBLISH}) {
+    query GetPages {
+      pages(where: {status: PUBLISH}, first: ${limit}) {
         nodes {
           content(format: RENDERED)
           databaseId

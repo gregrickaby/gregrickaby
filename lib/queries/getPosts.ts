@@ -2,12 +2,12 @@ import {fetchGraphQL} from '@/lib/functions'
 import {Post} from '@/lib/types'
 
 /**
- * Fetch all blog posts.
+ * Fetch blog posts.
  */
-export default async function getAllPosts() {
+export default async function getPosts(limit = 100) {
   const query = `
-    query GetAllPosts {
-      posts(where: {status: PUBLISH}) {
+    query GetPosts {
+      posts(where: {status: PUBLISH}, first: ${limit}) {
         nodes {
           commentCount
           databaseId
