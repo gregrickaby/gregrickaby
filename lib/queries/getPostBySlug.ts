@@ -42,6 +42,10 @@ export default async function getPostBySlug(slug: string) {
             name
           }
         }
+        seo {
+          metaDesc
+          title
+        }
         comments(first: 10, where: {order: ASC}) {
           nodes {
             content(format: RENDERED)

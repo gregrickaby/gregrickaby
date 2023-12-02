@@ -30,6 +30,10 @@ export default async function getPageBySlug(slug: string) {
           }
         }
         date
+        seo {
+          metaDesc
+          title
+        }
       }
     }
   `
