@@ -15,7 +15,7 @@
   },
   "homepage": "https://gregrickaby.com",
   "scripts": {
-    "build": "next build --turbo",
+    "build": "next build",
     "clean": "rimraf .next",
     "dev": "npm run clean && next dev --turbo",
     "format": "npx prettier '**/*.{js,jsx,ts,tsx,md,html,css,json,yml}' --config=.prettierrc.js --write || true",
