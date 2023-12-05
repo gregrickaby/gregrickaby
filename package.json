@@ -15,9 +15,9 @@
   },
   "homepage": "https://gregrickaby.com",
   "scripts": {
-    "build": "next build",
+    "build": "next build --turbo",
     "clean": "rimraf .next",
-    "dev": "npm run clean && next dev",
+    "dev": "npm run clean && next dev --turbo",
     "format": "npx prettier '**/*.{js,jsx,ts,tsx,md,html,css,json,yml}' --config=.prettierrc.js --write || true",
     "lint": "next lint",
     "start": "next start"
@@ -29,8 +29,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "^20.10.2",
-    "@types/react": "^18.2.40",
+    "@types/node": "^20.10.3",
+    "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",
     "@types/rss": "^0.0.32",
     "autoprefixer": "^10.4.16",
@@ -47,7 +47,7 @@
     "sharp": "^0.33.0",
     "stylelint": "^15.11.0",
     "stylelint-config-standard": "^34.0.0",
-    "tailwindcss": "^3.3.5",
+    "tailwindcss": "^3.3.6",
     "typescript": "^5.3.2"
   }
 }

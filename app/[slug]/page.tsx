@@ -53,8 +53,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${page.title} - ${config.siteName}`,
-    description: page.excerpt,
+    title: `${page.seo.title} - ${config.siteName}`,
+    description: page.seo.metaDesc,
     openGraph: {
       title: `${page.title} - ${config.siteName}`,
       description: page.excerpt,
