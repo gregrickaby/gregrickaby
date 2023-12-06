@@ -29,7 +29,10 @@ export const metadata: Metadata = {
   description: config.intro,
   robots: 'follow, index',
   alternates: {
-    canonical: config.siteUrl
+    canonical: config.siteUrl,
+    types: {
+      'application/rss+xml': `${config.siteUrl}/feed`
+    }
   },
   openGraph: {
     title: config.siteName,
