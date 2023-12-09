@@ -3,14 +3,6 @@ import getPosts from '@/lib/queries/getPosts'
 import RSS from 'rss'
 
 /**
- * Route segment config.
- *
- * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
- */
-export const dynamic = 'force-dynamic'
-export const revalidate = 3600
-
-/**
  * Route handler.
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route
