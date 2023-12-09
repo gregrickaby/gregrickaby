@@ -1,5 +1,5 @@
+import FeaturedImage from '@/components/FeaturedImage'
 import getPageBySlug from '@/lib/queries/getPageBySlug'
-import Image from 'next/image'
 import {notFound} from 'next/navigation'
 
 /**
@@ -19,15 +19,10 @@ export default async function Home() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-8">
       <article>
-        {page.featuredImage?.node && (
-          <Image
-            alt={page.featuredImage.node.altText}
-            height="400"
-            src={page.featuredImage.node.sourceUrl}
-            width="768"
-            priority={true}
-          />
-        )}
+        <FeaturedImage
+          image={page.featuredImage}
+          hidden={page.hideFeaturedImage.hideFeaturedImage}
+        />
         <h1 dangerouslySetInnerHTML={{__html: page.title}} />
         <div dangerouslySetInnerHTML={{__html: page.content}} />
       </article>
