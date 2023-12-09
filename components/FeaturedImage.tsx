@@ -3,14 +3,15 @@ import Image from 'next/image'
 
 export interface FeaturedImageProps {
   image: FeaturedImage
+  hidden: boolean
 }
 
 /**
  * Featured Image component.
  */
-export default function FeaturedImage({image}: FeaturedImageProps) {
-  // If there's no image, return null.
-  if (!image) {
+export default function FeaturedImage({image, hidden}: FeaturedImageProps) {
+  // If there's no image, or it's hidden, don't render anything.
+  if (!image || hidden) {
     return null
   }
 

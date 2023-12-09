@@ -32,6 +32,9 @@ export default async function getPageBySlug(slug: string) {
           metaDesc
           title
         }
+        hideFeaturedImage {
+          hideFeaturedImage
+        }
       }
     }
   `

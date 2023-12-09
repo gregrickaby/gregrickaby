@@ -44,6 +44,9 @@ export default async function getPostBySlug(slug: string) {
           metaDesc
           title
         }
+        hideFeaturedImage {
+          hideFeaturedImage
+        }
         comments(first: 10, where: {order: ASC}) {
           nodes {
             content(format: RENDERED)

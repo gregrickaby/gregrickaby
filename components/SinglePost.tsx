@@ -20,7 +20,10 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
           className="m-0 p-0 leading-none"
           dangerouslySetInnerHTML={{__html: post.title}}
         />
-        <FeaturedImage image={post.featuredImage} />
+        <FeaturedImage
+          image={post.featuredImage}
+          hidden={post.hideFeaturedImage.hideFeaturedImage}
+        />
         <p className="mt-4 italic">
           By {post.author.node.name} on{' '}
           <time dateTime={post.date}>{formatDate(post.date)}</time>

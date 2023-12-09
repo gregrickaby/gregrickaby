@@ -48,6 +48,9 @@ export interface Page {
     metaDesc: string
     title: string
   }
+  hideFeaturedImage: {
+    hideFeaturedImage: boolean
+  }
 }
 
 export interface Post {
@@ -101,6 +104,9 @@ export interface Post {
         }
       }
     ]
+  }
+  hideFeaturedImage: {
+    hideFeaturedImage: boolean
   }
 }
 
