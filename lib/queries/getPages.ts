@@ -16,12 +16,10 @@ export default async function getPages(limit = 100) {
           featuredImage {
             node {
               altText
+              sourceUrl
               mediaDetails {
-                sizes {
                   height
                   width
-                  sourceUrl
-                }
               }
             }
           }

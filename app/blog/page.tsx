@@ -9,7 +9,7 @@ import {notFound} from 'next/navigation'
  */
 export default async function Blog() {
   // Fetch posts from WordPress.
-  const posts = await getPosts(15)
+  const posts = await getPosts(150)
 
   // No posts? Throw a 404.
   if (!posts) {

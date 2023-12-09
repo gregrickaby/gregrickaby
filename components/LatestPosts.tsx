@@ -16,13 +16,13 @@ export default function LatestPosts({posts}: LatestPostsProps) {
       <div className="grid gap-8 md:grid-cols-3">
         {posts.map((post: Post) => (
           <article key={post.databaseId}>
-            {post.featuredImage?.node?.mediaDetails?.sizes?.[0] && (
+            {post.featuredImage?.node && (
               <Link href={`/blog/${post.slug}`}>
                 <Image
                   alt={post.featuredImage.node.altText}
-                  height={post.featuredImage.node.mediaDetails.sizes[0].height}
-                  src={post.featuredImage.node.mediaDetails.sizes[0].sourceUrl}
-                  width={post.featuredImage.node.mediaDetails.sizes[0].width}
+                  height={post.featuredImage.node.mediaDetails.height}
+                  src={post.featuredImage.node.sourceUrl}
+                  width={post.featuredImage.node.mediaDetails.width}
                   priority={true}
                 />
               </Link>

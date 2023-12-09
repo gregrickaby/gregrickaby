@@ -5,6 +5,17 @@ export interface GraphQLResponse<T = any> {
   errors?: Array<{message: string}>
 }
 
+export interface FeaturedImage {
+  node: {
+    altText: string
+    sourceUrl: string
+    mediaDetails: {
+      height: number
+      width: number
+    }
+  }
+}
+
 export interface Menu {
   menuItems: {
     edges: [
@@ -32,21 +43,7 @@ export interface Page {
   title: string
   excerpt: string
   content: string
-  featuredImage: {
-    node: {
-      altText: string
-      mediaDetails: {
-        sizes: [
-          {
-            name: string
-            sourceUrl: string
-            height: number
-            width: number
-          }
-        ]
-      }
-    }
-  }
+  featuredImage: FeaturedImage
   seo: {
     metaDesc: string
     title: string
@@ -83,21 +80,7 @@ export interface Post {
       }
     ]
   }
-  featuredImage: {
-    node: {
-      altText: string
-      mediaDetails: {
-        sizes: [
-          {
-            name: string
-            sourceUrl: string
-            height: number
-            width: number
-          }
-        ]
-      }
-    }
-  }
+  featuredImage: FeaturedImage
   seo: {
     metaDesc: string
     title: string

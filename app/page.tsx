@@ -19,11 +19,11 @@ export default async function Home() {
   return (
     <main className="mx-auto flex max-w-3xl flex-col gap-8">
       <article>
-        {page.featuredImage?.node?.mediaDetails?.sizes?.[0] && (
+        {page.featuredImage?.node && (
           <Image
             alt={page.featuredImage.node.altText}
             height="400"
-            src={page.featuredImage.node.mediaDetails.sizes[0].sourceUrl}
+            src={page.featuredImage.node.sourceUrl}
             width="768"
             priority={true}
           />

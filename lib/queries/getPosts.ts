@@ -17,12 +17,10 @@ export default async function getPosts(limit = 100) {
           featuredImage {
             node {
               altText
+              sourceUrl
               mediaDetails {
-                sizes(include: MEDIUM) {
                   height
                   width
-                  sourceUrl
-                }
               }
             }
           }

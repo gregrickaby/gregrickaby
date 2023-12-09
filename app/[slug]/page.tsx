@@ -55,10 +55,10 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: page?.featuredImage?.node?.mediaDetails?.sizes[0]?.sourceUrl,
-          width: page?.featuredImage?.node?.mediaDetails?.sizes[0]?.width,
-          height: page?.featuredImage?.node?.mediaDetails?.sizes[0]?.height,
-          alt: page.title
+          url: page?.featuredImage?.node?.sourceUrl,
+          width: page?.featuredImage?.node?.mediaDetails?.width,
+          height: page?.featuredImage?.node?.mediaDetails?.height,
+          alt: page?.featuredImage?.node?.altText
         }
       ]
     }

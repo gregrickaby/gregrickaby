@@ -14,12 +14,10 @@ export default async function getPostBySlug(slug: string) {
         featuredImage {
           node {
             altText
+            sourceUrl
             mediaDetails {
-              sizes(include: MEDIUM) {
                 height
                 width
-                sourceUrl
-              }
             }
           }
         }
