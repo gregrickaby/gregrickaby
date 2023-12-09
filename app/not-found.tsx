@@ -24,6 +24,17 @@ export default function NotFound() {
         </a>
         .
       </p>
+      <p>
+        You could also{' '}
+        <span className="rounded-md p-1 font-mono text-sm dark:bg-zinc-400 dark:text-black">
+          CMD+K
+        </span>{' '}
+        or{' '}
+        <span className="rounded-md p-1 font-mono text-sm dark:bg-zinc-400 dark:text-black">
+          CTRL+K
+        </span>{' '}
+        to try a search.
+      </p>
       <Link href="/">Return Home</Link>
     </div>
   )
