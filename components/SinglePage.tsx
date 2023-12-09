@@ -11,7 +11,10 @@ interface SinglePageProps {
 export default function SinglePage({page}: SinglePageProps) {
   return (
     <article>
-      <FeaturedImage image={page.featuredImage} />
+      <FeaturedImage
+        image={page.featuredImage}
+        hidden={page.hideFeaturedImage.hideFeaturedImage}
+      />
       <h1 dangerouslySetInnerHTML={{__html: page.title}} />
       <div dangerouslySetInnerHTML={{__html: page.content}} />
     </article>
