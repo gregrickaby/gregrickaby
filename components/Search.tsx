@@ -94,7 +94,7 @@ export default function Search() {
       }`}
     >
       <div
-        className="relative mx-4 w-[70%] rounded-md bg-zinc-200 p-2 dark:bg-zinc-600 lg:mx-0 lg:w-[28%]"
+        className="relative mx-4 w-[70%] rounded-md bg-zinc-200 p-2 dark:bg-zinc-600 lg:mx-0 lg:w-[30%]"
         style={{marginTop: '15vh'}}
       >
         {toggleSearch && (
