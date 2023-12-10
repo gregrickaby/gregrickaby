@@ -14,8 +14,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/feed.xml',
-        destination: '/feed',
+        source: '/:path(feed|rss.xml|blog/feed/|feed/atom)',
+        destination: '/feed.xml',
         permanent: true
       },
       {
