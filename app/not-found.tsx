@@ -45,7 +45,7 @@ export default function NotFound() {
         </li>
         <li>
           <strong>Head Home:</strong> Still lost? Click{' '}
-          <Link href="/">Home</Link> to start afresh from the homepage.
+          <Link href="/">Home</Link> to start fresh from the homepage.
         </li>
       </ol>
 
