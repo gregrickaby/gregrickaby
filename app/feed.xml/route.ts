@@ -1,5 +1,6 @@
-import config from '@/lib/config'
-import getPosts from '@/lib/queries/getPosts'
+import config from '@/lib/config';
+import getPosts from '@/lib/queries/getPosts';
+import escape from 'xml-escape';
 
 /**
  * Route handler for generating RSS feed.
@@ -34,8 +35,8 @@ export async function GET() {
   allPosts.forEach((post) => {
     rss += `
     <item>
-      <title>${post.title}</title>
-      <description>${post.excerpt}</description>
+      <title>${escape(post.title)}</title>
+      <description>${escape(post.excerpt)}</description>
       <link>${config.siteUrl}/blog/${post.slug}</link>
       <guid>${config.siteUrl}/blog/${post.slug}</guid>
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
