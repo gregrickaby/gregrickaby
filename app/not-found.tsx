@@ -1,3 +1,6 @@
+'use client'
+
+import {useSearch} from '@/components/SearchProvider'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -5,9 +8,49 @@ import Link from 'next/link'
  * Not Found component.
  */
 export default function NotFound() {
+  const {toggleSearch, setToggleSearch} = useSearch()
+
   return (
-    <div className="text-center">
-      <h1 className="text-3xl font-bold">404 - Not Found</h1>
+    <>
+      <h1 className="text-center">404 - Not Found</h1>
+
+      <p>
+        Just a heads up: I&apos;ve given my website a fresh new look, and in the
+        process, some pages have found new homes.
+      </p>
+
+      <h2 className="text-3xl">
+        The issue is my fault, not yours! Here&apos;s what you can do:
+      </h2>
+
+      <ol className="text-left">
+        <li>
+          <strong>Search Around:</strong> Use the{' '}
+          <Link href="" onClick={() => setToggleSearch(!toggleSearch)}>
+            search
+          </Link>{' '}
+          to quickly find what you&apos;re looking for.
+        </li>
+        <li>
+          <strong>Explore the Archives:</strong> Dive into the{' '}
+          <Link href="/blog">blog archive</Link> for past posts and goodies.
+        </li>
+        <li>
+          <strong>Wayback Machine:</strong> If you&apos;re feeling nostalgic or
+          can&apos;t find something, the{' '}
+          <a href="https://web.archive.org/web/20220101000000*/https://gregrickaby.com">
+            Wayback Machine
+          </a>{' '}
+          might have a snapshot of the old site.
+        </li>
+        <li>
+          <strong>Head Home:</strong> Still lost? Click{' '}
+          <Link href="/">Home</Link> to start afresh from the homepage.
+        </li>
+      </ol>
+
+      <p>Happy exploring! 🌟 </p>
+
       <Image
         alt=""
         className="mx-auto"
@@ -17,25 +60,6 @@ export default function NotFound() {
         width="160"
         priority={true}
       />
-      <p>
-        The missing page might be on the{' '}
-        <a href="https://web.archive.org/web/20220101000000*/https://gregrickaby.com">
-          Wayback Machine
-        </a>
-        .
-      </p>
-      <p>
-        You could also{' '}
-        <span className="rounded-md p-1 font-mono text-sm dark:bg-zinc-400 dark:text-black">
-          CMD+K
-        </span>{' '}
-        or{' '}
-        <span className="rounded-md p-1 font-mono text-sm dark:bg-zinc-400 dark:text-black">
-          CTRL+K
-        </span>{' '}
-        to try a search.
-      </p>
-      <Link href="/">Return Home</Link>
-    </div>
+    </>
   )
 }
