@@ -4,8 +4,18 @@ import Meta from '@/components/JsonLd'
 import SerachProvder from '@/components/SearchProvider'
 import config from '@/lib/config'
 import type {Metadata, Viewport} from 'next'
+import dynamic from 'next/dynamic'
 import {Fira_Sans} from 'next/font/google'
 import './globals.css'
+
+/**
+ * Setup dynamic imports.
+ *
+ * @see https://nextjs.org/docs/advanced-features/dynamic-import
+ */
+const Search = dynamic(() => import('@/components/Search'), {
+  ssr: false
+})
 
 /**
  * Setup Google Font.
@@ -71,12 +81,13 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className={`${googleFont.className}`}>
-        <Meta />
         <SerachProvder>
+          <Meta />
           <Header />
+          <main>{children}</main>
+          <Footer />
+          <Search />
         </SerachProvder>
-        <main>{children}</main>
-        <Footer />
       </body>
     </html>
   )

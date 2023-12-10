@@ -2,14 +2,9 @@
 
 import {useSearch} from '@/components/SearchProvider'
 import config from '@/lib/config'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import {FaMagnifyingGlass} from 'react-icons/fa6'
-
-const Search = dynamic(() => import('@/components/Search'), {
-  ssr: false
-})
 
 /**
  * Header component.
@@ -51,7 +46,6 @@ export default function Header() {
           <FaMagnifyingGlass />
         </button>
       </nav>
-      <Search />
     </header>
   )
 }
