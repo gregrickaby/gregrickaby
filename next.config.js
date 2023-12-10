@@ -22,6 +22,11 @@ const nextConfig = {
         source: '/:year(\\d{4})/:month(\\d{2})/:slug*',
         destination: '/blog/:slug*',
         permanent: true
+      },
+      {
+        source: '/blog/:year(\\d{4})/:month(\\d{2})/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true
       }
     ]
   },
