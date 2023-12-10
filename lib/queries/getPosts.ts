@@ -4,7 +4,7 @@ import {Post} from '@/lib/types'
 /**
  * Fetch blog posts.
  */
-export default async function getPosts(limit = 100) {
+export default async function getPosts(limit = 1000) {
   const query = `
     query GetPosts {
       posts(where: {status: PUBLISH}, first: ${limit}) {
@@ -13,6 +13,8 @@ export default async function getPosts(limit = 100) {
           databaseId
           title
           slug
+          date
+          modified
           excerpt(format: RENDERED)
           featuredImage {
             node {

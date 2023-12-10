@@ -28,6 +28,7 @@ export default async function getPostBySlug(slug: string) {
           }
         }
         date
+        modified
         tags {
           nodes {
             databaseId

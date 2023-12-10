@@ -51,6 +51,7 @@ export interface Page {
   }
   databaseId: string
   date: string
+  modified: string
   slug: string
   title: string
   excerpt: string
@@ -74,6 +75,7 @@ export interface Post {
   }
   databaseId: string
   date: string
+  modified: string
   slug: string
   title: string
   excerpt: string

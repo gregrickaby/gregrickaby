@@ -28,6 +28,7 @@ export default async function getPageBySlug(slug: string) {
           }
         }
         date
+        modified
         seo {
           metaDesc
           title
