@@ -45,7 +45,7 @@ export default function Header() {
         <Link href="/contact">Contact</Link>
         <Link href="/feed">RSS</Link>
         <button
-          className="rounded bg-transparent p-2 transition-all duration-300 ease-in-out hover:bg-zinc-200 dark:hover:bg-zinc-700"
+          className="rounded bg-transparent p-2 transition-all duration-300 ease-in-out hover:bg-zinc-200 dark:text-white dark:hover:bg-zinc-700"
           onClick={() => setToggleSearch(!toggleSearch)}
         >
           <FaMagnifyingGlass />

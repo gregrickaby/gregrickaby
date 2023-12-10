@@ -18,7 +18,7 @@ function Drawer({isOpen, children}: DrawerProps) {
   return (
     <div
       className={`text-left transition-all  duration-300 ease-in-out dark:bg-zinc-600 ${
-        isOpen ? 'opacity-100mt-4 visible p-4' : 'invisible opacity-0'
+        isOpen ? 'visible p-4 opacity-100' : 'invisible opacity-0'
       }`}
     >
       {children}
@@ -94,7 +94,7 @@ export default function Search() {
       }`}
     >
       <div
-        className="relative w-full max-w-lg rounded-md bg-zinc-200 p-2 dark:bg-zinc-600"
+        className="relative mx-4 w-[70%] rounded-md bg-zinc-200 p-2 dark:bg-zinc-600 lg:mx-0 lg:w-[28%]"
         style={{marginTop: '15vh'}}
       >
         {toggleSearch && (
