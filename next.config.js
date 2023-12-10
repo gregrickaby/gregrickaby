@@ -25,6 +25,9 @@ const nextConfig = {
       }
     ]
   },
+  experimental: {
+    optimizePackageImports: ['react-icons']
+  },
   logging: {
     fetches: {
       fullUrl: true
