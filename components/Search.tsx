@@ -1,61 +1,14 @@
 'use client'
 
+import {useSearch} from '@/components/SearchProvider'
+import {searchQuery} from '@/lib/functions'
+import {SearchResults} from '@/lib/types'
 import Link from 'next/link'
 import {useCallback, useEffect, useRef, useState} from 'react'
-
-export interface SearchResults {
-  id: number
-  title: string
-  url: string
-  type: string
-  subtype: string
-}
 
 interface DrawerProps {
   isOpen: boolean
   children: React.ReactNode
-}
-
-/**
- * Search the WordPress REST API for posts matching the query.
- *
- * @see https://developer.wordpress.org/rest-api/reference/search-results/
- */
-async function searchQuery(query: string): Promise<SearchResults[]> {
-  // Sanitize the query.
-  query = encodeURIComponent(query.trim())
-
-  try {
-    // Fetch the search results.
-    const response = await fetch(
-      `https://blog.gregrickaby.com/wp-json/wp/v2/search?search=${query}&subtype=any&per_page=100`,
-      {
-        next: {
-          tags: ['search']
-        }
-      }
-    )
-
-    // If the response status is not 200, throw an error.
-    if (!response.ok) {
-      console.error('Response Status:', response.status)
-      throw new Error(response.statusText)
-    }
-
-    // Read the response as JSON.
-    const data = await response.json()
-
-    // Verify data has posts.
-    if (!data || data.length === 0) {
-      throw new Error('No posts found.')
-    }
-
-    // Return the data.
-    return data as SearchResults[]
-  } catch (error) {
-    console.error('Error fetching data:', error)
-    return []
-  }
 }
 
 /**
@@ -64,7 +17,7 @@ async function searchQuery(query: string): Promise<SearchResults[]> {
 function Drawer({isOpen, children}: DrawerProps) {
   return (
     <div
-      className={`transition-all  duration-300 ease-in-out dark:bg-zinc-600 ${
+      className={`text-left transition-all  duration-300 ease-in-out dark:bg-zinc-600 ${
         isOpen ? 'opacity-100mt-4 visible p-4' : 'invisible opacity-0'
       }`}
     >
@@ -77,20 +30,32 @@ function Drawer({isOpen, children}: DrawerProps) {
  * Search component.
  */
 export default function Search() {
+  const {toggleSearch, setToggleSearch} = useSearch()
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResults[]>([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [isPaletteOpen, setIsPaletteOpen] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
+  const [hasSearched, setHasSearched] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // Set focus on the input when the search palette opens.
+  useEffect(() => {
+    if (toggleSearch) {
+      const timer = setTimeout(() => {
+        inputRef.current?.focus()
+      }, 200)
+
+      return () => clearTimeout(timer)
+    }
+  }, [toggleSearch])
+
+  // Perform the search.
   const performSearch = useCallback(async () => {
     // If the query is empty or too long, return early.
     if (query.length === 0 || query.length > 100) return
 
-    // Set the loading state.
-    setIsLoading(true)
+    setIsSearching(true)
+    setHasSearched(true)
 
-    // Perform the search.
     try {
       const data = await searchQuery(query)
       setResults(data)
@@ -98,7 +63,7 @@ export default function Search() {
       console.error(error)
       setResults([])
     } finally {
-      setIsLoading(false)
+      setIsSearching(false)
     }
   }, [query])
 
@@ -107,57 +72,32 @@ export default function Search() {
     if (query.length > 0) {
       const debounceTimeout = setTimeout(performSearch, 500)
       return () => clearTimeout(debounceTimeout)
+    } else {
+      setResults([])
+      setHasSearched(false)
     }
   }, [query, performSearch])
 
-  // Keyboard shortcuts.
-  useEffect(() => {
-    // Handle keyboard shortcuts.
-    function handleKeyPress(event: KeyboardEvent) {
-      // CMD+K or CTRL+K opens the search palette.
-      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
-        event.preventDefault()
-        setIsPaletteOpen((prevState) => !prevState)
-
-        // Wait for the palette to open.
-        setTimeout(() => {
-          if (!isPaletteOpen) {
-            inputRef.current?.focus() // Set focus on search input.
-          }
-        }, 200)
-
-        // ESC closes and resets search.
-      } else if (event.key === 'Escape') {
-        resetSearch()
-      }
-    }
-
-    // Add the event listener.
-    window.addEventListener('keydown', handleKeyPress)
-
-    // Remove the event listener.
-    return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [isPaletteOpen])
-
   // Reset the search.
   function resetSearch() {
-    setIsLoading(false)
-    setIsPaletteOpen(false)
+    setIsSearching(false)
     setQuery('')
     setResults([])
+    setToggleSearch(false)
+    setHasSearched(false)
   }
 
   return (
     <div
       className={`fixed left-0 top-0 flex h-screen w-screen items-start justify-center bg-zinc-500 bg-opacity-50 dark:bg-black dark:bg-opacity-50 ${
-        isPaletteOpen ? 'visible' : 'invisible'
+        toggleSearch ? 'visible' : 'invisible'
       }`}
     >
       <div
         className="relative w-full max-w-lg rounded-md bg-zinc-200 p-2 dark:bg-zinc-600"
         style={{marginTop: '15vh'}}
       >
-        {isPaletteOpen && (
+        {toggleSearch && (
           <div className="relative flex items-center">
             <input
               ref={inputRef}
@@ -180,11 +120,13 @@ export default function Search() {
         )}
 
         <Drawer isOpen={query.length > 0}>
-          {isLoading && <p className="m-0">Searching...</p>}
-          {!isLoading && query && results.length === 0 && (
+          {query.length > 0 && !hasSearched && (
+            <p className="m-0">Searching...</p>
+          )}
+          {!isSearching && hasSearched && results.length === 0 && (
             <p className="m-0">Bummer. No results found.</p>
           )}
-          {!isLoading && results.length > 0 && (
+          {!isSearching && results.length > 0 && (
             <div className="max-h-[55vh] overflow-y-auto">
               <p className="m-0">
                 Nice! You found{' '}
@@ -199,6 +141,7 @@ export default function Search() {
                   <li key={result.id}>
                     <Link
                       href={result.url.replace('https://blog.', 'https://')}
+                      onClick={resetSearch}
                     >
                       <p
                         className="m-0 p-0"

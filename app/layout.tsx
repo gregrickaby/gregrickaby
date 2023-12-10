@@ -1,9 +1,9 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import Meta from '@/components/JsonLd'
+import SerachProvder from '@/components/SearchProvider'
 import config from '@/lib/config'
 import type {Metadata, Viewport} from 'next'
-import dynamic from 'next/dynamic'
 import {Fira_Sans} from 'next/font/google'
 import './globals.css'
 
@@ -65,13 +65,6 @@ export const viewport: Viewport = {
 }
 
 /**
- * Setup dynamic components.
- *
- * @see https://nextjs.org/docs/app/building-your-application/optimizing/lazy-loading
- */
-const Search = dynamic(() => import('../components/Search'))
-
-/**
  * Root layout component.
  */
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -79,10 +72,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <body className={`${googleFont.className}`}>
         <Meta />
-        <Header />
+        <SerachProvder>
+          <Header />
+        </SerachProvder>
         <main>{children}</main>
         <Footer />
-        <Search />
       </body>
     </html>
   )
