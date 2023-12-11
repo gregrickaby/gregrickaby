@@ -1,3 +1,4 @@
+import BlogContent from '@/components/BlogContent'
 import Comments from '@/components/Comments'
 import FeaturedImage from '@/components/FeaturedImage'
 import LatestPosts from '@/components/LatestPosts'
@@ -29,12 +30,7 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
           <time dateTime={post.date}>{formatDate(post.date)}</time>
         </p>
       </header>
-
-      <div
-        className="text-lg"
-        dangerouslySetInnerHTML={{__html: post.content}}
-      />
-
+      <BlogContent content={post.content} />
       <footer className="flex items-center justify-between gap-4 pb-4">
         <div>
           <h3>Categories</h3>

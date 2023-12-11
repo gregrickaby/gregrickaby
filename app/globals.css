@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --grd-acf-block-gutter: 24px;
+  }
+
   body {
     @apply relative mx-auto space-y-8 px-8 antialiased lg:px-0;
     @apply prose prose-zinc max-w-4xl lg:prose-xl;
@@ -31,5 +35,72 @@
 
   a {
     @apply underline hover:no-underline;
+  }
+}
+
+/* ACF Block Gallery */
+#grd-acf-block-gallery {
+  @apply m-auto;
+
+  /* Single column on mobile. */
+  .grd-acf-block-image,
+  .grd-acf-block-grid-sizer {
+    margin-bottom: var(--grd-acf-block-gutter);
+    width: calc(100% - var(--grd-acf-block-gutter));
+  }
+
+  /* Two columns on tablet. */
+  @media (width >= 768px) {
+    .grd-acf-block-image,
+    .grd-acf-block-grid-sizer {
+      width: calc(50% - var(--grd-acf-block-gutter));
+    }
+  }
+
+  /* Three columns on desktop. */
+  @media (width >= 1280px) {
+    .grd-acf-block-image,
+    .grd-acf-block-grid-sizer {
+      width: calc(33% - var(--grd-acf-block-gutter));
+    }
+  }
+
+  /* Each image. */
+  .grd-acf-block-image {
+    a {
+      @apply cursor-zoom-in text-white no-underline;
+    }
+
+    img {
+      @apply m-0 rounded transition-all duration-200 ease-in-out;
+
+      backface-visibility: hidden;
+    }
+
+    &:hover {
+      img {
+        @apply scale-105 transform shadow-lg;
+      }
+
+      .grd-acf-block-image-caption {
+        @apply visible opacity-100;
+      }
+    }
+  }
+
+  /* Optional captions. */
+  .grd-acf-block-image-caption {
+    @apply invisible absolute bottom-1 max-w-[90%] p-3 opacity-0 transition-all duration-200 ease-in-out;
+    @apply bg-zinc-900/50 text-left text-white shadow-lg;
+
+    backface-visibility: hidden;
+  }
+}
+
+.fancybox__caption {
+  @apply text-center;
+
+  .exif {
+    @apply text-xs;
   }
 }
