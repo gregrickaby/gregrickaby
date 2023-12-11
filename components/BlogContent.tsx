@@ -1,9 +1,6 @@
 'use client'
 
-import {Fancybox} from '@fancyapps/ui'
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
-import imagesLoaded from 'imagesloaded'
-import Masonry from 'masonry-layout'
 import {useEffect, useRef} from 'react'
 
 interface BlogContentProps {
@@ -19,9 +16,14 @@ export default function BlogContent({content}: BlogContentProps) {
   const contentRef = useRef<HTMLDivElement>(null)
 
   /**
-   * Scan the content for galleries and initialize.
+   * Initialize photo gallery.
    */
-  useEffect(() => {
+  async function galleryInit() {
+    // On the server? Bail.
+    if (typeof window === 'undefined') {
+      return
+    }
+
     // No ref? Bail.
     if (!contentRef.current) {
       return
@@ -35,20 +37,24 @@ export default function BlogContent({content}: BlogContentProps) {
       return
     }
 
-    // Initialize Masonry.
-    let masonryGrid: Masonry | undefined
+    // Import the libraries on demand.
+    const Masonry = (await import('masonry-layout')).default
+    const Fancybox = (await import('@fancyapps/ui')).Fancybox
+    const imagesLoaded = (await import('imagesloaded')).default
 
     // Initialize ImagesLoaded.
     const imagesLoadedInstance = imagesLoaded(gallery)
 
+    // Initialize Masonry.
+    const masonryGrid = new Masonry(gallery, {
+      gutter: 24,
+      itemSelector: '.grd-acf-block-image',
+      columnWidth: '.grd-acf-block-grid-sizer',
+      percentPosition: true
+    })
+
     // When ImagesLoaded is done, initialize Masonry.
     imagesLoadedInstance.on('done', () => {
-      masonryGrid = new Masonry(gallery, {
-        gutter: 24,
-        itemSelector: '.grd-acf-block-image',
-        columnWidth: '.grd-acf-block-grid-sizer',
-        percentPosition: true
-      })
       masonryGrid?.layout?.()
     })
 
@@ -79,6 +85,13 @@ export default function BlogContent({content}: BlogContentProps) {
       masonryGrid?.destroy?.()
       Fancybox.destroy?.()
     }
+  }
+
+  /**
+   * Initialize the gallery when the component mounts.
+   */
+  useEffect(() => {
+    galleryInit()
   }, [content])
 
   return (
