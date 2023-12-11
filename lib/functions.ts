@@ -1,4 +1,5 @@
-import { GraphQLResponse, SearchResults } from '@/lib/types'
+import {GraphQLResponse, SearchResults} from '@/lib/types'
+import {redirect} from 'next/navigation'
 
 /**
  * Function to execute a GraphQL query.
@@ -112,4 +113,24 @@ export function formatDate(date: string) {
     timeStyle: 'short',
     timeZone: 'America/Chicago'
   }).format(new Date(date))
+}
+
+/**
+ * Handles redirection of the RSS feed.
+ *
+ * Issue:
+ * When utilizing the 'redirects()' function in 'next.config.js', Next.js is appending 'feed.xml' with an
+ * unintended query parameter (e.g., '/feed.xml?_rsc=abc123'). This altered URL leads to a 404 error and
+ * triggers a console error in the browser.
+ *
+ * Solution:
+ * To address this, the following alternative redirection method is used to ensure that the RSS feed
+ * correctly redirects to '/feed.xml' without additional query parameters.
+ *
+ * @see https://github.com/vercel/next.js/issues/52296#issuecomment-1716917437
+ */
+export function rssFeedRedirect(slug: string) {
+  if (/^(feed|rss\.xml|blog\/feed\/?|feed\/atom)$/.test(slug)) {
+    redirect('/feed.xml')
+  }
 }

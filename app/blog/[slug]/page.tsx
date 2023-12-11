@@ -1,5 +1,6 @@
 import SinglePost from '@/components/SinglePost'
 import config from '@/lib/config'
+import {rssFeedRedirect} from '@/lib/functions'
 import getPostBySlug from '@/lib/queries/getPostBySlug'
 import getPosts from '@/lib/queries/getPosts'
 import {Metadata} from 'next'
@@ -71,6 +72,9 @@ export async function generateMetadata({
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
 export default async function Post({params}: {params: {slug: string}}) {
+  // Maybe redirect to the RSS feed.
+  rssFeedRedirect(params.slug)
+
   // Fetch a single post from WordPress.
   const post = await getPostBySlug(params.slug)
 

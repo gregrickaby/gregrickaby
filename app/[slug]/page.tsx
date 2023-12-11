@@ -1,5 +1,6 @@
 import SinglePage from '@/components/SinglePage'
 import config from '@/lib/config'
+import {rssFeedRedirect} from '@/lib/functions'
 import getPageBySlug from '@/lib/queries/getPageBySlug'
 import getPages from '@/lib/queries/getPages'
 import {Metadata} from 'next'
@@ -66,11 +67,14 @@ export async function generateMetadata({
 }
 
 /**
- * The single page route.
+ * The single page catch-all route.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
 export default async function Page({params}: {params: {slug: string}}) {
+  // Maybe redirect to the RSS feed.
+  rssFeedRedirect(params.slug)
+
   // Fetch a page from WordPress.
   const page = await getPageBySlug(params.slug)
 
