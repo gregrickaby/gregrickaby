@@ -27,7 +27,7 @@ export async function fetchGraphQL<T = any>(
           variables
         }),
         next: {
-          revalidate: 3600
+          tags: ['posts']
         }
       }
     )
