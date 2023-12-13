@@ -71,7 +71,7 @@ export default async function getPostBySlug(slug: string) {
     slug: slug
   }
 
-  const response = await fetchGraphQL(query, variables)
+  const response = await fetchGraphQL(query, variables, slug)
 
   return response.data.post as Post
 }

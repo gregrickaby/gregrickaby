@@ -6,7 +6,8 @@ import {redirect} from 'next/navigation'
  */
 export async function fetchGraphQL<T = any>(
   query: string,
-  variables: object = {}
+  variables: object = {},
+  cacheTag: string
 ): Promise<GraphQLResponse<T>> {
   try {
     // If there is no URL, throw an error.
@@ -27,7 +28,7 @@ export async function fetchGraphQL<T = any>(
           variables
         }),
         next: {
-          tags: ['posts']
+          tags: [cacheTag]
         }
       }
     )

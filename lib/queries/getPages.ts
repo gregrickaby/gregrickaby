@@ -30,7 +30,7 @@ export default async function getPages(limit = 1000) {
     }
   `
 
-  const response = await fetchGraphQL(query)
+  const response = await fetchGraphQL(query, {}, 'getPages')
 
   return response.data.pages.nodes as Page[]
 }
