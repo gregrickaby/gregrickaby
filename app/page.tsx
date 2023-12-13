@@ -3,13 +3,6 @@ import getPageBySlug from '@/lib/queries/getPageBySlug'
 import {notFound} from 'next/navigation'
 
 /**
- * Time-based Revalidation.
- *
- * @see https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#time-based-revalidation
- */
-export const revalidate = 3600
-
-/**
  * The homepage route.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
