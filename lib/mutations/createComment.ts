@@ -52,7 +52,7 @@ export async function createComment(comment: {
     postID: comment.postID
   }
 
-  const response = await fetchGraphQL(query, variables, 'createComment')
+  const response = await fetchGraphQL(query, variables)
 
   return response.data.createComment
 }
