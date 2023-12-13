@@ -3,6 +3,13 @@ import getPosts from '@/lib/queries/getPosts'
 import {notFound} from 'next/navigation'
 
 /**
+ * Time-based Revalidation.
+ *
+ * @see https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#time-based-revalidation
+ */
+export const revalidate = 3600
+
+/**
  * The blog archive.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages

@@ -7,6 +7,13 @@ import {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
 /**
+ * Time-based Revalidation.
+ *
+ * @see https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#time-based-revalidation
+ */
+export const revalidate = 3600
+
+/**
  * Generate the static routes at build time.
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-static-params
