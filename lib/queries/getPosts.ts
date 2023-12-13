@@ -31,7 +31,7 @@ export default async function getPosts(limit = 1000) {
     }
   `
 
-  const response = await fetchGraphQL(query, {}, 'getPosts')
+  const response = await fetchGraphQL(query)
 
   return response.data.posts.nodes as Post[]
 }

@@ -6,8 +6,7 @@ import {redirect} from 'next/navigation'
  */
 export async function fetchGraphQL<T = any>(
   query: string,
-  variables: object = {},
-  cacheTag: string
+  variables: object = {}
 ): Promise<GraphQLResponse<T>> {
   try {
     // If there is no URL, throw an error.
@@ -28,7 +27,7 @@ export async function fetchGraphQL<T = any>(
           variables
         }),
         next: {
-          tags: [cacheTag]
+          revalidate: 3600
         }
       }
     )
@@ -71,13 +70,11 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
       throw new Error('Missing WordPress REST API URL environment variable!')
     }
 
-    // Fetch the search results.
+    // Always fetch fresh search results.
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_WORDPRESS_REST_API_URL}/search?search=${query}&subtype=any&per_page=100`,
       {
-        next: {
-          tags: ['search']
-        }
+        cache: 'no-store'
       }
     )
 
