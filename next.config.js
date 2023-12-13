@@ -3,13 +3,13 @@
  */
 const nextConfig = {
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '*.gregrickaby.com'
       }
-    ],
-    formats: ['image/avif', 'image/webp']
+    ]
   },
   async redirects() {
     return [
@@ -25,7 +25,6 @@ const nextConfig = {
       }
     ]
   },
-
   experimental: {
     optimizePackageImports: ['react-icons']
   },
