@@ -22,6 +22,16 @@ const nextConfig = {
         source: '/blog/:year(\\d{4})/:month(\\d{2})/:slug*',
         destination: '/blog/:slug*',
         permanent: true
+      },
+      {
+        source: '/genesis-code-snippets',
+        destination: '/blog/genesis-code-snippets',
+        permanent: true
+      },
+      {
+        source: '/custom-rss-template-wordpress',
+        destination: '/blog/custom-rss-template-wordpress',
+        permanent: true
       }
     ]
   },

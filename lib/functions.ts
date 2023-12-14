@@ -128,7 +128,11 @@ export function formatDate(date: string) {
  * @see https://github.com/vercel/next.js/issues/52296#issuecomment-1716917437
  */
 export function rssFeedRedirect(slug: string) {
-  if (/^(feed|rss\.xml|blog\/feed\/?|feed\/atom)$/.test(slug)) {
+  if (
+    /^(feed|rss\.xml|blog\/feed\/?|feed\/atom|xmlrpc\.php|blog\/xmlrpc\.php)$/.test(
+      slug
+    )
+  ) {
     redirect('/feed.xml')
   }
 }
