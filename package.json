@@ -28,7 +28,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@fancyapps/ui": "^5.0.29",
+    "@fancyapps/ui": "^5.0.30",
     "@tailwindcss/typography": "^0.5.10",
     "@types/imagesloaded": "^4.1.6",
     "@types/masonry-layout": "^4.2.7",
