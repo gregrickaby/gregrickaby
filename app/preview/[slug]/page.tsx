@@ -42,6 +42,7 @@ export async function generateMetadata({
   return {
     title: `${post.title} - ${config.siteName}`,
     description: post.excerpt,
+    robots: 'noindex',
     openGraph: {
       title: `${post.title} - ${config.siteName}`,
       description: post.excerpt,
