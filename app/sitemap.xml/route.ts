@@ -3,6 +3,13 @@ import getPages from '@/lib/queries/getPages'
 import getPosts from '@/lib/queries/getPosts'
 
 /**
+ * Route segment config.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+ */
+export const dynamic = 'force-static'
+
+/**
  * Route handler for generating sitemap.xml.
  *
  * @see https://www.sitemaps.org/protocol.html

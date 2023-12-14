@@ -1,6 +1,13 @@
 import {revalidateTag} from 'next/cache'
 
 /**
+ * Route segment config.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+ */
+export const runtime = 'edge'
+
+/**
  * On-demand revalidation endpoint.
  *
  * @see https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#on-demand-revalidation

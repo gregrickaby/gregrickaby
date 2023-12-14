@@ -1,6 +1,13 @@
-import config from '@/lib/config';
-import getPosts from '@/lib/queries/getPosts';
-import escape from 'xml-escape';
+import config from '@/lib/config'
+import getPosts from '@/lib/queries/getPosts'
+import escape from 'xml-escape'
+
+/**
+ * Route segment config.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+ */
+export const dynamic = 'force-static'
 
 /**
  * Route handler for generating RSS feed.
