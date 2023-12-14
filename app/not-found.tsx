@@ -26,7 +26,7 @@ export default function NotFound() {
       <ol className="text-left">
         <li>
           <strong>Search Around:</strong> Use the{' '}
-          <Link href="" onClick={() => setToggleSearch(!toggleSearch)}>
+          <Link href="" onClick={() => setToggleSearch(true)}>
             search
           </Link>{' '}
           to quickly find what you&apos;re looking for.
