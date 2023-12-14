@@ -9,28 +9,35 @@ export async function fetchGraphQL<T = any>(
   variables: object = {}
 ): Promise<GraphQLResponse<T>> {
   try {
-    // If there is no URL, throw an error.
-    if (!process.env.NEXT_PUBLIC_WORDPRESS_GRAPHQL_URL) {
+    // Validate the WordPress GraphQL URL.
+    const graphqlUrl = process.env.NEXT_PUBLIC_WORDPRESS_GRAPHQL_URL
+    if (!graphqlUrl) {
       throw new Error('Missing WordPress GraphQL URL environment variable!')
     }
 
+    // Prepare headers.
+    const headers: {[key: string]: string} = {
+      'Content-Type': 'application/json'
+    }
+
+    // If there is a refresh token, add it to the headers.
+    const refreshToken = process.env.NEXTJS_AUTH_REFRESH_TOKEN
+    if (refreshToken) {
+      headers['Authorization'] = `Bearer ${refreshToken}`
+    }
+
     // Fetch data from external API.
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_GRAPHQL_URL}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          query,
-          variables
-        }),
-        next: {
-          tags: ['posts']
-        }
+    const response = await fetch(graphqlUrl, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        query,
+        variables
+      }),
+      next: {
+        tags: ['posts']
       }
-    )
+    })
 
     // If the response status is not 200, throw an error.
     if (!response.ok) {
