@@ -26,7 +26,7 @@ export async function generateMetadata({
   // Get the preview.
   const post = await getPreview(params.slug)
 
-  // No preview? Bail...
+  // No preview? Bail.
   if (!post) {
     return {}
   }
@@ -62,7 +62,7 @@ export default async function Preview({params}: {params: {slug: string}}) {
   // Fetch the preview from WordPress.
   const post = await getPreview(params.slug)
 
-  // No preview? Bail...
+  // No preview? Bail.
   if (!post) {
     return (
       <div className="container mx-auto text-center">
