@@ -3,6 +3,13 @@ import getPosts from '@/lib/queries/getPosts'
 import {notFound} from 'next/navigation'
 
 /**
+ * Route segment config.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+ */
+export const revalidate = 3600
+
+/**
  * The blog archive.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
