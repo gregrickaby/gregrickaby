@@ -6,7 +6,8 @@ import {redirect} from 'next/navigation'
  */
 export async function fetchGraphQL<T = any>(
   query: string,
-  variables: object = {}
+  variables: object = {},
+  preview = false
 ): Promise<GraphQLResponse<T>> {
   try {
     // Validate the WordPress GraphQL URL.
@@ -15,14 +16,17 @@ export async function fetchGraphQL<T = any>(
       throw new Error('Missing WordPress GraphQL URL environment variable!')
     }
 
+    // Get the refresh token.
+    const refreshToken = process.env.NEXTJS_AUTH_REFRESH_TOKEN
+
     // Prepare headers.
     const headers: {[key: string]: string} = {
       'Content-Type': 'application/json'
     }
 
-    // If there is a refresh token, add it to the headers.
-    const refreshToken = process.env.NEXTJS_AUTH_REFRESH_TOKEN
-    if (refreshToken) {
+    // If preview mode is enabled and we have a token.
+    if (preview && refreshToken) {
+      // Add refresh token to fetch headers.
       headers['Authorization'] = `Bearer ${refreshToken}`
     }
 
