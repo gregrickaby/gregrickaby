@@ -4,7 +4,7 @@ import {Post} from '@/lib/types'
 /**
  * Fetch a preview post.
  */
-export default async function getPreview(id: number | string) {
+export default async function getPreview(id: string) {
   const query = `
     query PreviewPost($id: ID!) {
       post(id: $id, idType: DATABASE_ID) {
@@ -56,7 +56,7 @@ export default async function getPreview(id: number | string) {
     id: id
   }
 
-  const response = await fetchGraphQL(query, variables)
+  const response = await fetchGraphQL(query, variables, true)
 
   return response.data.post as Post
 }
