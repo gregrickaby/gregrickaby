@@ -37,10 +37,7 @@ export async function fetchGraphQL<T = any>(
       body: JSON.stringify({
         query,
         variables
-      }),
-      next: {
-        tags: ['posts']
-      }
+      })
     })
 
     // If the response status is not 200, throw an error.
@@ -83,10 +80,7 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
 
     // Always fetch fresh search results.
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_REST_API_URL}/search?search=${query}&subtype=any&per_page=100`,
-      {
-        cache: 'no-store'
-      }
+      `${process.env.NEXT_PUBLIC_WORDPRESS_REST_API_URL}/search?search=${query}&subtype=any&per_page=100`
     )
 
     // If the response status is not 200, throw an error.
