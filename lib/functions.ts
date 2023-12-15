@@ -6,7 +6,7 @@ import {redirect} from 'next/navigation'
  */
 export async function fetchGraphQL<T = any>(
   query: string,
-  variables: object = {},
+  variables?: {[key: string]: any},
   preview = false
 ): Promise<GraphQLResponse<T>> {
   try {
@@ -30,6 +30,9 @@ export async function fetchGraphQL<T = any>(
       headers['Authorization'] = `Bearer ${refreshToken}`
     }
 
+    // Get the slug.
+    const slug = variables?.slug || variables?.id || 'graphql'
+
     // Fetch data from external API.
     const response = await fetch(graphqlUrl, {
       method: 'POST',
@@ -37,7 +40,10 @@ export async function fetchGraphQL<T = any>(
       body: JSON.stringify({
         query,
         variables
-      })
+      }),
+      next: {
+        tags: [slug]
+      }
     })
 
     // If the response status is not 200, throw an error.
