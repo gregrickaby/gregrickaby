@@ -8,7 +8,7 @@ import {NextRequest} from 'next/server'
  *
  * @see https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#on-demand-revalidation
  */
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const requestHeaders = new Headers(request.headers)
   const secret = requestHeaders.get('x-vercel-revalidation-secret')
   const slug = request.nextUrl.searchParams.get('slug')
