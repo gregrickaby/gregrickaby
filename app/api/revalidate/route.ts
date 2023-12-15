@@ -1,5 +1,5 @@
-import {revalidatePath} from 'next/cache'
-import {NextRequest} from 'next/server'
+import { revalidatePath } from 'next/cache'
+import { NextRequest } from 'next/server'
 
 /**
  * Route segment config.
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Revalidate the slug.
-  revalidatePath(slug, 'page')
+  revalidatePath(`/blog/${slug}, 'page')
 
   return Response.json({
     revalidated: true,
