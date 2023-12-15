@@ -1,4 +1,5 @@
-import {revalidateTag} from 'next/cache'
+import {revalidatePath} from 'next/cache'
+import {NextRequest} from 'next/server'
 
 /**
  * Route segment config.
@@ -8,19 +9,37 @@ import {revalidateTag} from 'next/cache'
 export const runtime = 'edge'
 
 /**
- * On-demand revalidation endpoint.
+ * On-demand revalidation.
+ *
+ * @usage POST /api/revalidate?slug=foo-bar-baz
  *
  * @see https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#on-demand-revalidation
  */
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const requestHeaders = new Headers(request.headers)
   const secret = requestHeaders.get('x-vercel-revalidation-secret')
+  const slug = request.nextUrl.searchParams.get('slug')
 
   if (secret !== process.env.NEXTJS_REVALIDATION_SECRET) {
-    return Response.json({message: 'Invalid secret'}, {status: 401})
+    return Response.json(
+      {revalidated: false, message: 'Invalid secret'},
+      {status: 401}
+    )
   }
 
-  revalidateTag('posts')
+  if (!slug) {
+    return Response.json(
+      {revalidated: false, message: 'Invalid slug parameter.'},
+      {status: 400}
+    )
+  }
 
-  return Response.json({revalidated: true, now: Date.now()})
+  // Revalidate the slug.
+  revalidatePath(slug, 'page')
+
+  return Response.json({
+    revalidated: true,
+    slug,
+    now: Date.now()
+  })
 }
