@@ -2,13 +2,6 @@ import {revalidatePath} from 'next/cache'
 import {NextRequest} from 'next/server'
 
 /**
- * Route segment config.
- *
- * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
- */
-export const runtime = 'edge'
-
-/**
  * On-demand revalidation.
  *
  * @usage POST /api/revalidate?slug=foo-bar-baz
