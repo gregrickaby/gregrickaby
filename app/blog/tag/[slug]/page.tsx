@@ -1,6 +1,26 @@
 import LatestPosts from '@/components/LatestPosts'
+import config from '@/lib/config'
 import getTagBySlug from '@/lib/queries/getTagBySlug'
+import {Metadata} from 'next'
 import {notFound} from 'next/navigation'
+
+/**
+ * Generate the metadata for this archive.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
+export async function generateMetadata({
+  params
+}: {
+  params: {slug: string}
+}): Promise<Metadata | null> {
+  const slug = params.slug
+
+  return {
+    title: `${slug} Archives - ${config.siteName}`,
+    description: `The post archive for ${slug}`
+  }
+}
 
 /**
  * The tag archive.
