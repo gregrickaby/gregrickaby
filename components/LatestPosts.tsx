@@ -4,15 +4,17 @@ import Link from 'next/link'
 
 interface LatestPostsProps {
   posts: Post[]
+  title?: string
 }
 
 /**
  * Latest posts component.
  */
-export default function LatestPosts({posts}: LatestPostsProps) {
+export default function LatestPosts({posts, title}: LatestPostsProps) {
+  const componentTitle = title || 'Latest Posts'
   return (
     <>
-      <h3>Latest Posts</h3>
+      <h3>{componentTitle}</h3>
       <div className="grid gap-8 md:grid-cols-3">
         {posts.map((post: Post) => (
           <article key={post.databaseId}>

@@ -24,6 +24,16 @@ const nextConfig = {
         permanent: true
       },
       {
+        source: '/category/:slug*',
+        destination: '/blog/category/:slug*',
+        permanent: true
+      },
+      {
+        source: '/tag/:slug*',
+        destination: '/blog/tag/:slug*',
+        permanent: true
+      },
+      {
         source: '/genesis-code-snippets',
         destination: '/blog/genesis-code-snippets',
         permanent: true

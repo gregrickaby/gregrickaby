@@ -4,6 +4,7 @@ import FeaturedImage from '@/components/FeaturedImage'
 import LatestPosts from '@/components/LatestPosts'
 import {formatDate} from '@/lib/functions'
 import {Post} from '@/lib/types'
+import Link from 'next/link'
 
 interface SinglePostProps {
   post: Post
@@ -37,7 +38,9 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
           <ul className="m-0 flex list-none gap-2 p-0">
             {post.categories.nodes.map((category) => (
               <li className="m-0 p-0" key={category.databaseId}>
-                {category.name}
+                <Link href={`/blog/category/${category.name}`}>
+                  {category.name}
+                </Link>
               </li>
             ))}
           </ul>
@@ -47,7 +50,7 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
           <ul className="m-0 flex list-none gap-2 p-0">
             {post.tags.nodes.map((tag) => (
               <li className="m-0 p-0" key={tag.databaseId}>
-                {tag.name}
+                <Link href={`/blog/tag/${tag.name}`}>{tag.name}</Link>
               </li>
             ))}
           </ul>
