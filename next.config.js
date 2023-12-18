@@ -42,6 +42,11 @@ const nextConfig = {
         source: '/custom-rss-template-wordpress',
         destination: '/blog/custom-rss-template-wordpress',
         permanent: true
+      },
+      {
+        source: '/remove-woocommerce-styles-and-scripts',
+        destination: '/blog/remove-woocommerce-styles-and-scripts',
+        permanent: true
       }
     ]
   },
