@@ -26,7 +26,7 @@ export default function Header() {
           />
         </Link>
         <div className="flex flex-col md:text-left">
-          <Link href="/">
+          <Link href="/" className="no-underline">
             <h1 className="mb-3 text-4xl font-bold leading-none">
               {config.siteName}
             </h1>
