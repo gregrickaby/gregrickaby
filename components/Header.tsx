@@ -38,7 +38,7 @@ export default function Header() {
         <Link href="/">Home</Link>
         <Link href="/blog">Blog</Link>
         <Link href="/contact">Contact</Link>
-        <Link href="/feed">RSS</Link>
+        <Link href="/feed.xml">RSS</Link>
         <button
           aria-label="Search"
           className="rounded bg-transparent p-2 transition-all duration-300 ease-in-out hover:bg-zinc-200 dark:text-white dark:hover:bg-zinc-700"
