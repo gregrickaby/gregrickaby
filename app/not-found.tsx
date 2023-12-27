@@ -1,15 +1,12 @@
-'use client'
-
-import {useSearch} from '@/components/SearchProvider'
 import Image from 'next/image'
 import Link from 'next/link'
 
 /**
- * Not Found component.
+ * Not Found route.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/not-found
  */
 export default function NotFound() {
-  const {toggleSearch, setToggleSearch} = useSearch()
-
   return (
     <>
       <h1 className="text-center">404 - Not Found</h1>
@@ -26,10 +23,8 @@ export default function NotFound() {
       <ol className="text-left">
         <li>
           <strong>Search Around:</strong> Use the{' '}
-          <Link href="" onClick={() => setToggleSearch(true)}>
-            search
-          </Link>{' '}
-          to quickly find what you&apos;re looking for.
+          <Link href="/search">search</Link> to quickly find what you&apos;re
+          looking for.
         </li>
         <li>
           <strong>Explore the Archives:</strong> Dive into the{' '}
