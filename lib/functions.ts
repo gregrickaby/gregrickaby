@@ -118,7 +118,7 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
  */
 export function formatDate(date: string) {
   return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'full',
+    dateStyle: 'medium',
     timeStyle: 'short',
     timeZone: 'America/Chicago'
   }).format(new Date(date))
