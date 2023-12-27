@@ -1,7 +1,6 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import Meta from '@/components/JsonLd'
-import SerachProvder from '@/components/SearchProvider'
 import config from '@/lib/config'
 import type {Metadata, Viewport} from 'next'
 import dynamic from 'next/dynamic'
@@ -37,7 +36,7 @@ const googleFont = Fira_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(config.siteUrl),
   title: `${config.siteName} - ${config.siteDescription}`,
-  description: config.intro,
+  description: config.siteDescription,
   robots: 'follow, index',
   alternates: {
     canonical: config.siteUrl,
@@ -56,7 +55,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: config.siteName,
-    description: config.intro,
+    description: config.siteDescription,
     url: config.siteUrl,
     siteName: config.siteName,
     locale: 'en_US',
@@ -90,13 +89,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className={`${googleFont.className}`}>
-        <SerachProvder>
-          <Meta />
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <Search />
-        </SerachProvder>
+        <Meta />
+        <Header />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   )
