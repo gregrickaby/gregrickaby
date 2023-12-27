@@ -29,7 +29,7 @@
   .button,
   [type='submit'] {
     @apply rounded px-4 py-3 leading-tight no-underline;
-    @apply bg-zinc-200 text-zinc-900 dark:bg-zinc-400;
+    @apply text-zinc-900 dark:text-white;
     @apply hover:bg-zinc-300 dark:hover:bg-zinc-500;
   }
 
