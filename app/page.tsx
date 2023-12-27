@@ -1,28 +1,20 @@
-import FeaturedImage from '@/components/FeaturedImage'
-import getPageBySlug from '@/lib/queries/getPageBySlug'
+import LatestPosts from '@/components/LatestPosts'
+import getPosts from '@/lib/queries/getPosts'
 import {notFound} from 'next/navigation'
 
 /**
- * The homepage route.
+ * The home page route.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
 export default async function Home() {
-  // Fetch page from WordPress.
-  const page = await getPageBySlug('home')
+  // Fetch posts from WordPress.
+  const posts = await getPosts(15)
 
-  // No page? Throw a 404.
-  if (!page) {
+  // No posts? Throw a 404.
+  if (!posts) {
     notFound()
   }
 
-  return (
-    <article>
-      <FeaturedImage
-        image={page.featuredImage}
-        hidden={page.hideFeaturedImage.hideFeaturedImage}
-      />
-      <div dangerouslySetInnerHTML={{__html: page.content}} />
-    </article>
-  )
+  return <LatestPosts posts={posts} />
 }
