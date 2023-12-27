@@ -15,7 +15,7 @@ export default function SocialLinks() {
           key={social.name}
           rel="author"
         >
-          {social.icon && React.createElement(social.icon)}
+          {!!social.icon && React.createElement(social.icon)}
         </a>
       ))}
     </div>
