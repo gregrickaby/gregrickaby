@@ -17,15 +17,13 @@ export default async function Home() {
   }
 
   return (
-    <main className="mx-auto flex max-w-3xl flex-col gap-8">
-      <article>
-        <FeaturedImage
-          image={page.featuredImage}
-          hidden={page.hideFeaturedImage.hideFeaturedImage}
-        />
-        <h1 dangerouslySetInnerHTML={{__html: page.title}} />
-        <div dangerouslySetInnerHTML={{__html: page.content}} />
-      </article>
-    </main>
+    <article>
+      <FeaturedImage
+        image={page.featuredImage}
+        hidden={page.hideFeaturedImage.hideFeaturedImage}
+      />
+      <h1 dangerouslySetInnerHTML={{__html: page.title}} />
+      <div dangerouslySetInnerHTML={{__html: page.content}} />
+    </article>
   )
 }
