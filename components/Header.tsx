@@ -1,12 +1,16 @@
 import HamburgerNav from '@/components/HamburgerNav'
 import config from '@/lib/config'
+import getMenuBySlug from '@/lib/queries/getMenuBySlug'
 import Image from 'next/image'
 import Link from 'next/link'
 
 /**
  * Header component.
  */
-export default function Header() {
+export default async function Header() {
+  // Get the primary menu.
+  const menu = await getMenuBySlug('primary')
+
   return (
     <header className="flex flex-col items-center justify-center gap-12 text-center md:flex-row md:justify-between">
       <div className="flex flex-col items-center gap-4 md:flex-row md:text-left">
@@ -29,7 +33,7 @@ export default function Header() {
           <p className="m-0 max-w-sm p-0 text-lg">{config.siteDescription}</p>
         </div>
       </div>
-      <HamburgerNav />
+      <HamburgerNav menu={menu} />
     </header>
   )
 }

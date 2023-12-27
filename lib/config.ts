@@ -24,53 +24,6 @@ const config = {
     'Disney Dad. Photographer. Published Author. Dev Team Lead at WPForms.',
   gravatarApiUrl:
     'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
-  menuItems: [
-    {
-      name: 'Home',
-      url: '/',
-      icon: ''
-    },
-    {
-      name: 'About',
-      url: '/about',
-      icon: ''
-    },
-    {
-      name: 'Blog',
-      url: '/blog',
-      icon: ''
-    },
-    {
-      name: 'Contact',
-      url: '/contact',
-      icon: ''
-    },
-    {
-      name: 'Media',
-      url: '/media',
-      icon: ''
-    },
-    {
-      name: 'Portfolio',
-      url: '/portfolio',
-      icon: ''
-    },
-    {
-      name: 'Resources',
-      url: '/resources',
-      icon: ''
-    },
-    {
-      name: 'Search',
-      url: '/search',
-      icon: ''
-    },
-    {
-      name: 'RSS Feed',
-      url: '/feed',
-      icon: FaRss
-    }
-  ],
   socials: [
     {
       name: 'Instagram',

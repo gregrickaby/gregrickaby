@@ -1,13 +1,17 @@
 'use client'
 
-import config from '@/lib/config'
+import {Menu} from '@/lib/types'
 import Link from 'next/link'
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
+
+interface HamburgerNavProps {
+  menu: Menu
+}
 
 /**
  * Hamburger Nav / Drawer.
  */
-export default function HamburgerNav() {
+export default function HamburgerNav({menu}: HamburgerNavProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   /**
@@ -102,17 +106,17 @@ export default function HamburgerNav() {
         </button>
 
         <nav className="flex flex-col gap-2 px-8 py-16">
-          {config.menuItems.map((item) => (
-            <Link
-              className="flex items-center gap-2 no-underline hover:font-bold"
-              href={item.url}
-              key={item.name}
-              onClick={toggleDrawer}
-            >
-              {item.name}
-              {!!item.icon && React.createElement(item.icon)}
-            </Link>
-          ))}
+          {!!menu.nodes.length &&
+            menu.nodes.map((item) => (
+              <Link
+                className="flex items-center gap-2 no-underline hover:font-bold"
+                href={item.uri}
+                key={item.databaseId}
+                onClick={toggleDrawer}
+              >
+                {item.label}
+              </Link>
+            ))}
         </nav>
       </div>
     </div>

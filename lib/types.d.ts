@@ -29,17 +29,13 @@ export interface FeaturedImage {
 }
 
 export interface Menu {
-  menuItems: {
-    edges: [
-      {
-        node: {
-          uri: string
-          label: string
-          databaseId: string
-        }
-      }
-    ]
-  }
+  nodes: [
+    {
+      uri: string
+      label: string
+      databaseId: string
+    }
+  ]
 }
 
 export interface Page {
