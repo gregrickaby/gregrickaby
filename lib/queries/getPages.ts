@@ -13,6 +13,7 @@ export default async function getPages(limit = 1000) {
           databaseId
           date
           modified
+          title(format: RENDERED)
           excerpt(format: RENDERED)
           slug
           featuredImage {
