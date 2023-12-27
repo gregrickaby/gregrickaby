@@ -89,6 +89,7 @@ export default function HamburgerNav() {
         {/* Navigation Links */}
         <nav className="flex flex-col gap-4 px-8 py-16 text-left text-xl">
           <Link href="/">Home</Link>
+          <Link href="/about">About</Link>
           <Link href="/blog">Blog</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/portfolio">Portfolio</Link>

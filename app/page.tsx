@@ -9,7 +9,7 @@ import {notFound} from 'next/navigation'
  */
 export default async function Home() {
   // Fetch page from WordPress.
-  const page = await getPageBySlug('about')
+  const page = await getPageBySlug('home')
 
   // No page? Throw a 404.
   if (!page) {
@@ -22,7 +22,6 @@ export default async function Home() {
         image={page.featuredImage}
         hidden={page.hideFeaturedImage.hideFeaturedImage}
       />
-      <h1 dangerouslySetInnerHTML={{__html: page.title}} />
       <div dangerouslySetInnerHTML={{__html: page.content}} />
     </article>
   )
