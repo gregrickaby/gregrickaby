@@ -17,7 +17,7 @@ export default function LatestPosts({posts, title}: LatestPostsProps) {
       <h3>{componentTitle}</h3>
       <div className="grid gap-8 md:grid-cols-3">
         {posts.map((post: Post) => (
-          <article key={post.databaseId}>
+          <article className="not-prose" key={post.databaseId}>
             {post.featuredImage?.node && (
               <Link href={`/blog/${post.slug}`}>
                 <Image
@@ -29,15 +29,14 @@ export default function LatestPosts({posts, title}: LatestPostsProps) {
                 />
               </Link>
             )}
-            <Link href={`/blog/${post.slug}`}>
-              <h2 dangerouslySetInnerHTML={{__html: post.title}} />
-            </Link>
-            <p className="text-sm text-gray-500">
-              {post.commentCount > 0 ? post.commentCount : 0} comments
-            </p>
-            <div dangerouslySetInnerHTML={{__html: post.excerpt}} />
-            <Link className="button" href={`/blog/${post.slug}`}>
-              View Post
+            <Link
+              className="no-underline hover:underline"
+              href={`/blog/${post.slug}`}
+            >
+              <h2
+                className="mt-1 text-xl font-bold leading-tight"
+                dangerouslySetInnerHTML={{__html: post.title}}
+              />
             </Link>
           </article>
         ))}
