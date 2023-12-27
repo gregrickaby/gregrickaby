@@ -22,14 +22,14 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
           className="m-0 p-0 leading-none"
           dangerouslySetInnerHTML={{__html: post.title}}
         />
+        <p className="mt-4 text-lg italic text-zinc-500 ">
+          Posted on <time dateTime={post.date}>{formatDate(post.date)}</time> |{' '}
+          <span>{post.seo.readingTime} minute read</span>
+        </p>
         <FeaturedImage
           image={post.featuredImage}
           hidden={post.hideFeaturedImage.hideFeaturedImage}
         />
-        <p className="mt-4 italic">
-          By {post.author.node.name} on{' '}
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
-        </p>
       </header>
       <BlogContent content={post.content} />
       <footer className="flex items-center justify-between gap-4 pb-4">
@@ -38,7 +38,7 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
           <ul className="m-0 flex list-none gap-2 p-0">
             {post.categories.nodes.map((category) => (
               <li className="m-0 p-0" key={category.databaseId}>
-                <Link href={`/blog/category/${category.name}`}>
+                <Link href={`/blog/category/${category.slug}`}>
                   {category.name}
                 </Link>
               </li>
@@ -50,7 +50,7 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
           <ul className="m-0 flex list-none gap-2 p-0">
             {post.tags.nodes.map((tag) => (
               <li className="m-0 p-0" key={tag.databaseId}>
-                <Link href={`/blog/tag/${tag.name}`}>{tag.name}</Link>
+                <Link href={`/blog/tag/${tag.slug}`}>{tag.name}</Link>
               </li>
             ))}
           </ul>
