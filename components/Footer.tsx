@@ -5,7 +5,7 @@ import SocialLinks from '@/components/SocialLinks'
  */
 export default function Footer() {
   return (
-    <footer className="mx-auto max-w-2xl border-t border-zinc-500 pt-8 text-center text-sm">
+    <footer className="mx-auto w-full border-t border-zinc-500 pt-8 text-center text-sm">
       <SocialLinks />
       <p>
         Unless otherwise noted, all content on this website is licensed under{' '}
