@@ -25,9 +25,9 @@ export async function generateMetadata({
  */
 export default function Page() {
   return (
-    <>
+    <article>
       <h1>Search</h1>
       <Search />
-    </>
+    </article>
   )
 }
