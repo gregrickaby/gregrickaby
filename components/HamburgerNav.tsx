@@ -5,20 +5,28 @@ import Link from 'next/link'
 import {useState} from 'react'
 import {FaMagnifyingGlass} from 'react-icons/fa6'
 
+/**
+ * Hamburger Nav / Drawer.
+ */
 export default function HamburgerNav() {
   const [isOpen, setIsOpen] = useState(false)
   const {toggleSearch, setToggleSearch} = useSearch()
 
-  function toggleMenu() {
+  /**
+   * Toggle Drawer.
+   */
+  function toggleDrawer() {
     setIsOpen(!isOpen)
   }
 
   return (
     <div>
       {/* Toggle Button */}
-      <button className="p-4" onClick={toggleMenu}>
+      <button
+        className="absolute right-2 top-1 p-4 md:relative"
+        onClick={toggleDrawer}
+      >
         {isOpen ? (
-          // Close Icon (When Drawer is Open)
           <svg
             className="h-10 w-10"
             fill="none"
@@ -34,7 +42,6 @@ export default function HamburgerNav() {
             ></path>
           </svg>
         ) : (
-          // Hamburger Icon (When Drawer is Closed)
           <svg
             className="h-10 w-10"
             fill="none"
@@ -52,7 +59,6 @@ export default function HamburgerNav() {
         )}
       </button>
 
-      {/* Drawer */}
       <div
         className={`fixed right-0 top-0 h-full w-64 transform bg-zinc-100 transition-all duration-300 ease-in-out dark:bg-zinc-700 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
@@ -62,7 +68,7 @@ export default function HamburgerNav() {
         <button
           aria-label="Toggle menu"
           className="absolute right-3 top-3 p-1"
-          onClick={toggleMenu}
+          onClick={toggleDrawer}
         >
           {/* Close Icon (Inside Drawer) */}
           <svg

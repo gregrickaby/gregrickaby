@@ -8,7 +8,7 @@ import Link from 'next/link'
  */
 export default function Header() {
   return (
-    <header className="flex flex-col items-center justify-center gap-12 pb-12 text-center md:flex-row md:justify-between">
+    <header className="flex flex-col items-center justify-center gap-12 text-center md:flex-row md:justify-between">
       <div className="flex flex-col items-center gap-4 md:flex-row md:text-left">
         <Link href="/">
           <Image
