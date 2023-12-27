@@ -4,10 +4,10 @@ import {Post} from '@/lib/types'
 /**
  * Fetch a tag archive by slug.
  */
-export default async function getTagBySlug(slug: string, limit: number = 10) {
+export default async function getTagBySlug(slug: string, limit = 15) {
   const query = `
-    query GetTagBySlug($slug: String!) {
-      posts(where: {tag: $slug, status: PUBLISH}, first: ${limit}) {
+    query GetTagBySlug($slug: String!, $limit: Int!) {
+      posts(where: {tag: $slug, status: PUBLISH}, first: $limit) {
         nodes {
           databaseId
           date
@@ -26,6 +26,7 @@ export default async function getTagBySlug(slug: string, limit: number = 10) {
           seo {
             metaDesc
             title
+            readingTime
           }
           slug
         }
@@ -34,7 +35,8 @@ export default async function getTagBySlug(slug: string, limit: number = 10) {
   `
 
   const variables = {
-    slug: slug
+    slug: slug,
+    limit: limit
   }
 
   const response = await fetchGraphQL(query, variables)

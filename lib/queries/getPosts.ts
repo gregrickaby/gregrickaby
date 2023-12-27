@@ -6,8 +6,8 @@ import {Post} from '@/lib/types'
  */
 export default async function getPosts(limit = 1000) {
   const query = `
-    query GetPosts {
-      posts(where: {status: PUBLISH}, first: ${limit}) {
+    query GetPosts($limit: Int!) {
+      posts(where: {status: PUBLISH}, first: $limit) {
         nodes {
           commentCount
           databaseId
@@ -26,12 +26,21 @@ export default async function getPosts(limit = 1000) {
               }
             }
           }
+          seo {
+            title
+            metaDesc
+            readingTime
+          }
         }
       }
     }
   `
 
-  const response = await fetchGraphQL(query)
+  const variables = {
+    limit: limit
+  }
+
+  const response = await fetchGraphQL(query, variables)
 
   return response.data.posts.nodes as Post[]
 }

@@ -32,6 +32,7 @@ export default async function getPageBySlug(slug: string) {
         seo {
           metaDesc
           title
+          readingTime
         }
         hideFeaturedImage {
           hideFeaturedImage

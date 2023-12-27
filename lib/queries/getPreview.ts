@@ -44,6 +44,7 @@ export default async function getPreview(id: string) {
         seo {
           metaDesc
           title
+          readingTime
         }
         hideFeaturedImage {
           hideFeaturedImage

@@ -4,13 +4,10 @@ import {Post} from '@/lib/types'
 /**
  * Fetch a category archive by slug.
  */
-export default async function getCategoryBySlug(
-  slug: string,
-  limit: number = 10
-) {
+export default async function getCategoryBySlug(slug: string, limit = 15) {
   const query = `
-    query GetCategoryBySlug($slug: String!) {
-      posts(where: {categoryName: $slug, status: PUBLISH}, first: ${limit}) {
+    query GetCategoryBySlug($slug: String!, $limit: Int!) {
+      posts(where: {categoryName: $slug, status: PUBLISH}, first: $limit) {
         nodes {
           databaseId
           date
@@ -29,6 +26,7 @@ export default async function getCategoryBySlug(
           seo {
             metaDesc
             title
+            readingTime
           }
           slug
         }
@@ -37,7 +35,8 @@ export default async function getCategoryBySlug(
   `
 
   const variables = {
-    slug: slug
+    slug: slug,
+    limit: limit
   }
 
   const response = await fetchGraphQL(query, variables)

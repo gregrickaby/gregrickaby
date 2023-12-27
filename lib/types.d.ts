@@ -60,6 +60,7 @@ export interface Page {
   seo: {
     metaDesc: string
     title: string
+    readingTime: number
   }
   hideFeaturedImage: {
     hideFeaturedImage: boolean
@@ -86,6 +87,7 @@ export interface Post {
       {
         databaseId: string
         name: string
+        slug: string
       }
     ]
   }
@@ -94,6 +96,7 @@ export interface Post {
       {
         databaseId: string
         name: string
+        slug: string
       }
     ]
   }
@@ -101,6 +104,7 @@ export interface Post {
   seo: {
     metaDesc: string
     title: string
+    readingTime: number
   }
   comments: {
     nodes: [

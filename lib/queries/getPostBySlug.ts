@@ -33,17 +33,20 @@ export default async function getPostBySlug(slug: string) {
           nodes {
             databaseId
             name
+            slug
           }
         }
         categories {
           nodes {
             databaseId
             name
+            slug
           }
         }
         seo {
           metaDesc
           title
+          readingTime
         }
         hideFeaturedImage {
           hideFeaturedImage
