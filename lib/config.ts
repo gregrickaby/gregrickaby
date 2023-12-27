@@ -13,7 +13,7 @@ import {
 
 const config = {
   siteName: 'Greg Rickaby',
-  siteDescription: 'Building websites since 1997',
+  siteDescription: 'Web Developer / Photographer / Author',
   siteUrl: 'https://gregrickaby.com',
   siteLogo: '/logo.webp',
   siteOgImage: '/og.webp',
