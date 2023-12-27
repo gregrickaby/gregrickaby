@@ -45,12 +45,12 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${page.seo.title} - ${config.siteName}`,
+    title: page.seo.title,
     description: page.seo.metaDesc,
     openGraph: {
-      title: `${page.title} - ${config.siteName}`,
-      description: page.excerpt,
-      url: `${config.siteUrl}/blog/${params.slug}`,
+      title: page.seo.title,
+      description: page.seo.metaDesc,
+      url: `${config.siteUrl}/${params.slug}`,
       siteName: config.siteName,
       locale: 'en_US',
       type: 'website',
