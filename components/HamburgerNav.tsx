@@ -1,29 +1,45 @@
 'use client'
 
-import {useSearch} from '@/components/SearchProvider'
+import config from '@/lib/config'
 import Link from 'next/link'
-import {useState} from 'react'
-import {FaMagnifyingGlass} from 'react-icons/fa6'
+import React, {useEffect, useState} from 'react'
 
 /**
  * Hamburger Nav / Drawer.
  */
 export default function HamburgerNav() {
   const [isOpen, setIsOpen] = useState(false)
-  const {toggleSearch, setToggleSearch} = useSearch()
 
   /**
-   * Toggle Drawer.
+   * Drawer toggle handler.
    */
   function toggleDrawer() {
     setIsOpen(!isOpen)
   }
 
+  /**
+   * Keyboard event handler.
+   */
+  function handleKeyDown(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+      setIsOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    // Add event listener.
+    window.addEventListener('keydown', handleKeyDown)
+
+    // Cleanup.
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
   return (
     <div>
-      {/* Toggle Button */}
       <button
-        className="absolute right-2 top-1 p-4 md:relative"
+        className="absolute right-2 top-1 p-1 md:relative"
         onClick={toggleDrawer}
       >
         {isOpen ? (
@@ -60,17 +76,15 @@ export default function HamburgerNav() {
       </button>
 
       <div
-        className={`fixed right-0 top-0 h-full w-64 transform bg-zinc-100 transition-all duration-300 ease-in-out dark:bg-zinc-700 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed right-0 top-0 h-full w-64 transform bg-zinc-100 transition-all duration-500 ease-in-out dark:bg-zinc-700 ${
+          isOpen ? 'z-50 translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Close Button Inside Drawer */}
         <button
           aria-label="Toggle menu"
           className="absolute right-3 top-3 p-1"
           onClick={toggleDrawer}
         >
-          {/* Close Icon (Inside Drawer) */}
           <svg
             className="h-6 w-6"
             fill="none"
@@ -86,25 +100,19 @@ export default function HamburgerNav() {
             ></path>
           </svg>
         </button>
-        {/* Navigation Links */}
-        <nav className="flex flex-col gap-4 px-8 py-16 text-left text-xl">
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/portfolio">Portfolio</Link>
-          <Link href="/feed">RSS</Link>
-          <button
-            aria-label="Search"
-            title="Search"
-            className="flex items-center gap-4 rounded bg-transparent p-2 transition-all duration-300 ease-in-out hover:bg-zinc-200 dark:text-white dark:hover:bg-zinc-700"
-            onClick={() => setToggleSearch(!toggleSearch)}
-          >
-            <FaMagnifyingGlass />
-            <span className="rounded-l-md rounded-r-md bg-zinc-400 p-1 font-mono text-xs text-zinc-900">
-              CMD+K
-            </span>
-          </button>
+
+        <nav className="flex flex-col gap-2 px-8 py-16">
+          {config.menuItems.map((item) => (
+            <Link
+              className="flex items-center gap-2 no-underline hover:font-bold"
+              href={item.url}
+              key={item.name}
+              onClick={toggleDrawer}
+            >
+              {item.name}
+              {!!item.icon && React.createElement(item.icon)}
+            </Link>
+          ))}
         </nav>
       </div>
     </div>
