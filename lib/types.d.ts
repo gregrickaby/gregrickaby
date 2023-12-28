@@ -28,6 +28,29 @@ export interface FeaturedImage {
   }
 }
 
+export interface Comments {
+  edges: [
+    {
+      cursor: string
+      node: {
+        databaseId: string
+        content: string
+        date: string
+        author: {
+          node: {
+            avatar: {
+              url: string
+            }
+            email: string
+            name: string
+            url: string
+          }
+        }
+      }
+    }
+  ]
+}
+
 export interface Menu {
   nodes: [
     {
@@ -66,8 +89,10 @@ export interface Page {
 export interface Post {
   author: {
     node: {
-      gravatarUrl: string
       name: string
+      avatar: {
+        url: string
+      }
     }
   }
   databaseId: string
@@ -102,23 +127,7 @@ export interface Post {
     title: string
     readingTime: number
   }
-  comments: {
-    nodes: [
-      {
-        databaseId: string
-        content: string
-        date: string
-        status: string
-        author: {
-          node: {
-            email: string
-            gravatarUrl: string
-            name: string
-          }
-        }
-      }
-    ]
-  }
+  comments: Comments
   hideFeaturedImage: {
     hideFeaturedImage: boolean
   }
