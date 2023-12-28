@@ -16,15 +16,17 @@ export default async function getPostBySlug(slug: string) {
             altText
             sourceUrl
             mediaDetails {
-                height
-                width
+              height
+              width
             }
           }
         }
         author {
           node {
-            gravatarUrl
             name
+            avatar {
+              url
+            }
           }
         }
         date
@@ -51,17 +53,22 @@ export default async function getPostBySlug(slug: string) {
         hideFeaturedImage {
           hideFeaturedImage
         }
-        comments(first: 10, where: {order: ASC}) {
-          nodes {
-            content(format: RENDERED)
-            databaseId
-            date
-            status
-            author {
-              node {
-                email
-                gravatarUrl
-                name
+        comments(first: 10, where: {order: ASC, status: "APPROVED"}) {
+          edges {
+            cursor
+            node {
+              databaseId
+              date
+              content(format: RENDERED)
+              author {
+                node {
+                  avatar {
+                    url
+                  }
+                  email
+                  name
+                  url
+                }
               }
             }
           }
