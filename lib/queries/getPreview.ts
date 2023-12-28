@@ -23,8 +23,10 @@ export default async function getPreview(id: string) {
         }
         author {
           node {
-            gravatarUrl
             name
+            avatar {
+              url
+            }
           }
         }
         date

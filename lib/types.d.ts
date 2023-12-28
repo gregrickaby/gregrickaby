@@ -64,8 +64,10 @@ export interface Menu {
 export interface Page {
   author: {
     node: {
-      gravatarUrl: string
       name: string
+      avatar: {
+        url: string
+      }
     }
   }
   databaseId: string
