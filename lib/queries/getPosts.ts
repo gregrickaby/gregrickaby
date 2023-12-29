@@ -1,5 +1,5 @@
 import {fetchGraphQL} from '@/lib/functions'
-import {Post} from '@/lib/types'
+import {AllPosts} from '@/lib/types'
 
 /**
  * Fetch blog posts.
@@ -8,29 +8,38 @@ export default async function getPosts(limit = 1000) {
   const query = `
     query GetPosts($limit: Int!) {
       posts(where: {status: PUBLISH}, first: $limit) {
-        nodes {
-          commentCount
-          databaseId
-          title
-          slug
-          date
-          modified
-          excerpt(format: RENDERED)
-          featuredImage {
-            node {
-              altText
-              sourceUrl
-              mediaDetails {
+        edges {
+          cursor
+          node {
+            commentCount
+            databaseId
+            title(format: RENDERED)
+            slug
+            date
+            modified
+            excerpt(format: RENDERED)
+            featuredImage {
+              node {
+                altText
+                sourceUrl
+                mediaDetails {
                   height
                   width
+                }
               }
             }
+            seo {
+              title
+              metaDesc
+              readingTime
+            }
           }
-          seo {
-            title
-            metaDesc
-            readingTime
-          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+          hasPreviousPage
+          startCursor
         }
       }
     }
@@ -42,5 +51,5 @@ export default async function getPosts(limit = 1000) {
 
   const response = await fetchGraphQL(query, variables)
 
-  return response.data.posts.nodes as Post[]
+  return response.data.posts as AllPosts
 }

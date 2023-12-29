@@ -142,7 +142,16 @@ export interface AllPages {
 }
 
 export interface AllPosts {
-  posts: {
-    nodes: Post[]
-  }
+  edges: [
+    {
+      cursor: string
+      node: Post
+      pageinfo: {
+        endCursor: string
+        hasNextPage: boolean
+        hasPreviousPage: boolean
+        startCursor: string
+      }
+    }
+  ]
 }

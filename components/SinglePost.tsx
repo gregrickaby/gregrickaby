@@ -1,20 +1,18 @@
 import BlogContent from '@/components/BlogContent'
 import Comments from '@/components/Comments'
 import FeaturedImage from '@/components/FeaturedImage'
-import LatestPosts from '@/components/LatestPosts'
 import {formatDate} from '@/lib/functions'
 import {Post} from '@/lib/types'
 import Link from 'next/link'
 
 interface SinglePostProps {
   post: Post
-  latestPosts: Post[]
 }
 
 /**
  * Single post component.
  */
-export default function SinglePost({post, latestPosts}: SinglePostProps) {
+export default function SinglePost({post}: SinglePostProps) {
   return (
     <article>
       <header>
@@ -57,7 +55,6 @@ export default function SinglePost({post, latestPosts}: SinglePostProps) {
         </div>
       </footer>
       <Comments post={post} />
-      <LatestPosts posts={latestPosts} />
     </article>
   )
 }

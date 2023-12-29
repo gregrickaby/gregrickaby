@@ -16,15 +16,15 @@ export const dynamic = 'force-static'
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route
  */
 export async function GET() {
-  // Fetch all posts and pages
+  // Fetch all posts and pages.
   const allPosts = await getPosts()
   const allPages = await getPages()
 
-  // Start sitemap XML
+  // Start sitemap XML.
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`
 
-  // Add all pages to sitemap
+  // Add all pages to sitemap.
   allPages.forEach((page) => {
     xml += `
   <url>
@@ -33,19 +33,19 @@ export async function GET() {
   </url>`
   })
 
-  // Add blog posts to sitemap
-  allPosts.forEach((post) => {
+  // Add blog posts to sitemap.
+  allPosts.edges.forEach(({node}) => {
     xml += `
   <url>
-    <loc>${config.siteUrl}/blog/${post.slug}</loc>
-    <lastmod>${new Date(post.date).toISOString()}</lastmod>
+    <loc>${config.siteUrl}/blog/${node.slug}</loc>
+    <lastmod>${new Date(node.date).toISOString()}</lastmod>
   </url>`
   })
 
-  // Close urlset tag
+  // Close urlset tag.
   xml += `</urlset>`
 
-  // Return response
+  // Return response.
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8'

@@ -39,14 +39,14 @@ export async function GET() {
     <ttl>60</ttl>`
 
   // Add posts to RSS feed.
-  allPosts.forEach((post) => {
+  allPosts.edges.forEach(({node}) => {
     rss += `
     <item>
-      <title>${escape(post.title)}</title>
-      <description>${escape(post.excerpt)}</description>
-      <link>${config.siteUrl}/blog/${post.slug}</link>
-      <guid>${config.siteUrl}/blog/${post.slug}</guid>
-      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
+      <title>${escape(node.title)}</title>
+      <description>${escape(node.excerpt)}</description>
+      <link>${config.siteUrl}/blog/${node.slug}</link>
+      <guid>${config.siteUrl}/blog/${node.slug}</guid>
+      <pubDate>${new Date(node.date).toUTCString()}</pubDate>
     </item>`
   })
 
