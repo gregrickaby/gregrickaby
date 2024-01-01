@@ -104,3 +104,16 @@
     @apply text-xs;
   }
 }
+
+/* ACF Photo Gallery - Homepage Widget */
+.homepage-gallery #grd-photo-gallery-gallery {
+  .grd-photo-gallery-image,
+  .grd-photo-gallery-grid-sizer {
+    margin-bottom: var(--grd-photo-gallery-gutter);
+    width: calc(50% - var(--grd-photo-gallery-gutter));
+  }
+
+  .grd-photo-gallery-image-caption {
+    display: none;
+  }
+}

@@ -67,11 +67,9 @@ export default async function Home() {
             </li>
           </ul>
         </div>
-        <div>
+        <div className="homepage-gallery">
           <h3>Recent Photos</h3>
-          <ul>
-            <Blocks content={photos.content} />
-          </ul>
+          <Blocks content={photos.content} />
         </div>
       </section>
     </article>
