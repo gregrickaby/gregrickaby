@@ -1,4 +1,4 @@
-import BlogContent from '@/components/BlogContent'
+import Blocks from '@/components/Blocks'
 import Comments from '@/components/Comments'
 import FeaturedImage from '@/components/FeaturedImage'
 import {formatDate} from '@/lib/functions'
@@ -29,7 +29,7 @@ export default function SinglePost({post}: SinglePostProps) {
           hidden={post.hideFeaturedImage.hideFeaturedImage}
         />
       </header>
-      <BlogContent content={post.content} />
+      <Blocks content={post.content} />
       <footer className="flex items-center justify-between gap-4 pb-4">
         <div>
           <h3>Categories</h3>

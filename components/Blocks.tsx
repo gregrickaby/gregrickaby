@@ -3,7 +3,7 @@
 import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import {useEffect, useRef} from 'react'
 
-interface BlogContentProps {
+interface BlocksProps {
   content: string
 }
 
@@ -11,7 +11,7 @@ interface BlogContentProps {
  * The idea is to scan the post content for galleries and initialize
  * 3rd party libraries like Masonry and Fancybox.
  */
-export default function BlogContent({content}: BlogContentProps) {
+export default function Blocks({content}: BlocksProps) {
   // Create a ref for the post content.
   const contentRef = useRef<HTMLDivElement>(null)
 

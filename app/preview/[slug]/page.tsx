@@ -1,4 +1,4 @@
-import BlogContent from '@/components/BlogContent'
+import Blocks from '@/components/Blocks'
 import FeaturedImage from '@/components/FeaturedImage'
 import config from '@/lib/config'
 import {formatDate} from '@/lib/functions'
@@ -125,7 +125,7 @@ export default async function Preview({params, searchParams}: PreviewProps) {
           <time dateTime={post.date}>{formatDate(post.date)}</time>
         </p>
       </header>
-      <BlogContent content={post.content} />
+      <Blocks content={post.content} />
       <footer className="flex items-center justify-between gap-4 pb-4">
         <div>
           <h3>Categories</h3>
