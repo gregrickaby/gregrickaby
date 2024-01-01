@@ -23,10 +23,11 @@ export default async function Home() {
 
   return (
     <article>
+      <h2 className="m-0 p-0">Welcome</h2>
       <Blocks content={page.content} />
-      <div className="grid gap-8 md:grid-cols-2">
+      <section className="grid gap-8 md:grid-cols-2">
         <div>
-          <h2>Latest Posts</h2>
+          <h3>Latest Posts</h3>
           <ul>
             {posts.edges.map(({node}) => (
               <li key={node.databaseId}>
@@ -34,7 +35,7 @@ export default async function Home() {
               </li>
             ))}
           </ul>
-          <h2>Popular GitHub Repos</h2>
+          <h3>Popular GitHub Repos</h3>
           <ul>
             {repos.map((repo) => (
               <li key={repo.id}>
@@ -43,7 +44,7 @@ export default async function Home() {
               </li>
             ))}
           </ul>
-          <h2>Blogroll</h2>
+          <h3>Blogroll</h3>
           <ul>
             <li>
               <a href="https://petapixel.com/">PetaPixel</a>
@@ -67,12 +68,12 @@ export default async function Home() {
           </ul>
         </div>
         <div>
-          <h2>Recent Photos</h2>
+          <h3>Recent Photos</h3>
           <ul>
             <Blocks content={photos.content} />
           </ul>
         </div>
-      </div>
+      </section>
     </article>
   )
 }
