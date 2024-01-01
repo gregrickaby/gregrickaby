@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --grd-acf-block-gutter: 24px;
+    --grd-photo-gallery-gutter: 24px;
   }
 
   body {
@@ -39,34 +39,34 @@
 }
 
 /* ACF Block Gallery */
-#grd-acf-block-gallery {
+#grd-photo-gallery-gallery {
   @apply m-auto;
 
   /* Single column on mobile. */
-  .grd-acf-block-image,
-  .grd-acf-block-grid-sizer {
-    margin-bottom: var(--grd-acf-block-gutter);
-    width: calc(100% - var(--grd-acf-block-gutter));
+  .grd-photo-gallery-image,
+  .grd-photo-gallery-grid-sizer {
+    margin-bottom: var(--grd-photo-gallery-gutter);
+    width: calc(100% - var(--grd-photo-gallery-gutter));
   }
 
   /* Two columns on tablet. */
   @media (width >= 768px) {
-    .grd-acf-block-image,
-    .grd-acf-block-grid-sizer {
-      width: calc(50% - var(--grd-acf-block-gutter));
+    .grd-photo-gallery-image,
+    .grd-photo-gallery-grid-sizer {
+      width: calc(50% - var(--grd-photo-gallery-gutter));
     }
   }
 
   /* Three columns on desktop. */
   @media (width >= 1280px) {
-    .grd-acf-block-image,
-    .grd-acf-block-grid-sizer {
-      width: calc(33% - var(--grd-acf-block-gutter));
+    .grd-photo-gallery-image,
+    .grd-photo-gallery-grid-sizer {
+      width: calc(33% - var(--grd-photo-gallery-gutter));
     }
   }
 
   /* Each image. */
-  .grd-acf-block-image {
+  .grd-photo-gallery-image {
     a {
       @apply cursor-zoom-in text-white no-underline;
     }
@@ -82,14 +82,14 @@
         @apply scale-105 transform shadow-lg;
       }
 
-      .grd-acf-block-image-caption {
+      .grd-photo-gallery-image-caption {
         @apply visible opacity-100;
       }
     }
   }
 
   /* Optional captions. */
-  .grd-acf-block-image-caption {
+  .grd-photo-gallery-image-caption {
     @apply invisible absolute bottom-1 max-w-[90%] p-3 opacity-0 transition-all duration-200 ease-in-out;
     @apply bg-zinc-900/50 text-left text-white shadow-lg;
 

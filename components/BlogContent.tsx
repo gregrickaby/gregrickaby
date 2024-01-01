@@ -30,7 +30,7 @@ export default function BlogContent({content}: BlogContentProps) {
     }
 
     // Attempt to find the gallery.
-    const gallery = contentRef.current.querySelector('.grd-acf-block-grid')
+    const gallery = contentRef.current.querySelector('.grd-photo-gallery-grid')
 
     // No gallery? Bail.
     if (!gallery) {
@@ -48,8 +48,8 @@ export default function BlogContent({content}: BlogContentProps) {
     // Initialize Masonry.
     const masonryGrid = new Masonry(gallery, {
       gutter: 24,
-      itemSelector: '.grd-acf-block-image',
-      columnWidth: '.grd-acf-block-grid-sizer',
+      itemSelector: '.grd-photo-gallery-image',
+      columnWidth: '.grd-photo-gallery-grid-sizer',
       percentPosition: true
     })
 
@@ -65,17 +65,9 @@ export default function BlogContent({content}: BlogContentProps) {
       defaultDisplay: 'flex',
       Toolbar: {
         display: {
-          left: ['infobar'],
-          middle: [
-            'zoomIn',
-            'zoomOut',
-            'toggle1to1',
-            'rotateCCW',
-            'rotateCW',
-            'flipX',
-            'flipY'
-          ],
-          right: ['slideshow', 'thumbs', 'download', 'close']
+          left: [],
+          middle: ['prev', 'infobar', 'next'],
+          right: ['download', 'close']
         }
       }
     })
