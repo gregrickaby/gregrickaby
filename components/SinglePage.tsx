@@ -1,4 +1,4 @@
-import BlogContent from '@/components/BlogContent'
+import Blocks from '@/components/Blocks'
 import FeaturedImage from '@/components/FeaturedImage'
 import {Page} from '@/lib/types'
 
@@ -17,7 +17,7 @@ export default function SinglePage({page}: SinglePageProps) {
         hidden={page.hideFeaturedImage.hideFeaturedImage}
       />
       <h1 dangerouslySetInnerHTML={{__html: page.title}} />
-      <BlogContent content={page.content} />
+      <Blocks content={page.content} />
     </article>
   )
 }
