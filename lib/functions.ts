@@ -1,4 +1,4 @@
-import {GraphQLResponse, SearchResults} from '@/lib/types'
+import {GitHubRepo, GraphQLResponse, SearchResults} from '@/lib/types'
 import {redirect} from 'next/navigation'
 
 /**
@@ -145,5 +145,47 @@ export function rssFeedRedirect(slug: string) {
     )
   ) {
     redirect('/feed.xml')
+  }
+}
+
+/**
+ * Get most starred GitHub repos.
+ *
+ * @see https://docs.github.com/en/rest/reference/repos#list-repositories-for-a-user
+ */
+export async function getPopularGithubRepos(
+  username: string = 'gregrickaby',
+  count: number = 5
+): Promise<GitHubRepo[]> {
+  try {
+    // Fetch data from GitHub REST API.
+    const response = await fetch(
+      `https://api.github.com/users/${username}/repos?per_page=100`
+    )
+
+    // If the response status is not 200, throw an error.
+    if (!response.ok) {
+      console.error('Response Status:', response.status)
+      throw new Error(response.statusText)
+    }
+
+    // Read the response as JSON.
+    const repos = await response.json()
+
+    // Verify data has repos.
+    if (!repos || repos.length === 0) {
+      throw new Error('No repos found.')
+    }
+
+    // Sort repositories by stargazers_count in descending order.
+    const sortedRepos = repos.sort(
+      (a: GitHubRepo, b: GitHubRepo) => b.stargazers_count - a.stargazers_count
+    )
+
+    // Return the top 'count' repositories.
+    return sortedRepos.slice(0, count)
+  } catch (error) {
+    console.error(error)
+    throw error
   }
 }

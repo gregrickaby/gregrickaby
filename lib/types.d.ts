@@ -155,3 +155,11 @@ export interface AllPosts {
     }
   ]
 }
+
+export interface GitHubRepo {
+  name: string
+  stargazers_count: number
+  html_url: string
+  description: string
+  id: number
+}
