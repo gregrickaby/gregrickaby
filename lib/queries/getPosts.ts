@@ -4,10 +4,10 @@ import {AllPosts} from '@/lib/types'
 /**
  * Fetch blog posts.
  */
-export default async function getPosts(limit = 1000) {
+export default async function getPosts(limit = 1000, after = '', before = '') {
   const query = `
-    query GetPosts($limit: Int!) {
-      posts(where: {status: PUBLISH}, first: $limit) {
+    query GetPosts($limit: Int!, $after: String, $before: String) {
+      posts(where: {status: PUBLISH}, first: $limit, after: $after, before: $before) {
         edges {
           cursor
           node {
@@ -46,7 +46,9 @@ export default async function getPosts(limit = 1000) {
   `
 
   const variables = {
-    limit: limit
+    limit,
+    after,
+    before
   }
 
   const response = await fetchGraphQL(query, variables)
