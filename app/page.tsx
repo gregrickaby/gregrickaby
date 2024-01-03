@@ -35,35 +35,116 @@ export default async function Home() {
               </li>
             ))}
           </ul>
+          <h3>Experience</h3>
+          <ul>
+            <li>WPForms - Development Team Lead (2023-Preset)</li>
+            <li>AmericanEagle.com - Technical Lead (2022-2023)</li>
+            <li>WebDevStudios - Director of Engineering (2013-2022)</li>
+            <li>Bluewater Broadcasting - Chief Engineer (2010-2013)</li>
+            <li>Gulf South Communications - Chief Engineer (2002-2009)</li>
+            <li>Midwest Communications - Webmaster (1999-2002)</li>
+          </ul>
           <h3>Popular GitHub Repos</h3>
           <ul>
             {repos.map((repo) => (
               <li key={repo.id}>
                 <a href={repo.html_url}>{repo.name}</a> ({repo.stargazers_count}
-                )
+                ⭐️)
               </li>
             ))}
           </ul>
           <h3>Blogroll</h3>
           <ul>
             <li>
-              <a href="https://petapixel.com/">PetaPixel</a>
+              <a href="https://petapixel.com/">PetaPixel</a> 📸
             </li>
             <li>
-              <a href="https://news.ycombinator.com/">Hacker News</a>
+              <a href="https://www.dpreview.com/">DP Review</a> 📸
+            </li>
+            <li>
+              <a href="https://fstoppers.com/">Fstoppers</a> 📸
+            </li>
+            <li>
+              <a href="https://news.ycombinator.com/">Hacker News</a> 💻
             </li>
             <li>
               <a href="https://www.timeanddate.com/news/astronomy/">
                 Astronomy News
-              </a>
+              </a>{' '}
+              🌌
             </li>
             <li>
               <a href="https://www.disneytouristblog.com/">
                 Disney Tourist Blog
-              </a>
+              </a>{' '}
+              🏰
             </li>
             <li>
-              <a href="https://make.wordpress.org/core/">Make WordPress Core</a>
+              <a href="https://make.wordpress.org/core/">Make WordPress Core</a>{' '}
+              💻
+            </li>
+          </ul>
+          <h3>Videoroll</h3>
+          <ul>
+            <li>
+              <a href="https://www.youtube.com/@tested">
+                Adam Savage&apos;s Tested
+              </a>{' '}
+              🥼
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@theartofphotography">
+                The Art of Photography
+              </a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@HighPrairieSportsmen">
+                High Prairie Sportsmen
+              </a>{' '}
+              🦆
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@TFLtruck">
+                The Fast Lane Truck
+              </a>{' '}
+              🚚
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@KeithCooper">Keith Cooper</a> 🖨️
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@geraldundone">Gerald Undone</a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@MarkDenneyPhoto">Mark Denny</a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@DustinAbbottTWI">
+                Dustin Abbot
+              </a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@ThePhlogPhotography">
+                Christian Möhrle
+              </a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@jherr">Jack Herrington</a> 💻
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@PetaPixel">
+                Chris Niccolls and Jordan Drake
+              </a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@AlexArmitage">Alex Armitage</a>{' '}
+              📸
             </li>
           </ul>
         </div>
