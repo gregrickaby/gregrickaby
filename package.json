@@ -28,7 +28,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@fancyapps/ui": "^5.0.32",
+    "@fancyapps/ui": "^5.0.33",
     "@tailwindcss/typography": "^0.5.10",
     "@types/imagesloaded": "^4.1.6",
     "@types/masonry-layout": "^4.2.7",
@@ -43,7 +43,7 @@
     "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
     "postcss": "^8.4.32",
-    "postcss-import": "^15.1.0",
+    "postcss-import": "^16.0.0",
     "prettier": "^3.1.1",
     "prettier-plugin-tailwindcss": "^0.5.10",
     "react-icons": "^4.12.0",
