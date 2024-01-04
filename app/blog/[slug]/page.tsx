@@ -1,6 +1,5 @@
 import SinglePost from '@/components/SinglePost'
-import config from '@/lib/config'
-import {rssFeedRedirect} from '@/lib/functions'
+import {rssFeedRedirect, seoHandler} from '@/lib/functions'
 import getPostBySlug from '@/lib/queries/getPostBySlug'
 import getPosts from '@/lib/queries/getPosts'
 import {Metadata, ResolvingMetadata} from 'next'
@@ -48,26 +47,7 @@ export async function generateMetadata(
     return {}
   }
 
-  return {
-    title: post.seo.title,
-    description: post.seo.metaDesc,
-    openGraph: {
-      title: post.seo.title,
-      description: post.seo.metaDesc,
-      url: `${config.siteUrl}/blog/${params.slug}`,
-      siteName: config.siteName,
-      locale: 'en_US',
-      type: 'website',
-      images: [
-        {
-          url: post?.featuredImage?.node?.sourceUrl,
-          width: post?.featuredImage?.node?.mediaDetails?.width,
-          height: post?.featuredImage?.node?.mediaDetails?.height,
-          alt: post?.featuredImage?.node?.altText
-        }
-      ]
-    }
-  }
+  return seoHandler(post)
 }
 
 /**

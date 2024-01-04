@@ -26,6 +26,25 @@ export default async function getPages(limit = 1000) {
               }
             }
           }
+          seo {
+            title
+            metaDesc
+            readingTime
+            metaRobotsNofollow
+            metaRobotsNoindex
+            opengraphDescription
+            opengraphTitle
+            opengraphType
+            opengraphUrl
+            opengraphImage {
+              altText
+              sourceUrl(size: LARGE)
+              mediaDetails {
+                height
+                width
+              }
+            }
+          }
         }
       }
     }

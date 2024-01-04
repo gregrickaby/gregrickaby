@@ -3,18 +3,8 @@ import Header from '@/components/Header'
 import Meta from '@/components/JsonLd'
 import config from '@/lib/config'
 import type {Metadata, Viewport} from 'next'
-import dynamic from 'next/dynamic'
 import {Fira_Sans} from 'next/font/google'
 import './globals.css'
-
-/**
- * Setup dynamic imports.
- *
- * @see https://nextjs.org/docs/advanced-features/dynamic-import
- */
-const Search = dynamic(() => import('@/components/Search'), {
-  ssr: false
-})
 
 /**
  * Setup Google Font.
@@ -28,7 +18,10 @@ const googleFont = Fira_Sans({
 })
 
 /**
- * Setup metadata.
+ * Setup default sitewide metadata.
+ *
+ * Note: Much of this is overridden by the metadata returned
+ * from the `generateMetadata()` function on individual routes.
  *
  * @see https://nextjs.org/docs/app/building-your-application/optimizing/metadata
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#basic-fields

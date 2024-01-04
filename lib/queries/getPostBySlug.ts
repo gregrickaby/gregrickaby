@@ -46,9 +46,23 @@ export default async function getPostBySlug(slug: string) {
           }
         }
         seo {
-          metaDesc
           title
+          metaDesc
           readingTime
+          metaRobotsNofollow
+          metaRobotsNoindex
+          opengraphDescription
+          opengraphTitle
+          opengraphType
+          opengraphUrl
+          opengraphImage {
+            altText
+            sourceUrl(size: LARGE)
+            mediaDetails {
+              height
+              width
+            }
+          }
         }
         hideFeaturedImage {
           hideFeaturedImage

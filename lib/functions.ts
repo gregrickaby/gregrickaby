@@ -1,4 +1,6 @@
-import {GitHubRepo, GraphQLResponse, SearchResults} from '@/lib/types'
+import config from '@/lib/config'
+import {GitHubRepo, GraphQLResponse, Page, SearchResults} from '@/lib/types'
+import {Metadata} from 'next'
 import {redirect} from 'next/navigation'
 
 /**
@@ -187,5 +189,45 @@ export async function getPopularGithubRepos(
   } catch (error) {
     console.error(error)
     throw error
+  }
+}
+
+/**
+ * Parse SEO data and return an object.
+ *
+ * Used in the generateMetadata() function.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
+export function seoHandler(page: Page): Metadata {
+  // If there is no page, return an empty object.
+  if (!page) {
+    return {}
+  }
+
+  // Build the metadata object.
+  return {
+    title: page.seo.title,
+    description: page.seo.metaDesc,
+    robots: {
+      follow: page.seo.metaRobotsNofollow === 'follow',
+      index: page.seo.metaRobotsNoindex === 'index'
+    },
+    openGraph: {
+      title: page.seo.opengraphTitle,
+      description: page.seo.opengraphDescription,
+      url: page.seo.opengraphUrl,
+      siteName: config.siteName,
+      locale: 'en_US',
+      type: page.seo.opengraphType,
+      images: [
+        {
+          url: page?.seo?.opengraphImage?.sourceUrl,
+          width: page?.seo?.opengraphImage?.mediaDetails?.width,
+          height: page?.seo?.opengraphImage?.mediaDetails?.height,
+          alt: page?.seo?.opengraphImage?.altText
+        }
+      ]
+    }
   }
 }

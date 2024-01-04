@@ -32,6 +32,20 @@ export default async function getPosts(limit = 1000, after = '', before = '') {
               title
               metaDesc
               readingTime
+              metaRobotsNofollow
+              metaRobotsNoindex
+              opengraphDescription
+              opengraphTitle
+              opengraphType
+              opengraphUrl
+              opengraphImage {
+                altText
+                sourceUrl(size: LARGE)
+                mediaDetails {
+                  height
+                  width
+                }
+              }
             }
           }
         }

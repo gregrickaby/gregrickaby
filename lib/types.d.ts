@@ -51,6 +51,26 @@ export interface Comments {
   ]
 }
 
+export interface Seo {
+  title: string
+  metaDesc: string
+  readingTime: number
+  metaRobotsNoindex: 'noindex' | 'index'
+  metaRobotsNofollow: 'nofollow' | 'follow'
+  opengraphDescription: string
+  opengraphTitle: string
+  opengraphType: 'website' | 'article'
+  opengraphUrl: string
+  opengraphImage: {
+    altText: string
+    sourceUrl: string
+    mediaDetails: {
+      height: number
+      width: number
+    }
+  }
+}
+
 export interface Menu {
   nodes: [
     {
@@ -78,11 +98,7 @@ export interface Page {
   excerpt: string
   content: string
   featuredImage: FeaturedImage
-  seo: {
-    metaDesc: string
-    title: string
-    readingTime: number
-  }
+  seo: Seo
   hideFeaturedImage: {
     hideFeaturedImage: boolean
   }
@@ -124,11 +140,7 @@ export interface Post {
     ]
   }
   featuredImage: FeaturedImage
-  seo: {
-    metaDesc: string
-    title: string
-    readingTime: number
-  }
+  seo: Seo
   comments: Comments
   hideFeaturedImage: {
     hideFeaturedImage: boolean

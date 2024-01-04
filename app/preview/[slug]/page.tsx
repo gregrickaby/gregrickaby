@@ -1,7 +1,6 @@
 import Blocks from '@/components/Blocks'
 import FeaturedImage from '@/components/FeaturedImage'
-import config from '@/lib/config'
-import {formatDate} from '@/lib/functions'
+import {formatDate, seoHandler} from '@/lib/functions'
 import getPreview from '@/lib/queries/getPreview'
 import {Metadata} from 'next'
 
@@ -39,27 +38,7 @@ export async function generateMetadata({
     return {}
   }
 
-  return {
-    title: `${post.title} - ${config.siteName}`,
-    description: post.excerpt,
-    robots: 'noindex',
-    openGraph: {
-      title: `${post.title} - ${config.siteName}`,
-      description: post.excerpt,
-      url: `${config.siteUrl}/blog/${params.slug}`,
-      siteName: config.siteName,
-      locale: 'en_US',
-      type: 'website',
-      images: [
-        {
-          url: post?.featuredImage?.node?.sourceUrl,
-          width: post?.featuredImage?.node?.mediaDetails?.width,
-          height: post?.featuredImage?.node?.mediaDetails?.height,
-          alt: post?.featuredImage?.node?.altText
-        }
-      ]
-    }
-  }
+  return seoHandler(post)
 }
 
 /**

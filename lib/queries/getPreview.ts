@@ -44,9 +44,23 @@ export default async function getPreview(id: string) {
           }
         }
         seo {
-          metaDesc
           title
+          metaDesc
           readingTime
+          metaRobotsNofollow
+          metaRobotsNoindex
+          opengraphDescription
+          opengraphTitle
+          opengraphType
+          opengraphUrl
+          opengraphImage {
+            altText
+            sourceUrl(size: LARGE)
+            mediaDetails {
+              height
+              width
+            }
+          }
         }
         hideFeaturedImage {
           hideFeaturedImage

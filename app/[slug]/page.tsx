@@ -1,6 +1,5 @@
 import SinglePage from '@/components/SinglePage'
-import config from '@/lib/config'
-import {rssFeedRedirect} from '@/lib/functions'
+import {rssFeedRedirect, seoHandler} from '@/lib/functions'
 import getPageBySlug from '@/lib/queries/getPageBySlug'
 import getPages from '@/lib/queries/getPages'
 import {Metadata} from 'next'
@@ -44,26 +43,7 @@ export async function generateMetadata({
     return {}
   }
 
-  return {
-    title: page.seo.title,
-    description: page.seo.metaDesc,
-    openGraph: {
-      title: page.seo.title,
-      description: page.seo.metaDesc,
-      url: `${config.siteUrl}/${params.slug}`,
-      siteName: config.siteName,
-      locale: 'en_US',
-      type: 'website',
-      images: [
-        {
-          url: page?.featuredImage?.node?.sourceUrl,
-          width: page?.featuredImage?.node?.mediaDetails?.width,
-          height: page?.featuredImage?.node?.mediaDetails?.height,
-          alt: page?.featuredImage?.node?.altText
-        }
-      ]
-    }
-  }
+  return seoHandler(page)
 }
 
 /**
