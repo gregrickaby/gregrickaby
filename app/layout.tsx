@@ -30,7 +30,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(config.siteUrl),
   title: `${config.siteName} - ${config.siteDescription}`,
   description: config.siteDescription,
-  robots: 'follow, index',
+  robots: {
+    follow: true,
+    index: true
+  },
   alternates: {
     canonical: config.siteUrl,
     types: {
