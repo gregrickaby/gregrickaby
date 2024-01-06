@@ -112,8 +112,4 @@
     margin-bottom: var(--grd-photo-gallery-gutter);
     width: calc(50% - var(--grd-photo-gallery-gutter));
   }
-
-  .grd-photo-gallery-image-caption {
-    display: none;
-  }
 }
