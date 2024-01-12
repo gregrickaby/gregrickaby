@@ -51,11 +51,11 @@ const nextConfig = {
     ]
   },
   swcMinify: true,
-  outputFileTracing: true,
+  outputFileTracing: false,
   experimental: {
     turbotrace: {
       logLevel: 'fatal'
-    },
+    }
   },
   logging: {
     fetches: {
