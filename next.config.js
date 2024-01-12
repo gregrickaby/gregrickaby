@@ -51,7 +51,7 @@ const nextConfig = {
     ]
   },
   swcMinify: true,
-  outputFileTracing: false,
+  outputFileTracing: true,
   experimental: {
     turbotrace: {
       logLevel: 'fatal'
