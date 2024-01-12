@@ -1,5 +1,6 @@
 import config from '@/lib/config'
 import {GitHubRepo, GraphQLResponse, Page, SearchResults} from '@/lib/types'
+import moment from 'moment-timezone'
 import {Metadata} from 'next'
 import {redirect} from 'next/navigation'
 
@@ -119,11 +120,14 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
  */
 export function formatDate(date: string) {
-  return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: 'America/Chicago'
-  }).format(new Date(date))
+  // Parse the ISO 8601 date string.
+  const dateString = moment(date)
+
+  // Convert to 'America/Chicago' time zone.
+  const chicagoDate = dateString.tz('America/Chicago')
+
+  // Format the date.
+  return chicagoDate.format('LLL')
 }
 
 /**
