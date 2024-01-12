@@ -121,8 +121,7 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
 export function formatDate(date: string) {
   return new Intl.DateTimeFormat('en-US', {
     dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: 'America/Lost_Angeles'
+    timeStyle: 'short'
   }).format(new Date(date))
 }
 
