@@ -50,13 +50,18 @@ const nextConfig = {
       }
     ]
   },
+  swcMinify: true,
+  outputFileTracing: true,
   experimental: {
-    optimizePackageImports: ['react-icons']
+    turbotrace: {
+      logLevel: 'fatal'
+    },
   },
   logging: {
     fetches: {
       fullUrl: true
-    }
+    },
+    level: 'warn'
   }
 }
 
