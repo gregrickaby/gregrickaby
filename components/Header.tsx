@@ -1,4 +1,4 @@
-import HamburgerNav from '@/components/HamburgerNav'
+import Navigation from '@/components/Navigation'
 import config from '@/lib/config'
 import getMenuBySlug from '@/lib/queries/getMenuBySlug'
 import Image from 'next/image'
@@ -33,7 +33,7 @@ export default async function Header() {
           <p className="m-0 max-w-sm p-0 text-lg">{config.siteDescription}</p>
         </div>
       </div>
-      <HamburgerNav menu={menu} />
+      <Navigation menu={menu} />
     </header>
   )
 }

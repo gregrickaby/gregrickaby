@@ -4,14 +4,14 @@ import {Menu} from '@/lib/types'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
 
-interface HamburgerNavProps {
+interface NavigationProps {
   menu: Menu
 }
 
 /**
  * Hamburger Nav / Drawer.
  */
-export default function HamburgerNav({menu}: HamburgerNavProps) {
+export default function Navigation({menu}: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   /**
@@ -113,6 +113,7 @@ export default function HamburgerNav({menu}: HamburgerNavProps) {
                 href={item.uri}
                 key={item.databaseId}
                 onClick={toggleDrawer}
+                prefetch={item.uri === '/feed' ? false : true}
               >
                 {item.label}
               </Link>
