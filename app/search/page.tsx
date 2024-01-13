@@ -21,7 +21,10 @@ export async function generateMetadata({
 }): Promise<Metadata | null> {
   return {
     title: `Search - ${config.siteName}`,
-    description: `Search all pages and posts from ${config.siteName}`
+    description: `Search all pages and posts from ${config.siteName}`,
+    alternates: {
+      canonical: `${config.siteUrl}/search`
+    }
   }
 }
 

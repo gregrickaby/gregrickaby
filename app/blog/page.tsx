@@ -23,7 +23,10 @@ export async function generateMetadata({
 }): Promise<Metadata | null> {
   return {
     title: `Latest Posts - ${config.siteName}`,
-    description: `The latest blog posts from ${config.siteName}`
+    description: `The latest blog posts from ${config.siteName}`,
+    alternates: {
+      canonical: `${config.siteUrl}/blog`
+    }
   }
 }
 

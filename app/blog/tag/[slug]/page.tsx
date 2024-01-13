@@ -25,7 +25,10 @@ export async function generateMetadata({
 
   return {
     title: `${slug} Archives - ${config.siteName}`,
-    description: `The post archive for ${slug}`
+    description: `The post archive for ${slug}`,
+    alternates: {
+      canonical: `${config.siteUrl}/tag/${slug}`
+    }
   }
 }
 
