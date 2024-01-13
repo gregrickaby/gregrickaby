@@ -59,11 +59,12 @@ export default function Search() {
     <>
       <div className="relative flex items-center pb-8">
         <input
-          ref={inputRef}
           aria-label="Search"
           className="w-full"
+          name="search"
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Begin typing to search..."
+          ref={inputRef}
           type="search"
           value={query}
         />
