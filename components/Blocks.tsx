@@ -65,9 +65,17 @@ export default function Blocks({content}: BlocksProps) {
       defaultDisplay: 'flex',
       Toolbar: {
         display: {
-          left: [],
-          middle: ['prev', 'infobar', 'next'],
-          right: ['download', 'close']
+          left: ['infobar'],
+          middle: [
+            'zoomIn',
+            'zoomOut',
+            'toggle1to1',
+            'rotateCCW',
+            'rotateCW',
+            'flipX',
+            'flipY'
+          ],
+          right: ['slideshow', 'thumbs', 'download', 'close']
         }
       }
     })
