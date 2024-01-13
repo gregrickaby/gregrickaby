@@ -55,7 +55,7 @@ export async function generateMetadata(
 }
 
 /**
- * The tag archive.
+ * The tag archive route.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */

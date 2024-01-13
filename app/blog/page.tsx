@@ -36,11 +36,11 @@ export async function generateMetadata({
 }
 
 /**
- * The blog archive.
+ * The blog archive route.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
-export default async function Blog() {
+export default async function BlogArchive() {
   // Fetch posts from WordPress.
   const posts = await getPosts(15)
 

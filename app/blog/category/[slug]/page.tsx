@@ -55,7 +55,7 @@ export async function generateMetadata(
 }
 
 /**
- * The category archive.
+ * The category archive route.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
