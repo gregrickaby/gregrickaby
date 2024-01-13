@@ -192,6 +192,32 @@ export async function getPopularGithubRepos(
 }
 
 /**
+ * Handle SEO for 404 pages.
+ *
+ * Used in the generateMetadata() function.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
+export function notFoundSeoHandler(slug: string): Metadata {
+  return {
+    title: `404 Not Found - ${config.siteName}`,
+    description: 'This content could not be found.',
+    robots: {
+      follow: false,
+      index: false
+    },
+    alternates: {
+      canonical: ''
+    },
+    openGraph: {
+      title: `404 Not Found - ${config.siteName}`,
+      description: 'This content could not be found.',
+      url: `${config.siteUrl}/${slug}`
+    }
+  }
+}
+
+/**
  * Parse SEO data and return an object.
  *
  * Used in the generateMetadata() function.
@@ -199,12 +225,6 @@ export async function getPopularGithubRepos(
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
 export function seoHandler(page: Page): Metadata {
-  // If there is no page, return an empty object.
-  if (!page) {
-    return {}
-  }
-
-  // Build the metadata object.
   return {
     title: page.seo.title,
     description: page.seo.metaDesc,
