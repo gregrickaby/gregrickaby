@@ -3,6 +3,13 @@ import config from '@/lib/config'
 import {Metadata} from 'next/types'
 
 /**
+ * Route segment config.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+ */
+export const runtime = 'edge'
+
+/**
  * Generate the metadata for this route.
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function

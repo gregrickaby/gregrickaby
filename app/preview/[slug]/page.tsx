@@ -13,7 +13,7 @@ interface PreviewProps {
 /**
  * Route segment config.
  *
- * Because previews are dynamic, force the route to be dynamic.
+ * Force dynamic rendering for each user at request time.
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
