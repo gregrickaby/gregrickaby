@@ -113,7 +113,7 @@ export default function Navigation({menu}: NavigationProps) {
                 href={item.uri}
                 key={item.databaseId}
                 onClick={toggleDrawer}
-                prefetch={item.uri === '/feed' ? false : true}
+                prefetch={item.uri === '/feed.xml' ? false : true}
               >
                 {item.label}
               </Link>
