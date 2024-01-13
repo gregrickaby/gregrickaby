@@ -24,6 +24,11 @@ export async function generateMetadata({
     description: `Search all pages and posts from ${config.siteName}`,
     alternates: {
       canonical: `${config.siteUrl}/search`
+    },
+    openGraph: {
+      title: `Search - ${config.siteName}`,
+      description: `Search all pages and posts from ${config.siteName}`,
+      url: `${config.siteUrl}/search`
     }
   }
 }

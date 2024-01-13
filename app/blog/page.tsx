@@ -26,6 +26,11 @@ export async function generateMetadata({
     description: `The latest blog posts from ${config.siteName}`,
     alternates: {
       canonical: `${config.siteUrl}/blog`
+    },
+    openGraph: {
+      title: `Latest Posts - ${config.siteName}`,
+      description: `The latest blog posts from ${config.siteName}`,
+      url: `${config.siteUrl}/blog`
     }
   }
 }

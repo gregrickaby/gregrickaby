@@ -28,6 +28,11 @@ export async function generateMetadata({
     description: `The post archive for ${slug}`,
     alternates: {
       canonical: `${config.siteUrl}/category/${slug}`
+    },
+    openGraph: {
+      title: `${slug} Archives - ${config.siteName}`,
+      description: `The post archive for ${slug}`,
+      url: `${config.siteUrl}/category/${slug}`
     }
   }
 }
