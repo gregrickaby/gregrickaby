@@ -77,7 +77,7 @@ const config = {
     },
     {
       name: 'RSS Feed',
-      url: 'https://gregrickaby.com/feed',
+      url: 'https://gregrickaby.com/feed.xml',
       icon: FaRss
     }
   ]
