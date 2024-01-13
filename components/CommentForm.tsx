@@ -55,6 +55,7 @@ export default function CommentForm({postID}: {postID: string}) {
         <div className="flex flex-col gap-2">
           <label htmlFor="name">Name*</label>
           <input
+            autoComplete="name"
             id="name"
             onChange={(e) => setName(e.target.value)}
             required
@@ -65,6 +66,7 @@ export default function CommentForm({postID}: {postID: string}) {
         <div className="flex flex-col gap-2">
           <label htmlFor="email">Email*</label>
           <input
+            autoComplete="email"
             id="email"
             onChange={(e) => setEmail(e.target.value)}
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
