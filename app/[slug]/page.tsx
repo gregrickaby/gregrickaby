@@ -1,5 +1,5 @@
 import SinglePage from '@/components/SinglePage'
-import {rssFeedRedirect, seoHandler} from '@/lib/functions'
+import {notFoundSeoHandler, rssFeedRedirect, seoHandler} from '@/lib/functions'
 import getPageBySlug from '@/lib/queries/getPageBySlug'
 import getPages from '@/lib/queries/getPages'
 import {Metadata} from 'next'
@@ -45,9 +45,9 @@ export async function generateMetadata({
   // Get the page.
   const page = await getPageBySlug(params.slug)
 
-  // No page? Bail...
+  // No page? Return 404 metadata.
   if (!page) {
-    return {}
+    return notFoundSeoHandler(params.slug)
   }
 
   return seoHandler(page)

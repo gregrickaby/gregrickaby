@@ -1,7 +1,8 @@
 import SinglePost from '@/components/SinglePost'
-import {rssFeedRedirect, seoHandler} from '@/lib/functions'
+import {notFoundSeoHandler, rssFeedRedirect, seoHandler} from '@/lib/functions'
 import getPostBySlug from '@/lib/queries/getPostBySlug'
 import getPosts from '@/lib/queries/getPosts'
+import {GenerateMetadataProps} from '@/lib/types'
 import {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
 
@@ -32,11 +33,6 @@ export async function generateStaticParams() {
   }))
 }
 
-interface GenerateMetadataProps {
-  params: {slug: string}
-  searchParams: {[key: string]: string | string[] | undefined}
-}
-
 /**
  * Generate the metadata for each static route at build time.
  *
@@ -49,9 +45,9 @@ export async function generateMetadata(
   // Get the blog post.
   const post = await getPostBySlug(params.slug)
 
-  // No post? Bail...
+  // No post? Return 404 metadata.
   if (!post) {
-    return {}
+    return notFoundSeoHandler(params.slug)
   }
 
   return seoHandler(post)
