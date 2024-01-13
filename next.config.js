@@ -13,6 +13,13 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      {source: '/feed', destination: '/feed.xml', permanent: true},
+      {source: '/rss', destination: '/feed.xml', permanent: true},
+      {source: '/rss.xml', destination: '/feed.xml', permanent: true},
+      {source: '/blog/feed', destination: '/feed.xml', permanent: true},
+      {source: '/feed/atom', destination: '/feed.xml', permanent: true},
+      {source: '/xmlrpc.php', destination: '/feed.xml', permanent: true},
+      {source: '/blog/xmlrpc.php', destination: '/feed.xml', permanent: true},
       {
         source: '/:year(\\d{4})/:month(\\d{2})/:slug*',
         destination: '/blog/:slug*',
