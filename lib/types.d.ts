@@ -176,3 +176,18 @@ export interface GitHubRepo {
   description: string
   id: number
 }
+
+export interface GenerateMetadataProps {
+  params: {slug: string}
+  searchParams: {[key: string]: string | string[] | undefined}
+}
+
+export interface CategoryTag {
+  edges: [
+    node: {
+      databaseId: string
+      name: string
+      slug: string
+    }
+  ]
+}

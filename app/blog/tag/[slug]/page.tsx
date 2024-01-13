@@ -1,7 +1,10 @@
 import LatestPosts from '@/components/LatestPosts'
-import config from '@/lib/config'
+import {notFoundSeoHandler, seoHandler} from '@/lib/functions'
+import getPostBySlug from '@/lib/queries/getPostBySlug'
 import getTagBySlug from '@/lib/queries/getTagBySlug'
-import {Metadata} from 'next'
+import getTags from '@/lib/queries/getTags'
+import {GenerateMetadataProps} from '@/lib/types'
+import {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
 
 /**
@@ -9,32 +12,46 @@ import {notFound} from 'next/navigation'
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 /**
- * Generate the metadata for this archive.
+ * Generate the static routes at build time.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-static-params
+ */
+export async function generateStaticParams() {
+  // Get all tags.
+  const tags = await getTags(100)
+
+  // No tags? Bail...
+  if (!tags.edges.length) {
+    return []
+  }
+
+  // Return the slugs for each tag.
+  return tags.edges.map((node) => ({
+    slug: node.slug
+  }))
+}
+
+/**
+ * Generate the metadata for each static route at build time.
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export async function generateMetadata({
-  params
-}: {
-  params: {slug: string}
-}): Promise<Metadata | null> {
-  const slug = params.slug
+export async function generateMetadata(
+  {params, searchParams}: GenerateMetadataProps,
+  parent: ResolvingMetadata
+): Promise<Metadata | null> {
+  // Get the blog post.
+  const post = await getPostBySlug(params.slug)
 
-  return {
-    title: `${slug} Archives - ${config.siteName}`,
-    description: `The post archive for ${slug}`,
-    alternates: {
-      canonical: `${config.siteUrl}/tag/${slug}`
-    },
-    openGraph: {
-      title: `${slug} Archives - ${config.siteName}`,
-      description: `The post archive for ${slug}`,
-      url: `${config.siteUrl}/tag/${slug}`
-    }
+  // No post? Return 404 metadata.
+  if (!post) {
+    return notFoundSeoHandler(params.slug)
   }
+
+  return seoHandler(post)
 }
 
 /**
