@@ -5,6 +5,8 @@ import getPosts from '@/lib/queries/getPosts'
 import {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
 
+export const runtime = 'edge'
+
 /**
  * Generate the static routes at build time.
  *

@@ -4,6 +4,8 @@ import getCategoryBySlug from '@/lib/queries/getCategoryBySlug'
 import {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
+export const runtime = 'edge'
+
 /**
  * Generate the metadata for this archive.
  *
