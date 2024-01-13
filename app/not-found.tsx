@@ -2,13 +2,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 /**
- * Route segment config.
- *
- * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
- */
-export const runtime = 'nodejs'
-
-/**
  * Not Found route.
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/not-found
