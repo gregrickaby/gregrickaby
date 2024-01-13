@@ -54,7 +54,7 @@ const nextConfig = {
   outputFileTracing: true,
   experimental: {
     turbotrace: {
-      logLevel: 'warning',
+      logLevel: 'fatal',
       logDetail: true,
       logAll: false
     }
