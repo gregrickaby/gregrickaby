@@ -34,6 +34,7 @@ export default async function getPosts(limit = 1000, after = '', before = '') {
               readingTime
               metaRobotsNofollow
               metaRobotsNoindex
+              canonical
               opengraphDescription
               opengraphTitle
               opengraphType

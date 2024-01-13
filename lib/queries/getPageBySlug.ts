@@ -37,6 +37,7 @@ export default async function getPageBySlug(slug: string) {
           readingTime
           metaRobotsNofollow
           metaRobotsNoindex
+          canonical
           opengraphDescription
           opengraphTitle
           opengraphType

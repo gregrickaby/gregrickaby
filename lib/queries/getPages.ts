@@ -32,6 +32,7 @@ export default async function getPages(limit = 1000) {
             readingTime
             metaRobotsNofollow
             metaRobotsNoindex
+            canonical
             opengraphDescription
             opengraphTitle
             opengraphType

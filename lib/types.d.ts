@@ -57,6 +57,7 @@ export interface Seo {
   readingTime: number
   metaRobotsNoindex: 'noindex' | 'index'
   metaRobotsNofollow: 'nofollow' | 'follow'
+  canonical: string
   opengraphDescription: string
   opengraphTitle: string
   opengraphType: 'website' | 'article'

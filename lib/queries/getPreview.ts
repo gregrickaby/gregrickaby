@@ -49,6 +49,7 @@ export default async function getPreview(id: string) {
           readingTime
           metaRobotsNofollow
           metaRobotsNoindex
+          canonical
           opengraphDescription
           opengraphTitle
           opengraphType

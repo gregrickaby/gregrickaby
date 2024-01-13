@@ -51,6 +51,7 @@ export default async function getPostBySlug(slug: string) {
           readingTime
           metaRobotsNofollow
           metaRobotsNoindex
+          canonical
           opengraphDescription
           opengraphTitle
           opengraphType

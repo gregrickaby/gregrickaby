@@ -31,6 +31,7 @@ export default async function getCategoryBySlug(slug: string, limit = 15) {
               readingTime
               metaRobotsNofollow
               metaRobotsNoindex
+              canonical
               opengraphDescription
               opengraphTitle
               opengraphType

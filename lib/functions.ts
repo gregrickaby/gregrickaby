@@ -212,6 +212,9 @@ export function seoHandler(page: Page): Metadata {
       follow: page.seo.metaRobotsNofollow === 'follow',
       index: page.seo.metaRobotsNoindex === 'index'
     },
+    alternates: {
+      canonical: page.seo.canonical || config.siteUrl
+    },
     openGraph: {
       title: page.seo.opengraphTitle,
       description: page.seo.opengraphDescription,
