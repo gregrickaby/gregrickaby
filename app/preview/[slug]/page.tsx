@@ -4,12 +4,6 @@ import {formatDate, seoHandler} from '@/lib/functions'
 import getPreview from '@/lib/queries/getPreview'
 import {Metadata} from 'next'
 
-// Types.
-interface PreviewProps {
-  params: {slug: string}
-  searchParams: {[key: string]: string | string[] | undefined}
-}
-
 /**
  * Route segment config.
  *
@@ -39,6 +33,14 @@ export async function generateMetadata({
   }
 
   return seoHandler(post)
+}
+
+/**
+ * Preview props.
+ */
+interface PreviewProps {
+  params: {slug: string}
+  searchParams: {[key: string]: string | string[] | undefined}
 }
 
 /**

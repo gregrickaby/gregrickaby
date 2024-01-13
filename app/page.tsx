@@ -9,7 +9,7 @@ import {notFound} from 'next/navigation'
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 /**
  * The home page route.

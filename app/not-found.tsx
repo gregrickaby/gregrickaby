@@ -6,7 +6,7 @@ import Link from 'next/link'
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 /**
  * Not Found route.
