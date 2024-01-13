@@ -28,23 +28,27 @@ export async function GET() {
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`
 
-  // Add all pages to sitemap.
-  allPages.forEach((page) => {
-    xml += `
+  // Filter and add pages to sitemap.
+  allPages
+    .filter((page) => 'noindex' !== page.seo.metaRobotsNoindex)
+    .forEach((page) => {
+      xml += `
   <url>
     <loc>${config.siteUrl}/${page.slug}</loc>
     <lastmod>${new Date(page.date).toISOString()}</lastmod>
   </url>`
-  })
+    })
 
-  // Add blog posts to sitemap.
-  allPosts.edges.forEach(({node}) => {
-    xml += `
+  // Filter and add blog posts to sitemap.
+  allPosts.edges
+    .filter(({node}) => 'noindex' !== node.seo.metaRobotsNoindex)
+    .forEach(({node}) => {
+      xml += `
   <url>
     <loc>${config.siteUrl}/blog/${node.slug}</loc>
     <lastmod>${new Date(node.date).toISOString()}</lastmod>
   </url>`
-  })
+    })
 
   // Close urlset tag.
   xml += `</urlset>`
