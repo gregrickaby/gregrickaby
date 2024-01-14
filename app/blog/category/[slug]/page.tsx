@@ -75,7 +75,7 @@ export default async function CategoryArchive({
 
   return (
     <>
-      <h1>Latest Posts</h1>
+      <h1>Category: {params.slug}</h1>
       <PostList posts={posts} />
       <MorePosts endCursor={posts.pageInfo.endCursor} />
     </>

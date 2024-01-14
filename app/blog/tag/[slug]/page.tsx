@@ -71,7 +71,7 @@ export default async function TagArchive({params}: {params: {slug: string}}) {
 
   return (
     <>
-      <h1>Latest Posts</h1>
+      <h1>Tag: {params.slug}</h1>
       <PostList posts={posts} />
       <MorePosts endCursor={posts.pageInfo.endCursor} />
     </>
