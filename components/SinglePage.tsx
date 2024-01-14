@@ -2,14 +2,10 @@ import Blocks from '@/components/Blocks'
 import FeaturedImage from '@/components/FeaturedImage'
 import {Page} from '@/lib/types'
 
-interface SinglePageProps {
-  page: Page
-}
-
 /**
  * Single page component.
  */
-export default function SinglePage({page}: SinglePageProps) {
+export default function SinglePage({page}: {page: Page}) {
   return (
     <article>
       <FeaturedImage

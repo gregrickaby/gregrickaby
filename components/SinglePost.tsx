@@ -5,14 +5,10 @@ import {formatDate} from '@/lib/functions'
 import {Post} from '@/lib/types'
 import Link from 'next/link'
 
-interface SinglePostProps {
-  post: Post
-}
-
 /**
  * Single post component.
  */
-export default function SinglePost({post}: SinglePostProps) {
+export default function SinglePost({post}: {post: Post}) {
   return (
     <article>
       <header>

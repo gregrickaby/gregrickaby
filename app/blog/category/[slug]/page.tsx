@@ -1,4 +1,5 @@
-import LatestPosts from '@/components/LatestPosts'
+import MorePosts from '@/components/MorePosts'
+import PostList from '@/components/PostList'
 import {notFoundSeoHandler, seoHandler} from '@/lib/functions'
 import getCategories from '@/lib/queries/getCategories'
 import getCategoryBySlug from '@/lib/queries/getCategoryBySlug'
@@ -65,12 +66,18 @@ export default async function CategoryArchive({
   params: {slug: string}
 }) {
   // Fetch posts from WordPress.
-  const posts = await getCategoryBySlug(params.slug, 100)
+  const posts = await getCategoryBySlug(params.slug, 12)
 
   // No posts? Throw a 404.
   if (!posts) {
     notFound()
   }
 
-  return <LatestPosts title={`Post Category: ${params.slug}`} posts={posts} />
+  return (
+    <>
+      <h1>Latest Posts</h1>
+      <PostList posts={posts} />
+      <MorePosts endCursor={posts.pageInfo.endCursor} />
+    </>
+  )
 }

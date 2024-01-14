@@ -4,12 +4,16 @@ import {AllPosts} from '@/lib/types'
 /**
  * Fetch a tag archive by slug.
  */
-export default async function getTagBySlug(slug: string, limit = 15) {
+export default async function getTagBySlug(
+  slug: string,
+  limit = 12,
+  after = '',
+  before = ''
+) {
   const query = `
-    query GetTagBySlug($slug: String!, $limit: Int!) {
-      posts(where: {tag: $slug, status: PUBLISH}, first: $limit) {
+    query GetTagBySlug($slug: String!, $limit: Int!, $after: String, $before: String) {
+      posts(where: {tag: $slug, status: PUBLISH}, first: $limit, after: $after, before: $before) {
         edges {
-          cursor
           node {
             databaseId
             date
@@ -59,8 +63,10 @@ export default async function getTagBySlug(slug: string, limit = 15) {
   `
 
   const variables = {
-    slug: slug,
-    limit: limit
+    slug,
+    limit,
+    after,
+    before
   }
 
   const response = await fetchGraphQL(query, variables)

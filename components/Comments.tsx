@@ -1,14 +1,10 @@
 import CommentForm from '@/components/CommentForm'
 import {Post} from '@/lib/types'
 
-interface CommentsProps {
-  post: Post
-}
-
 /**
  * Comments component.
  */
-export default function Comments({post}: CommentsProps) {
+export default function Comments({post}: {post: Post}) {
   return (
     <>
       <section className="border-t-2 border-zinc-500 py-4">

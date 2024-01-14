@@ -1,4 +1,5 @@
-import LatestPosts from '@/components/LatestPosts'
+import MorePosts from '@/components/MorePosts'
+import PostList from '@/components/PostList'
 import {notFoundSeoHandler, seoHandler} from '@/lib/functions'
 import getPostBySlug from '@/lib/queries/getPostBySlug'
 import getTagBySlug from '@/lib/queries/getTagBySlug'
@@ -61,12 +62,18 @@ export async function generateMetadata(
  */
 export default async function TagArchive({params}: {params: {slug: string}}) {
   // Fetch posts from WordPress.
-  const posts = await getTagBySlug(params.slug, 100)
+  const posts = await getTagBySlug(params.slug, 12)
 
   // No posts? Throw a 404.
   if (!posts) {
     notFound()
   }
 
-  return <LatestPosts title={`Post Tag: ${params.slug}`} posts={posts} />
+  return (
+    <>
+      <h1>Latest Posts</h1>
+      <PostList posts={posts} />
+      <MorePosts endCursor={posts.pageInfo.endCursor} />
+    </>
+  )
 }

@@ -1,4 +1,5 @@
-import LatestPosts from '@/components/LatestPosts'
+import MorePosts from '@/components/MorePosts'
+import PostList from '@/components/PostList'
 import config from '@/lib/config'
 import getPosts from '@/lib/queries/getPosts'
 import {notFound} from 'next/navigation'
@@ -42,12 +43,18 @@ export async function generateMetadata({
  */
 export default async function BlogArchive() {
   // Fetch posts from WordPress.
-  const posts = await getPosts(15)
+  const posts = await getPosts(12)
 
   // No posts? Throw a 404.
   if (!posts) {
     notFound()
   }
 
-  return <LatestPosts posts={posts} />
+  return (
+    <>
+      <h1>Latest Posts</h1>
+      <PostList posts={posts} />
+      <MorePosts endCursor={posts.pageInfo.endCursor} />
+    </>
+  )
 }

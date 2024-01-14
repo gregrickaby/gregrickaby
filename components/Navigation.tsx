@@ -4,14 +4,10 @@ import {Menu} from '@/lib/types'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
 
-interface NavigationProps {
-  menu: Menu
-}
-
 /**
  * Hamburger Nav / Drawer.
  */
-export default function Navigation({menu}: NavigationProps) {
+export default function Navigation({menu}: {menu: Menu}) {
   const [isOpen, setIsOpen] = useState(false)
 
   /**
