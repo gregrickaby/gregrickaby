@@ -9,7 +9,6 @@ export default async function getPosts(limit = 1000, after = '', before = '') {
     query GetPosts($limit: Int!, $after: String, $before: String) {
       posts(where: {status: PUBLISH}, first: $limit, after: $after, before: $before) {
         edges {
-          cursor
           node {
             commentCount
             databaseId
