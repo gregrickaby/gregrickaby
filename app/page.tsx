@@ -120,7 +120,8 @@ export default async function Home() {
           <hr />
         </div>
         View all my experiences on{' '}
-        <a href="https://www.linkedin.com/in/gregrickaby/">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/gregrickaby/">LinkedIn</a> and my
+        code on <a href="https://github.com/gregrickaby">GitHub</a>.
       </section>
     </article>
   )
