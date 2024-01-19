@@ -18,10 +18,9 @@ const config = {
   siteUrl: 'https://gregrickaby.com',
   siteLogo: '/logo.webp',
   siteOgImage: '/og.webp',
-  jobTitle: 'Development Team Lead at WPForms',
+  jobTitle: 'Web Developer',
   email: 'greg@gregrickaby.com',
-  intro:
-    'Disney Dad. Photographer. Published Author. Dev Team Lead at WPForms.',
+  intro: 'Disney Dad. Web Developer. Photographer. Author.',
   gravatarApiUrl:
     'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
   socials: [
