@@ -20,7 +20,7 @@ export default async function Home() {
   return (
     <article>
       <section>
-        <h2 className="mt-0 pt-0">Resume</h2>
+        <h2 className="mt-0 pt-0">Résumé</h2>
         <p>
           With a career in web development spanning over two decades, my focus
           has transitioned from hands-on technical implementation to project
@@ -32,7 +32,7 @@ export default async function Home() {
         </p>
       </section>
       <section>
-        <h3>Experience</h3>
+        <h2 className="mt-0 pt-0">Experience</h2>
         <div>
           <h3>WPForms.com, Remote - Team Lead</h3>
           <p>May 2023 - January 2024</p>
@@ -119,7 +119,7 @@ export default async function Home() {
           </p>
           <hr />
         </div>
-        View all my experience on{' '}
+        View all my experiences on{' '}
         <a href="https://www.linkedin.com/in/gregrickaby/">LinkedIn</a>
       </section>
     </article>
