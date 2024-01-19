@@ -44,7 +44,7 @@ export default async function Home() {
           </ul>
           <h3>Experience</h3>
           <ul>
-            <li>WPForms - Development Team Lead (2023-Preset)</li>
+            <li>WPForms - Development Team Lead (2023-2024)</li>
             <li>AmericanEagle.com - Technical Lead (2022-2023)</li>
             <li>WebDevStudios - Director of Engineering (2013-2022)</li>
             <li>Bluewater Broadcasting - Chief Engineer (2010-2013)</li>
