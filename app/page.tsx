@@ -58,7 +58,8 @@ export default async function Home() {
             initiatives.
           </p>
           <p>
-            <strong>Skills:</strong> Project Leadership, WordPress, Next.js
+            <strong>Skills:</strong> Project Leadership, WordPress, Next.js,
+            TypeScript, TailwindCSS
           </p>
           <hr />
         </div>
@@ -75,7 +76,8 @@ export default async function Home() {
           </p>
           <p>
             <strong>Skills:</strong> Leadership, Business Strategy,
-            Interviewing, Constructive Feedback
+            Interviewing, Constructive Feedback, WordPress, Next.js, TypeScript,
+            TailwindCSS
           </p>
           <hr />
         </div>
