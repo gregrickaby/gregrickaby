@@ -23,9 +23,9 @@ export default async function Home() {
         <h2 className="mt-0 pt-0">Résumé</h2>
         <p>
           With a career in web development spanning over two decades, my focus
-          has transitioned from hands-on technical implementation to project
+          has transitioned from hands-on technical implementation to team
           leadership. This pivotal change was driven by my passion for nurturing
-          talent and fostering growth. As a project leader, I embrace the
+          talent and fostering growth. As a team leader, I embrace the
           principles of servant leadership, dedicating myself to supporting and
           empowering team members to achieve their goals through positive
           reinforcement.
