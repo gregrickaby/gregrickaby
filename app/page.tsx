@@ -36,13 +36,38 @@ export default async function Home() {
         <div>
           <h3>WPForms.com, Remote - Team Lead</h3>
           <p>May 2023 - January 2024</p>
+          <ul>
+            <li>
+              Lead and mentored a web development team, fostering collaboration
+              and productivity.
+            </li>
+            <li>
+              Work closely with stakeholders to translate designs into efficient
+              solutions.
+            </li>
+            <li>
+              Oversee the entire development lifecycle, ensuring timely project
+              completion and adherence to quality standards.
+            </li>
+            <li>
+              Implement coding standards, best practices, and maintainable code
+              for long-term sustainability.
+            </li>
+            <li>
+              Facilitate cross-functional collaboration with designer, product
+              lead, engineering manager, quality assurance, and stakeholders.
+            </li>
+            <li>
+              Conducted 1:1s with direct reports to provide regular feedback and
+              ensure career growth and progression, coordinating work within the
+              team and stakeholders, building relationships, and identifying
+              opportunities and areas for improvement.
+            </li>
+          </ul>
           <p>
-            I helped support a team of senior engineers in managing and
-            enhancing high-traffic marketing websites built on WordPress.
-          </p>
-          <p>
-            <strong>Skills:</strong> Project Leadership, WordPress, PHP, CSS,
-            JavaScript
+            <strong>Skills:</strong> Team Leadership, WordPress Development,
+            PHP, CSS, JavaScript, REST APIs, Node.js, Employee Coaching,
+            Performance Reviews, Constructive Feedback
           </p>
           <hr />
         </div>
