@@ -1,6 +1,3 @@
-import {getPopularGithubRepos} from '@/lib/functions'
-import getPageBySlug from '@/lib/queries/getPageBySlug'
-
 /**
  * Route segment config.
  *
@@ -14,9 +11,6 @@ export const runtime = 'nodejs'
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
 export default async function Home() {
-  const repos = await getPopularGithubRepos()
-  const photos = await getPageBySlug('recent')
-
   return (
     <article>
       <section>
