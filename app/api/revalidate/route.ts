@@ -4,7 +4,9 @@ import {NextRequest} from 'next/server'
 /**
  * Route segment configuration.
  */
-export const runtime = 'edge'
+export const runtime = 'nodejs'
+export const dynamic = 'force-static'
+export const revalidate = 300
 
 /**
  * On-demand revalidation.
