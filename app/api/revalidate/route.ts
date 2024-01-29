@@ -2,11 +2,13 @@ import {revalidatePath, revalidateTag} from 'next/cache'
 import {NextRequest} from 'next/server'
 
 /**
- * Route segment configuration.
+ * Route segment config.
+ *
+ * Force static generation of route and revalidate every 5 minutes.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
-export const runtime = 'nodejs'
-export const dynamic = 'force-static'
-export const revalidate = 300
+export const runtime = 'edge'
 
 /**
  * On-demand revalidation.
