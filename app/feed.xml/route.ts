@@ -9,9 +9,7 @@ import escape from 'xml-escape'
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
-export const runtime = 'nodejs'
-export const dynamic = 'force-static'
-export const revalidate = 300
+export const runtime = 'edge'
 
 /**
  * Route handler for generating RSS feed.
