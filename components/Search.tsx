@@ -6,9 +6,7 @@ import Link from 'next/link'
 import {useCallback, useEffect, useRef, useState} from 'react'
 
 /**
- * Search route.
- *
- * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
+ * Search component.
  */
 export default function Search() {
   const [query, setQuery] = useState('')
