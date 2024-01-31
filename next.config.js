@@ -57,15 +57,6 @@ const nextConfig = {
       }
     ]
   },
-  swcMinify: true,
-  outputFileTracing: true,
-  experimental: {
-    turbotrace: {
-      logLevel: 'fatal',
-      logDetail: true,
-      logAll: false
-    }
-  },
   logging: {
     fetches: {
       fullUrl: true
