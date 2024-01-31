@@ -20,13 +20,14 @@
     "dev": "npm run clean && next dev",
     "format": "npx prettier '**/*.{js,jsx,ts,tsx,md,html,css,json,yml}' --config=.prettierrc.js --write || true",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "info": "next info"
   },
   "dependencies": {
     "@fancyapps/ui": "^5.0.33",
     "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
-    "next": "^14.1.0",
+    "next": "^14.1.1-canary.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
@@ -38,7 +39,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/imagesloaded": "^4.1.6",
     "@types/masonry-layout": "^4.2.7",
-    "@types/node": "^20.11.11",
+    "@types/node": "^20.11.13",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "@types/xml-escape": "^1.1.3",
