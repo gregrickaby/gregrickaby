@@ -1,3 +1,4 @@
+import {headers} from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -6,10 +7,15 @@ import Link from 'next/link'
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/not-found
  */
-export default function NotFound() {
+export default async function NotFound() {
+  const headersList = headers()
+  const referer = headersList.get('referer')
+
   return (
     <>
       <h1 className="text-center">404 - Not Found</h1>
+
+      <p className="text-center text-red-500">{referer}</p>
 
       <p>
         Just a heads up: I&apos;ve given my website a fresh new look, and in the
@@ -51,9 +57,10 @@ export default function NotFound() {
         className="mx-auto"
         height="160"
         loading="eager"
-        src="/404.webp"
-        width="160"
         priority={true}
+        src="/404.webp"
+        unoptimized={true}
+        width="160"
       />
     </>
   )
