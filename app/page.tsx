@@ -1,3 +1,8 @@
+import Blocks from '@/components/Blocks'
+import {getPopularGithubRepos} from '@/lib/functions'
+import getPageBySlug from '@/lib/queries/getPageBySlug'
+import getPosts from '@/lib/queries/getPosts'
+
 /**
  * Route segment config.
  *
@@ -11,138 +16,131 @@ export const runtime = 'nodejs'
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
 export default async function Home() {
+  // Fetch homepage data.
+  const posts = await getPosts(7)
+  const repos = await getPopularGithubRepos(7)
+  const photos = await getPageBySlug('photos')
+
   return (
     <article>
-      <section>
-        <h2 className="mt-0 pt-0">Résumé</h2>
-        <p>
-          With a career in web development spanning over two decades, my focus
-          has transitioned from hands-on technical implementation to team
-          leadership. This pivotal change was driven by my passion for nurturing
-          talent and fostering growth. As a team leader, I embrace the
-          principles of servant leadership, dedicating myself to supporting and
-          empowering team members to achieve their goals through positive
-          reinforcement.
-        </p>
-      </section>
-      <section>
-        <h2 className="mt-0 pt-0">Experience</h2>
+      <section className="grid gap-8 md:grid-cols-2">
         <div>
-          <h3>WPForms.com, Remote - Team Lead</h3>
-          <p>May 2023 - January 2024</p>
+          <h3>Latest Posts</h3>
+          <ul>
+            {posts.edges.map(({node}) => (
+              <li key={node.databaseId}>
+                <a href={`/blog/${node.slug}`}>{node.title}</a>
+              </li>
+            ))}
+          </ul>
+          <h3>Popular GitHub Repos</h3>
+          <ul>
+            {repos.map((repo) => (
+              <li key={repo.id}>
+                <a href={repo.html_url}>{repo.name}</a> ({repo.stargazers_count}
+                ⭐️)
+              </li>
+            ))}
+          </ul>
+          <h3>Blogroll</h3>
           <ul>
             <li>
-              Lead and mentored a web development team, fostering collaboration
-              and productivity.
+              <a href="https://petapixel.com/">PetaPixel</a> 📸
             </li>
             <li>
-              Work closely with stakeholders to translate designs into efficient
-              solutions.
+              <a href="https://www.dpreview.com/">DP Review</a> 📸
             </li>
             <li>
-              Oversee the entire development lifecycle, ensuring timely project
-              completion and adherence to quality standards.
+              <a href="https://fstoppers.com/">Fstoppers</a> 📸
             </li>
             <li>
-              Implement coding standards, best practices, and maintainable code
-              for long-term sustainability.
+              <a href="https://news.ycombinator.com/">Hacker News</a> 💻
             </li>
             <li>
-              Facilitate cross-functional collaboration with designer, product
-              lead, engineering manager, quality assurance, and stakeholders.
+              <a href="https://www.timeanddate.com/news/astronomy/">
+                Astronomy News
+              </a>{' '}
+              🌌
             </li>
             <li>
-              Conducted 1:1s with direct reports to provide regular feedback and
-              ensure career growth and progression, coordinating work within the
-              team and stakeholders, building relationships, and identifying
-              opportunities and areas for improvement.
+              <a href="https://www.disneytouristblog.com/">
+                Disney Tourist Blog
+              </a>{' '}
+              🏰
+            </li>
+            <li>
+              <a href="https://make.wordpress.org/core/">Make WordPress Core</a>{' '}
+              💻
             </li>
           </ul>
-          <p>
-            <strong>Skills:</strong> Team Leadership, WordPress Development,
-            PHP, CSS, JavaScript, REST APIs, Node.js, Employee Coaching,
-            Performance Reviews, Constructive Feedback
-          </p>
-          <hr />
+          <h3>Videoroll</h3>
+          <ul>
+            <li>
+              <a href="https://www.youtube.com/@tested">
+                Adam Savage&apos;s Tested
+              </a>{' '}
+              🥼
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@theartofphotography">
+                The Art of Photography
+              </a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@HighPrairieSportsmen">
+                High Prairie Sportsmen
+              </a>{' '}
+              🦆
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@TFLtruck">
+                The Fast Lane Truck
+              </a>{' '}
+              🚚
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@KeithCooper">Keith Cooper</a> 🖨️
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@geraldundone">Gerald Undone</a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@MarkDenneyPhoto">Mark Denny</a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@DustinAbbottTWI">
+                Dustin Abbot
+              </a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@ThePhlogPhotography">
+                Christian Möhrle
+              </a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@jherr">Jack Herrington</a> 💻
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@PetaPixel">
+                Chris Niccolls and Jordan Drake
+              </a>{' '}
+              📸
+            </li>
+            <li>
+              <a href="https://www.youtube.com/@AlexArmitage">Alex Armitage</a>{' '}
+              📸
+            </li>
+          </ul>
         </div>
-        <div>
-          <h3>Americaneagle.com, Remote - Technical Lead</h3>
-          <p>May 2022 - April 2023</p>
-          <p>
-            I worked closely with clients and team members to build websites
-            using WordPress and React.js. I helped out the business development
-            team with sales proposals and scoping. I also hosted lunch and
-            learns and made sure we were up-to-date with emerging technologies
-            and trends by contributing to various research and development
-            initiatives.
-          </p>
-          <p>
-            <strong>Skills:</strong> Project Leadership, WordPress, Next.js,
-            TypeScript, TailwindCSS
-          </p>
-          <hr />
+        <div className="homepage-gallery">
+          <h3>Recent Photos</h3>
+          <Blocks content={photos.content} />
         </div>
-        <div>
-          <h3>WebDevStudios, Remote - Director of Engineering</h3>
-          <p>May 2013 - May 2022</p>
-          <p>
-            I oversaw staffing, policy, wellness, continuing education, and help
-            build technical roadmaps and goals for the team. I also support the
-            Project Management department with resource allocation, the Business
-            Development with technical estimates and solutions engineering, and
-            assist both the CEO and COO with planning and execution of goals. I
-            occasionally lead projects for high value clients.
-          </p>
-          <p>
-            <strong>Skills:</strong> Leadership, Business Strategy,
-            Interviewing, Constructive Feedback, WordPress, Next.js, TypeScript,
-            TailwindCSS
-          </p>
-          <hr />
-        </div>
-        <div>
-          <h3>Bluewater Broadcasting, Montgomery, AL - Chief Engineer</h3>
-          <p>January 2010 - May 2013</p>
-          <p>
-            Oversaw all studios, networking, computers, automation systems,
-            websites and social media.
-          </p>
-          <p>
-            <strong>Skills:</strong> Project Management, Business Strategy, IT,
-            Networking, Automation, WordPress
-          </p>
-          <hr />
-        </div>
-        <div>
-          <h3>Gulf South Communications, Dothan, AL - Chief Engineer</h3>
-          <p>September 2002 - December 2009</p>
-          <p>
-            Oversaw all studios, networking, computers, automation systems, and
-            websites.
-          </p>
-          <p>
-            <strong>Skills:</strong> Project Management, Business Strategy, IT,
-            Networking, Automation, WordPress
-          </p>
-          <hr />
-        </div>
-        <div>
-          <h3>Midwest Communications, Wausau, WI - Webmaster</h3>
-          <p>June 1999 - September 2002</p>
-          <p>
-            Webmaster for all country-music formatted radio stations.
-            Responsible for daily content updates, content and graphic creation.
-            Managing relationships with all Program Directors.
-          </p>
-          <p>
-            <strong>Skills:</strong> Organization, Planning, Content Creation,
-            Graphic Design, Photography, HTML, CSS, ASP
-          </p>
-          <hr />
-        </div>
-        View all my experiences on{' '}
-        <a href="https://www.linkedin.com/in/gregrickaby/">LinkedIn</a> and my
-        code on <a href="https://github.com/gregrickaby">GitHub</a>.
       </section>
     </article>
   )
