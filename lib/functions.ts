@@ -130,13 +130,12 @@ export function formatDate(date: string) {
  * @see https://docs.github.com/en/rest/reference/repos#list-repositories-for-a-user
  */
 export async function getPopularGithubRepos(
-  username: string = 'gregrickaby',
-  count: number = 5
+  limit: number
 ): Promise<GitHubRepo[]> {
   try {
-    // Fetch data from GitHub REST API.
+    // Fetch 100 repos from the GitHub API.
     const response = await fetch(
-      `https://api.github.com/users/${username}/repos?per_page=100`
+      `https://api.github.com/users/gregrickaby/repos?per_page=100`
     )
 
     // If the response status is not 200, throw an error.
@@ -158,8 +157,8 @@ export async function getPopularGithubRepos(
       (a: GitHubRepo, b: GitHubRepo) => b.stargazers_count - a.stargazers_count
     )
 
-    // Return the top 'count' repositories.
-    return sortedRepos.slice(0, count)
+    // Return the top N repos.
+    return sortedRepos.slice(0, limit)
   } catch (error) {
     console.error(error)
     throw error
