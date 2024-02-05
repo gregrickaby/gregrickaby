@@ -33,6 +33,25 @@ export default async function Home() {
               </li>
             ))}
           </ul>
+          <h3>Hobby Apps</h3>
+          <ul>
+            <li>
+              <a href="https://spellingscramble.vercel.app">
+                🧩 Spelling Scramble
+              </a>
+            </li>
+            <li>
+              <a href="https://preschool-flashcards.vercel.app">
+                🔤 Preschool Flashcards
+              </a>
+            </li>
+            <li>
+              <a href="https://redditviewer.vercel.app">🙈 Reddit Viewer</a>
+            </li>
+            <li>
+              <a href="https://localwx.vercel.app">⛈️ Local Weather</a>
+            </li>
+          </ul>
           <h3>Popular GitHub Repos</h3>
           <ul>
             {repos.map((repo) => (
