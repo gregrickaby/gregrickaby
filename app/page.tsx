@@ -23,6 +23,29 @@ export default async function Home() {
 
   return (
     <article>
+      <section>
+        <h1>Welcome</h1>
+        <p>
+          I&apos;m a{' '}
+          <a href="https://www.linkedin.com/in/gregrickaby/" rel="author">
+            full-stack web developer
+          </a>
+          , <a href="http://localhost:3000/photos">photography enthusist</a>,
+          and{' '}
+          <a href="https://www.amazon.com/author/gregrickaby" rel="author">
+            published author
+          </a>{' '}
+          who has been building websites and contributing to open-source
+          projects since the late 90&apos;s. I&apos;m also excited about the{' '}
+          <a href="https://indieweb.org/">IndieWeb</a> movement because I love
+          the idea of owning your own online identiy, domain, and content.
+        </p>
+        <p>
+          Offline, I live in south Alabama and I&apos;m married with three kids.
+          My hobbies include cooking, traveling, painting, and reading. Thanks
+          for stopping by! ✌️
+        </p>
+      </section>
       <section className="grid gap-8 md:grid-cols-2">
         <div>
           <h3>Latest Posts</h3>
