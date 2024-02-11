@@ -1,6 +1,0 @@
-# Allow all bots to access the entire site.
-User-agent: *
-Allow: /
-
-# Sitemap location.
-Sitemap: https://gregrickaby.com/sitemap.xml
