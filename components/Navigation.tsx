@@ -1,6 +1,7 @@
 'use client'
 
 import {Menu} from '@/lib/types'
+import {IconBurger, IconX} from '@tabler/icons-react'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
 
@@ -42,37 +43,7 @@ export default function Navigation({menu}: {menu: Menu}) {
         className="absolute right-2 top-1 p-1 md:relative"
         onClick={toggleDrawer}
       >
-        {isOpen ? (
-          <svg
-            className="h-10 w-10"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
-        ) : (
-          <svg
-            className="h-10 w-10"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        )}
+        {isOpen ? <IconX size={48} /> : <IconBurger size={48} stroke={1} />}
       </button>
 
       <div
@@ -85,20 +56,7 @@ export default function Navigation({menu}: {menu: Menu}) {
           className="absolute right-3 top-3 p-1"
           onClick={toggleDrawer}
         >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
+          <IconX size={24} />
         </button>
 
         <nav className="flex flex-col gap-2 px-8 py-16">

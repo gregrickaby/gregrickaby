@@ -1,16 +1,17 @@
 import {
-  FaAmazon,
-  FaCodepen,
-  FaFacebook,
-  FaGithub,
-  FaGoodreadsG,
-  FaInstagram,
-  FaLinkedin,
-  FaRss,
-  FaThreads,
-  FaWordpress,
-  FaYoutube
-} from 'react-icons/fa6'
+  IconBook,
+  IconBrandAmazon,
+  IconBrandCodepen,
+  IconBrandFacebook,
+  IconBrandFeedly,
+  IconBrandGithub,
+  IconBrandInstagram,
+  IconBrandLinkedin,
+  IconBrandThreads,
+  IconBrandWordpress,
+  IconBrandYoutube,
+  IconRss
+} from '@tabler/icons-react'
 
 const config = {
   siteName: 'Greg Rickaby',
@@ -27,57 +28,62 @@ const config = {
     {
       name: 'Instagram',
       url: 'https://www.instagram.com/gregoryrickaby/',
-      icon: FaInstagram
+      icon: IconBrandInstagram
     },
     {
       name: 'Threads',
       url: 'https://www.threads.net/@gregoryrickaby',
-      icon: FaThreads
+      icon: IconBrandThreads
     },
     {
       name: 'GitHub',
       url: 'https://github.com/gregrickaby/',
-      icon: FaGithub
+      icon: IconBrandGithub
     },
     {
       name: 'LinkedIn',
       url: 'https://linkedin.com/in/gregrickaby/',
-      icon: FaLinkedin
+      icon: IconBrandLinkedin
     },
     {
       name: 'WordPress',
       url: 'https://profiles.wordpress.org/gregrickaby/',
-      icon: FaWordpress
+      icon: IconBrandWordpress
     },
     {
       name: 'Amazon Author',
       url: 'https://www.amazon.com/author/gregrickaby',
-      icon: FaAmazon
+      icon: IconBrandAmazon
     },
     {
       name: 'Facebook',
       url: 'https://www.facebook.com/gregrickaby',
-      icon: FaFacebook
+      icon: IconBrandFacebook
     },
     {
       name: 'Goodreads',
       url: 'https://www.goodreads.com/author/show/16999736.Greg_Rickaby',
-      icon: FaGoodreadsG
+      icon: IconBook
     },
     {
       name: 'CodePen',
       url: 'https://codepen.io/gregrickaby',
-      icon: FaCodepen
+      icon: IconBrandCodepen
     },
     {
       name: 'YouTube',
       url: 'https://www.youtube.com/@GregRickaby',
-      icon: FaYoutube
+      icon: IconBrandYoutube
     },
     {
       name: 'RSS Feed',
       url: 'https://gregrickaby.com/feed.xml',
-      icon: FaRss
+      icon: IconRss
+    },
+    {
+      name: 'Feedly',
+      url: 'https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fgregrickaby.com%2Ffeed.xml',
+      icon: IconBrandFeedly
     }
   ]
 }
