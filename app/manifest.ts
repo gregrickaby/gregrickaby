@@ -2,7 +2,7 @@ import config from '@/lib/config'
 import {MetadataRoute} from 'next'
 
 /**
- * The manifest.json route.
+ * The manifest.webmanifest route.
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/manifest
  */
