@@ -11,7 +11,7 @@ import {MetadataRoute} from 'next'
 export const revalidate = 43200 // 12 hours
 
 /**
- * The sitemap route.
+ * The sitemap.xml route.
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
  */
