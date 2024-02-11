@@ -180,11 +180,11 @@ export interface GenerateMetadataProps {
 }
 
 export interface CategoryTag {
-  edges: [
+  edges: {
     node: {
       databaseId: string
       name: string
       slug: string
     }
-  ]
+  }[]
 }
