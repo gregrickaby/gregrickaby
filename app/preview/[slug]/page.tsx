@@ -11,7 +11,6 @@ import {Metadata} from 'next'
  *
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
-export const dynamic = 'force-dynamic'
 export const runtime = 'edge'
 
 /**
