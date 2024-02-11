@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Generate sitemap entries for pages.
   const pagesSitemapEntries = allPages
     .filter((page) => page.seo.metaRobotsNoindex !== 'noindex')
+    .filter((page) => page.slug !== 'home')
     .map((page) => ({
       url: `${config.siteUrl}/${page.slug}`,
       lastModified: new Date(page.modified).toISOString()
