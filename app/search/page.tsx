@@ -7,11 +7,7 @@ import {Metadata} from 'next/types'
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export async function generateMetadata({
-  params
-}: {
-  params: {slug: string}
-}): Promise<Metadata | null> {
+export async function generateMetadata(): Promise<Metadata | null> {
   return {
     title: `Search - ${config.siteName}`,
     description: `Search all pages and posts from ${config.siteName}`,
