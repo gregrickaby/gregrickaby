@@ -1,11 +1,10 @@
 import MorePosts from '@/components/MorePosts'
 import PostList from '@/components/PostList'
-import {notFoundSeoHandler, seoHandler} from '@/lib/functions'
+import config from '@/lib/config'
 import getCategories from '@/lib/queries/getCategories'
 import getCategoryBySlug from '@/lib/queries/getCategoryBySlug'
-import getPostBySlug from '@/lib/queries/getPostBySlug'
 import {GenerateMetadataProps} from '@/lib/types'
-import {Metadata, ResolvingMetadata} from 'next'
+import {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
 /**
@@ -23,7 +22,7 @@ export async function generateStaticParams() {
   }
 
   // Return the slugs for each category.
-  return categories.edges.map((node) => ({
+  return categories.edges.map(({node}) => ({
     slug: node.slug
   }))
 }
@@ -33,19 +32,21 @@ export async function generateStaticParams() {
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export async function generateMetadata(
-  {params, searchParams}: GenerateMetadataProps,
-  parent: ResolvingMetadata
-): Promise<Metadata | null> {
-  // Get the blog post.
-  const post = await getPostBySlug(params.slug)
-
-  // No post? Return 404 metadata.
-  if (!post) {
-    return notFoundSeoHandler(params.slug)
+export async function generateMetadata({
+  params
+}: GenerateMetadataProps): Promise<Metadata | null> {
+  return {
+    title: `${params.slug} Archive - ${config.siteName}`,
+    description: `The blog archive for the ${params.slug} category.`,
+    alternates: {
+      canonical: `${config.siteUrl}/blog/category/${params.slug}`
+    },
+    openGraph: {
+      title: `${params.slug} Archive - ${config.siteName}`,
+      description: `The blog archive for the ${params.slug} category.`,
+      url: `${config.siteUrl}/blog/category/${params.slug}`
+    }
   }
-
-  return seoHandler(post)
 }
 
 /**
@@ -68,7 +69,7 @@ export default async function CategoryArchive({
 
   return (
     <>
-      <h1>Category: {params.slug}</h1>
+      <h1 className="capitalize">{params.slug} Archive</h1>
       <PostList posts={posts} />
       <MorePosts endCursor={posts.pageInfo.endCursor} />
     </>

@@ -3,7 +3,7 @@ import {notFoundSeoHandler, seoHandler} from '@/lib/functions'
 import getPostBySlug from '@/lib/queries/getPostBySlug'
 import getPosts from '@/lib/queries/getPosts'
 import {GenerateMetadataProps} from '@/lib/types'
-import {Metadata, ResolvingMetadata} from 'next'
+import {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
 /**
@@ -31,10 +31,9 @@ export async function generateStaticParams() {
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export async function generateMetadata(
-  {params, searchParams}: GenerateMetadataProps,
-  parent: ResolvingMetadata
-): Promise<Metadata | null> {
+export async function generateMetadata({
+  params
+}: GenerateMetadataProps): Promise<Metadata | null> {
   // Get the blog post.
   const post = await getPostBySlug(params.slug)
 
