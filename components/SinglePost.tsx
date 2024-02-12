@@ -30,11 +30,9 @@ export default function SinglePost({post}: {post: Post}) {
         <div>
           <h3>Categories</h3>
           <ul className="m-0 flex list-none gap-2 p-0">
-            {post.categories.nodes.map((category) => (
-              <li className="m-0 p-0" key={category.databaseId}>
-                <Link href={`/blog/category/${category.slug}`}>
-                  {category.name}
-                </Link>
+            {post.categories.edges.map(({node}) => (
+              <li className="m-0 p-0" key={node.databaseId}>
+                <Link href={`/blog/category/${node.slug}`}>{node.name}</Link>
               </li>
             ))}
           </ul>
@@ -42,9 +40,9 @@ export default function SinglePost({post}: {post: Post}) {
         <div>
           <h3>Tags</h3>
           <ul className="m-0 flex list-none gap-2 p-0">
-            {post.tags.nodes.map((tag) => (
-              <li className="m-0 p-0" key={tag.databaseId}>
-                <Link href={`/blog/tag/${tag.slug}`}>{tag.name}</Link>
+            {post.tags.edges.map(({node}) => (
+              <li className="m-0 p-0" key={node.databaseId}>
+                <Link href={`/blog/tag/${node.slug}`}>{node.name}</Link>
               </li>
             ))}
           </ul>

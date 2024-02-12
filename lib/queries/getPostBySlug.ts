@@ -32,17 +32,21 @@ export default async function getPostBySlug(slug: string) {
         date
         modified
         tags {
-          nodes {
-            databaseId
-            name
-            slug
+          edges {
+            node {
+              databaseId
+              name
+              slug
+            }
           }
         }
         categories {
-          nodes {
-            databaseId
-            name
-            slug
+          edges {
+            node {
+              databaseId
+              name
+              slug
+            }
           }
         }
         seo {

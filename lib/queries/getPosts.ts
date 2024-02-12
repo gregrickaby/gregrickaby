@@ -10,8 +10,13 @@ export default async function getPosts(limit = 1000, after = '', before = '') {
       posts(where: {status: PUBLISH}, first: $limit, after: $after, before: $before) {
         edges {
           node {
-            commentCount
             databaseId
+            author {
+              node {
+                name
+              }
+            }
+            commentCount
             title(format: RENDERED)
             slug
             date
@@ -24,6 +29,15 @@ export default async function getPosts(limit = 1000, after = '', before = '') {
                 mediaDetails {
                   height
                   width
+                }
+              }
+            }
+            categories {
+              edges {
+                node {
+                  databaseId
+                  name
+                  slug
                 }
               }
             }

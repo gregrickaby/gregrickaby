@@ -123,22 +123,22 @@ export interface Post {
   content: string
   commentCount: number
   categories: {
-    nodes: [
-      {
+    edges: {
+      node: {
         databaseId: string
         name: string
         slug: string
       }
-    ]
+    }[]
   }
   tags: {
-    nodes: [
-      {
+    edges: {
+      node: {
         databaseId: string
         name: string
         slug: string
       }
-    ]
+    }[]
   }
   featuredImage: FeaturedImage
   seo: Seo

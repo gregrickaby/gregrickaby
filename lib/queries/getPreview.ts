@@ -31,16 +31,22 @@ export default async function getPreview(id: string) {
         }
         date
         modified
-        tags {
-          nodes {
-            databaseId
-            name
+        categories {
+          edges {
+            node {
+              databaseId
+              name
+              slug
+            }
           }
         }
-        categories {
-          nodes {
-            databaseId
-            name
+        tags {
+          edges {
+            node {
+              databaseId
+              name
+              slug
+            }
           }
         }
         seo {
