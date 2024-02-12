@@ -40,15 +40,6 @@ export const metadata: Metadata = {
       'application/rss+xml': `${config.siteUrl}/feed.xml`
     }
   },
-  icons: {
-    icon: '/icons/apple-icon.png',
-    shortcut: '/icons/apple-icon.png',
-    apple: '/icons/apple-touch-icon.png',
-    other: {
-      rel: 'apple-icon-precomposed',
-      url: '/icons/apple-icon-precomposed.png'
-    }
-  },
   openGraph: {
     title: config.siteName,
     description: config.siteDescription,
