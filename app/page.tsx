@@ -4,6 +4,13 @@ import getPageBySlug from '@/lib/queries/getPageBySlug'
 import getPosts from '@/lib/queries/getPosts'
 
 /**
+ * Route segment config.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+ */
+export const revalidate = 43200 // 12 hours
+
+/**
  * The home page route.
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages

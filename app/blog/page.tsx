@@ -6,6 +6,13 @@ import {notFound} from 'next/navigation'
 import {Metadata} from 'next/types'
 
 /**
+ * Route segment config.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
+ */
+export const revalidate = 43200 // 12 hours
+
+/**
  * Generate the metadata for this archive.
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
