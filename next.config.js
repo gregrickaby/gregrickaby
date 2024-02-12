@@ -20,6 +20,8 @@ const nextConfig = {
       {source: '/feed/atom', destination: '/feed.xml', permanent: true},
       {source: '/xmlrpc.php', destination: '/feed.xml', permanent: true},
       {source: '/blog/xmlrpc.php', destination: '/feed.xml', permanent: true},
+      {source: '/wp-:path*', destination: '/', permanent: true},
+      {source: '/index.php', destination: '/', permanent: true},
       {
         source: '/:year(\\d{4})/:month(\\d{2})/:slug*',
         destination: '/blog/:slug*',
