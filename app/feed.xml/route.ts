@@ -39,7 +39,6 @@ export async function GET() {
         <ttl>60</ttl>
         <docs>https://www.rssboard.org/rss-specification</docs>
         <generator>https://github.com/gregrickaby/gregrickaby</generator>
-        <managingEditor>greg@gregrickaby.com (Greg Rickaby)</managingEditor>
         <webMaster>greg@gregrickaby.com (Greg Rickaby)</webMaster>
         <atom:link href="${config.siteUrl}/feed.xml" rel="self" type="application/rss+xml" />
     `
@@ -50,8 +49,11 @@ export async function GET() {
         ({node}) => `
         <item>
           <title>${escape(node.title)}</title>
-          <description>${escape(node.excerpt)}</description>
           <link>${config.siteUrl}/blog/${node.slug}</link>
+          <description>${escape(`${node.excerpt}<a href="${config.siteUrl}/blog/${node.slug}">Continue reading</a>`)}</description>
+          <author>${node.author.node.name}</author>
+          <category>${node.categories.edges[0].node.name}</category>
+          <enclosure url="${node.featuredImage?.node.sourceUrl}" length="1024" type="image/jpeg" />
           <pubDate>${new Date(node.date).toUTCString()}</pubDate>
           <guid>${config.siteUrl}/blog/${node.slug}</guid>
         </item>
