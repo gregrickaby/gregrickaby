@@ -56,6 +56,11 @@ const nextConfig = {
         source: '/remove-woocommerce-styles-and-scripts',
         destination: '/blog/remove-woocommerce-styles-and-scripts',
         permanent: true
+      },
+      {
+        source: '/using-the-golden-ratio-and-rems',
+        destination: '/blog/using-the-golden-ratio-and-rems',
+        permanent: true
       }
     ]
   },
