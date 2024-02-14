@@ -37,8 +37,8 @@ export default async function Home() {
           </a>{' '}
           who has been building websites and contributing to open-source
           projects since the late 90&apos;s. I&apos;m also excited about the{' '}
-          <a href="https://indieweb.org/">IndieWeb</a> movement because I love
-          the idea of owning your own online identity, domain, and content.
+          <a href="https://indieweb.org/">IndieWeb</a> movement. I love the idea
+          of owning your own online identity, domain, and content.
         </p>
         <p>
           Offline, I live in south Alabama and I&apos;m married with three kids.
