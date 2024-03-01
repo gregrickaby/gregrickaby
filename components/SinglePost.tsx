@@ -8,7 +8,7 @@ import Link from 'next/link'
 /**
  * Single post component.
  */
-export default function SinglePost({post}: {post: Post}) {
+export default function SinglePost({post}: Readonly<{post: Post}>) {
   return (
     <article>
       <header>

@@ -4,7 +4,7 @@ import {Post} from '@/lib/types'
 /**
  * Comments component.
  */
-export default function Comments({post}: {post: Post}) {
+export default function Comments({post}: Readonly<{post: Post}>) {
   return (
     <>
       <section className="border-t-2 border-zinc-500 py-4">

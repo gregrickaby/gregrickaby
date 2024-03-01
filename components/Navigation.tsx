@@ -8,7 +8,7 @@ import {useEffect, useState} from 'react'
 /**
  * Hamburger Nav / Drawer.
  */
-export default function Navigation({menu}: {menu: Menu}) {
+export default function Navigation({menu}: Readonly<{menu: Menu}>) {
   const [isOpen, setIsOpen] = useState(false)
 
   /**
@@ -67,7 +67,7 @@ export default function Navigation({menu}: {menu: Menu}) {
                 href={item.uri}
                 key={item.databaseId}
                 onClick={toggleDrawer}
-                prefetch={item.uri === '/feed.xml' ? false : true}
+                prefetch={item.uri !== '/feed.xml'}
               >
                 {item.label}
               </Link>

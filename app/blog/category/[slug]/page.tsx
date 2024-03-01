@@ -56,9 +56,9 @@ export async function generateMetadata({
  */
 export default async function CategoryArchive({
   params
-}: {
+}: Readonly<{
   params: {slug: string}
-}) {
+}>) {
   // Fetch posts from WordPress.
   const posts = await getCategoryBySlug(params.slug, 12)
 

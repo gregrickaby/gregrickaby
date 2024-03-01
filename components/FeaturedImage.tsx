@@ -12,7 +12,7 @@ export interface FeaturedImageProps {
 export default function FeaturedImage({
   image,
   hidden = false
-}: FeaturedImageProps) {
+}: Readonly<FeaturedImageProps>) {
   // If there's no image, or it's hidden, don't render anything.
   if (!image || hidden) {
     return null

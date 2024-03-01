@@ -8,7 +8,7 @@ import {useState} from 'react'
 /**
  * The more posts component.
  */
-export default function MorePosts({endCursor}: {endCursor: string}) {
+export default function MorePosts({endCursor}: Readonly<{endCursor: string}>) {
   const [posts, setPosts] = useState<AllPosts>({
     edges: [],
     pageInfo: {endCursor: ''}

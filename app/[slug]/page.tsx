@@ -58,7 +58,9 @@ export async function generateMetadata({
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
-export default async function Page({params}: {params: {slug: string}}) {
+export default async function Page({
+  params
+}: Readonly<{params: {slug: string}}>) {
   // Fetch a page from WordPress.
   const page = await getPageBySlug(params.slug)
 

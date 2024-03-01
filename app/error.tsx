@@ -12,7 +12,7 @@ interface ErrorProps {
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/error-handling
  */
-export default function Error({error, reset}: ErrorProps) {
+export default function Error({error, reset}: Readonly<ErrorProps>) {
   useEffect(() => {
     console.error(error)
   }, [error])

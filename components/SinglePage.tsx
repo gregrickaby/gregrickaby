@@ -5,7 +5,7 @@ import {Page} from '@/lib/types'
 /**
  * Single page component.
  */
-export default function SinglePage({page}: {page: Page}) {
+export default function SinglePage({page}: Readonly<{page: Page}>) {
   return (
     <article>
       <FeaturedImage

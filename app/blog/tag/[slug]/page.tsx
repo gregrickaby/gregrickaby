@@ -54,7 +54,9 @@ export async function generateMetadata({
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
-export default async function TagArchive({params}: {params: {slug: string}}) {
+export default async function TagArchive({
+  params
+}: Readonly<{params: {slug: string}}>) {
   // Fetch posts from WordPress.
   const posts = await getTagBySlug(params.slug, 12)
 

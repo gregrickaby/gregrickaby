@@ -6,7 +6,7 @@ import {useState} from 'react'
 /**
  * The comment form component.
  */
-export default function CommentForm({postID}: {postID: string}) {
+export default function CommentForm({postID}: Readonly<{postID: string}>) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [website, setWebsite] = useState('')
@@ -29,7 +29,7 @@ export default function CommentForm({postID}: {postID: string}) {
     })
 
     // If the comment was created successfully...
-    if (status && status.success) {
+    if (status?.success) {
       // Clear the form.
       setName('')
       setEmail('')
@@ -43,7 +43,7 @@ export default function CommentForm({postID}: {postID: string}) {
     }
 
     // If there was an error...
-    if (status && !status.success) {
+    if (!status?.success) {
       setStatus(`There was an error submitting your comment: ${status.message}`)
     }
   }

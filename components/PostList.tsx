@@ -5,7 +5,7 @@ import Link from 'next/link'
 /**
  * The post list component.
  */
-export default function PostList({posts}: {posts: AllPosts}) {
+export default function PostList({posts}: Readonly<{posts: AllPosts}>) {
   return (
     <div className="grid gap-8 md:grid-cols-3">
       {!!posts.edges.length &&

@@ -30,8 +30,7 @@ export default async function Home() {
           <a href="https://www.linkedin.com/in/gregrickaby/" rel="author">
             full-stack web developer
           </a>
-          , <a href="https://gregrickaby.com/photos">photography enthusiast</a>,
-          and{' '}
+          , <a href="/photos">photography enthusiast</a>, and{' '}
           <a href="https://www.amazon.com/author/gregrickaby" rel="author">
             published author
           </a>{' '}

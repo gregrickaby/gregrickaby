@@ -6,7 +6,7 @@ import {useEffect, useRef} from 'react'
 /**
  * The blocks component.
  */
-export default function Blocks({content}: {content: string}) {
+export default function Blocks({content}: Readonly<{content: string}>) {
   // Create a ref for the post content.
   const contentRef = useRef<HTMLDivElement>(null)
 

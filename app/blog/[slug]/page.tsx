@@ -50,7 +50,9 @@ export async function generateMetadata({
  *
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
-export default async function Post({params}: {params: {slug: string}}) {
+export default async function Post({
+  params
+}: Readonly<{params: {slug: string}}>) {
   // Fetch a single post from WordPress.
   const post = await getPostBySlug(params.slug)
 
