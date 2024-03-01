@@ -28,7 +28,7 @@ export default async function Home() {
         <p>
           I&apos;m a{' '}
           <a href="https://www.linkedin.com/in/gregrickaby/" rel="author">
-            full-stack web developer
+            full-stack engineer
           </a>
           , <a href="/photos">photography enthusiast</a>, and{' '}
           <a href="https://www.amazon.com/author/gregrickaby" rel="author">
