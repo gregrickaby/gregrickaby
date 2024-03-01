@@ -15,13 +15,13 @@ import {
 
 const config = {
   siteName: 'Greg Rickaby',
-  siteDescription: 'Full-Stack Developer / Photographer / Author',
+  siteDescription: 'Full-Stack Engineer / Photographer / Author',
   siteUrl: 'https://gregrickaby.com',
   siteLogo: '/logo.webp',
   siteOgImage: '/og.webp',
   jobTitle: 'Web Developer',
   email: 'greg@gregrickaby.com',
-  intro: 'Disney Dad. Full-Stack Developer. Photographer. Author.',
+  intro: 'Disney Dad. Full-Stack Engineer. Photographer. Author.',
   gravatarApiUrl:
     'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
   socials: [
