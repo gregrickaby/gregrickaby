@@ -1,4 +1,4 @@
-import {FeaturedImage} from '@/lib/types'
+import type {FeaturedImage} from '@/lib/types'
 import Image from 'next/image'
 
 export interface FeaturedImageProps {

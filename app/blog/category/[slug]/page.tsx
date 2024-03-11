@@ -3,7 +3,7 @@ import PostList from '@/components/PostList'
 import config from '@/lib/config'
 import getCategories from '@/lib/queries/getCategories'
 import getCategoryBySlug from '@/lib/queries/getCategoryBySlug'
-import {GenerateMetadataProps} from '@/lib/types'
+import type {GenerateMetadataProps} from '@/lib/types'
 import {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 

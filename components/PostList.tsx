@@ -1,4 +1,4 @@
-import {AllPosts} from '@/lib/types'
+import type {AllPosts} from '@/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
 

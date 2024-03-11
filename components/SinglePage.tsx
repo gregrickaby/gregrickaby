@@ -1,6 +1,6 @@
 import Blocks from '@/components/Blocks'
 import FeaturedImage from '@/components/FeaturedImage'
-import {Page} from '@/lib/types'
+import type {Page} from '@/lib/types'
 
 /**
  * Single page component.

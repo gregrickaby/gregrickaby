@@ -1,6 +1,6 @@
 import Search from '@/components/Search'
 import config from '@/lib/config'
-import {Metadata} from 'next/types'
+import type {Metadata} from 'next/types'
 
 /**
  * Generate the metadata for this route.

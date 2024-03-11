@@ -1,5 +1,5 @@
 import CommentForm from '@/components/CommentForm'
-import {Post} from '@/lib/types'
+import type {Post} from '@/lib/types'
 
 /**
  * Comments component.

@@ -2,7 +2,7 @@
 
 import LatestPosts from '@/components/PostList'
 import getPosts from '@/lib/queries/getPosts'
-import {AllPosts} from '@/lib/types'
+import type {AllPosts} from '@/lib/types'
 import {useState} from 'react'
 
 /**

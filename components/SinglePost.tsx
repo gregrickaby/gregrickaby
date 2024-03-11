@@ -2,7 +2,7 @@ import Blocks from '@/components/Blocks'
 import Comments from '@/components/Comments'
 import FeaturedImage from '@/components/FeaturedImage'
 import {formatDate} from '@/lib/functions'
-import {Post} from '@/lib/types'
+import type {Post} from '@/lib/types'
 import Link from 'next/link'
 
 /**

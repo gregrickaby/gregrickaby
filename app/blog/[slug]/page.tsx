@@ -2,7 +2,7 @@ import SinglePost from '@/components/SinglePost'
 import {notFoundSeoHandler, seoHandler} from '@/lib/functions'
 import getPostBySlug from '@/lib/queries/getPostBySlug'
 import getPosts from '@/lib/queries/getPosts'
-import {GenerateMetadataProps} from '@/lib/types'
+import type {GenerateMetadataProps} from '@/lib/types'
 import {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 
