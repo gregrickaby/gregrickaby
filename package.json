@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@fancyapps/ui": "^5.0.33",
-    "@tabler/icons-react": "^2.47.0",
+    "@tabler/icons-react": "^3.0.0",
     "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
     "next": "^14.1.3",
