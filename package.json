@@ -27,13 +27,13 @@
   },
   "dependencies": {
     "@fancyapps/ui": "^5.0.36",
-    "@tabler/icons-react": "^3.3.0",
+    "@tabler/icons-react": "^3.4.0",
     "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
     "next": "^14.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sharp": "^0.33.3",
+    "sharp": "^0.33.4",
     "typescript": "^5.4.5",
     "xml-escape": "^1.1.0"
   },
