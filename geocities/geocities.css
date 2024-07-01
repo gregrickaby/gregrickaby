@@ -3,8 +3,10 @@
   --button-face: #dfdfdf;
   --button-shadow: #808080;
   --link-blue: #00f;
-  --border-raised-outer: inset -1px -1px var(--window-frame), inset 1px 1px var(--button-highlight);
-  --border-raised-inner: inset -2px -2px var(--button-shadow), inset 2px 2px var(--button-face);
+  --border-raised-outer: inset -1px -1px var(--window-frame),
+    inset 1px 1px var(--button-highlight);
+  --border-raised-inner: inset -2px -2px var(--button-shadow),
+    inset 2px 2px var(--button-face);
   --scroll-size: 1rem;
   --ms-font: "MS Sans Serif", sans-serif;
   --comic-font: "Comic Sans", sans-serif;
@@ -112,4 +114,17 @@ img {
 
 ul {
   text-align: left;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.boldy-going {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
 }

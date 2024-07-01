@@ -3,7 +3,7 @@
   "redirects": [
     {
       "source": "/2020/06/16/reddit-image-viewer",
-      "destination": "https://reddit-image-viewer.vercel.app",
+      "destination": "https://reddit-viewer.com",
       "permanent": true
     },
     {

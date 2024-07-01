@@ -1,65 +1,35 @@
 {
-  "name": "@gregrickaby/homepage",
-  "version": "1.0.0",
+  "name": "@gregrickaby/gregrickaby",
+  "version": "5.0.0",
   "description": "My homepage on the web",
   "main": "index.html",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gregrickaby/homepage.git"
+    "url": "git+https://github.com/gregrickaby/gregrickaby.git"
   },
   "keywords": [],
-  "author": "Greg Rickaby <gregrickaby@gmail.com>",
+  "author": "Greg Rickaby <greg@gregrickaby.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gregrickaby/homepage/issues"
+    "url": "https://github.com/gregrickaby/gregrickaby/issues"
   },
   "homepage": "https://gregrickaby.com",
   "scripts": {
-    "format": "npx prettier '**/*.{js,md,html,css,json,yml}' --write || true",
-    "lint": "npm run format && npm run lint:css && npm run lint:js",
-    "lint:css": "npx stylelint '**/*.css' --fix || true",
-    "lint:js": "npx eslint '**/*.js' --fix || true"
+    "format": "prettier '**/*.{js,jsx,ts,tsx,md,html,css,json,yml}' --write",
+    "lint": "npm run lint:css && npm run lint:js && npm run format",
+    "lint:css": "npx stylelint '**/*.css' --fix",
+    "lint:js": "npx eslint '**/*.js' --fix"
   },
   "devDependencies": {
-    "eslint": "^8.30.0",
-    "eslint-config-prettier": "^8.5.0",
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.5.0",
+    "eslint": "^9.5.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-config-recommended": "^4.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.1",
-    "stylelint": "^14.16.0",
-    "stylelint-config-prettier": "^9.0.4",
-    "stylelint-config-standard": "^29.0.0"
-  },
-  "prettier": {
-    "printWidth": 120,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "useTabs": false
-  },
-  "stylelint": {
-    "extends": "stylelint-config-standard",
-    "rules": {
-      "no-descending-specificity": null
-    }
-  },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es6": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2021,
-      "sourceType": "module"
-    },
-    "rules": {
-      "no-unused-vars": 0
-    }
+    "eslint-plugin-prettier": "^5.1.3",
+    "globals": "^15.5.0",
+    "prettier": "^3.3.2",
+    "stylelint": "^16.6.1",
+    "stylelint-config-standard": "^36.0.0"
   }
 }
