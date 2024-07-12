@@ -22,14 +22,14 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.5.0",
-    "eslint": "^9.5.0",
+    "@eslint/js": "^9.7.0",
+    "eslint": "^9.7.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-recommended": "^4.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "globals": "^15.5.0",
+    "globals": "^15.8.0",
     "prettier": "^3.3.2",
-    "stylelint": "^16.6.1",
-    "stylelint-config-standard": "^36.0.0"
+    "stylelint": "^16.7.0",
+    "stylelint-config-standard": "^36.0.1"
   }
 }
