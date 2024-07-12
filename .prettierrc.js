@@ -4,11 +4,5 @@ module.exports = {
   singleQuote: true,
   bracketSpacing: false,
   semi: false,
-<<<<<<< HEAD
   trailingComma: "none",
 };
-=======
-  trailingComma: 'none',
-  plugins: ['prettier-plugin-tailwindcss'],
-}
->>>>>>> main
