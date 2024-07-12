@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --grd-photo-gallery-gutter: 24px;
+  }
+
+  body {
+    @apply relative mx-auto space-y-8 px-8 antialiased lg:px-0;
+    @apply prose prose-zinc max-w-4xl lg:prose-xl;
+    @apply bg-white dark:prose-invert dark:bg-zinc-900;
+  }
+
+  input {
+    @apply rounded px-4 py-2;
+    @apply text-zinc-900;
+    @apply bg-zinc-200 dark:bg-zinc-200;
+  }
+
+  textarea {
+    @apply rounded px-4 py-2;
+    @apply text-zinc-900;
+    @apply bg-zinc-200 dark:bg-zinc-200;
+  }
+
+  button,
+  .button,
+  [type='submit'] {
+    @apply rounded px-4 py-3 leading-tight no-underline;
+    @apply text-zinc-900 dark:bg-zinc-800 dark:text-white;
+    @apply hover:bg-zinc-300 dark:hover:bg-zinc-700;
+  }
+
+  a {
+    @apply underline hover:no-underline;
+  }
+}
+
+/* ACF Photo Gallery */
+#grd-photo-gallery-gallery {
+  @apply m-auto;
+
+  /* Single column on mobile. */
+  .grd-photo-gallery-image,
+  .grd-photo-gallery-grid-sizer {
+    margin-bottom: var(--grd-photo-gallery-gutter);
+    width: calc(100% - var(--grd-photo-gallery-gutter));
+  }
+
+  /* Two columns on tablet. */
+  @media (width >= 768px) {
+    .grd-photo-gallery-image,
+    .grd-photo-gallery-grid-sizer {
+      width: calc(50% - var(--grd-photo-gallery-gutter));
+    }
+  }
+
+  /* Three columns on desktop. */
+  @media (width >= 1280px) {
+    .grd-photo-gallery-image,
+    .grd-photo-gallery-grid-sizer {
+      width: calc(33% - var(--grd-photo-gallery-gutter));
+    }
+  }
+
+  /* Each image. */
+  .grd-photo-gallery-image {
+    a {
+      @apply cursor-zoom-in text-white no-underline;
+    }
+
+    img {
+      @apply m-0 rounded transition-all duration-200 ease-in-out;
+
+      backface-visibility: hidden;
+    }
+
+    &:hover {
+      img {
+        @apply scale-105 transform shadow-lg;
+      }
+
+      .grd-photo-gallery-image-caption {
+        @apply visible opacity-100;
+      }
+    }
+  }
+
+  /* Optional captions. */
+  .grd-photo-gallery-image-caption {
+    @apply invisible absolute bottom-1 max-w-[90%] p-3 opacity-0 transition-all duration-200 ease-in-out;
+    @apply bg-zinc-900/50 text-left text-white shadow-lg;
+
+    backface-visibility: hidden;
+  }
+}
+
+.fancybox__caption {
+  @apply text-center;
+
+  .exif {
+    @apply text-xs;
+  }
+}
+
+/* ACF Photo Gallery - Homepage Widget */
+.homepage-gallery #grd-photo-gallery-gallery {
+  .grd-photo-gallery-image,
+  .grd-photo-gallery-grid-sizer {
+    margin-bottom: var(--grd-photo-gallery-gutter);
+    width: calc(50% - var(--grd-photo-gallery-gutter));
+  }
+}
+
+/* oEmbeds */
+embed,
+iframe,
+object {
+  @apply max-w-full;
+
+  @media screen and (width <= 768px) {
+    height: 56.25vw;
+    max-height: 500px;
+  }
+}
