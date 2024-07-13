@@ -21,10 +21,10 @@ jobs:
       - name: Deploy via SFTP
         uses: easingthemes/ssh-deploy@main
         with:
-          ssh-private-key: ${{ secrets.REMOTE_PRIVATE_KEY }}
-          args: '-avz --delete --exclude=/photos' # don't delete /photos on server
-          source: './'
-          remote-host: ${{ secrets.REMOTE_HOST }}
-          remote-user: ${{ secrets.REMOTE_USER }}
-          target: ${{ secrets.REMOTE_PATH }}
-          exclude: 'node_modules/*' # don't upload node_modules
+          SSH_PRIVATE_KEY: ${{ secrets.REMOTE_PRIVATE_KEY }}
+          ARGS: '-avz --delete --exclude=/photos' # don't delete /photos on server
+          SOURCE: './'
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ secrets.REMOTE_PATH }}
+          EXCLUDE: 'node_modules/*' # don't upload node_modules
