@@ -6,9 +6,6 @@ on:
 
   workflow_dispatch:
 
-concurrecy:
-  cancel-in-progress: true
-
 jobs:
   lint:
     runs-on: ubuntu-latest

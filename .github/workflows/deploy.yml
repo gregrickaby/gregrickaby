@@ -6,9 +6,6 @@ on:
 
   workflow_dispatch:
 
-concurrency:
-  cancel-in-progress: false
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
