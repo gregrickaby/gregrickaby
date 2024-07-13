@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -16,9 +15,9 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@main
 
-      - name: Deploy via SFTP
+      - name: Deploy via sFTP
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.REMOTE_PRIVATE_KEY }}
