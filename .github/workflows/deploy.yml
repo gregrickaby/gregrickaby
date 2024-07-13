@@ -22,9 +22,9 @@ jobs:
         uses: easingthemes/ssh-deploy@main
         with:
           SSH_PRIVATE_KEY: ${{ secrets.REMOTE_PRIVATE_KEY }}
-          ARGS: '-avz --delete --exclude=/photos' # don't delete /photos on server
+          ARGS: '-avz --delete'
           SOURCE: './'
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_PATH }}
-          EXCLUDE: '.*, node_modules/*, eslint.config.mjs, package.json, package-lock.json, README.md' # don't upload these
+          EXCLUDE: '.*, eslint.config.mjs, package.json, package-lock.json, README.md, node_modules/*, photos/*' # don't upload these
