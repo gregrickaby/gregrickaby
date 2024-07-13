@@ -27,4 +27,4 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_PATH }}
-          EXCLUDE: '.*,node_modules/*' # don't upload these
+          EXCLUDE: '.*, node_modules/*, eslint.config.mjs, package.json, package-lock.json, README.md' # don't upload these
