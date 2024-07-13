@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- 👋🏻 https://github.com/gregrickaby/gregrickaby -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Greg Rickaby - Full-Stack Engineer / Photographer / Author</title>
+    <meta
+      name="description"
+      content="Full-Stack Engineer / Photographer / Author"
+    />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="canonical" href="https://gregrickaby.com" />
+    <style>
+      body {
+        -webkit-font-smoothing: antialiased;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          Segoe UI,
+          Roboto,
+          Helvetica Neue,
+          Arial,
+          Noto Sans,
+          sans-serif,
+          Apple Color Emoji,
+          Segoe UI Emoji,
+          Segoe UI Symbol,
+          Noto Color Emoji;
+        font-size: 1.125rem;
+        line-height: 1.625;
+        margin: 0 auto;
+        max-width: 48rem;
+        padding: 2rem;
+      }
+
+      img {
+        height: auto;
+        max-width: 100%;
+      }
+
+      h1 {
+        font-size: 47px;
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        font-size: 37px;
+        text-wrap: wrap;
+      }
+
+      h3 {
+        font-size: 29px;
+        text-wrap: wrap;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      button {
+        background: #c0c0c0;
+        border-radius: 0;
+        border: none;
+        box-shadow:
+          inset -1px -1px #0a0a0a,
+          inset 1px 1px #fff,
+          inset -2px -2px grey,
+          inset 2px 2px #dfdfdf;
+        box-sizing: border-box;
+        cursor: pointer;
+        font-size: 0.8rem;
+        min-height: 1.5rem;
+        min-width: 5rem;
+        padding: 0 0.75rem;
+      }
+
+      button:hover {
+        box-shadow:
+          inset -1px -1px #fff,
+          inset 1px 1px #0a0a0a,
+          inset -2px -2px #dfdfdf,
+          inset 2px 2px grey;
+      }
+
+      button:focus {
+        box-shadow:
+          inset -1px 1px #cee7ff,
+          inset 1px 2px #98b8ea,
+          inset -2px 2px #bcd4f6,
+          inset 1px -1px #89ade4,
+          inset 2px -2px #89ade4;
+        outline: 1px dotted #000;
+        outline-offset: -4px;
+      }
+
+      header {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      header div {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .logo {
+        border-radius: 50%;
+        height: 100px;
+        margin-right: 1rem;
+        width: 100px;
+      }
+
+      footer {
+        text-align: center;
+        padding-bottom: 1rem;
+      }
+
+      .sr-only {
+        height: 1px;
+        left: -10000px;
+        overflow: hidden;
+        position: absolute;
+        top: auto;
+        width: 1px;
+      }
+
+      #loading {
+        align-items: center;
+        background: #18181b;
+        display: flex;
+        height: 100vh;
+        justify-content: center;
+        left: 0;
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        z-index: 1000;
+      }
+
+      #loading img {
+        position: relative;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #18181b;
+          color: #fff;
+        }
+
+        a {
+          color: #fff;
+        }
+      }
+    </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Greg Rickaby",
+        "url": "https://gregrickaby.com",
+        "sameAs": [
+          "https://github.com/gregrickaby/",
+          "https://linkedin.com/in/gregrickaby/",
+          "https://profiles.wordpress.org/gregrickaby/",
+          "https://www.facebook.com/gregrickaby",
+          "https://https://www.instagram.com/gregoryrickaby/",
+          "https://www.threads.net/@gregoryrickaby"
+        ]
+      }
+    </script>
+    <script defer src="geocities/script.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <div>
+        <img
+          class="logo"
+          src="images/logo.webp"
+          alt="Greg Rickaby"
+          loading="eager"
+        />
+      </div>
+      <div>
+        <h1>Greg Rickaby</h1>
+        <aside>Full-Stack Engineer / Photographer / Author</aside>
+      </div>
+    </header>
+    <a class="sr-only" href="#main">Skip to Main Content</a>
+
+    <main id="main" tabindex="-1">
+      <article>
+        <section>
+          <h2>About</h2>
+          <p>
+            With over two decades of web development expertise, my journey began
+            in the early days of the internet, hacking away at my first website
+            on
+            <button id="toggleGeocities">Geocities</button> in 1997.
+          </p>
+
+          <p>
+            By 1999, I was working full-time on dynamic web applications using
+            (classic) ASP, laying the groundwork for a long career in tech. In
+            2006, I transitioned to WordPress, harnessing its power to create
+            dynamic, user-friendly sites.
+          </p>
+          <p>
+            My passion for innovation led me to embrace modern JavaScript
+            frameworks, and since 2019, I've been thriving as a full-stack
+            developer, specializing in React and Next.js to build cutting-edge
+            web applications.
+          </p>
+        </section>
+        <section>
+          <h2>Experience</h2>
+          <div>
+            <h3>Mindsize, Remote - Tech Lead</h3>
+            <p>February 2024 - Present</p>
+            <ul>
+              <li>
+                Lead and mentor an agile web development team, fostering
+                collaboration and productivity.
+              </li>
+              <li>
+                Work closely with stakeholders to translate designs into
+                efficient solutions in React and Next.js
+              </li>
+              <li>
+                Oversee the entire development lifecycle adherence to quality
+                standards.
+              </li>
+              <li>
+                Implement coding standards, best practices, testing, and write
+                maintainable code for long-term sustainability.
+              </li>
+              <li>
+                Facilitate cross-functional collaboration with designer,
+                engineering manager, architect, product owner, and other
+                stakeholders.
+              </li>
+            </ul>
+            <p>
+              <strong>Skills:</strong> Team Leadership, Typescript, Next.js,
+              TailwindCSS, Jest, Playwright, Storybook, GraphQL, REST APIs,
+              Node.js, Agile/Scrum
+            </p>
+          </div>
+          <div>
+            <h3>WPForms.com, Remote - Team Lead</h3>
+            <p>May 2023 - January 2024</p>
+            <ul>
+              <li>
+                I worked closely with the engineering manager, product owner,
+                and project team to help guide and maintain wpforms.com
+              </li>
+              <li>
+                Work closely with stakeholders to translate designs into
+                efficient solutions.
+              </li>
+              <li>
+                Oversee the entire development lifecycle, ensuring timely
+                project completion and adherence to quality standards.
+              </li>
+              <li>
+                Implement coding standards, best practices, and maintainable
+                code for long-term sustainability.
+              </li>
+              <li>
+                Facilitate cross-functional collaboration with designer, product
+                lead, engineering manager, quality assurance, and stakeholders.
+              </li>
+              <li>
+                Conducted 1:1s with direct reports to provide regular feedback
+                and ensure career growth and progression, coordinating work
+                within the team and stakeholders, building relationships, and
+                identifying opportunities and areas for improvement.
+              </li>
+            </ul>
+            <p>
+              <strong>Skills:</strong> Team Leadership, WordPress Development,
+              PHP, CSS, JavaScript, REST APIs, Node.js, Employee Coaching,
+              Performance Reviews, Constructive Feedback
+            </p>
+          </div>
+          <div>
+            <h3>Americaneagle.com, Remote - Technical Lead</h3>
+            <p>May 2022 - April 2023</p>
+            <p>
+              I worked closely with clients and team members to build websites
+              using WordPress and React.js. I helped out the business
+              development team with sales proposals and scoping. I also hosted
+              lunch and learns and made sure we were up-to-date with emerging
+              technologies and trends by contributing to various research and
+              development initiatives.
+            </p>
+            <p>
+              <strong>Skills:</strong> Project Leadership, WordPress, Next.js,
+              TypeScript, TailwindCSS
+            </p>
+          </div>
+          <div>
+            <h3>WebDevStudios, Remote - Director of Engineering</h3>
+            <p>May 2013 - May 2022</p>
+            <p>
+              I oversaw staffing, policy, wellness, continuing education, and
+              help build technical roadmaps and goals for the team. I also
+              support the Project Management department with resource
+              allocation, the Business Development with technical estimates and
+              solutions engineering, and assist both the CEO and COO with
+              planning and execution of goals. I occasionally lead projects for
+              high value clients.
+            </p>
+            <p>
+              <strong>Skills:</strong> Leadership, Business Strategy,
+              Interviewing, Constructive Feedback, WordPress, Next.js,
+              TypeScript, TailwindCSS
+            </p>
+          </div>
+          <div>
+            <h3>Bluewater Broadcasting, Montgomery, AL - Chief Engineer</h3>
+            <p>January 2010 - May 2013</p>
+            <p>
+              Oversaw all studios, networking, computers, automation systems,
+              websites and social media.
+            </p>
+            <p>
+              <strong>Skills:</strong> Project Management, Business Strategy,
+              IT, Networking, Automation, WordPress
+            </p>
+          </div>
+          <div>
+            <h3>Gulf South Communications, Dothan, AL - Chief Engineer</h3>
+            <p>September 2002 - December 2009</p>
+            <p>
+              Oversaw all studios, networking, computers, automation systems,
+              and websites.
+            </p>
+            <p>
+              <strong>Skills:</strong> Project Management, Business Strategy,
+              IT, Networking, Automation, WordPress
+            </p>
+          </div>
+          <div>
+            <h3>Midwest Communications, Wausau, WI - Webmaster</h3>
+            <p>June 1999 - September 2002</p>
+            <p>
+              Webmaster for all country-music formatted radio stations.
+              Responsible for daily content updates, content and graphic
+              creation. Managing relationships with all Program Directors.
+            </p>
+            <p>
+              <strong>Skills:</strong> Organization, Planning, Content Creation,
+              Graphic Design, Photography, HTML, CSS, ASP
+            </p>
+          </div>
+          View all my experiences on
+          <a href="https://www.linkedin.com/in/gregrickaby/">LinkedIn</a> and my
+          code on <a href="https://github.com/gregrickaby">GitHub</a>.
+        </section>
+        <section>
+          <h2>Other Experience</h2>
+
+          <h3>Author</h3>
+          <p>
+            In 2017, I wrote a children's book titled
+            <a href="https://amzn.to/41eZFfF" rel="nofollow sponsored" title=""
+              ><em><strong>Creating a Website for Dummies Jr</strong></em></a
+            >
+            which Wiley Global published under the
+            <a href="https://www.dummies.com/">dummies™️</a> brand.
+          </p>
+
+          <p>
+            The book guides young readers through the planning and development
+            processes of building a website. It has been translated into other 2
+            other languages and currently has a 4.5-star rating on Amazon.
+          </p>
+
+          <p>
+            Since being published, I've also served as the Technical Editor on
+            three other books:
+          </p>
+
+          <ol>
+            <li>
+              <em
+                ><a
+                  href="https://amzn.to/44EeXgy"
+                  rel="nofollow sponsored"
+                  title=""
+                  >WordPress for Dummies</a
+                ></em
+              ><br />(Sabin-Wilson, 2021)
+            </li>
+
+            <li>
+              <em
+                ><a
+                  href="https://amzn.to/3VN8f3Z"
+                  rel="nofollow sponsored"
+                  title=""
+                  >Professional WordPress Plugin Development</a
+                ></em
+              ><br />(Williams et al., 2020)
+            </li>
+
+            <li>
+              <em
+                ><a
+                  href="https://amzn.to/3B37BG8"
+                  rel="nofollow sponsored"
+                  title=""
+                  >WordPress All-In-One For Dummies</a
+                ></em
+              ><br />(Sabin-Wilson, 2019)
+            </li>
+          </ol>
+
+          <h3>Contributor</h3>
+
+          <p>
+            I've been part of the WordPress community since 2008. I've made
+            contributions to core, documentation, plugins, and themes. I've also
+            spoken at WordCamps and meet-ups. I also contribute to other
+            open-source projects like Next.js, Storybook, and Gatsby.
+          </p>
+
+          <p>
+            Outside of tech, I've volunteered my time and efforts at local
+            community organizations. The Boy Scouts, Wiregrass Church, and the
+            Enterprise High School Band Boosters to name a few.
+          </p>
+
+          <h3>Photographer</h3>
+          <p>
+            Photographer In late 2019, I purchased a Lumix GX85 and dedicated
+            several months to taking courses, reading, practicing, and receiving
+            feedback from my peers. I started out as a modest hobbyist but have
+            since become a passionate enthusiast who appreciates various forms
+            of photography, such as landscape, events, wildlife, street, and
+            astrophotography.
+          </p>
+        </section>
+      </article>
+    </main>
+
+    <footer>
+      <hr />
+      <p>
+        <a href="https://github.com/gregrickaby" rel="author">Github</a>
+        &middot;
+        <a href="https://www.instagram.com/gregoryrickaby/" rel="author"
+          >Instagram</a
+        >
+        &middot;
+        <a href="https://www.linkedin.com/in/gregrickaby/" rel="author"
+          >LinkedIn</a
+        >
+        &middot;
+        <a href="https://www.threads.net/@gregoryrickaby" rel="author"
+          >Threads</a
+        >
+        &middot;
+        <a href="https://www.facebook.com/gregrickaby" rel="author">Facebook</a>
+        &middot;
+        <a href="https://profiles.wordpress.org/gregrickaby/" rel="author"
+          >WordPress</a
+        >
+      </p>
+    </footer>
+
+    <div id="loading" style="display: none">
+      <img src="geocities/dialup.webp" alt="Loading..." loading="lazy" />
+      <audio
+        id="loadingAudio"
+        src="geocities/star-trek-modem.mp3"
+        loading="lazy"
+      ></audio>
+    </div>
+  </body>
+</html>
