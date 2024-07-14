@@ -1,0 +1,26 @@
+name: Deploy
+
+on:
+  push:
+    branches: ['main']
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@main
+
+      - name: Deploy Website
+        uses: appleboy/ssh-action@main
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_PRIVATE_KEY }}
+          port: ${{ secrets.REMOTE_PORT }}
+          script: |
+            cd ~
+            sh deploy-gregrickaby.sh
