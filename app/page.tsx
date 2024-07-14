@@ -242,7 +242,7 @@ export default function Home() {
             astrophotography.
           </p>
           <p>
-            Check out some of <a href="/photos">my photo galleries</a>. 📸
+            📸 Check out some of <a href="/photos">my recent photos</a>.
           </p>
         </section>
       </article>
