@@ -22,5 +22,6 @@ jobs:
           key: ${{ secrets.REMOTE_PRIVATE_KEY }}
           port: ${{ secrets.REMOTE_PORT }}
           script: |
-            cd ~
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             sh deploy-gregrickaby.sh
