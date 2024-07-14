@@ -14,28 +14,15 @@ export default async function NotFound() {
   return (
     <>
       <h1 className="text-center">404 - Not Found</h1>
-
       <p className="text-center text-red-500">{referer}</p>
-
       <p>
         Just a heads up: I&apos;ve given my website a fresh new look, and in the
         process, some pages have found new homes.
       </p>
-
       <h2 className="text-3xl">
         The issue is my fault, not yours! Here&apos;s what you can do:
       </h2>
-
       <ol className="text-left">
-        <li>
-          <strong>Search Around:</strong> Use the{' '}
-          <Link href="/search">search</Link> to quickly find what you&apos;re
-          looking for.
-        </li>
-        <li>
-          <strong>Explore the Archives:</strong> Dive into the{' '}
-          <Link href="/blog">blog archive</Link> for past posts and goodies.
-        </li>
         <li>
           <strong>Wayback Machine:</strong> If you&apos;re feeling nostalgic or
           can&apos;t find something, the{' '}
@@ -50,7 +37,7 @@ export default async function NotFound() {
         </li>
       </ol>
 
-      <p>Happy exploring! 🌟 </p>
+      <p>Happy exploring! 🌟</p>
 
       <Image
         alt=""
