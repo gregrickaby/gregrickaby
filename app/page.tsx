@@ -1,61 +1,16 @@
-<!doctype html>
-<html lang="en">
-  <!-- 👋🏻 https://github.com/gregrickaby/gregrickaby -->
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Greg Rickaby - Full-Stack Engineer / Photographer / Author</title>
-    <meta
-      name="description"
-      content="Full-Stack Engineer / Photographer / Author"
-    />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="canonical" href="https://gregrickaby.com" />
-    <link rel="stylesheet" href="/styles.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Greg Rickaby",
-        "url": "https://gregrickaby.com",
-        "sameAs": [
-          "https://github.com/gregrickaby/",
-          "https://linkedin.com/in/gregrickaby/",
-          "https://profiles.wordpress.org/gregrickaby/",
-          "https://www.facebook.com/gregrickaby",
-          "https://https://www.instagram.com/gregoryrickaby/",
-          "https://www.threads.net/@gregoryrickaby"
-        ]
-      }
-    </script>
-    <script defer src="/geocities/script.js"></script>
-  </head>
-  <body>
-    <header>
-      <div>
-        <img
-          class="logo"
-          src="/images/logo.webp"
-          alt="Greg Rickaby"
-          loading="eager"
-        />
-      </div>
-      <div>
-        <h1>Greg Rickaby</h1>
-        <aside>Full-Stack Engineer / Photographer / Author</aside>
-      </div>
-    </header>
-    <a class="sr-only" href="#main">Skip to Main Content</a>
-    <main id="main" tabindex="-1">
+/**
+ * Home page route.
+ */
+export default function Home() {
+  return (
+    <main>
       <article>
         <section>
           <h2>About</h2>
           <p>
             With over two decades of web development expertise, my journey began
             in the early days of the internet, hacking away at my first website
-            on
-            <button id="toggleGeocities">Geocities</button> in 1997.
+            on Geocities in 1997.
           </p>
           <p>
             By 1999, I was working full-time on dynamic web applications using
@@ -65,7 +20,7 @@
           </p>
           <p>
             My passion for innovation led me to embrace modern JavaScript
-            frameworks, and since 2019, I've been thriving as a full-stack
+            frameworks, and since 2019, I&apos;ve been thriving as a full-stack
             developer, specializing in React and Next.js to build cutting-edge
             web applications.
           </p>
@@ -197,10 +152,12 @@
 
           <h3>Author</h3>
           <p>
-            In 2017, I wrote a children's book titled
-            <a href="https://amzn.to/41eZFfF" rel="nofollow sponsored" title=""
-              ><em><strong>Creating a Website for Dummies Jr</strong></em></a
-            >
+            In 2017, I wrote a children&apos;s book titled
+            <a href="https://amzn.to/41eZFfF" rel="nofollow sponsored" title="">
+              <em>
+                <strong>Creating a Website for Dummies Jr</strong>
+              </em>
+            </a>
             which Wiley Global published under the
             <a href="https://www.dummies.com/">dummies™️</a> brand.
           </p>
@@ -212,56 +169,65 @@
           </p>
 
           <p>
-            Since being published, I've also served as the Technical Editor on
-            three other books:
+            Since being published, I&apos;ve also served as the Technical Editor
+            on three other books:
           </p>
 
           <ol>
             <li>
-              <em
-                ><a
+              <em>
+                <a
                   href="https://amzn.to/44EeXgy"
                   rel="nofollow sponsored"
                   title=""
-                  >WordPress for Dummies</a
-                ></em
-              ><br />(Sabin-Wilson, 2021)
+                >
+                  WordPress for Dummies
+                </a>
+              </em>
+              <br />
+              (Sabin-Wilson, 2021)
             </li>
 
             <li>
-              <em
-                ><a
+              <em>
+                <a
                   href="https://amzn.to/3VN8f3Z"
                   rel="nofollow sponsored"
                   title=""
-                  >Professional WordPress Plugin Development</a
-                ></em
-              ><br />(Williams et al., 2020)
+                >
+                  Professional WordPress Plugin Development
+                </a>
+              </em>
+              <br />
+              (Williams et al., 2020)
             </li>
 
             <li>
-              <em
-                ><a
+              <em>
+                <a
                   href="https://amzn.to/3B37BG8"
                   rel="nofollow sponsored"
                   title=""
-                  >WordPress All-In-One For Dummies</a
-                ></em
-              ><br />(Sabin-Wilson, 2019)
+                >
+                  WordPress All-In-One For Dummies
+                </a>
+              </em>
+              <br />
+              (Sabin-Wilson, 2019)
             </li>
           </ol>
 
           <h3>Contributor</h3>
 
           <p>
-            I've been part of the WordPress community since 2008. I've made
-            contributions to core, documentation, plugins, and themes. I've also
-            spoken at WordCamps and meet-ups. I also contribute to other
-            open-source projects like Next.js, Storybook, and Gatsby.
+            I&apos;ve been part of the WordPress community since 2008. I&apos;ve
+            made contributions to core, documentation, plugins, and themes.
+            I&apos;ve also spoken at WordCamps and meet-ups. I also contribute
+            to other open-source projects like Next.js, Storybook, and Gatsby.
           </p>
 
           <p>
-            Outside of tech, I've volunteered my time and efforts at local
+            Outside of tech, I&apos;ve volunteered my time and efforts at local
             community organizations. The Boy Scouts, Wiregrass Church, and the
             Enterprise High School Band Boosters to name a few.
           </p>
@@ -275,43 +241,11 @@
             of photography, such as landscape, events, wildlife, street, and
             astrophotography.
           </p>
-          <p>Check out some of <a href="/photos">my photo galleries</a>. 📸</p>
+          <p>
+            Check out some of <a href="/photos">my photo galleries</a>. 📸
+          </p>
         </section>
       </article>
     </main>
-
-    <footer>
-      <hr />
-      <p>
-        <a href="https://github.com/gregrickaby" rel="author">Github</a>
-        &middot;
-        <a href="https://www.instagram.com/gregoryrickaby/" rel="author"
-          >Instagram</a
-        >
-        &middot;
-        <a href="https://www.linkedin.com/in/gregrickaby/" rel="author"
-          >LinkedIn</a
-        >
-        &middot;
-        <a href="https://www.threads.net/@gregoryrickaby" rel="author"
-          >Threads</a
-        >
-        &middot;
-        <a href="https://www.facebook.com/gregrickaby" rel="author">Facebook</a>
-        &middot;
-        <a href="https://profiles.wordpress.org/gregrickaby/" rel="author"
-          >WordPress</a
-        >
-      </p>
-    </footer>
-
-    <div id="loading" style="display: none">
-      <img src="/geocities/dialup.webp" alt="Loading..." loading="lazy" />
-      <audio
-        id="loadingAudio"
-        src="/geocities/star-trek-modem.mp3"
-        loading="lazy"
-      ></audio>
-    </div>
-  </body>
-</html>
+  )
+}

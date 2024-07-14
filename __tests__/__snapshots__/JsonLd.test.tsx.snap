@@ -1,0 +1,30 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`JsonLD > should match snapshot 1`] = `
+<script
+  data-testid="json-ld"
+  type="application/ld+json"
+>
+  {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Greg Rickaby",
+  "jobTitle": "Web Developer",
+  "url": "https://gregrickaby.com",
+  "sameAs": [
+    "https://www.instagram.com/gregoryrickaby/",
+    "https://www.threads.net/@gregoryrickaby",
+    "https://github.com/gregrickaby/",
+    "https://linkedin.com/in/gregrickaby/",
+    "https://profiles.wordpress.org/gregrickaby/",
+    "https://www.amazon.com/author/gregrickaby",
+    "https://www.facebook.com/gregrickaby",
+    "https://www.goodreads.com/author/show/16999736.Greg_Rickaby",
+    "https://codepen.io/gregrickaby",
+    "https://www.youtube.com/@GregRickaby",
+    "https://gregrickaby.com/feed.xml",
+    "https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fgregrickaby.com%2Ffeed.xml"
+  ]
+}
+</script>
+`;
