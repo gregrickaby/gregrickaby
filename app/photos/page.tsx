@@ -27,7 +27,7 @@ export default function Page() {
         from Wes Anderson and applied a liberal use of orange and teal in
         Lightroom. I hope you enjoy them!
       </p>
-      <div className="not-prose -mx-16 grid grid-cols-2 gap-2">
+      <div className="not-prose grid grid-cols-2 gap-2">
         <Photos photos={photos} />
       </div>
     </div>

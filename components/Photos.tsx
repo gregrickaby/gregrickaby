@@ -1,21 +1,32 @@
 'use client'
 
 import Image from 'next/image'
-import {useState} from 'react'
+import {useCallback, useState} from 'react'
 import Lightbox from './Lightbox'
 
 interface PhotosProps {
   photos: string[]
 }
 
+/**
+ * Photos component.
+ */
 export default function Photos({photos}: PhotosProps) {
+  // Manage whether the lightbox is open.
   const [isOpen, setIsOpen] = useState(false)
+  // Manage the index of the currently selected photo.
   const [photoIndex, setPhotoIndex] = useState(0)
 
-  const openLightbox = (index: number) => {
+  // Open the lightbox and set the current photo index.
+  const openLightbox = useCallback((index: number) => {
     setPhotoIndex(index)
     setIsOpen(true)
-  }
+  }, [])
+
+  // Close the lightbox.
+  const closeLightbox = useCallback(() => {
+    setIsOpen(false)
+  }, [])
 
   return (
     <>
@@ -25,6 +36,11 @@ export default function Photos({photos}: PhotosProps) {
           onClick={() => openLightbox(index)}
           className="cursor-pointer"
           role="button"
+          tabIndex={0}
+          onKeyPress={(e) => {
+            if (e.key === 'Enter') openLightbox(index)
+          }}
+          aria-label={`Open photo ${index + 1}`}
         >
           <Image
             alt={`Photo ${index + 1}`}
@@ -34,10 +50,11 @@ export default function Photos({photos}: PhotosProps) {
           />
         </div>
       ))}
+      {/* Conditionally render the lightbox if it is open. */}
       {isOpen && (
         <Lightbox
           images={photos}
-          onClose={() => setIsOpen(false)}
+          onClose={closeLightbox}
           startIndex={photoIndex}
         />
       )}
