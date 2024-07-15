@@ -2,7 +2,7 @@
   "name": "@gregrickaby/gregrickaby",
   "version": "5.0.0",
   "description": "My homepage on the web",
-  "main": "index.html",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gregrickaby/gregrickaby.git"
@@ -28,14 +28,15 @@
   },
   "dependencies": {
     "@tabler/icons-react": "^3.10.0",
-    "next": "15.0.0-canary.66",
-    "react": "19.0.0-rc.0",
-    "react-dom": "19.0.0-rc.0"
+    "next": "15.0.0-canary.67",
+    "react": "19.0.0-rc-8b08e99e-20240713",
+    "react-dom": "19.0.0-rc-8b08e99e-20240713"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
     "@types/jest-axe": "^3.5.9",
     "@types/node": "^20",
     "@types/react": "^18",
