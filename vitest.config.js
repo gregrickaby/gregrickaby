@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+/// <reference types="vite/client" />
 
 import react from '@vitejs/plugin-react'
 import {resolve} from 'path'
@@ -13,12 +14,14 @@ export default defineConfig({
   plugins: [react()],
   test: {
     coverage: {
+      enabled: true,
+      include: ['components/**/*'],
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      include: ['components/**/*']
+      reporter: ['text', 'html', 'lcov']
     },
     globals: true,
     environment: 'jsdom',
+    exclude: ['**/node_modules/**'],
     setupFiles: './__tests__/setup.ts'
   }
 })
