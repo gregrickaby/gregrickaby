@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import Logo from '../app/icon.png'
 
 /**
@@ -6,7 +7,7 @@ import Logo from '../app/icon.png'
  */
 export default function Header() {
   return (
-    <header className="flex items-center gap-4" data-testid="header">
+    <header className="flex items-center gap-8" data-testid="header">
       <div>
         <a href="/">
           <Image
@@ -19,11 +20,21 @@ export default function Header() {
           />
         </a>
       </div>
-      <div className="not-prose">
-        <h1 className="mb-3 text-3xl font-bold md:text-4xl">
+      <div className="not-prose space-y-2">
+        <h1 className="text-3xl font-bold md:text-4xl">
           <a href="/">Greg Rickaby</a>
         </h1>
-        <p>Full-Stack Engineer / Photographer / Author</p>
+        <p className="text-xl font-bold">
+          Full-Stack Engineer / Photographer / Author
+        </p>
+        <nav className="flex items-center gap-4">
+          <Link className="underline" href="/blog">
+            Blog
+          </Link>
+          <Link className="underline" href="/photos">
+            Photos
+          </Link>
+        </nav>
       </div>
     </header>
   )
