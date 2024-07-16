@@ -56,7 +56,7 @@ export default async function BlogPost({params}: {params: {slug: string}}) {
 
   return (
     <article className="overflow-clip">
-      <h1>{post.title.rendered}</h1>
+      <h1 dangerouslySetInnerHTML={{__html: post.title.rendered}} />
       <time>
         Posted on{' '}
         {new Date(post.date).toLocaleDateString('en-US', {
