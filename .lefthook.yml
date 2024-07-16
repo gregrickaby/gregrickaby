@@ -12,13 +12,3 @@ pre-commit:
     prettier:
       glob: '*.{js,jsx,ts,tsx,css,html,json,md,mdx,yml,graphql}'
       run: 'npx prettier {staged_files} --ignore-path .prettierignore --write'
-
-# Prior to pushing, run tests.
-pre-push:
-  commands:
-    coverage:
-      run: 'npx vitest run --coverage'
-    e2e:
-      run: ''
-    unit:
-      run: 'npx vitest run'
