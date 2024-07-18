@@ -10,22 +10,16 @@ function generateSitemapEntries(
   items: Post[],
   urlPrefix: string
 ): MetadataRoute.Sitemap {
-  return (
-    items
-
-      // Filter out any items that are set to noindex.
-      .filter((item) => item.yoast_head_json.robots.index !== 'noindex')
-
-      // Map the items to sitemap entries.
-      .map((item) => ({
-        url: `${config.siteUrl}${urlPrefix}${item.slug}`,
-        lastModified: new Date(
-          item.yoast_head_json.article_modified_time
-        ).toISOString(),
-        changeFrequency: 'monthly',
-        priority: 0.5
-      }))
-  )
+  return items
+    .filter((item) => item.yoast_head_json.robots.index !== 'noindex') // Exclude noindex items.
+    .map((item) => ({
+      url: `${config.siteUrl}${urlPrefix}${item.slug}`,
+      lastModified: new Date(
+        item.yoast_head_json.article_modified_time
+      ).toISOString(),
+      changeFrequency: 'monthly',
+      priority: 0.5
+    }))
 }
 
 /**
@@ -43,8 +37,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     allPages.filter((page) => page.slug !== 'home'), // Exclude the home page.
     '/'
   )
-
-  console.log(pagesSitemapEntries)
 
   // Generate sitemap entries for posts.
   const postsSitemapEntries = generateSitemapEntries(allPosts, '/blog/')
