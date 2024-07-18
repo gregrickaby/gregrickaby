@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* oEmbeds */
+embed,
+iframe,
+object {
+  @apply max-w-full;
+
+  @media screen and (width <= 768px) {
+    height: 56.25vw;
+    max-height: 500px;
+  }
+}

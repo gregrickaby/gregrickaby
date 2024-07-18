@@ -23,7 +23,7 @@ export default async function BlogPost({params}: BlogPostProps) {
   }
 
   return (
-    <article className="overflow-clip">
+    <article>
       <header>
         <h1 dangerouslySetInnerHTML={{__html: post.title.rendered}} />
         <time className="italic">Posted on {formatDate(post.date)}</time>
