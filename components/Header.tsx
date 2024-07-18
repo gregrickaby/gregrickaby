@@ -34,6 +34,15 @@ export default function Header() {
           <Link className="underline" href="/photos">
             Photos
           </Link>
+          <Link className="underline" href="/media">
+            Media
+          </Link>
+          <Link className="underline" href="/contact">
+            Contact
+          </Link>
+          <Link className="underline" href="/resources">
+            Resources
+          </Link>
         </nav>
       </div>
     </header>
