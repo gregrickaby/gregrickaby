@@ -1,5 +1,6 @@
 import {getPostBySlug} from '@/lib/api'
 import {formatDate} from '@/lib/functions'
+import {notFound} from 'next/navigation'
 
 /**
  * Blog Post props.
@@ -19,7 +20,7 @@ export default async function BlogPost({params}: BlogPostProps) {
 
   // No post? No problem.
   if (!post) {
-    return <p>Post not found</p>
+    return notFound()
   }
 
   return (

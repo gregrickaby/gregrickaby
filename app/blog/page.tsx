@@ -1,4 +1,5 @@
 import {getAllPosts} from '@/lib/api'
+import {notFound} from 'next/navigation'
 
 /**
  * Blog Archive.
@@ -9,7 +10,7 @@ export default async function BlogArchive() {
 
   // No posts? No problem.
   if (!posts) {
-    return <p>No posts found</p>
+    return notFound()
   }
 
   return (
