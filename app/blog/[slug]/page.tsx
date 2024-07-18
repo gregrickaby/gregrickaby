@@ -1,71 +1,48 @@
-interface Post {
-  id: number
-  slug: string
-  title: {
-    rendered: string
-  }
-  date: string
-  content: {
-    rendered: string
-  }
-}
+import {getPostBySlug} from '@/lib/api'
+import {formatDate} from '@/lib/functions'
 
-async function getBlogBySlug(slug: string): Promise<Post> {
-  // Remove "/blog/" from the slug.
-  slug = slug.replace(/^\/blog\//, '')
-
-  try {
-    const response = await fetch(
-      `https://blog.gregrickaby.com/wp-json/wp/v2/posts?slug=${slug}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        cache: 'force-cache',
-        next: {revalidate: 3600}
-      }
-    )
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
-    }
-
-    const data: Post[] = await response.json()
-
-    if (data.length === 0) {
-      throw new Error('Post not found')
-    }
-
-    return data[0]
-  } catch (error) {
-    console.error(error)
-    throw error
+/**
+ * Blog Post props.
+ */
+interface BlogPostProps {
+  params: {
+    slug: string
   }
 }
 
 /**
  * Blog Post.
  */
-export default async function BlogPost({params}: {params: {slug: string}}) {
-  const post = await getBlogBySlug(params.slug)
+export default async function BlogPost({params}: BlogPostProps) {
+  // Get the post by slug.
+  const post = await getPostBySlug(params.slug)
 
+  // No post? No problem.
   if (!post) {
     return <p>Post not found</p>
   }
 
   return (
     <article className="overflow-clip">
-      <h1 dangerouslySetInnerHTML={{__html: post.title.rendered}} />
-      <time>
-        Posted on{' '}
-        {new Date(post.date).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })}
-      </time>
+      <header>
+        <h1 dangerouslySetInnerHTML={{__html: post.title.rendered}} />
+        <time className="italic">Posted on {formatDate(post.date)}</time>
+      </header>
       <div dangerouslySetInnerHTML={{__html: post.content.rendered}} />
+      <footer>
+        <p className="font-bold">
+          Filed under:{' '}
+          <span className="font-normal">
+            {post.category_names.map((category) => category.name).join(', ')}
+          </span>
+        </p>
+        <p className="font-bold">
+          Tagged with:{' '}
+          <span className="font-normal">
+            {post.tag_names.map((tag) => tag.name).join(', ')}
+          </span>
+        </p>
+      </footer>
     </article>
   )
 }
