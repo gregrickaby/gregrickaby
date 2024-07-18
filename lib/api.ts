@@ -12,7 +12,6 @@ export async function getAllPosts(): Promise<Post[]> {
         headers: {
           'Content-Type': 'application/json'
         },
-        cache: 'force-cache',
         next: {revalidate: 3600}
       }
     )
@@ -49,7 +48,6 @@ export async function getPostBySlug(slug: string): Promise<Post> {
         headers: {
           'Content-Type': 'application/json'
         },
-        cache: 'force-cache',
         next: {revalidate: 3600}
       }
     )
