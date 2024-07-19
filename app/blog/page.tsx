@@ -8,7 +8,7 @@ import {notFound} from 'next/navigation'
  */
 export default async function BlogArchive() {
   // Get all posts.
-  const posts = await getPosts()
+  const posts = await getPosts(100)
 
   // No posts? No problem.
   if (!posts) {

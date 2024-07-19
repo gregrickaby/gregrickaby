@@ -10,7 +10,11 @@ async function query({
 }: QueryParams): Promise<Post[]> {
   try {
     const response = await fetch(
-      `https://blog.gregrickaby.com/wp-json/wp/v2/${endpoint}?${query}${posts_per_page ? `&per_page=${posts_per_page}` : ''}`,
+      'https://blog.gregrickaby.com/wp-json/wp/v2/' +
+        endpoint +
+        '?' +
+        query +
+        (posts_per_page ? '&per_page=' + posts_per_page : ''),
       {
         method: 'GET',
         headers: {
