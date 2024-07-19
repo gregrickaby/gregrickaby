@@ -13,3 +13,21 @@ object {
     max-height: 500px;
   }
 }
+
+.homepage-gallery {
+  .grd-photo-gallery-grid {
+    @apply flex flex-col gap-4 text-center;
+  }
+
+  .grd-photo-gallery-image {
+    @apply mb-0 mt-0 flex flex-col gap-1 !important;
+
+    & img {
+      @apply mb-0 mt-0;
+    }
+  }
+
+  .grd-photo-gallery-image-caption {
+    @apply mt-0 text-sm !important;
+  }
+}
