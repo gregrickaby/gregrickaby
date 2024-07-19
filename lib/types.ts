@@ -146,3 +146,17 @@ export interface TargetClass {
 export interface TwitterMisc {
   'Written by': string
 }
+
+export interface GitHubRepo {
+  name: string
+  stargazers_count: number
+  html_url: string
+  description: string
+  id: number
+}
+
+export interface QueryParams {
+  endpoint: string
+  query: string
+  posts_per_page?: number
+}

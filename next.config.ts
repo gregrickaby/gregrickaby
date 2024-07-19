@@ -11,8 +11,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'gregrickaby.com',
-        pathname: '/galleries/**'
+        hostname: '**.gregrickaby.com',
+        pathname: '/**'
       }
     ]
   },

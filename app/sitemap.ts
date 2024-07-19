@@ -1,4 +1,4 @@
-import {getAllPages, getAllPosts} from '@/lib/api'
+import {getPages, getPosts} from '@/lib/api'
 import config from '@/lib/config'
 import {Post} from '@/lib/types'
 import {MetadataRoute} from 'next'
@@ -29,8 +29,8 @@ function generateSitemapEntries(
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all the pages and posts.
-  const allPages = await getAllPages()
-  const allPosts = await getAllPosts()
+  const allPages = await getPages()
+  const allPosts = await getPosts()
 
   // Generate sitemap entries for pages.
   const pagesSitemapEntries = generateSitemapEntries(

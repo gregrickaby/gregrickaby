@@ -31,14 +31,14 @@ export default function Header() {
           <Link className="underline" href="/blog">
             Blog
           </Link>
-          <Link className="underline" href="/photos">
-            Photos
+          <Link className="underline" href="/contact">
+            Contact
+          </Link>
+          <Link className="underline" href="/cv">
+            CV
           </Link>
           <Link className="underline" href="/media">
             Media
-          </Link>
-          <Link className="underline" href="/contact">
-            Contact
           </Link>
           <Link className="underline" href="/resources">
             Resources
