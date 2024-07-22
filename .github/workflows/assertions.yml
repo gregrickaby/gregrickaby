@@ -21,7 +21,7 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci --ignore-scripts
+        run: npm ci --ignore-scripts --force
 
       - name: Lint
         run: npm run lint
