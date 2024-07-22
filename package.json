@@ -28,9 +28,9 @@
   },
   "dependencies": {
     "@tabler/icons-react": "^3.11.0",
-    "next": "15.0.0-canary.72",
-    "react": "19.0.0-rc-163365a0-20240717",
-    "react-dom": "19.0.0-rc-163365a0-20240717"
+    "next": "15.0.0-canary.76",
+    "react": "19.0.0-rc-512b09b2-20240718",
+    "react-dom": "19.0.0-rc-512b09b2-20240718"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
@@ -42,14 +42,14 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@vitejs/plugin-react": "^4.3.1",
-    "@vitest/coverage-v8": "^2.0.3",
+    "@vitest/coverage-v8": "^2.0.4",
     "eslint": "8",
     "eslint-config-next": "15.0.0-canary.70",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "jest-axe": "^9.0.0",
-    "jsdom": "^24.1.0",
-    "lefthook": "^1.7.3",
+    "jsdom": "^24.1.1",
+    "lefthook": "^1.7.5",
     "postcss": "^8.4.39",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.5",
@@ -59,6 +59,6 @@
     "stylelint-config-standard": "^36.0.1",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.5.3",
-    "vitest": "^2.0.3"
+    "vitest": "^2.0.4"
   }
 }
