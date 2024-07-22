@@ -15,7 +15,7 @@ export default defineConfig({
   test: {
     coverage: {
       enabled: true,
-      include: ['components/**/*'],
+      include: ['components/**/*', 'lib/**/*'],
       provider: 'v8',
       reporter: ['text', 'html', 'lcov']
     },
