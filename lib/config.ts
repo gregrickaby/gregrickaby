@@ -24,6 +24,36 @@ const config = {
   intro: 'Disney Dad. Full-Stack Engineer. Photographer. Author.',
   gravatarApiUrl:
     'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
+  navigation: [
+    {
+      name: 'Home',
+      url: '/'
+    },
+    {
+      name: 'Blog',
+      url: '/blog'
+    },
+    {
+      name: 'About',
+      url: '/about'
+    },
+    {
+      name: 'Contact',
+      url: '/contact'
+    },
+    {
+      name: 'CV',
+      url: '/cv'
+    },
+    {
+      name: 'Media',
+      url: '/media'
+    },
+    {
+      name: 'Resources',
+      url: '/resources'
+    }
+  ],
   socials: [
     {
       name: 'Instagram',

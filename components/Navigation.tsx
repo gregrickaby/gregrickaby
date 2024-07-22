@@ -1,3 +1,4 @@
+import config from '@/lib/config'
 import Link from 'next/link'
 
 /**
@@ -5,22 +6,15 @@ import Link from 'next/link'
  */
 export default function Navigation() {
   return (
-    <nav className="flex items-center justify-center gap-4 md:justify-start">
-      <Link className="underline" href="/blog">
-        Blog
-      </Link>
-      <Link className="underline" href="/contact">
-        Contact
-      </Link>
-      <Link className="underline" href="/cv">
-        CV
-      </Link>
-      <Link className="underline" href="/media">
-        Media
-      </Link>
-      <Link className="underline" href="/resources">
-        Resources
-      </Link>
+    <nav
+      className="flex items-center justify-center gap-4 md:justify-start"
+      data-testid="nav"
+    >
+      {config.navigation.map((item) => (
+        <Link className="underline" key={item.name} href={item.url}>
+          {item.name}
+        </Link>
+      ))}
     </nav>
   )
 }
