@@ -1,6 +1,6 @@
 $schema: 'https://json.schemastore.org/lefthook.json'
 
-# Prior to each commit, lint and format staged files.
+# Lint and format staged files prior to commit.
 pre-commit:
   commands:
     eslint:
@@ -12,3 +12,9 @@ pre-commit:
     prettier:
       glob: '*.{js,jsx,ts,tsx,css,html,json,md,mdx,yml,graphql}'
       run: 'npx prettier {staged_files} --ignore-path .prettierignore --write'
+
+# Run tests prior to push.
+pre-push:
+  commands:
+    tests:
+      run: npx vitest run
