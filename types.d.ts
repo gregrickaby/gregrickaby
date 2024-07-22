@@ -40,23 +40,24 @@ export interface Title {
 }
 
 export interface YoastHeadJSON {
-  title: string
-  robots: Robots
-  og_locale: string
-  og_type: string
-  og_title: string
-  og_description: string
-  og_url: string
-  og_site_name: string
-  article_published_time: Date
   article_modified_time: Date
-  og_image: FeaturedImageData[]
+  article_published_time: Date
   author: string
+  canonical: string
+  og_description: string
+  og_image: FeaturedImageData[]
+  og_locale: string
+  og_site_name: string
+  og_title: string
+  og_type: string
+  og_url: string
+  robots: Robots
+  schema: Schema
+  title: string
   twitter_card: string
   twitter_creator: string
-  twitter_site: string
   twitter_misc: TwitterMisc
-  schema: Schema
+  twitter_site: string
 }
 
 export interface Robots {
