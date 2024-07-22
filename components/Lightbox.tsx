@@ -7,7 +7,7 @@ import {
 } from '@tabler/icons-react'
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 
-interface LightboxProps {
+export interface LightboxProps {
   images: string[]
   onClose: () => void
   startIndex: number

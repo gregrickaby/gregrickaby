@@ -4,7 +4,7 @@ import Image from 'next/image'
 import {useCallback, useState} from 'react'
 import Lightbox from './Lightbox'
 
-interface PhotosProps {
+export interface PhotosProps {
   photos: string[]
 }
 
@@ -42,12 +42,7 @@ export default function Photos({photos}: PhotosProps) {
           }}
           aria-label={`Open photo ${index + 1}`}
         >
-          <Image
-            alt={`Photo ${index + 1}`}
-            height={300}
-            src={photo}
-            width={425}
-          />
+          <Image alt={`${index + 1}`} height={300} src={photo} width={425} />
         </div>
       ))}
       {/* Conditionally render the lightbox if it is open. */}

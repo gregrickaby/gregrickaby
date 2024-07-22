@@ -2,41 +2,47 @@
 
 exports[`Header > should match snapshot 1`] = `
 <header
-  class="flex items-center gap-4"
+  class="flex flex-col items-center justify-center gap-12 text-center md:flex-row md:justify-between"
   data-testid="header"
 >
-  <div>
+  <div
+    class="not-prose flex flex-col items-center gap-4 md:flex-row md:text-left"
+  >
     <a
       href="/"
     >
       <img
         alt="Greg Rickaby"
-        class="rounded-full"
+        class="mx-auto h-24 w-24 rounded-full shadow-lg"
         data-nimg="1"
         decoding="async"
-        height="120"
+        height="96"
+        loading="eager"
         src="/_next/image?url=%2Fapp%2Ficon.png&w=256&q=75"
-        srcset="/_next/image?url=%2Fapp%2Ficon.png&w=128&q=75 1x, /_next/image?url=%2Fapp%2Ficon.png&w=256&q=75 2x"
+        srcset="/_next/image?url=%2Fapp%2Ficon.png&w=96&q=75 1x, /_next/image?url=%2Fapp%2Ficon.png&w=256&q=75 2x"
         style="color: transparent;"
-        width="120"
+        width="96"
       />
     </a>
-  </div>
-  <div
-    class="not-prose"
-  >
-    <h1
-      class="mb-3 text-3xl font-bold md:text-4xl"
+    <div
+      class="flex flex-col md:text-left"
     >
       <a
+        class="no-underline"
         href="/"
       >
-        Greg Rickaby
+        <h1
+          class="mb-3 text-4xl font-bold leading-none"
+        >
+          Greg Rickaby
+        </h1>
       </a>
-    </h1>
-    <p>
-      Full-Stack Engineer / Photographer / Author
-    </p>
+      <p
+        class="m-0 max-w-sm p-0 text-lg"
+      >
+        Full-Stack Engineer / Photographer / Author
+      </p>
+    </div>
   </div>
 </header>
 `;

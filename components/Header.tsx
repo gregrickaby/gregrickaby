@@ -8,7 +8,10 @@ import Logo from '../app/icon.png'
  */
 export default function Header() {
   return (
-    <header className="flex flex-col items-center justify-center gap-12 text-center md:flex-row md:justify-between">
+    <header
+      className="flex flex-col items-center justify-center gap-12 text-center md:flex-row md:justify-between"
+      data-testid="header"
+    >
       <div className="not-prose flex flex-col items-center gap-4 md:flex-row md:text-left">
         <Link href="/">
           <Image

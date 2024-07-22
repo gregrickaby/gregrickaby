@@ -1,0 +1,51 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Navigation > should match snapshot 1`] = `
+<nav
+  class="flex items-center justify-center gap-4 md:justify-start"
+  data-testid="nav"
+>
+  <a
+    class="underline"
+    href="/"
+  >
+    Home
+  </a>
+  <a
+    class="underline"
+    href="/blog"
+  >
+    Blog
+  </a>
+  <a
+    class="underline"
+    href="/about"
+  >
+    About
+  </a>
+  <a
+    class="underline"
+    href="/contact"
+  >
+    Contact
+  </a>
+  <a
+    class="underline"
+    href="/cv"
+  >
+    CV
+  </a>
+  <a
+    class="underline"
+    href="/media"
+  >
+    Media
+  </a>
+  <a
+    class="underline"
+    href="/resources"
+  >
+    Resources
+  </a>
+</nav>
+`;

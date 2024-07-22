@@ -1,0 +1,60 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Photos > should match snapshot 1`] = `
+<div>
+  <div
+    aria-label="Open photo 1"
+    class="cursor-pointer"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt="1"
+      data-nimg="1"
+      decoding="async"
+      height="300"
+      loading="lazy"
+      src="/_next/image?url=%2Fpath%2Fto%2Fphoto1.jpg&w=1080&q=75"
+      srcset="/_next/image?url=%2Fpath%2Fto%2Fphoto1.jpg&w=640&q=75 1x, /_next/image?url=%2Fpath%2Fto%2Fphoto1.jpg&w=1080&q=75 2x"
+      style="color: transparent;"
+      width="425"
+    />
+  </div>
+  <div
+    aria-label="Open photo 2"
+    class="cursor-pointer"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt="2"
+      data-nimg="1"
+      decoding="async"
+      height="300"
+      loading="lazy"
+      src="/_next/image?url=%2Fpath%2Fto%2Fphoto2.jpg&w=1080&q=75"
+      srcset="/_next/image?url=%2Fpath%2Fto%2Fphoto2.jpg&w=640&q=75 1x, /_next/image?url=%2Fpath%2Fto%2Fphoto2.jpg&w=1080&q=75 2x"
+      style="color: transparent;"
+      width="425"
+    />
+  </div>
+  <div
+    aria-label="Open photo 3"
+    class="cursor-pointer"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt="3"
+      data-nimg="1"
+      decoding="async"
+      height="300"
+      loading="lazy"
+      src="/_next/image?url=%2Fpath%2Fto%2Fphoto3.jpg&w=1080&q=75"
+      srcset="/_next/image?url=%2Fpath%2Fto%2Fphoto3.jpg&w=640&q=75 1x, /_next/image?url=%2Fpath%2Fto%2Fphoto3.jpg&w=1080&q=75 2x"
+      style="color: transparent;"
+      width="425"
+    />
+  </div>
+</div>
+`;
