@@ -58,7 +58,8 @@ export async function getPages(posts_per_page: number): Promise<Post[]> {
 export async function getPosts(posts_per_page: number): Promise<Post[]> {
   return await query({
     endpoint: 'posts',
-    query: '&_fields=id,slug,title,featured_image_data,yoast_head_json',
+    query:
+      '&_fields=id,date,slug,title,excerpt,author_name,author_gravatar_url,category_names,featured_image_data,yoast_head_json',
     posts_per_page
   })
 }

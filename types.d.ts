@@ -6,6 +6,9 @@ export interface Post {
   title: Title
   content: Content
   excerpt: Content
+  author_name: string
+  author_id: number
+  author_gravatar_url: string
   category_names: Name[]
   tag_names: Name[]
   featured_image_data: FeaturedImageData
