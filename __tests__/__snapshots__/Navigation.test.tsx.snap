@@ -2,7 +2,7 @@
 
 exports[`Navigation > should match snapshot 1`] = `
 <nav
-  class="flex items-center justify-center gap-4 md:justify-start"
+  class="flex flex-wrap items-center justify-center gap-4 md:justify-start"
   data-testid="nav"
 >
   <a
