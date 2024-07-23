@@ -1,4 +1,4 @@
-import {Post} from '@/types/types'
+import {Post} from '@/types'
 
 export const mockPost: Post = {
   id: 1,

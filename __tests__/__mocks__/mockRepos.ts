@@ -1,4 +1,4 @@
-import {GitHubRepo} from '@/types/types'
+import {GitHubRepo} from '@/types'
 
 export const mockRepos: GitHubRepo[] = [
   {

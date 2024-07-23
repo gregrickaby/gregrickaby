@@ -1,4 +1,4 @@
-import {GitHubRepo, Post, QueryParams} from '@/types/types'
+import {GitHubRepo, Post, QueryParams} from '@/types'
 
 /**
  * Generic function to query data from the WordPress REST API.
