@@ -7,7 +7,7 @@ import Link from 'next/link'
 export default function Navigation() {
   return (
     <nav
-      className="flex items-center justify-center gap-4 md:justify-start"
+      className="flex flex-wrap items-center justify-center gap-4 md:justify-start"
       data-testid="nav"
     >
       {config.navigation.map((item) => (
