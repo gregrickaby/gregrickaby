@@ -21,13 +21,14 @@
     "format": "prettier --write .",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint \"**/*.css\" --fix",
-    "lint:js": "next lint",
+    "lint:js": "tsc --noEmit && next lint",
     "start": "next start -p 3001",
     "test": "vitest",
     "test:ci": "vitest run"
   },
   "dependencies": {
     "@tabler/icons-react": "^3.11.0",
+    "clsx": "^2.1.1",
     "next": "14.2.5",
     "react": "18.3.1",
     "react-dom": "18.3.1",
