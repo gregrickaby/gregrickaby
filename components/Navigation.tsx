@@ -2,6 +2,7 @@
 
 import config from '@/lib/config'
 import {IconMenu, IconX} from '@tabler/icons-react'
+import clsx from 'clsx'
 import Link from 'next/link'
 import {MouseEvent, useEffect, useRef, useState} from 'react'
 
@@ -45,6 +46,7 @@ export default function Navigation() {
     <nav ref={navRef} className="relative" data-testid="nav">
       <div className="flex items-center justify-between">
         <button
+          aria-label="Toggle navigation"
           className="flex rounded border p-2 lg:hidden"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -52,15 +54,17 @@ export default function Navigation() {
         </button>
       </div>
       <div
-        className={`${
-          isOpen ? 'flex' : 'hidden'
-        } absolute right-0 top-12 z-10 flex-col gap-4 rounded-lg bg-gray-50 pb-8 pl-8 pr-0 pt-8 text-right lg:static lg:flex lg:flex-row lg:rounded-none lg:bg-transparent lg:shadow-none dark:bg-gray-950`}
+        className={clsx(
+          'absolute right-0 top-12 z-10 flex-col gap-4 rounded-lg bg-gray-50 pb-8 pl-8 pr-0 pt-8 text-right lg:static lg:flex lg:flex-row lg:rounded-none lg:bg-transparent lg:shadow-none dark:bg-gray-950',
+          {flex: isOpen, hidden: !isOpen}
+        )}
+        data-testid="nav-links"
       >
         {config.navigation.map((item) => (
           <Link
             className="text-xl lg:hover:underline"
-            key={item.name}
             href={item.url}
+            key={item.name}
             onClick={handleLinkClick}
           >
             {item.name}

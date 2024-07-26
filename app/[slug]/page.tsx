@@ -26,7 +26,7 @@ export default async function BlogPost({params}: PageProps) {
     <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
       <header>
         <h1
-          className="font-title not-prose mb-6 text-3xl font-bold lg:text-6xl lg:leading-[1.1]"
+          className="not-prose mb-6 font-title text-3xl font-bold lg:text-6xl lg:leading-[1.1]"
           dangerouslySetInnerHTML={{__html: page.title.rendered}}
         />
       </header>

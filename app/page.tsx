@@ -14,7 +14,7 @@ export default async function Home() {
   return (
     <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
       <section>
-        <h1 className="font-title not-prose mb-6 text-3xl font-bold lg:text-6xl lg:leading-[1.1]">
+        <h1 className="not-prose mb-6 font-title text-3xl font-bold lg:text-6xl lg:leading-[1.1]">
           Welcome
         </h1>
         <p>
