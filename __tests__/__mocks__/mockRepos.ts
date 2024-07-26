@@ -1,6 +1,6 @@
-import {GitHubRepo} from '@/types'
+import {Repo} from '@/lib/types'
 
-export const mockRepos: GitHubRepo[] = [
+export const mockRepos: Repo[] = [
   {
     id: 1,
     name: 'repo-1',

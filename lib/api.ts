@@ -1,4 +1,4 @@
-import {GitHubRepo, Post, QueryParams} from '@/types'
+import {Post, QueryParams, Repo} from '@/lib/types'
 
 /**
  * Generic function to query data from the WordPress REST API.
@@ -93,9 +93,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
  *
  * @see https://docs.github.com/en/rest/reference/repos#list-repositories-for-a-user
  */
-export async function getPopularGithubRepos(
-  limit: number
-): Promise<GitHubRepo[]> {
+export async function getPopularGithubRepos(limit: number): Promise<Repo[]> {
   try {
     // Fetch 100 repos from the GitHub API.
     const response = await fetch(
@@ -118,7 +116,7 @@ export async function getPopularGithubRepos(
 
     // Sort repositories by stargazers_count in descending order.
     const sortedRepos = repos.sort(
-      (a: GitHubRepo, b: GitHubRepo) => b.stargazers_count - a.stargazers_count
+      (a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count
     )
 
     // Return the top N repos.

@@ -1,6 +1,6 @@
 import {getPages, getPosts} from '@/lib/api'
 import config from '@/lib/config'
-import {Post} from '@/types'
+import {Post} from '@/lib/types'
 import {MetadataRoute} from 'next'
 
 /**
