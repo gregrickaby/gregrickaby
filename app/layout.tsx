@@ -1,10 +1,16 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import JsonLD from '@/components/JsonLd'
-import Navigation from '@/components/Navigation'
 import config from '@/lib/config'
 import type {Metadata, Viewport} from 'next'
+import {Aleo} from 'next/font/google'
 import './globals.css'
+
+const aleo = Aleo({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-aleo'
+})
 
 /**
  * Setup default sitewide metadata.
@@ -64,11 +70,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${aleo.variable}`}>
       <body className="prose m-auto space-y-8 p-8 antialiased lg:prose-xl dark:prose-invert dark:bg-zinc-900">
         <JsonLD />
         <Header />
-        <Navigation />
         {children}
         <Footer />
       </body>
