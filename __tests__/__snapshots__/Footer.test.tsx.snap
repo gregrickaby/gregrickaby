@@ -2,7 +2,7 @@
 
 exports[`Footer > should match snapshot 1`] = `
 <footer
-  class="mx-auto w-full border-t border-zinc-500 pt-8 text-center text-sm"
+  class="mt-20 p-8 text-center text-sm md:p-12"
   data-testid="footer"
 >
   <div
