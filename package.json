@@ -29,8 +29,8 @@
   "dependencies": {
     "@tabler/icons-react": "^3.11.0",
     "next": "15.0.0-canary.84",
-    "react": "19.0.0-rc-14a4699f-20240725",
-    "react-dom": "19.0.0-rc-14a4699f-20240725",
+    "react": "19.0.0-rc.0",
+    "react-dom": "19.0.0-rc.0",
     "xml-escape": "^1.1.0"
   },
   "devDependencies": {
