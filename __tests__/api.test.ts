@@ -13,6 +13,7 @@ global.fetch = mockFetch
 
 afterEach(() => {
   mockFetch.mockClear()
+  vi.spyOn(console, 'error').mockImplementation(() => {})
 })
 
 describe('WordPress API Functions', () => {
