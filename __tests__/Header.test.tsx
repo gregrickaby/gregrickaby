@@ -1,7 +1,7 @@
 import Header from '@/components/Header'
 import config from '@/lib/config'
 import '@testing-library/jest-dom'
-import {render} from '@testing-library/react'
+import {act, fireEvent, render} from '@testing-library/react'
 import {axe} from 'jest-axe'
 import {describe, expect, it} from 'vitest'
 
@@ -34,8 +34,20 @@ describe('Header', () => {
   })
 
   it('should not have accessibility issues', async () => {
-    const {container} = render(<Header />)
-    const results = await axe(container)
+    const {container, getByRole} = render(<Header />)
+    const button = getByRole('button')
+
+    // Open the menu.
+    await act(async () => {
+      fireEvent.click(button)
+    })
+
+    // Get the container.
+    const results = await act(async () => {
+      return await axe(container)
+    })
+
+    // Verify there are no violations.
     expect(results).toHaveNoViolations()
   })
 
