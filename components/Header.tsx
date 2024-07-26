@@ -2,6 +2,7 @@ import config from '@/lib/config'
 import Image from 'next/image'
 import Link from 'next/link'
 import Logo from '../app/icon.png'
+import Navigation from './Navigation'
 
 /**
  * Header component.
@@ -9,29 +10,32 @@ import Logo from '../app/icon.png'
 export default function Header() {
   return (
     <header
-      className="flex flex-col items-center justify-center gap-12 text-center md:flex-row md:justify-between"
+      className="mb-16 flex items-center justify-between gap-12 p-8 text-center md:flex-row md:justify-between md:p-12"
       data-testid="header"
     >
-      <div className="not-prose flex flex-col items-center gap-4 md:flex-row md:text-left">
+      <div className="flex flex-row items-center gap-4 lg:flex-row lg:text-left">
         <Link href="/">
           <Image
             alt="Greg Rickaby"
-            className="mx-auto h-24 w-24 rounded-full shadow-lg"
+            className="mx-auto rounded-full shadow-lg"
             height={96}
             loading="eager"
             src={Logo}
             width={96}
           />
         </Link>
-        <div className="flex flex-col md:text-left">
+        <div className="flex flex-col text-left">
           <Link href="/" className="no-underline">
-            <h1 className="mb-3 text-4xl font-bold leading-none">
+            <h1 className="mb-3 text-2xl font-bold leading-none md:text-4xl">
               {config.siteName}
             </h1>
           </Link>
-          <p className="m-0 max-w-sm p-0 text-lg">{config.siteDescription}</p>
+          <p className="m-0 max-w-sm p-0 md:text-lg">
+            {config.siteDescription}
+          </p>
         </div>
       </div>
+      <Navigation />
     </header>
   )
 }

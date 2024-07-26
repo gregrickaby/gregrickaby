@@ -6,7 +6,7 @@ import SocialLinks from '@/components/SocialLinks'
 export default function Footer() {
   return (
     <footer
-      className="mx-auto w-full border-t border-zinc-500 pt-8 text-center text-sm"
+      className="mt-20 p-8 text-center text-sm md:p-12"
       data-testid="footer"
     >
       <SocialLinks />

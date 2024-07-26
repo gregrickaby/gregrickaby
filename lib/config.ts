@@ -15,7 +15,7 @@ import {
 
 const config = {
   siteName: 'Greg Rickaby',
-  siteDescription: 'Full-Stack Engineer / Photographer / Author',
+  siteDescription: 'Cameras and Code',
   siteUrl: 'https://gregrickaby.com',
   siteLogo: '/logo.webp',
   siteOgImage: '/og.webp',
@@ -30,13 +30,14 @@ const config = {
       url: '/'
     },
     {
-      name: 'Blog',
-      url: '/blog'
-    },
-    {
       name: 'About',
       url: '/about'
     },
+    {
+      name: 'Blog',
+      url: '/blog'
+    },
+
     {
       name: 'Contact',
       url: '/contact'

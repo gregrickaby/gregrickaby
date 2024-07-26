@@ -70,8 +70,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${aleo.variable}`}>
-      <body className="prose m-auto space-y-8 p-8 antialiased lg:prose-xl dark:prose-invert dark:bg-zinc-900">
+    <html
+      lang="en"
+      className={`${aleo.variable} bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50`}
+    >
+      <body>
         <JsonLD />
         <Header />
         {children}

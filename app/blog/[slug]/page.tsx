@@ -24,19 +24,25 @@ export default async function BlogPost({params}: BlogPostProps) {
   }
 
   return (
-    <article>
+    <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
       <header>
-        <h1 dangerouslySetInnerHTML={{__html: post.title.rendered}} />
-        <time className="italic">Posted on {formatDate(post.date)}</time>
-      </header>
-      <div dangerouslySetInnerHTML={{__html: post.content.rendered}} />
-      <footer>
-        <p className="font-bold">
-          Filed under:{' '}
-          <span className="font-normal">
+        <h1
+          className="font-title not-prose mb-6 text-3xl font-bold lg:text-6xl lg:leading-[1.1]"
+          dangerouslySetInnerHTML={{__html: post.title.rendered}}
+        />
+        <div className="font-sans text-sm">
+          Published to{' '}
+          <span className="font-bold">
             {post.category_names.map((category) => category.name).join(', ')}
-          </span>
-        </p>
+          </span>{' '}
+          on <time className="font-bold">{formatDate(post.date)} </time>
+        </div>
+      </header>
+      <div
+        className="font-serif"
+        dangerouslySetInnerHTML={{__html: post.content.rendered}}
+      />
+      <footer>
         <p className="font-bold">
           Tagged with:{' '}
           <span className="font-normal">

@@ -5,7 +5,8 @@
  */
 export function formatDate(date: Date): string {
   return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'medium',
-    timeStyle: 'short'
+    dateStyle: 'long',
+    timeStyle: 'short',
+    hourCycle: 'h23'
   }).format(new Date(date))
 }

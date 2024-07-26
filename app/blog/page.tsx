@@ -15,20 +15,25 @@ export default async function BlogArchive() {
   }
 
   return (
-    <>
-      <h1>Blog</h1>
+    <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
+      <h1 className="font-title not-prose mb-6 text-3xl font-bold lg:text-6xl lg:leading-[1.1]">
+        Blog
+      </h1>
       <div className="not-prose flex flex-col gap-4">
         {posts.map((post) => (
           <article key={post.id}>
-            <Link className="" href={`/blog/${post.slug}`}>
+            <Link
+              className="underline hover:no-underline"
+              href={`/blog/${post.slug}`}
+            >
               <h2
-                className="text-xl hover:underline"
+                className="text-xl"
                 dangerouslySetInnerHTML={{__html: post.title.rendered}}
               />
             </Link>
           </article>
         ))}
       </div>
-    </>
+    </article>
   )
 }

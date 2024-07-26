@@ -12,9 +12,11 @@ export default async function Home() {
   const photos = await getPageBySlug('photos')
 
   return (
-    <article>
+    <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
       <section>
-        <h1>Welcome</h1>
+        <h1 className="font-title not-prose mb-6 text-3xl font-bold lg:text-6xl lg:leading-[1.1]">
+          Welcome
+        </h1>
         <p>
           I&apos;m a{' '}
           <a href="https://www.linkedin.com/in/gregrickaby/" rel="author">

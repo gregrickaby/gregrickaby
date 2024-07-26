@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['Helvetica Neue', 'Arial', 'sans-serif'],
         serif: ['Georgia', 'Times', 'serif'],
         title: ['var(--font-aleo)', 'Georgia', 'Times', 'serif']
       }
