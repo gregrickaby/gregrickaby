@@ -8,7 +8,9 @@ exports[`Footer > should match snapshot 1`] = `
   <div
     data-testid="social-links"
   />
-  <p>
+  <p
+    class="py-4"
+  >
     Unless otherwise noted, all content on this website is licensed under
      
     <a
@@ -21,7 +23,7 @@ exports[`Footer > should match snapshot 1`] = `
   <p>
     © 2008 - 
     2024
-     Greg Rickaby
+     Greg Rickaby ✌️
   </p>
 </footer>
 `;

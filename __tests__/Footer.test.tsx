@@ -33,7 +33,7 @@ describe('Footer', () => {
     const {getByText} = render(<Footer />)
     const currentYear = new Date().getFullYear()
     expect(
-      getByText(`© 2008 - ${currentYear} Greg Rickaby`)
+      getByText(`© 2008 - ${currentYear} Greg Rickaby ✌️`)
     ).toBeInTheDocument()
   })
 
