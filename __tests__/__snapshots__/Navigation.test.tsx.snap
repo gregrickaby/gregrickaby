@@ -75,6 +75,12 @@ exports[`Navigation > should match snapshot 1`] = `
     </a>
     <a
       class="text-xl hover:underline"
+      href="/photos"
+    >
+      Photos
+    </a>
+    <a
+      class="text-xl hover:underline"
       href="/resources"
     >
       Resources

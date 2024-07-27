@@ -51,6 +51,10 @@ const config = {
       url: '/media'
     },
     {
+      name: 'Photos',
+      url: '/photos'
+    },
+    {
       name: 'Resources',
       url: '/resources'
     }
