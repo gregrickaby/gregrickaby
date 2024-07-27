@@ -12,8 +12,6 @@ export async function GET() {
     // Fetch all blog posts.
     const posts = await getPosts(10)
 
-    console.log(posts)
-
     // No posts? Bail.
     if (!posts) {
       return new Response('No posts found.', {
