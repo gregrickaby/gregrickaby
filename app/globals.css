@@ -2,6 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --grd-photo-gallery-gutter: 24px;
+  }
+}
+
+/* ACF Photo Gallery */
+#grd-photo-gallery-gallery {
+  @apply m-auto;
+
+  /* Single column on mobile. */
+  .grd-photo-gallery-image,
+  .grd-photo-gallery-grid-sizer {
+    margin-bottom: var(--grd-photo-gallery-gutter);
+    width: calc(100% - var(--grd-photo-gallery-gutter));
+  }
+
+  /* Two columns on tablet. */
+  @media (width >= 768px) {
+    .grd-photo-gallery-image,
+    .grd-photo-gallery-grid-sizer {
+      width: calc(50% - var(--grd-photo-gallery-gutter));
+    }
+  }
+
+  /* Three columns on desktop. */
+  @media (width >= 1280px) {
+    .grd-photo-gallery-image,
+    .grd-photo-gallery-grid-sizer {
+      width: calc(33% - var(--grd-photo-gallery-gutter));
+    }
+  }
+
+  /* Each image. */
+  .grd-photo-gallery-image {
+    a {
+      @apply cursor-zoom-in text-white no-underline;
+    }
+
+    img {
+      @apply m-0 rounded transition-all duration-200 ease-in-out;
+
+      backface-visibility: hidden;
+    }
+
+    &:hover {
+      img {
+        @apply scale-105 transform shadow-lg;
+      }
+
+      .grd-photo-gallery-image-caption {
+        @apply visible opacity-100;
+      }
+    }
+  }
+
+  /* Optional captions. */
+  .grd-photo-gallery-image-caption {
+    @apply invisible absolute bottom-1 max-w-[90%] p-3 opacity-0 transition-all duration-200 ease-in-out;
+    @apply bg-zinc-900/50 text-left text-white shadow-lg;
+
+    backface-visibility: hidden;
+  }
+}
+
+.fancybox__caption {
+  @apply text-center;
+
+  .exif {
+    @apply text-xs;
+  }
+}
+
+/* ACF Photo Gallery - Homepage Widget */
+.homepage-gallery #grd-photo-gallery-gallery {
+  .grd-photo-gallery-image,
+  .grd-photo-gallery-grid-sizer {
+    margin-bottom: var(--grd-photo-gallery-gutter);
+    width: calc(50% - var(--grd-photo-gallery-gutter));
+  }
+}
+
 /* oEmbeds */
 embed,
 iframe,
@@ -11,32 +93,5 @@ object {
   @media screen and (width <= 768px) {
     height: 56.25vw;
     max-height: 500px;
-  }
-}
-
-.wp-block-image img {
-  @apply mb-0;
-}
-
-.grd-photo-gallery-image-caption,
-.wp-element-caption {
-  @apply text-center font-sans text-sm !important;
-}
-
-.homepage-gallery {
-  .grd-photo-gallery-grid {
-    @apply flex flex-col gap-4 text-center;
-  }
-
-  .grd-photo-gallery-image {
-    @apply mb-0 mt-0 flex flex-col gap-1 !important;
-
-    & img {
-      @apply mb-0 mt-0;
-    }
-  }
-
-  .grd-photo-gallery-image-caption {
-    @apply mt-0 text-sm !important;
   }
 }
