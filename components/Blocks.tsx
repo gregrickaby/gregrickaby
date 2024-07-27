@@ -89,5 +89,11 @@ export default function Blocks({content}: Readonly<{content: string}>) {
     galleryInit()
   }, [content])
 
-  return <div ref={contentRef} dangerouslySetInnerHTML={{__html: content}} />
+  return (
+    <div
+      ref={contentRef}
+      dangerouslySetInnerHTML={{__html: content}}
+      data-testid="blocks"
+    />
+  )
 }
