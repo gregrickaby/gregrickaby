@@ -1,3 +1,4 @@
+import Blocks from '@/components/Blocks'
 import {getPageBySlug} from '@/lib/api'
 import {yoastSeo} from '@/lib/functions'
 import {notFound} from 'next/navigation'
@@ -45,7 +46,7 @@ export default async function BlogPost({params}: PageProps) {
       <header>
         <h1 dangerouslySetInnerHTML={{__html: page.title.rendered}} />
       </header>
-      <div dangerouslySetInnerHTML={{__html: page.content.rendered}} />
+      <Blocks content={page.content.rendered} />
     </article>
   )
 }
