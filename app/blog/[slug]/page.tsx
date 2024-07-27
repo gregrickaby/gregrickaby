@@ -1,3 +1,4 @@
+import Blocks from '@/components/Blocks'
 import {getPostBySlug} from '@/lib/api'
 import {formatDate} from '@/lib/functions'
 import {notFound} from 'next/navigation'
@@ -35,7 +36,7 @@ export default async function BlogPost({params}: BlogPostProps) {
           on <time>{formatDate(post.date)} </time>
         </div>
       </header>
-      <div dangerouslySetInnerHTML={{__html: post.content.rendered}} />
+      <Blocks content={post.content.rendered} />
       <footer>
         <p className="font-bold">
           Tagged with:{' '}
