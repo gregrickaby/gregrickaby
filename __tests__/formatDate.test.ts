@@ -2,8 +2,14 @@ import {formatDate} from '@/lib/functions'
 import {describe, expect, it} from 'vitest'
 
 describe('formatDate', () => {
-  it('should format a valid date correctly', () => {
+  it('should format a date object correctly', () => {
     const date = new Date('2024-07-22T10:20:30Z')
+    const formattedDate = formatDate(date)
+    expect(formattedDate).toBe('July 22, 2024 at 05:20')
+  })
+
+  it('should format a string date correctly', () => {
+    const date = '2024-07-22T10:20:30Z'
     const formattedDate = formatDate(date)
     expect(formattedDate).toBe('July 22, 2024 at 05:20')
   })
