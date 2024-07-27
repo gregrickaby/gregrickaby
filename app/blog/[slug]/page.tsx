@@ -1,6 +1,6 @@
 import Blocks from '@/components/Blocks'
 import {getPostBySlug} from '@/lib/api'
-import {formatDate} from '@/lib/functions'
+import {formatDate, yoastSeo} from '@/lib/functions'
 import {notFound} from 'next/navigation'
 
 /**
@@ -10,6 +10,23 @@ interface BlogPostProps {
   params: {
     slug: string
   }
+}
+
+/**
+ * Generate metadata.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
+export async function generateMetadata({params}: BlogPostProps) {
+  // Get the post by slug.
+  const post = await getPostBySlug(params.slug)
+
+  // No page? No problem.
+  if (!post) {
+    return notFound()
+  }
+
+  return yoastSeo(post)
 }
 
 /**

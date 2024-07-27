@@ -1,4 +1,5 @@
 import {getPageBySlug} from '@/lib/api'
+import {yoastSeo} from '@/lib/functions'
 import {notFound} from 'next/navigation'
 
 /**
@@ -8,6 +9,23 @@ interface PageProps {
   params: {
     slug: string
   }
+}
+
+/**
+ * Generate metadata.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
+export async function generateMetadata({params}: PageProps) {
+  // Get a page by slug.
+  const page = await getPageBySlug(params.slug)
+
+  // No page? No problem.
+  if (!page) {
+    return notFound()
+  }
+
+  return yoastSeo(page)
 }
 
 /**
@@ -23,7 +41,7 @@ export default async function BlogPost({params}: PageProps) {
   }
 
   return (
-    <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
+    <article className="article">
       <header>
         <h1 dangerouslySetInnerHTML={{__html: page.title.rendered}} />
       </header>

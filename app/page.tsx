@@ -12,7 +12,7 @@ export default async function Home() {
   const photos = await getPageBySlug('photos')
 
   return (
-    <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
+    <article className="article">
       <section>
         <h1>Welcome</h1>
         <p>
