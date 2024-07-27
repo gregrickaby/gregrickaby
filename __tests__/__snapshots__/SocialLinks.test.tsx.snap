@@ -7,7 +7,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
 >
   <a
     aria-label="follow on Instagram"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://www.instagram.com/gregoryrickaby/"
     rel="author"
     title="Follow on Instagram"
@@ -37,7 +37,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Threads"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://www.threads.net/@gregoryrickaby"
     rel="author"
     title="Follow on Threads"
@@ -61,7 +61,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on GitHub"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://github.com/gregrickaby/"
     rel="author"
     title="Follow on GitHub"
@@ -85,7 +85,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on LinkedIn"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://linkedin.com/in/gregrickaby/"
     rel="author"
     title="Follow on LinkedIn"
@@ -121,7 +121,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on WordPress"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://profiles.wordpress.org/gregrickaby/"
     rel="author"
     title="Follow on WordPress"
@@ -160,7 +160,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Amazon Author"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://www.amazon.com/author/gregrickaby"
     rel="author"
     title="Follow on Amazon Author"
@@ -187,7 +187,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Facebook"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://www.facebook.com/gregrickaby"
     rel="author"
     title="Follow on Facebook"
@@ -211,7 +211,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Goodreads"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://www.goodreads.com/author/show/16999736.Greg_Rickaby"
     rel="author"
     title="Follow on Goodreads"
@@ -247,7 +247,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on CodePen"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://codepen.io/gregrickaby"
     rel="author"
     title="Follow on CodePen"
@@ -286,7 +286,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on YouTube"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://www.youtube.com/@GregRickaby"
     rel="author"
     title="Follow on YouTube"
@@ -313,7 +313,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on RSS Feed"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://gregrickaby.com/feed.xml"
     rel="author"
     title="Follow on RSS Feed"
@@ -343,7 +343,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Feedly"
-    class="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+    class="button"
     href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fgregrickaby.com%2Ffeed.xml"
     rel="author"
     title="Follow on Feedly"

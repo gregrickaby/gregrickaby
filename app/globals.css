@@ -6,6 +6,14 @@
   :root {
     --grd-photo-gallery-gutter: 24px;
   }
+
+  button,
+  .button {
+    @apply bg-gray-700 hover:bg-gray-500 dark:bg-gray-800 hover:dark:bg-gray-600;
+    @apply text-2xl text-white;
+    @apply rounded p-2 shadow;
+    @apply transition-colors duration-200 ease-in-out;
+  }
 }
 
 /* ACF Photo Gallery */

@@ -10,7 +10,7 @@ exports[`Navigation > should match snapshot 1`] = `
   >
     <button
       aria-label="Toggle navigation"
-      class="flex rounded border p-2 lg:hidden"
+      class="button flex lg:hidden"
     >
       <svg
         class="tabler-icon tabler-icon-menu "

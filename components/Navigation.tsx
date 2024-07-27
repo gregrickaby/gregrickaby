@@ -47,7 +47,7 @@ export default function Navigation() {
       <div className="flex items-center justify-between">
         <button
           aria-label="Toggle navigation"
-          className="flex rounded border p-2 lg:hidden"
+          className="button flex lg:hidden"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <IconX size={24} /> : <IconMenu size={24} />}

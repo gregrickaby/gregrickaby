@@ -13,7 +13,7 @@ export default function SocialLinks() {
       {config.socials.map((social) => (
         <a
           aria-label={`follow on ${social.name}`}
-          className="rounded bg-zinc-900 p-1 text-2xl text-white transition-colors duration-200 hover:bg-zinc-700"
+          className="button"
           href={social.url}
           key={social.name}
           rel="author"
