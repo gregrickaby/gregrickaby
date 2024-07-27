@@ -55,14 +55,14 @@ export default function Navigation() {
       </div>
       <div
         className={clsx(
-          'absolute right-0 top-12 z-10 flex-col gap-4 rounded-lg bg-gray-50 pb-8 pl-8 pr-0 pt-8 text-right lg:static lg:flex lg:flex-row lg:rounded-none lg:bg-transparent lg:shadow-none dark:bg-gray-950',
+          'absolute right-0 top-12 z-10 flex-col gap-4 rounded-lg bg-white pb-8 pl-8 pr-0 pt-8 text-right lg:static lg:flex lg:flex-row lg:rounded-none lg:bg-transparent lg:shadow-none dark:bg-gray-950',
           {flex: isOpen, hidden: !isOpen}
         )}
         data-testid="nav-links"
       >
         {config.navigation.map((item) => (
           <Link
-            className="text-xl lg:hover:underline"
+            className="text-xl hover:underline"
             href={item.url}
             key={item.name}
             onClick={handleLinkClick}

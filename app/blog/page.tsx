@@ -16,9 +16,7 @@ export default async function BlogArchive() {
 
   return (
     <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
-      <h1 className="not-prose mb-6 font-title text-3xl font-bold lg:text-6xl lg:leading-[1.1]">
-        Blog
-      </h1>
+      <h1>Blog</h1>
       <div className="not-prose flex flex-col gap-4">
         {posts.map((post) => (
           <article key={post.id}>

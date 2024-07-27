@@ -10,7 +10,7 @@ export default function Footer() {
       data-testid="footer"
     >
       <SocialLinks />
-      <p>
+      <p className="py-4">
         Unless otherwise noted, all content on this website is licensed under{' '}
         <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
           CC BY-NC-ND 4.0
@@ -18,7 +18,7 @@ export default function Footer() {
         .
       </p>
 
-      <p>&copy; 2008 - {new Date().getFullYear()} Greg Rickaby</p>
+      <p>&copy; 2008 - {new Date().getFullYear()} Greg Rickaby ✌️</p>
     </footer>
   )
 }

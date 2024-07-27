@@ -3,13 +3,25 @@ import Header from '@/components/Header'
 import JsonLD from '@/components/JsonLd'
 import config from '@/lib/config'
 import type {Metadata, Viewport} from 'next'
-import {Aleo} from 'next/font/google'
+import {Aleo, Fira_Code, Open_Sans} from 'next/font/google'
 import './globals.css'
 
-const aleo = Aleo({
-  subsets: ['latin'],
+const serif = Aleo({
   display: 'swap',
-  variable: '--font-aleo'
+  subsets: ['latin'],
+  variable: '--font-serif'
+})
+
+const sans = Open_Sans({
+  display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-sans'
+})
+
+const mono = Fira_Code({
+  display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-mono'
 })
 
 /**
@@ -72,7 +84,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${aleo.variable} bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50`}
     >
       <body>
         <JsonLD />

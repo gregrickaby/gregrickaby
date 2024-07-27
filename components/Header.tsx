@@ -26,11 +26,11 @@ export default function Header() {
         </Link>
         <div className="flex flex-col text-left">
           <Link href="/" className="no-underline">
-            <h1 className="mb-3 text-2xl font-bold leading-none md:text-4xl">
+            <h1 className="mb-1 text-2xl font-bold leading-none tracking-tighter md:text-4xl">
               {config.siteName}
             </h1>
           </Link>
-          <p className="m-0 max-w-sm p-0 md:text-lg">
+          <p className="m-0 max-w-sm p-0 md:ml-1 md:text-lg">
             {config.siteDescription}
           </p>
         </div>
