@@ -1,0 +1,765 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Blocks component tests > should match snapshot 1`] = `
+<div
+  data-testid="blocks"
+>
+  
+
+  <p>
+    Our family recently traveled to Wisconsin to visit my folks. One afternoon, we drove to 
+    <a
+      href="https://www.tripadvisor.com/Attraction_Review-g30324-d6740746-Reviews-Dave_s_Falls_County_Park-Amberg_Wisconsin.html"
+      title=""
+    >
+      Dave’s Falls County Park
+    </a>
+     in
+    <a
+      href="https://en.wikipedia.org/wiki/Amberg,_Wisconsin"
+      title=""
+    >
+       Amberg, WI
+    </a>
+    . My kids had an adventure at the playground and climbing rocks while I had an experience of my own, shooting a few of the gorgeous waterfalls the park offers.
+  </p>
+  
+
+
+
+
+  <!--more-->
+  
+
+
+
+
+  <p>
+    My goal was to capture several long exposures to create the calming effect of smooth water and I was carrying in a tripod, 
+    <strong>
+      Sony a7R IV
+    </strong>
+    , 
+    <strong>
+      Neewer ND1000
+    </strong>
+     lens filters, and both the 
+    <strong>
+      Tamron 20-40mm
+    </strong>
+     and 
+    <strong>
+      Tamron 35-150mm
+    </strong>
+     (aka CHONKY BOI).
+  </p>
+  
+
+
+
+
+  <p>
+    After we traveled down a flight of stairs and across a bridge, we came to a little tiny beach with some step stones. I didn’t even hesitate to jump on them over to the first waterfall. I put my 
+    <a
+      href="https://photos.app.goo.gl/6XkTRo7NGRgXHJYN7"
+      rel="noopener nofollow"
+      target="_blank"
+      title=""
+    >
+      tripod on the rock and set up for a long exposure
+    </a>
+    :
+  </p>
+  
+
+
+
+
+  <figure
+    class="wp-block-image size-full"
+  >
+    <a
+      href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9490_Daves-Falls_Amberg_WI_20230711.jpg"
+      rel="noreferrer noopener"
+      target="_blank"
+    >
+      <img
+        alt="Dave's Falls"
+        class="wp-image-26170"
+        decoding="async"
+        height="2560"
+        loading="lazy"
+        sizes="(max-width: 3840px) 100vw, 3840px"
+        src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9490_Daves-Falls_Amberg_WI_20230711.jpg"
+        srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9490_Daves-Falls_Amberg_WI_20230711.jpg 3840w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9490_Daves-Falls_Amberg_WI_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9490_Daves-Falls_Amberg_WI_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9490_Daves-Falls_Amberg_WI_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9490_Daves-Falls_Amberg_WI_20230711-2048x1365.jpg 2048w"
+        width="3840"
+      />
+    </a>
+    <figcaption
+      class="wp-element-caption"
+    >
+      Dave’s Falls in Amberg, WI | Sony a7R IV | Tamron 35-150mm | Neewer ND1000 Lens Filter | f/2.8, 1 sec, ISO 100 @ 100mm
+    </figcaption>
+  </figure>
+  
+
+
+
+
+  <p>
+    Next, I zoomed out to 35mm and took 4 different exposures with different focus points. The foreground, middle ground, waterfall, and background. I used Adobe Photoshop to auto-blend them together which is a process called “
+    <a
+      href="https://www.adobe.com/creativecloud/photography/discover/focus-stacking.html"
+      title=""
+    >
+      focus stacking
+    </a>
+    “. I love how it turned out!
+  </p>
+  
+
+
+
+
+  <figure
+    class="wp-block-image size-full"
+  >
+    <a
+      href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9495_Daves-Falls_Amberg_WI_20230711.jpg"
+      rel="noreferrer noopener"
+      target="_blank"
+    >
+      <img
+        alt="Dave's Falls"
+        class="wp-image-26167"
+        decoding="async"
+        height="2560"
+        loading="lazy"
+        sizes="(max-width: 3840px) 100vw, 3840px"
+        src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9495_Daves-Falls_Amberg_WI_20230711.jpg"
+        srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9495_Daves-Falls_Amberg_WI_20230711.jpg 3840w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9495_Daves-Falls_Amberg_WI_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9495_Daves-Falls_Amberg_WI_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9495_Daves-Falls_Amberg_WI_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9495_Daves-Falls_Amberg_WI_20230711-2048x1365.jpg 2048w"
+        width="3840"
+      />
+    </a>
+    <figcaption
+      class="wp-element-caption"
+    >
+      Dave’s Falls in Amberg, WI | 4 Exposures Focus Stacked | Sony a7R IV | Tamron 35-150mm | Neewer ND1000 Lens Filter | f/4, 2 sec, ISO 100 @ 35mm
+    </figcaption>
+  </figure>
+  
+
+
+
+
+  <p>
+    There was another waterfall that was bigger but tucked away. I needed to cross a bridge and hike for a few minutes to reach it. I couldn’t help but snap these along the way:
+  </p>
+  
+
+
+
+
+  <figure
+    class="wp-block-gallery has-nested-images columns-default is-cropped wp-block-gallery-1 is-layout-flex wp-block-gallery-is-layout-flex"
+  >
+    
+
+    <figure
+      class="wp-block-image size-large"
+    >
+      <a
+        href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9504_Daves-Falls_20230711.jpg"
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        <img
+          alt="Dave's Falls"
+          class="wp-image-26182"
+          data-id="26182"
+          decoding="async"
+          height="2560"
+          loading="lazy"
+          sizes="(max-width: 3840px) 100vw, 3840px"
+          src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9504_Daves-Falls_20230711.jpg"
+          srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9504_Daves-Falls_20230711.jpg 3840w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9504_Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9504_Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9504_Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9504_Daves-Falls_20230711-2048x1365.jpg 2048w"
+          width="3840"
+        />
+      </a>
+    </figure>
+    
+
+
+
+
+    <figure
+      class="wp-block-image size-large"
+    >
+      <a
+        href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9498_Daves-Falls_20230711.jpg"
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        <img
+          alt="Dave's Falls"
+          class="wp-image-26183"
+          data-id="26183"
+          decoding="async"
+          height="2560"
+          loading="lazy"
+          sizes="(max-width: 3840px) 100vw, 3840px"
+          src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9498_Daves-Falls_20230711.jpg"
+          srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9498_Daves-Falls_20230711.jpg 3840w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9498_Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9498_Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9498_Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9498_Daves-Falls_20230711-2048x1365.jpg 2048w"
+          width="3840"
+        />
+      </a>
+    </figure>
+    
+
+  </figure>
+  
+
+
+
+
+  <p>
+    Wow! This location was so serene! A bit of “calm” washed over me as I just stood there and enjoyed the moment. Then I set up my camera and tripod again for a single, 8-second exposure:
+  </p>
+  
+
+
+
+
+  <figure
+    class="wp-block-image size-full is-resized"
+  >
+    <a
+      href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9510_Daves-Falls_Amberg_WI_20230711.jpg"
+      rel="noreferrer noopener"
+      target="_blank"
+    >
+      <img
+        alt="Dave's Falls"
+        class="wp-image-26174"
+        decoding="async"
+        height="2560"
+        loading="lazy"
+        sizes="(max-width: 3840px) 100vw, 3840px"
+        src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9510_Daves-Falls_Amberg_WI_20230711.jpg"
+        srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9510_Daves-Falls_Amberg_WI_20230711.jpg 3840w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9510_Daves-Falls_Amberg_WI_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9510_Daves-Falls_Amberg_WI_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9510_Daves-Falls_Amberg_WI_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9510_Daves-Falls_Amberg_WI_20230711-2048x1365.jpg 2048w"
+        style="width:747px;height:auto"
+        width="3840"
+      />
+    </a>
+    <figcaption
+      class="wp-element-caption"
+    >
+      Dave’s Falls in Amberg, WI | Sony a7R IV | Tamron 35-150mm | Neewer ND1000 Lens Filter | f/8, 8 sec, ISO 100 @ 35mm
+    </figcaption>
+  </figure>
+  
+
+
+
+
+  <p>
+    Way downstream are the primary falls. There is a 20-30 foot drop, that you’re not able to get to, but you can get to the edge before the drop. I carefully walked down a slope to get alongside. It was getting late and the family was ready to go, so in order to get everything in focus quickly I stopped down to f/16 for 4 seconds:
+  </p>
+  
+
+
+
+
+  <figure
+    class="wp-block-image size-full"
+  >
+    <a
+      href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9539_Daves-Falls_Amberg_WI_20230711.jpg"
+      rel="noreferrer noopener"
+      target="_blank"
+    >
+      <img
+        alt="Dave's Falls"
+        class="wp-image-26177"
+        decoding="async"
+        height="2560"
+        loading="lazy"
+        sizes="(max-width: 3840px) 100vw, 3840px"
+        src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9539_Daves-Falls_Amberg_WI_20230711.jpg"
+        srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9539_Daves-Falls_Amberg_WI_20230711.jpg 3840w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9539_Daves-Falls_Amberg_WI_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9539_Daves-Falls_Amberg_WI_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9539_Daves-Falls_Amberg_WI_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9539_Daves-Falls_Amberg_WI_20230711-2048x1365.jpg 2048w"
+        width="3840"
+      />
+    </a>
+    <figcaption
+      class="wp-element-caption"
+    >
+      Dave’s Falls in Amberg, WI | Sony a7R IV | Tamron 35-150mm | Neewer ND1000 Lens Filter | f/16, 4 sec, ISO 100 @ 35mm
+    </figcaption>
+  </figure>
+  
+
+
+
+
+  <p>
+    Overall, I spent an about hour taking these waterfall photos and another hour doing edits in Lightroom. I absolutely loved how all of them turned out and I had so much fun on this adventure. 
+  </p>
+  
+
+
+
+
+  <p>
+    Before I go, I wanted to share some “happy snaps” of our family as we enjoyed the afternoon at Dave’s Falls County Park in Amberg, WI. 
+  </p>
+  
+
+
+
+
+  <section
+    data-testid="grd-photo-gallery"
+    id="grd-photo-gallery-gallery"
+  >
+    
+	
+    <div
+      class="grd-photo-gallery-grid"
+      data-testid="grd-photo-gallery-grid"
+    >
+      
+		
+      <div
+        class="grd-photo-gallery-grid-sizer"
+      />
+      
+					
+      <figure
+        class="grd-photo-gallery-image"
+        data-image-number="1"
+        data-testid="image-1"
+        itemprop="image"
+        itemscope=""
+        itemtype="https://schema.org/ImageObject"
+      >
+        
+				
+        <a
+          data-caption="<p>Wyatt and Chloe at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 40mm | ƒ/2.8 | 1/100s | ISO2000</span>"
+          data-fancybox=""
+          data-slug="26178"
+          data-testid="image-link"
+          href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9444_Wyatt-and-Chloe-at-Daves-Falls_20230711.jpg"
+        >
+          
+					
+          <img
+            alt="Wyatt and Chloe at Dave's Falls"
+            class="attachment-medium size-medium"
+            decoding="async"
+            height="427"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 640px"
+            src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9444_Wyatt-and-Chloe-at-Daves-Falls_20230711-640x427.jpg"
+            srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9444_Wyatt-and-Chloe-at-Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9444_Wyatt-and-Chloe-at-Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9444_Wyatt-and-Chloe-at-Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9444_Wyatt-and-Chloe-at-Daves-Falls_20230711-2048x1365.jpg 2048w"
+            width="640"
+          />
+          				
+        </a>
+        
+									
+        <figcaption
+          class="grd-photo-gallery-image-caption"
+          data-testid="image-caption"
+        >
+          
+						
+          <a
+            data-caption="<p>Wyatt and Chloe at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 40mm | ƒ/2.8 | 1/100s | ISO2000</span>"
+            data-slug="26178"
+            data-testid="image-caption-link"
+            href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9444_Wyatt-and-Chloe-at-Daves-Falls_20230711.jpg"
+            title="Wyatt and Chloe at Dave's Falls"
+          >
+            
+							Wyatt and Chloe at Dave's Falls						
+          </a>
+          
+					
+        </figcaption>
+        
+							
+      </figure>
+      
+						
+      <figure
+        class="grd-photo-gallery-image"
+        data-image-number="2"
+        data-testid="image-2"
+        itemprop="image"
+        itemscope=""
+        itemtype="https://schema.org/ImageObject"
+      >
+        
+				
+        <a
+          data-caption="<p>Tara and the kids at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 40mm | ƒ/4 | 1/250s | ISO100</span>"
+          data-fancybox=""
+          data-slug="26179"
+          data-testid="image-link"
+          href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9452_Tara-and-the-kids-at-Daves-Falls_20230711.jpg"
+        >
+          
+					
+          <img
+            alt="Tara and the kids at Dave's Falls"
+            class="attachment-medium size-medium"
+            decoding="async"
+            height="427"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 640px"
+            src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9452_Tara-and-the-kids-at-Daves-Falls_20230711-640x427.jpg"
+            srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9452_Tara-and-the-kids-at-Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9452_Tara-and-the-kids-at-Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9452_Tara-and-the-kids-at-Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9452_Tara-and-the-kids-at-Daves-Falls_20230711-2048x1365.jpg 2048w"
+            width="640"
+          />
+          				
+        </a>
+        
+									
+        <figcaption
+          class="grd-photo-gallery-image-caption"
+          data-testid="image-caption"
+        >
+          
+						
+          <a
+            data-caption="<p>Tara and the kids at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 40mm | ƒ/4 | 1/250s | ISO100</span>"
+            data-slug="26179"
+            data-testid="image-caption-link"
+            href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9452_Tara-and-the-kids-at-Daves-Falls_20230711.jpg"
+            title="Tara and the kids at Dave's Falls"
+          >
+            
+							Tara and the kids at Dave's Falls						
+          </a>
+          
+					
+        </figcaption>
+        
+							
+      </figure>
+      
+						
+      <figure
+        class="grd-photo-gallery-image"
+        data-image-number="3"
+        data-testid="image-3"
+        itemprop="image"
+        itemscope=""
+        itemtype="https://schema.org/ImageObject"
+      >
+        
+				
+        <a
+          data-caption="<p>Wyatt and Chloe at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 40mm | ƒ/3.5 | 1/80s | ISO100</span>"
+          data-fancybox=""
+          data-slug="26180"
+          data-testid="image-link"
+          href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9455_Wyatt-and-Chloe-at-Daves-Falls_20230711.jpg"
+        >
+          
+					
+          <img
+            alt="Wyatt and Chloe at Dave's Falls"
+            class="attachment-medium size-medium"
+            decoding="async"
+            height="427"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 640px"
+            src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9455_Wyatt-and-Chloe-at-Daves-Falls_20230711-640x427.jpg"
+            srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9455_Wyatt-and-Chloe-at-Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9455_Wyatt-and-Chloe-at-Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9455_Wyatt-and-Chloe-at-Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9455_Wyatt-and-Chloe-at-Daves-Falls_20230711-2048x1365.jpg 2048w"
+            width="640"
+          />
+          				
+        </a>
+        
+									
+        <figcaption
+          class="grd-photo-gallery-image-caption"
+          data-testid="image-caption"
+        >
+          
+						
+          <a
+            data-caption="<p>Wyatt and Chloe at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 40mm | ƒ/3.5 | 1/80s | ISO100</span>"
+            data-slug="26180"
+            data-testid="image-caption-link"
+            href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9455_Wyatt-and-Chloe-at-Daves-Falls_20230711.jpg"
+            title="Wyatt and Chloe at Dave's Falls"
+          >
+            
+							Wyatt and Chloe at Dave's Falls						
+          </a>
+          
+					
+        </figcaption>
+        
+							
+      </figure>
+      
+						
+      <figure
+        class="grd-photo-gallery-image"
+        data-image-number="4"
+        data-testid="image-4"
+        itemprop="image"
+        itemscope=""
+        itemtype="https://schema.org/ImageObject"
+      >
+        
+				
+        <a
+          data-caption="<p>Tara at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 35mm | ƒ/2.8 | 3.2s | ISO100</span>"
+          data-fancybox=""
+          data-slug="26181"
+          data-testid="image-link"
+          href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9485_Tara-at-Daves-Falls_20230711.jpg"
+        >
+          
+					
+          <img
+            alt="Tara at Dave's Falls"
+            class="attachment-medium size-medium"
+            decoding="async"
+            height="427"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 640px"
+            src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9485_Tara-at-Daves-Falls_20230711-640x427.jpg"
+            srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9485_Tara-at-Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9485_Tara-at-Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9485_Tara-at-Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9485_Tara-at-Daves-Falls_20230711-2048x1365.jpg 2048w"
+            width="640"
+          />
+          				
+        </a>
+        
+									
+        <figcaption
+          class="grd-photo-gallery-image-caption"
+          data-testid="image-caption"
+        >
+          
+						
+          <a
+            data-caption="<p>Tara at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 35mm | ƒ/2.8 | 3.2s | ISO100</span>"
+            data-slug="26181"
+            data-testid="image-caption-link"
+            href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9485_Tara-at-Daves-Falls_20230711.jpg"
+            title="Tara at Dave's Falls"
+          >
+            
+							Tara at Dave's Falls						
+          </a>
+          
+					
+        </figcaption>
+        
+							
+      </figure>
+      
+						
+      <figure
+        class="grd-photo-gallery-image"
+        data-image-number="5"
+        data-testid="image-5"
+        itemprop="image"
+        itemscope=""
+        itemtype="https://schema.org/ImageObject"
+      >
+        
+				
+        <a
+          data-caption="<p>Chase at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 150mm | ƒ/2.8 | 1/100s | ISO100</span>"
+          data-fancybox=""
+          data-slug="26186"
+          data-testid="image-link"
+          href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9480_Chase-at-Daves-Falls_20230711.jpg"
+        >
+          
+					
+          <img
+            alt="Chase at Dave's Falls"
+            class="attachment-medium size-medium"
+            decoding="async"
+            height="427"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 640px"
+            src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9480_Chase-at-Daves-Falls_20230711-640x427.jpg"
+            srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9480_Chase-at-Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9480_Chase-at-Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9480_Chase-at-Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9480_Chase-at-Daves-Falls_20230711-2048x1365.jpg 2048w"
+            width="640"
+          />
+          				
+        </a>
+        
+									
+        <figcaption
+          class="grd-photo-gallery-image-caption"
+          data-testid="image-caption"
+        >
+          
+						
+          <a
+            data-caption="<p>Chase at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 150mm | ƒ/2.8 | 1/100s | ISO100</span>"
+            data-slug="26186"
+            data-testid="image-caption-link"
+            href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9480_Chase-at-Daves-Falls_20230711.jpg"
+            title="Chase at Dave's Falls"
+          >
+            
+							Chase at Dave's Falls						
+          </a>
+          
+					
+        </figcaption>
+        
+							
+      </figure>
+      
+						
+      <figure
+        class="grd-photo-gallery-image"
+        data-image-number="6"
+        data-testid="image-6"
+        itemprop="image"
+        itemscope=""
+        itemtype="https://schema.org/ImageObject"
+      >
+        
+				
+        <a
+          data-caption="<p>Chase and Alicia at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 68mm | ƒ/2.5 | 1/160s | ISO100</span>"
+          data-fancybox=""
+          data-slug="26185"
+          data-testid="image-link"
+          href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9525_Chase-and-Alicia-at-Daves-Falls_20230711.jpg"
+        >
+          
+					
+          <img
+            alt="Chase and Alicia at Dave's Falls"
+            class="attachment-medium size-medium"
+            decoding="async"
+            height="427"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 640px"
+            src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9525_Chase-and-Alicia-at-Daves-Falls_20230711-640x427.jpg"
+            srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9525_Chase-and-Alicia-at-Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9525_Chase-and-Alicia-at-Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9525_Chase-and-Alicia-at-Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9525_Chase-and-Alicia-at-Daves-Falls_20230711-2048x1365.jpg 2048w"
+            width="640"
+          />
+          				
+        </a>
+        
+									
+        <figcaption
+          class="grd-photo-gallery-image-caption"
+          data-testid="image-caption"
+        >
+          
+						
+          <a
+            data-caption="<p>Chase and Alicia at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 68mm | ƒ/2.5 | 1/160s | ISO100</span>"
+            data-slug="26185"
+            data-testid="image-caption-link"
+            href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9525_Chase-and-Alicia-at-Daves-Falls_20230711.jpg"
+            title="Chase and Alicia at Dave's Falls"
+          >
+            
+							Chase and Alicia at Dave's Falls						
+          </a>
+          
+					
+        </figcaption>
+        
+							
+      </figure>
+      
+						
+      <figure
+        class="grd-photo-gallery-image"
+        data-image-number="7"
+        data-testid="image-7"
+        itemprop="image"
+        itemscope=""
+        itemtype="https://schema.org/ImageObject"
+      >
+        
+				
+        <a
+          data-caption="<p>Tara and the kids at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 35mm | ƒ/2.2 | 1/160s | ISO100</span>"
+          data-fancybox=""
+          data-slug="26184"
+          data-testid="image-link"
+          href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9519_Tara-and-the-kids-at-Daves-Falls_20230711.jpg"
+        >
+          
+					
+          <img
+            alt="Tara and the kids at Dave's Falls"
+            class="attachment-medium size-medium"
+            decoding="async"
+            height="427"
+            loading="lazy"
+            sizes="(max-width: 640px) 100vw, 640px"
+            src="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9519_Tara-and-the-kids-at-Daves-Falls_20230711-640x427.jpg"
+            srcset="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9519_Tara-and-the-kids-at-Daves-Falls_20230711-640x427.jpg 640w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9519_Tara-and-the-kids-at-Daves-Falls_20230711-768x512.jpg 768w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9519_Tara-and-the-kids-at-Daves-Falls_20230711-1536x1024.jpg 1536w, https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9519_Tara-and-the-kids-at-Daves-Falls_20230711-2048x1365.jpg 2048w"
+            width="640"
+          />
+          				
+        </a>
+        
+									
+        <figcaption
+          class="grd-photo-gallery-image-caption"
+          data-testid="image-caption"
+        >
+          
+						
+          <a
+            data-caption="<p>Tara and the kids at Dave's Falls</p> <span class="exif"> ILCE-7RM4A | 35mm | ƒ/2.2 | 1/160s | ISO100</span>"
+            data-slug="26184"
+            data-testid="image-caption-link"
+            href="https://blog.gregrickaby.com/wp-content/uploads/2023/07/DSC9519_Tara-and-the-kids-at-Daves-Falls_20230711.jpg"
+            title="Tara and the kids at Dave's Falls"
+          >
+            
+							Tara and the kids at Dave's Falls						
+          </a>
+          
+					
+        </figcaption>
+        
+							
+      </figure>
+      
+				
+    </div>
+    
+
+  </section>
+  
+
+
+
+
+  <p>
+    If you ask me, I think it’s perfectly okay to chase 
+    <em>
+      real-life
+    </em>
+     waterfalls! 😎
+    <br />
+    <br />
+    Thanks for reading! 📸
+  </p>
+  
+
+</div>
+`;
