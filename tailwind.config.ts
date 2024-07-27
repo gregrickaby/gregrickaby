@@ -1,6 +1,6 @@
 import type {Config} from 'tailwindcss'
 
-const config: Config = {
+const config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -13,7 +13,8 @@ const config: Config = {
         sans: ['var(--font-sans)', 'Helvetica Neue', 'Arial', 'sans-serif'],
         serif: ['var(--font-serif)', 'Georgia', 'Times', 'serif']
       },
-      typography: (theme) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      typography: (theme: any) => ({
         DEFAULT: {
           // Default Prose styles.
           css: {
@@ -65,5 +66,6 @@ const config: Config = {
     }
   },
   plugins: [require('@tailwindcss/typography')]
-}
+} satisfies Config
+
 export default config
