@@ -1,3 +1,4 @@
+import BackToTop from '@/components/BackToTop'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import JsonLD from '@/components/JsonLd'
@@ -91,6 +92,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <BackToTop />
       </body>
     </html>
   )

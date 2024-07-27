@@ -1,4 +1,5 @@
 import Blocks, {galleryInit} from '@/components/Blocks'
+import '@testing-library/jest-dom'
 import {render} from '@testing-library/react'
 import {axe} from 'jest-axe'
 import {describe, expect, it, vi} from 'vitest'
