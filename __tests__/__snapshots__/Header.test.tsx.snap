@@ -13,7 +13,7 @@ exports[`Header > should match snapshot 1`] = `
     >
       <img
         alt="Greg Rickaby"
-        class="mx-auto rounded-full shadow-lg"
+        class="mx-auto rounded-full shadow-lg hover:animate-spin"
         data-nimg="1"
         decoding="async"
         height="96"
@@ -53,7 +53,7 @@ exports[`Header > should match snapshot 1`] = `
     >
       <button
         aria-label="Toggle navigation"
-        class="flex rounded border p-2 lg:hidden"
+        class="button flex lg:hidden"
       >
         <svg
           class="tabler-icon tabler-icon-menu "

@@ -17,7 +17,7 @@ export default function Header() {
         <Link href="/">
           <Image
             alt="Greg Rickaby"
-            className="mx-auto rounded-full shadow-lg"
+            className="mx-auto rounded-full shadow-lg hover:animate-spin"
             height={96}
             loading="eager"
             src={Logo}
