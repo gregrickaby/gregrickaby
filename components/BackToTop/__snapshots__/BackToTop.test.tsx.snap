@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BackToTop Component > should match snapshot 1`] = `
+<div>
+  <button
+    aria-label="Go back to the top of the page"
+    class="button _backToTop_9131ed"
+    data-testid="back-to-top"
+    title="Go back to the top of the page"
+  >
+    <div>
+      Icon
+    </div>
+    <span
+      class="sr-only"
+    >
+      Go back to the top of the page
+    </span>
+  </button>
+</div>
+`;

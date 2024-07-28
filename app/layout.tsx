@@ -1,7 +1,4 @@
-import BackToTop from '@/components/BackToTop'
-import Footer from '@/components/Footer'
-import Header from '@/components/Header'
-import JsonLD from '@/components/JsonLd'
+import {BackToTop, Footer, Header, JsonLD} from '@/components'
 import config from '@/lib/config'
 import type {Metadata, Viewport} from 'next'
 import {Aleo, Fira_Code, Open_Sans} from 'next/font/google'

@@ -1,6 +1,6 @@
-import Blocks from '@/components/Blocks'
-import {getPageBySlug} from '@/lib/api'
-import {yoastSeo} from '@/lib/functions'
+import {Blocks} from '@/components/Blocks'
+import {getPageBySlug} from '@/lib/api/api'
+import {yoastSeo} from '@/lib/functions/'
 import {notFound} from 'next/navigation'
 
 /**

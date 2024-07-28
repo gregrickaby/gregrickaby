@@ -1,5 +1,5 @@
-import Blocks from '@/components/Blocks'
-import {getPostBySlug} from '@/lib/api'
+import {Blocks} from '@/components/Blocks'
+import {getPostBySlug} from '@/lib/api/api'
 import {formatDate, yoastSeo} from '@/lib/functions'
 import {notFound} from 'next/navigation'
 

@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Footer > should match snapshot 1`] = `
+<footer
+  class="_footer_3059f1"
+  data-testid="footer"
+>
+  <div
+    data-testid="social-links"
+  />
+  <p
+    class="py-4"
+  >
+    Unless otherwise noted, all content on this website is licensed under
+     
+    <a
+      href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
+    >
+      CC BY-NC-ND 4.0
+    </a>
+    .
+  </p>
+  <p>
+    © 2008 - 
+    2024
+     Greg Rickaby ✌️
+  </p>
+</footer>
+`;
