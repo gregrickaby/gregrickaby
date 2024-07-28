@@ -16,6 +16,12 @@ export default defineConfig({
     coverage: {
       enabled: true,
       include: ['components/**/*', 'lib/**/*'],
+      exclude: [
+        '**/*.d.ts',
+        '**/*.test.{ts,tsx}',
+        '**/index.ts',
+        '**/mocks/**/*'
+      ],
       provider: 'v8',
       reporter: ['text', 'html', 'lcov']
     },
