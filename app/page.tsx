@@ -1,4 +1,21 @@
-import {getGithubRepos, getPageBySlug, getPosts} from '@/lib/api'
+import {Blocks} from '@/components'
+import {getGithubRepos} from '@/lib/api'
+import {WP_Query} from '@/lib/api/WP_Query'
+
+const latestQuery = new WP_Query({
+  post_type: 'posts',
+  posts_per_page: 5,
+  orderby: 'date',
+  order: 'desc',
+  fields: 'id,title,slug'
+})
+
+const photosQuery = new WP_Query({
+  post_type: 'pages',
+  search: 'photos',
+  posts_per_page: 1,
+  fields: 'id,content'
+})
 
 /**
  * The home page route.
@@ -6,10 +23,9 @@ import {getGithubRepos, getPageBySlug, getPosts} from '@/lib/api'
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
 export default async function Home() {
-  // Fetch homepage data.
-  const posts = await getPosts(7)
+  const posts = await latestQuery.getPosts()
   const repos = await getGithubRepos(7)
-  const photos = await getPageBySlug('photos')
+  const photos = await photosQuery.getPosts()
 
   return (
     <article className="article">
@@ -173,7 +189,9 @@ export default async function Home() {
         </div>
         <div className="homepage-gallery">
           <h3>Recent Photos</h3>
-          <div dangerouslySetInnerHTML={{__html: photos.content.rendered}} />
+          {photos.map((photo) => (
+            <Blocks key={photo.id} content={photo.content.rendered} />
+          ))}
         </div>
       </section>
     </article>
