@@ -5,7 +5,7 @@ import type {Post} from '@/lib/types'
  */
 interface WP_QueryArgs {
   /** Optional. A post type slug to query. Defaults to 'posts'. */
-  post_type?: 'posts' | 'pages' | string
+  post_type?: 'posts' | 'pages'
   /** Optional. Number of posts to return per page. Defaults to 10. */
   per_page?: number
   /** Optional. Current page of the query. Defaults to 1. */
@@ -16,18 +16,33 @@ interface WP_QueryArgs {
     | 'date'
     | 'id'
     | 'include'
+    | 'include_slugs'
     | 'modified'
     | 'parent'
     | 'relevance'
     | 'slug'
-    | 'include_slugs'
     | 'title'
   /** Optional. Order direction of the query. 'asc' for ascending, 'desc' for descending. Defaults to 'desc'. */
   order?: 'asc' | 'desc'
   /** Optional. A search term to query posts by. */
   search?: string
-  /** Optional. Comma-separated list of fields to include in the response. */
-  fields?: string
+  /** Optional. Array of fields to include in the response. */
+  fields?: Array<
+    | 'acf'
+    | 'author_gravatar_url'
+    | 'author_name'
+    | 'category_names'
+    | 'content'
+    | 'date'
+    | 'excerpt'
+    | 'featured_image_data'
+    | 'id'
+    | 'slug'
+    | 'status'
+    | 'tag_names'
+    | 'title'
+    | 'yoast_head_json'
+  >
   /** Optional. The post or page slug to query. */
   slug?: string
   /** Optional. Scope under which the request is made; determines fields present in response. */
@@ -77,14 +92,7 @@ interface WP_QueryArgs {
 }
 
 /**
- * WP_Query class
- *
- * Fetch posts or custom post types from a WordPress REST API endpoint.
- *
- * Loosely based on the WP_Query class in WordPress, but uses WP REST API arguments.
- *
- * @see https://developer.wordpress.org/rest-api/reference/posts/#arguments
- * @see https://developer.wordpress.org/reference/classes/WP_Query/parse_query/
+ * WP_Query class.
  */
 export class WP_Query {
   /**
@@ -105,6 +113,24 @@ export class WP_Query {
   /**
    * Constructs a new WP_Query instance.
    *
+   * ### Usage
+   *
+   * Fetch posts or custom post types from a WordPress REST API endpoint.
+   * Loosely based on the WP_Query class in WordPress, but uses WP REST API
+   * arguments instead.
+   *
+   * ```typescript
+   * const query = new WP_Query({
+   *  post_type: 'posts',
+   *  per_page: 10,
+   *  fields: ['id', 'title', 'excerpt', 'slug'],
+   * });
+   *
+   * const posts = await query.getPosts()
+   * ```
+   *
+   * @see https://developer.wordpress.org/rest-api/reference/posts/#arguments
+   *
    * @param args - The arguments used to configure the query.
    * @param endpoint - The endpoint to query. Defaults to WP_Query.defaultEndpoint.
    */
@@ -112,53 +138,20 @@ export class WP_Query {
     this.endpoint = endpoint || 'https://blog.gregrickaby.com/wp-json/wp/v2'
     this.postType = args.post_type || 'posts'
     this.params = {
-      after: args.after,
-      author: args.author,
-      author_exclude: args.author_exclude,
-      before: args.before,
-      categories: args.categories,
-      categories_exclude: args.categories_exclude,
-      context: args.context || 'view',
-      exclude: args.exclude,
-      fields: args.fields,
-      include: args.include,
-      menu_order: args.menu_order,
-      modified_after: args.modified_after,
-      modified_before: args.modified_before,
-      offset: args.offset,
-      order: args.order || 'desc',
-      orderby: args.orderby || 'date',
-      page: args.page || 1,
-      parent: args.parent,
-      parent_exclude: args.parent_exclude,
-      per_page: args.per_page || 10,
-      search: args.search,
-      search_columns: args.search_columns,
-      slug: args.slug,
-      status: args.status || 'publish',
-      sticky: args.sticky,
-      tags_exclude: args.tags_exclude,
-      tax_relation: args.tax_relation,
+      // Set default query parameters.
+      context: 'view',
+      order: 'desc',
+      orderby: 'date',
+      page: 1,
+      per_page: 10,
+      status: 'publish',
+      // Merge with user-provided query parameters.
       ...args
     }
   }
 
   /**
    * Fetches posts from the WordPress REST API using the constructed query URL.
-   *
-   * ### Usage
-   *
-   * ```typescript
-   * const query = new WP_Query({
-   *  post_type: 'posts',
-   *  per_page: 10,
-   *  fields: 'id,title,excerpt,slug',
-   * });
-   *
-   * query.getPosts().then(posts => {
-   *   console.log(posts);
-   * });
-   * ```
    *
    * @returns A promise that resolves to an array of Post objects.
    */
@@ -177,7 +170,7 @@ export class WP_Query {
 
       // If the response is not OK, throw an error.
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        throw new Error(`HTTP error! status: ${response.status}, url: ${url}`)
       }
 
       // Parse the JSON response.
@@ -192,23 +185,58 @@ export class WP_Query {
   }
 
   /**
+   * Builds the base URL from the provided parameters.
+   *
+   * @returns The constructed base URL.
+   */
+  private buildBaseUrl(): URL {
+    return new URL(`${this.endpoint}/${this.postType}`)
+  }
+
+  /**
+   * Adds query parameters to the base URL.
+   *
+   * @param baseUrl - The base URL.
+   * @returns The URL with query parameters appended.
+   */
+  private addQueryParams(baseUrl: URL): URL {
+    // Create a new URLSearchParams object.
+    const queryParams = new URLSearchParams()
+
+    // Loop through each parameter.
+    Object.entries(this.params).forEach(([key, value]) => {
+      // If the key is 'fields' and the value is an array with more than one item.
+      if (key === 'fields' && Array.isArray(value) && value.length > 0) {
+        // Append the key and value to the query.
+        queryParams.append(key, value.join(','))
+
+        // If the value is empty (or a post type) ignore it.
+      } else if (value !== undefined && value !== '' && key !== 'post_type') {
+        // Append the key and value to the query.
+        queryParams.append(key, value.toString())
+      }
+    })
+
+    // Append the query parameters to the URL.
+    baseUrl.search = queryParams.toString()
+
+    // Return the URL.
+    return baseUrl
+  }
+
+  /**
    * Builds the query string from the provided parameters.
    *
    * @returns The constructed query URL.
    */
   private buildQuery(): string {
-    // Add all parameters to the query.
-    const query = new URLSearchParams()
+    // Build the base URL.
+    const baseUrl = this.buildBaseUrl()
 
-    // Loop through each parameter and append to the query string.
-    Object.entries(this.params).forEach(([key, value]) => {
-      // Skip undefined/empty values and the post_type parameter.
-      if (value !== undefined && value !== '' && key !== 'post_type') {
-        query.append(key, value.toString())
-      }
-    })
+    // Add the query parameters to the URL.
+    const finalUrl = this.addQueryParams(baseUrl)
 
-    // Return the constructed query URL.
-    return `${this.endpoint}/${this.postType}?${query.toString()}`
+    // Return the final URL as a string.
+    return finalUrl.toString()
   }
 }

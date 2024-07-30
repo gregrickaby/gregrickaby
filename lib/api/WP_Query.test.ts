@@ -50,7 +50,7 @@ describe('WP_Query', () => {
 
   it('should initialize with custom parameters', () => {
     const query = new WP_Query({
-      fields: 'id,title,slug',
+      fields: ['id', 'title', 'slug'],
       order: 'asc',
       orderby: 'title',
       page: 2,
@@ -70,7 +70,7 @@ describe('WP_Query', () => {
       categories_exclude: undefined,
       context: 'view',
       exclude: undefined,
-      fields: 'id,title,slug',
+      fields: ['id', 'title', 'slug'],
       include: undefined,
       menu_order: undefined,
       modified_after: undefined,
@@ -95,7 +95,7 @@ describe('WP_Query', () => {
 
   it('should build the correct query', () => {
     const query = new WP_Query({
-      fields: 'id,title,slug',
+      fields: ['id', 'title', 'slug'],
       order: 'asc',
       orderby: 'title',
       page: 2,
@@ -106,7 +106,7 @@ describe('WP_Query', () => {
     })
     const theQuery = query['buildQuery']()
     expect(theQuery).toBe(
-      'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&fields=id%2Ctitle%2Cslug&order=asc&orderby=title&page=2&per_page=5&search=search-term&status=draft'
+      'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=asc&orderby=title&page=2&per_page=5&status=draft&fields=id%2Ctitle%2Cslug&search=search-term'
     )
   })
 
