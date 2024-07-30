@@ -11,7 +11,17 @@ interface WP_QueryArgs {
   /** Optional. Current page of the query. Defaults to 1. */
   paged?: number
   /** Optional. Field to order the posts by. Defaults to 'date'. */
-  orderby?: string
+  orderby?:
+    | 'author'
+    | 'date'
+    | 'id'
+    | 'include'
+    | 'modified'
+    | 'parent'
+    | 'relevance'
+    | 'slug'
+    | 'include_slugs'
+    | 'title'
   /** Optional. Order direction of the query. 'asc' for ascending, 'desc' for descending. Defaults to 'desc'. */
   order?: 'asc' | 'desc'
   /** Optional. A search term to query posts by. */
@@ -41,7 +51,7 @@ interface WP_QueryArgs {
   /** Optional. Offset the result set by a specific number of items. */
   offset?: number
   /** Optional. Limit result set to posts with one or more specific statuses. */
-  status?: string
+  status?: 'publish' | 'future' | 'draft' | 'pending' | 'private'
   /** Optional. Limit result set to posts assigned one or more categories. */
   categories?: string
   /** Optional. Ensure result set excludes posts assigned to specific categories. */
@@ -57,7 +67,7 @@ interface WP_QueryArgs {
   /** Optional. Ensure result set excludes posts with a specific parent ID. */
   parent_exclude?: number
   /** Optional. Search criteria to select specific taxonomy terms. */
-  tax_relation?: string
+  tax_relation?: 'AND' | 'OR'
   /** Optional. Order by menu order. */
   menu_order?: number
   /** Optional. Columns to search. Defaults to 'all'. */
@@ -65,6 +75,7 @@ interface WP_QueryArgs {
   /** Optional. Any additional arguments. */
   [key: string]: any
 }
+
 /**
  * WP_Query class
  *
@@ -76,9 +87,19 @@ interface WP_QueryArgs {
  * @see https://developer.wordpress.org/reference/classes/WP_Query/parse_query/
  */
 export class WP_Query {
-  static defaultEndpoint: string = 'https://blog.gregrickaby.com/wp-json/wp/v2'
+  /**
+   * The endpoint to query.
+   */
   private endpoint: string
-  private postType: string
+
+  /**
+   * The post type to query.
+   */
+  private postType: WP_QueryArgs['post_type']
+
+  /**
+   * The query parameters.
+   */
   private params: WP_QueryArgs
 
   /**
@@ -87,11 +108,8 @@ export class WP_Query {
    * @param args - The arguments used to configure the query.
    * @param endpoint - The endpoint to query. Defaults to WP_Query.defaultEndpoint.
    */
-  constructor(
-    args: WP_QueryArgs = {},
-    endpoint: string = WP_Query.defaultEndpoint
-  ) {
-    this.endpoint = endpoint
+  constructor(args: WP_QueryArgs = {}, endpoint: string = '') {
+    this.endpoint = endpoint || 'https://blog.gregrickaby.com/wp-json/wp/v2'
     this.postType = args.post_type || 'posts'
     this.params = {
       after: args.after,
@@ -133,7 +151,7 @@ export class WP_Query {
    * ```typescript
    * const query = new WP_Query({
    *  post_type: 'posts',
-   *  posts_per_page: 10,
+   *  per_page: 10,
    *  fields: 'id,title,excerpt,slug',
    * });
    *
@@ -145,18 +163,27 @@ export class WP_Query {
    * @returns A promise that resolves to an array of Post objects.
    */
   public async getPosts(): Promise<Post[]> {
+    // Get the query URL.
     const url = this.buildQuery()
+
     try {
+      // Try to fetch the posts.
       const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         }
       })
+
+      // If the response is not OK, throw an error.
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
+
+      // Parse the JSON response.
       const data: Post[] = await response.json()
+
+      // Return the data.
       return data
     } catch (error) {
       console.error('Error fetching posts:', error)
@@ -170,12 +197,18 @@ export class WP_Query {
    * @returns The constructed query URL.
    */
   private buildQuery(): string {
+    // Add all parameters to the query.
     const query = new URLSearchParams()
+
+    // Loop through each parameter and append to the query string.
     Object.entries(this.params).forEach(([key, value]) => {
+      // Skip undefined/empty values and the post_type parameter.
       if (value !== undefined && value !== '' && key !== 'post_type') {
         query.append(key, value.toString())
       }
     })
+
+    // Return the constructed query URL.
     return `${this.endpoint}/${this.postType}?${query.toString()}`
   }
 }
