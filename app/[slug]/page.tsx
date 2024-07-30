@@ -1,5 +1,5 @@
 import {Blocks} from '@/components/Blocks'
-import {getPageBySlug} from '@/lib/api/api'
+import {getPageBySlug} from '@/lib/api/wordpress'
 import {yoastSeo} from '@/lib/functions/'
 import {notFound} from 'next/navigation'
 

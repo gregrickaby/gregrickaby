@@ -44,15 +44,15 @@ exports[`Header > should match snapshot 1`] = `
     </div>
   </div>
   <nav
-    class="relative"
+    class="_nav_2c0fa0"
     data-testid="nav"
   >
     <div
-      class="flex items-center justify-between"
+      class="_navContainer_2c0fa0"
     >
       <button
         aria-label="Toggle navigation"
-        class="button flex lg:hidden"
+        class="button _navButton_2c0fa0"
       >
         <svg
           class="tabler-icon tabler-icon-menu "
@@ -76,53 +76,53 @@ exports[`Header > should match snapshot 1`] = `
       </button>
     </div>
     <div
-      class="absolute right-0 top-12 z-10 flex-col gap-4 rounded-lg bg-white pb-8 pl-8 pr-0 pt-8 text-right lg:static lg:flex lg:flex-row lg:rounded-none lg:bg-transparent lg:shadow-none dark:bg-gray-950 hidden"
+      class="_linkContainer_2c0fa0 hidden"
       data-testid="nav-links"
     >
       <a
-        class="text-xl hover:underline"
+        class="_link_2c0fa0"
         href="/about"
       >
         About
       </a>
       <a
-        class="text-xl hover:underline"
+        class="_link_2c0fa0"
         href="/blog"
       >
         Blog
       </a>
       <a
-        class="text-xl hover:underline"
+        class="_link_2c0fa0"
         href="/contact"
       >
         Contact
       </a>
       <a
-        class="text-xl hover:underline"
+        class="_link_2c0fa0"
         href="/cv"
       >
         CV
       </a>
       <a
-        class="text-xl hover:underline"
+        class="_link_2c0fa0"
         href="/media"
       >
         Media
       </a>
       <a
-        class="text-xl hover:underline"
+        class="_link_2c0fa0"
         href="/photos"
       >
         Photos
       </a>
       <a
-        class="text-xl hover:underline"
+        class="_link_2c0fa0"
         href="/resources"
       >
         Resources
       </a>
       <a
-        class="text-xl hover:underline"
+        class="_link_2c0fa0"
         href="/feed.xml"
       >
         RSS

@@ -8,7 +8,8 @@ export function Footer() {
   return (
     <footer className={styles.footer} data-testid="footer">
       <SocialLinks />
-      <p className="py-4">
+
+      <p>
         Unless otherwise noted, all content on this website is licensed under{' '}
         <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
           CC BY-NC-ND 4.0

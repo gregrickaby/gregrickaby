@@ -1,4 +1,4 @@
-import {getPageBySlug, getPopularGithubRepos, getPosts} from '@/lib/api'
+import {getGithubRepos, getPageBySlug, getPosts} from '@/lib/api'
 
 /**
  * The home page route.
@@ -8,7 +8,7 @@ import {getPageBySlug, getPopularGithubRepos, getPosts} from '@/lib/api'
 export default async function Home() {
   // Fetch homepage data.
   const posts = await getPosts(7)
-  const repos = await getPopularGithubRepos(7)
+  const repos = await getGithubRepos(7)
   const photos = await getPageBySlug('photos')
 
   return (

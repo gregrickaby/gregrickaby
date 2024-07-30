@@ -1,0 +1,3 @@
+.socialLinks {
+  @apply flex flex-wrap justify-center gap-4 pb-4;
+}

@@ -1,0 +1,22 @@
+.nav {
+  @apply relative;
+}
+
+.navContainer {
+  @apply flex items-center justify-between;
+}
+
+.navButton {
+  @apply flex lg:hidden;
+}
+
+.linkContainer {
+  @apply absolute right-0 top-12 z-10 text-right;
+  @apply flex-col gap-4 rounded-lg pb-8 pl-8 pr-0 pt-8;
+  @apply lg:static lg:flex lg:flex-row lg:rounded-none lg:bg-transparent lg:shadow-none;
+  @apply bg-white dark:bg-gray-950;
+}
+
+.link {
+  @apply text-xl hover:underline;
+}

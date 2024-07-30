@@ -77,7 +77,7 @@ describe('Navigation', () => {
     const navLinks = screen.getByTestId('nav-links')
 
     // Verify the navigation links are hidden.
-    expect(navLinks).toHaveClass('hidden')
+    expect(navLinks).toHaveClass(/hidden/i)
   })
 
   it('should close the menu when clicking outside', () => {
@@ -98,7 +98,7 @@ describe('Navigation', () => {
     const navLinks = screen.getByTestId('nav-links')
 
     // Verify the navigation links are hidden.
-    expect(navLinks).toHaveClass('hidden')
+    expect(navLinks).toHaveClass(/hidden/i)
   })
 
   it('should not have any accessibility issues', async () => {

@@ -5,6 +5,7 @@ import {IconMenu, IconX} from '@tabler/icons-react'
 import clsx from 'clsx'
 import Link from 'next/link'
 import {MouseEvent, useEffect, useRef, useState} from 'react'
+import styles from './Navigation.module.css'
 
 /**
  * Navigation component.
@@ -43,26 +44,23 @@ export function Navigation() {
   }, [])
 
   return (
-    <nav ref={navRef} className="relative" data-testid="nav">
-      <div className="flex items-center justify-between">
+    <nav ref={navRef} className={styles.nav} data-testid="nav">
+      <div className={styles.navContainer}>
         <button
           aria-label="Toggle navigation"
-          className="button flex lg:hidden"
+          className={clsx('button', styles.navButton)}
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <IconX size={24} /> : <IconMenu size={24} />}
         </button>
       </div>
       <div
-        className={clsx(
-          'absolute right-0 top-12 z-10 flex-col gap-4 rounded-lg bg-white pb-8 pl-8 pr-0 pt-8 text-right lg:static lg:flex lg:flex-row lg:rounded-none lg:bg-transparent lg:shadow-none dark:bg-gray-950',
-          {flex: isOpen, hidden: !isOpen}
-        )}
+        className={clsx(styles.linkContainer, {flex: isOpen, hidden: !isOpen})}
         data-testid="nav-links"
       >
         {config.navigation.map((item) => (
           <Link
-            className="text-xl hover:underline"
+            className={styles.link}
             href={item.url}
             key={item.name}
             onClick={handleLinkClick}

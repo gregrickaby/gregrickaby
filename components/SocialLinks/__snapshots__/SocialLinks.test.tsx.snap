@@ -2,14 +2,14 @@
 
 exports[`SocialLinks > should match snapshot 1`] = `
 <div
-  class="flex flex-wrap justify-center gap-4 pb-4"
+  class="_socialLinks_34e23a"
   data-testid="social-links"
 >
   <a
     aria-label="follow on Instagram"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://www.instagram.com/gregoryrickaby/"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on Instagram"
   >
     <svg
@@ -37,9 +37,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Threads"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://www.threads.net/@gregoryrickaby"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on Threads"
   >
     <svg
@@ -61,9 +61,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on GitHub"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://github.com/gregrickaby/"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on GitHub"
   >
     <svg
@@ -85,9 +85,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on LinkedIn"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://linkedin.com/in/gregrickaby/"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on LinkedIn"
   >
     <svg
@@ -121,9 +121,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on WordPress"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://profiles.wordpress.org/gregrickaby/"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on WordPress"
   >
     <svg
@@ -160,9 +160,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Amazon Author"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://www.amazon.com/author/gregrickaby"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on Amazon Author"
   >
     <svg
@@ -187,9 +187,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Facebook"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://www.facebook.com/gregrickaby"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on Facebook"
   >
     <svg
@@ -211,9 +211,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Goodreads"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://www.goodreads.com/author/show/16999736.Greg_Rickaby"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on Goodreads"
   >
     <svg
@@ -247,9 +247,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on CodePen"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://codepen.io/gregrickaby"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on CodePen"
   >
     <svg
@@ -286,9 +286,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on YouTube"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://www.youtube.com/@GregRickaby"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on YouTube"
   >
     <svg
@@ -313,9 +313,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on RSS Feed"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://gregrickaby.com/feed.xml"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on RSS Feed"
   >
     <svg
@@ -343,9 +343,9 @@ exports[`SocialLinks > should match snapshot 1`] = `
   </a>
   <a
     aria-label="follow on Feedly"
-    class="button"
+    class="button _socialButton_34e23a"
     href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fgregrickaby.com%2Ffeed.xml"
-    rel="author"
+    rel="noopener noreferrer"
     title="Follow on Feedly"
   >
     <svg

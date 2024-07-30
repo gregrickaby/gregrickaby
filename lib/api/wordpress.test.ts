@@ -1,11 +1,5 @@
-import {
-  getPageBySlug,
-  getPages,
-  getPopularGithubRepos,
-  getPostBySlug,
-  getPosts
-} from '@/lib/api/api'
-import {mockPost, mockRepos} from '@/lib/mocks'
+import {getPageBySlug, getPages, getPostBySlug, getPosts} from '@/lib/api'
+import {mockPost} from '@/lib/mocks'
 import {describe, expect, it, vi} from 'vitest'
 
 // Mock the fetch API.
@@ -13,7 +7,7 @@ const mockFetch = vi.fn()
 global.fetch = mockFetch
 
 describe('WordPress API Functions', () => {
-  afterEach(() => {
+  beforeEach(() => {
     mockFetch.mockClear()
     vi.spyOn(console, 'error').mockImplementation(() => {})
   })
@@ -73,39 +67,5 @@ describe('WordPress API Functions', () => {
     })
 
     await expect(getPages(1)).rejects.toThrow('Network response was not ok')
-  })
-})
-
-describe('Github Repos', () => {
-  it('should fetch and return the most starred GitHub repos', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: () => Promise.resolve(mockRepos)
-    })
-
-    const repos = await getPopularGithubRepos(1)
-    expect(repos).toEqual([mockRepos[0]])
-    expect(mockFetch).toHaveBeenCalledWith(
-      'https://api.github.com/users/gregrickaby/repos?per_page=100'
-    )
-  })
-
-  it('should throw an error if no repos are found', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: () => Promise.resolve([])
-    })
-
-    await expect(getPopularGithubRepos(1)).rejects.toThrow('No repos found.')
-  })
-
-  it('should throw an error if the GitHub API response is not ok', async () => {
-    mockFetch.mockResolvedValueOnce({
-      ok: false,
-      status: 404,
-      statusText: 'Not Found'
-    })
-
-    await expect(getPopularGithubRepos(1)).rejects.toThrow('Not Found')
   })
 })

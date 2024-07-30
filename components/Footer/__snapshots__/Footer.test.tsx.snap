@@ -8,9 +8,7 @@ exports[`Footer > should match snapshot 1`] = `
   <div
     data-testid="social-links"
   />
-  <p
-    class="py-4"
-  >
+  <p>
     Unless otherwise noted, all content on this website is licensed under
      
     <a
