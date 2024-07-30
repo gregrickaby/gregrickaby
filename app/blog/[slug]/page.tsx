@@ -1,5 +1,5 @@
 import {Blocks} from '@/components/Blocks'
-import {getPostBySlug} from '@/lib/api/wordpress'
+import {WP_Query} from '@/lib/api'
 import {formatDate, yoastSeo} from '@/lib/functions'
 import {notFound} from 'next/navigation'
 
@@ -18,8 +18,22 @@ interface BlogPostProps {
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
 export async function generateMetadata({params}: BlogPostProps) {
+  const query = new WP_Query({
+    slug: params.slug,
+    fields: [
+      'category_names',
+      'content',
+      'date',
+      'id',
+      'slug',
+      'tag_names',
+      'title',
+      'yoast_head_json'
+    ]
+  })
+
   // Get the post by slug.
-  const post = await getPostBySlug(params.slug)
+  const [post] = await query.getPosts()
 
   // No page? No problem.
   if (!post) {
@@ -33,8 +47,22 @@ export async function generateMetadata({params}: BlogPostProps) {
  * Blog Post.
  */
 export default async function BlogPost({params}: BlogPostProps) {
+  const query = new WP_Query({
+    slug: params.slug,
+    fields: [
+      'category_names',
+      'content',
+      'date',
+      'id',
+      'slug',
+      'tag_names',
+      'title',
+      'yoast_head_json'
+    ]
+  })
+
   // Get the post by slug.
-  const post = await getPostBySlug(params.slug)
+  const [post] = await query.getPosts()
 
   // No post? No problem.
   if (!post) {

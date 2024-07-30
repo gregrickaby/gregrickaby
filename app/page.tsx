@@ -3,7 +3,7 @@ import {getGithubRepos, WP_Query} from '@/lib/api'
 import Link from 'next/link'
 
 const latestPosts = new WP_Query({
-  fields: 'id,title,slug',
+  fields: ['id', 'title', 'slug'],
   order: 'desc',
   orderby: 'date',
   post_type: 'posts',
@@ -11,7 +11,7 @@ const latestPosts = new WP_Query({
 })
 
 const photosQuery = new WP_Query({
-  fields: 'id,content',
+  fields: ['id', 'content'],
   post_type: 'pages',
   per_page: 1,
   slug: 'photos'

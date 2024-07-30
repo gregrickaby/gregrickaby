@@ -1,6 +1,20 @@
-import {getPosts} from '@/lib/api'
+import {WP_Query} from '@/lib/api'
 import config from '@/lib/config'
 import escape from 'xml-escape'
+
+const query = new WP_Query({
+  fields: [
+    'slug',
+    'title',
+    'excerpt',
+    'date',
+    'author_name',
+    'category_names',
+    'featured_image_data'
+  ],
+  per_page: 10,
+  post_type: 'posts'
+})
 
 /**
  * Route handler for generating RSS feed.
@@ -10,7 +24,7 @@ import escape from 'xml-escape'
 export async function GET() {
   try {
     // Fetch all blog posts.
-    const posts = await getPosts(10)
+    const posts = await query.getPosts()
 
     // No posts? Bail.
     if (!posts) {

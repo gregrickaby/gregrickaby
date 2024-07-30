@@ -1,5 +1,5 @@
 import {Blocks} from '@/components/Blocks'
-import {getPageBySlug} from '@/lib/api/wordpress'
+import {WP_Query} from '@/lib/api'
 import {yoastSeo} from '@/lib/functions/'
 import {notFound} from 'next/navigation'
 
@@ -18,8 +18,14 @@ interface PageProps {
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
 export async function generateMetadata({params}: PageProps) {
-  // Get a page by slug.
-  const page = await getPageBySlug(params.slug)
+  const query = new WP_Query({
+    post_type: 'pages',
+    slug: params.slug,
+    fields: ['content', 'title', 'yoast_head_json']
+  })
+
+  // Get the page by slug.
+  const [page] = await query.getPosts()
 
   // No page? No problem.
   if (!page) {
@@ -33,8 +39,14 @@ export async function generateMetadata({params}: PageProps) {
  * Single Page.
  */
 export default async function BlogPost({params}: PageProps) {
+  const query = new WP_Query({
+    post_type: 'pages',
+    slug: params.slug,
+    fields: ['content', 'title', 'yoast_head_json']
+  })
+
   // Get the page by slug.
-  const page = await getPageBySlug(params.slug)
+  const [page] = await query.getPosts()
 
   // No page? No problem.
   if (!page) {

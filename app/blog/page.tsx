@@ -1,8 +1,13 @@
-import {getPosts} from '@/lib/api'
+import {WP_Query} from '@/lib/api'
 import config from '@/lib/config'
 import {Metadata} from 'next'
 import Link from 'next/link'
 import {notFound} from 'next/navigation'
+
+const query = new WP_Query({
+  per_page: 100,
+  fields: ['id', 'slug', 'title']
+})
 
 /**
  * Generate metadata.
@@ -21,8 +26,8 @@ export function generateMetadata(): Metadata {
  * Blog Archive.
  */
 export default async function BlogArchive() {
-  // Get all posts.
-  const posts = await getPosts(100)
+  // Get the latest posts.
+  const posts = await query.getPosts()
 
   // No posts? No problem.
   if (!posts) {
