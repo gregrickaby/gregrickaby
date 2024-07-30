@@ -1,20 +1,20 @@
 import {Blocks} from '@/components'
-import {getGithubRepos} from '@/lib/api'
-import {WP_Query} from '@/lib/api/WP_Query'
+import {getGithubRepos, WP_Query} from '@/lib/api'
+import Link from 'next/link'
 
-const latestQuery = new WP_Query({
-  post_type: 'posts',
-  posts_per_page: 5,
-  orderby: 'date',
+const latestPosts = new WP_Query({
+  fields: 'id,title,slug',
   order: 'desc',
-  fields: 'id,title,slug'
+  orderby: 'date',
+  post_type: 'posts',
+  per_page: 5
 })
 
 const photosQuery = new WP_Query({
+  fields: 'id,content',
   post_type: 'pages',
-  search: 'photos',
-  posts_per_page: 1,
-  fields: 'id,content'
+  per_page: 1,
+  slug: 'photos'
 })
 
 /**
@@ -23,7 +23,7 @@ const photosQuery = new WP_Query({
  * @see https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts#pages
  */
 export default async function Home() {
-  const posts = await latestQuery.getPosts()
+  const posts = await latestPosts.getPosts()
   const repos = await getGithubRepos(7)
   const photos = await photosQuery.getPosts()
 
@@ -57,7 +57,7 @@ export default async function Home() {
           <ul>
             {posts.map((post) => (
               <li key={post.id}>
-                <a
+                <Link
                   href={`/blog/${post.slug}`}
                   dangerouslySetInnerHTML={{__html: post.title.rendered}}
                 />
