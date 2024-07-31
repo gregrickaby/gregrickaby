@@ -46,12 +46,12 @@
     "@types/imagesloaded": "^4.1.6",
     "@types/jest-axe": "^3.5.9",
     "@types/masonry-layout": "^4.2.8",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.0.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/xml-escape": "^1.1.3",
     "@vitejs/plugin-react": "^4.3.1",
-    "@vitest/coverage-v8": "^2.0.4",
+    "@vitest/coverage-v8": "^2.0.5",
     "autoprefixer": "^10.4.19",
     "eslint": "8",
     "eslint-config-next": "^14.2.5",
@@ -68,6 +68,6 @@
     "stylelint-config-standard": "^36.0.1",
     "tailwindcss": "^3.4.7",
     "typescript": "^5.5.4",
-    "vitest": "^2.0.4"
+    "vitest": "^2.0.5"
   }
 }
