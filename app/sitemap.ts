@@ -1,7 +1,19 @@
-import {getPages, getPosts} from '@/lib/api'
+import {WP_Query} from '@/lib/api'
 import config from '@/lib/config'
 import {Post} from '@/lib/types'
 import {MetadataRoute} from 'next'
+
+const pageQuery = new WP_Query({
+  fields: ['slug', 'yoast_head_json'],
+  per_page: 100,
+  post_type: 'pages'
+})
+
+const postQuery = new WP_Query({
+  fields: ['slug', 'yoast_head_json'],
+  per_page: 100,
+  post_type: 'posts'
+})
 
 /**
  * Helper function to generate sitemap entries.
@@ -29,8 +41,8 @@ function generateSitemapEntries(
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all the pages and posts.
-  const allPages = await getPages(100)
-  const allPosts = await getPosts(100)
+  const allPages = await pageQuery.getPosts()
+  const allPosts = await postQuery.getPosts()
 
   // Generate sitemap entries for pages.
   const pagesSitemapEntries = generateSitemapEntries(
