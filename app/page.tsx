@@ -1,5 +1,6 @@
-import {Blocks} from '@/components'
 import {getGithubRepos, WP_Query} from '@/lib/api'
+import {getThreads} from '@/lib/api/threads'
+import {IconBrandThreads} from '@tabler/icons-react'
 import Link from 'next/link'
 
 const latestPosts = new WP_Query({
@@ -10,13 +11,6 @@ const latestPosts = new WP_Query({
   per_page: 5
 })
 
-const photosQuery = new WP_Query({
-  fields: ['id', 'content'],
-  post_type: 'pages',
-  per_page: 1,
-  slug: 'photos'
-})
-
 /**
  * The home page route.
  *
@@ -25,7 +19,7 @@ const photosQuery = new WP_Query({
 export default async function Home() {
   const posts = await latestPosts.getPosts()
   const repos = await getGithubRepos(7)
-  const photos = await photosQuery.getPosts()
+  const threads = await getThreads(7)
 
   return (
     <article className="article">
@@ -36,19 +30,16 @@ export default async function Home() {
           <a href="https://www.linkedin.com/in/gregrickaby/" rel="author">
             full-stack engineer
           </a>
-          , <a href="/photos">photography enthusiast</a>, and{' '}
+          , photography enthusiast, and{' '}
           <a href="https://www.amazon.com/author/gregrickaby" rel="author">
             published author
           </a>{' '}
           who has been building websites and contributing to open-source
-          projects since the late 90&apos;s. I&apos;m also excited about the{' '}
-          <a href="https://indieweb.org/">IndieWeb</a> movement. I love the idea
-          of owning your own online identity, domain, and content.
+          projects since the late 90&apos;s.
         </p>
         <p>
-          Offline, I live in south Alabama and I&apos;m married with three kids.
-          My hobbies include cooking, traveling, painting, and reading. Thanks
-          for stopping by! ✌️
+          Offline, I&apos;m married with three kids and my hobbies include
+          photography, cooking, traveling, painting, and reading.
         </p>
       </section>
       <section className="grid gap-8 md:grid-cols-2">
@@ -188,10 +179,26 @@ export default async function Home() {
           </ul>
         </div>
         <div className="homepage-gallery">
-          <h3>Recent Photos</h3>
-          {photos.map((photo) => (
-            <Blocks key={photo.id} content={photo.content.rendered} />
-          ))}
+          <h3 className="flex items-center gap-2">
+            Recent Photos{' '}
+            <a
+              aria-label="follow on Threads"
+              className="button"
+              href="https://www.threads.net/@gregoryrickaby"
+              rel="noopener noreferrer"
+              title="Follow on Threads"
+            >
+              <IconBrandThreads />
+            </a>
+          </h3>
+          {threads.data.map((thread) =>
+            // If there is not a media_url, skip this iteration.
+            !thread.media_url ? null : (
+              <a key={thread.id} href={thread.permalink}>
+                <img src={thread.media_url} alt={thread.text} />
+              </a>
+            )
+          )}
         </div>
       </section>
     </article>
