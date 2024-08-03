@@ -4,8 +4,9 @@
 import react from '@vitejs/plugin-react'
 import {resolve} from 'path'
 import {defineConfig} from 'vitest/config'
+import {loadEnv} from 'vite'
 
-export default defineConfig({
+export default defineConfig(({mode}) => ({
   resolve: {
     alias: {
       '@': resolve(__dirname, './')
@@ -13,6 +14,7 @@ export default defineConfig({
   },
   plugins: [react()],
   test: {
+    env: loadEnv(mode, process.cwd(), ''),
     coverage: {
       enabled: true,
       include: ['components/**/*', 'lib/**/*'],
@@ -30,4 +32,4 @@ export default defineConfig({
     exclude: ['**/node_modules/**'],
     setupFiles: './vitest.setup.ts'
   }
-})
+}))
