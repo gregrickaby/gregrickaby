@@ -1,5 +1,16 @@
 import {Threads} from '../api/threads'
 
+export const mockEmptyThreads: Threads = {
+  data: [],
+  paging: {
+    cursors: {
+      before: '',
+      after: ''
+    },
+    next: ''
+  }
+}
+
 export const mockThreads: Threads = {
   data: [
     {

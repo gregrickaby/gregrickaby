@@ -68,8 +68,8 @@ export function BlogArchive({initialPosts}: {initialPosts: Post[]}) {
         </p>
       }
     >
-      {posts.map((post) => (
-        <ArticleCard key={post.id} post={post} />
+      {posts.map((post, index) => (
+        <ArticleCard key={index} post={post} />
       ))}
     </InfiniteScroll>
   )

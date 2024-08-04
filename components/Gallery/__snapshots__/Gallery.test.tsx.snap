@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Gallery > should match snapshot 1`] = `
+<div
+  class="_gallery_5fdb3a"
+  data-testid="gallery"
+>
+  <div
+    aria-label="Open photo Taking advantage of the new moon! Milky Way from my front yard"
+    class="_photo_5fdb3a"
+    data-testid="photo-0"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt="Taking advantage of the new moon! Milky Way from my front yard"
+      height="300"
+      loading="lazy"
+      src="https://scontent-atl3-1.cdninstagram.com/v/t51.29350-15/453769781_1165705561342861_3077480464820431675_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=18de74&_nc_ohc=nRWYYqypj0oQ7kNvgErE_Lc&_nc_ht=scontent-atl3-1.cdninstagram.com&edm=ACx9VUEEAAAA&oh=00_AYBVVGC6uLoGHbwqC5kMNBcEHVYPpneWytiQ5AC-BW6y2w&oe=66B3F393"
+      width="425"
+    />
+  </div>
+  <div
+    aria-label="Open photo My youngest yelled, “it’s the zombie apocalypse!” stormyweather"
+    class="_photo_5fdb3a"
+    data-testid="photo-1"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt="My youngest yelled, “it’s the zombie apocalypse!” stormyweather"
+      height="300"
+      loading="lazy"
+      src="https://scontent-atl3-1.cdninstagram.com/v/t51.29350-15/453259251_503995798667592_3625227248165730293_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=18de74&_nc_ohc=46uSKISPRVkQ7kNvgEY2ddI&_nc_ht=scontent-atl3-1.cdninstagram.com&edm=ACx9VUEEAAAA&oh=00_AYDm265xezWddW7GUpVbRMwgEbMmNzvJyuskddCXhcsuTw&oe=66B3CB08"
+      width="425"
+    />
+  </div>
+  <div
+    aria-label="Open photo Who wants hugs?"
+    class="_photo_5fdb3a"
+    data-testid="photo-2"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt="Who wants hugs?"
+      height="300"
+      loading="lazy"
+      src="https://scontent-atl3-1.cdninstagram.com/v/t51.29350-15/452937348_526651603050710_3094736639257777462_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=18de74&_nc_ohc=KVJHOvmacecQ7kNvgHYSpNQ&_nc_ht=scontent-atl3-1.cdninstagram.com&edm=ACx9VUEEAAAA&oh=00_AYBXIiM3xGOzCqEoyvBh8z-_DDhLfGSAGy5YtZKTeg4BZg&oe=66B3CC28"
+      width="425"
+    />
+  </div>
+  <div
+    aria-label="Open photo Hello dark sky season! 👀🌌📷"
+    class="_photo_5fdb3a"
+    data-testid="photo-3"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt="Hello dark sky season! 👀🌌📷"
+      height="300"
+      loading="lazy"
+      src="https://scontent-atl3-1.cdninstagram.com/v/t39.30808-6/449195864_18439774633004645_5040392547010828344_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=18de74&_nc_ohc=6YpL6AguGZAQ7kNvgE3kRKJ&_nc_ht=scontent-atl3-1.cdninstagram.com&edm=ACx9VUEEAAAA&oh=00_AYDdRd50T67gEVWGXoKS5IDit4QWkKfeBoXRaXhUzvxyyw&oe=66B3F128"
+      width="425"
+    />
+  </div>
+  <div
+    aria-label="Open photo Happy Birthday @chefboyarecee!!! 1️⃣9️⃣"
+    class="_photo_5fdb3a"
+    data-testid="photo-4"
+    role="button"
+    tabindex="0"
+  >
+    <img
+      alt="Happy Birthday @chefboyarecee!!! 1️⃣9️⃣"
+      height="300"
+      loading="lazy"
+      src="https://scontent-atl3-1.cdninstagram.com/v/t39.30808-6/448399927_18437829799004645_8126595902947242612_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=18de74&_nc_ohc=raCixRpmvRUQ7kNvgE-wQjj&_nc_ht=scontent-atl3-1.cdninstagram.com&edm=ACx9VUEEAAAA&oh=00_AYBpOpkg0bqotEfIYBq4Y0bEr9PSk4cI2fckDnT-5L8Vng&oe=66B3E93B"
+      width="425"
+    />
+  </div>
+</div>
+`;

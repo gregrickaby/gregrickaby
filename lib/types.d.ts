@@ -49,12 +49,12 @@ export interface Title {
 
 export interface Content {
   rendered: string
-  protected: boolean
+  protected?: boolean
 }
 
 export interface Excerpt {
   rendered: string
-  protected: boolean
+  protected?: boolean
 }
 
 export interface Meta {

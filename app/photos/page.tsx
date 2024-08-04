@@ -1,3 +1,4 @@
+import {Gallery} from '@/components/Gallery'
 import {getThreads} from '@/lib/api'
 import {IconBrandThreads} from '@tabler/icons-react'
 
@@ -5,6 +6,7 @@ import {IconBrandThreads} from '@tabler/icons-react'
  * The photos page route.
  */
 export default async function Photos() {
+  // Get the most recent Threads photos.
   const threads = await getThreads(120)
 
   return (
@@ -21,16 +23,7 @@ export default async function Photos() {
           <IconBrandThreads />
         </a>
       </h1>
-      <div className="columns-1 gap-5 sm:columns-2 sm:gap-8 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-8">
-        {threads.data.map((thread) =>
-          // If there is not a media_url, skip this iteration.
-          !thread.media_url ? null : (
-            <a key={thread.id} href={thread.media_url}>
-              <img alt={thread.text} src={thread.media_url} loading="lazy" />
-            </a>
-          )
-        )}
-      </div>
+      <Gallery photos={threads} />
     </article>
   )
 }
