@@ -1,5 +1,7 @@
+export * from './ArticleCard'
 export * from './BackToTop'
 export * from './Blocks'
+export * from './BlogArchive'
 export * from './Footer'
 export * from './Header'
 export * from './JsonLd'

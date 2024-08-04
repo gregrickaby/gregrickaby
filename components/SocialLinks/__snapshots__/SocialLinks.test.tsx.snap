@@ -9,7 +9,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on Instagram"
     class="button _socialButton_34e23a"
     href="https://www.instagram.com/gregoryrickaby/"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on Instagram"
   >
     <svg
@@ -39,7 +39,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on Threads"
     class="button _socialButton_34e23a"
     href="https://www.threads.net/@gregoryrickaby"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on Threads"
   >
     <svg
@@ -63,7 +63,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on GitHub"
     class="button _socialButton_34e23a"
     href="https://github.com/gregrickaby/"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on GitHub"
   >
     <svg
@@ -87,7 +87,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on LinkedIn"
     class="button _socialButton_34e23a"
     href="https://linkedin.com/in/gregrickaby/"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on LinkedIn"
   >
     <svg
@@ -123,7 +123,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on WordPress"
     class="button _socialButton_34e23a"
     href="https://profiles.wordpress.org/gregrickaby/"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on WordPress"
   >
     <svg
@@ -162,7 +162,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on Amazon Author"
     class="button _socialButton_34e23a"
     href="https://www.amazon.com/author/gregrickaby"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on Amazon Author"
   >
     <svg
@@ -189,7 +189,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on Facebook"
     class="button _socialButton_34e23a"
     href="https://www.facebook.com/gregrickaby"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on Facebook"
   >
     <svg
@@ -213,7 +213,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on Goodreads"
     class="button _socialButton_34e23a"
     href="https://www.goodreads.com/author/show/16999736.Greg_Rickaby"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on Goodreads"
   >
     <svg
@@ -249,7 +249,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on CodePen"
     class="button _socialButton_34e23a"
     href="https://codepen.io/gregrickaby"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on CodePen"
   >
     <svg
@@ -288,7 +288,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on YouTube"
     class="button _socialButton_34e23a"
     href="https://www.youtube.com/@GregRickaby"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on YouTube"
   >
     <svg
@@ -315,7 +315,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on RSS Feed"
     class="button _socialButton_34e23a"
     href="https://gregrickaby.com/feed.xml"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on RSS Feed"
   >
     <svg
@@ -345,7 +345,7 @@ exports[`SocialLinks > should match snapshot 1`] = `
     aria-label="follow on Feedly"
     class="button _socialButton_34e23a"
     href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fgregrickaby.com%2Ffeed.xml"
-    rel="noopener noreferrer"
+    rel="author"
     title="Follow on Feedly"
   >
     <svg

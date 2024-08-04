@@ -87,7 +87,7 @@ export default function RootLayout({
       <body>
         <JsonLD />
         <Header />
-        {children}
+        <main className="main">{children}</main>
         <Footer />
         <BackToTop />
       </body>

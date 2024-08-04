@@ -1,12 +1,14 @@
+import {BlogArchive} from '@/components/BlogArchive'
 import {WP_Query} from '@/lib/api'
 import config from '@/lib/config'
 import {Metadata} from 'next'
-import Link from 'next/link'
-import {notFound} from 'next/navigation'
 
-const query = new WP_Query({
-  per_page: 100,
-  fields: ['id', 'slug', 'title']
+const initialQuery = new WP_Query({
+  per_page: 10,
+  page: 1,
+  fields: ['id', 'slug', 'title', 'excerpt', 'featured_image_data', 'date'],
+  orderby: 'date',
+  order: 'desc'
 })
 
 /**
@@ -25,33 +27,14 @@ export function generateMetadata(): Metadata {
 /**
  * Blog Archive.
  */
-export default async function BlogArchive() {
-  // Get the latest posts.
-  const posts = await query.getPosts()
-
-  // No posts? No problem.
-  if (!posts) {
-    return notFound()
-  }
+export default async function Blog() {
+  // Get the initial posts.
+  const posts = await initialQuery.getPosts()
 
   return (
     <article className="article">
       <h1>Blog</h1>
-      <div className="not-prose flex flex-col gap-4">
-        {posts.map((post) => (
-          <article key={post.id}>
-            <Link
-              className="underline hover:no-underline"
-              href={`/blog/${post.slug}`}
-            >
-              <h2
-                className="text-xl"
-                dangerouslySetInnerHTML={{__html: post.title.rendered}}
-              />
-            </Link>
-          </article>
-        ))}
-      </div>
+      <BlogArchive initialPosts={posts} />
     </article>
   )
 }

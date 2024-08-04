@@ -14,8 +14,20 @@
     @apply transition-colors duration-200 ease-in-out;
   }
 
+  .main {
+    @apply flex w-full flex-wrap items-start justify-center px-8 lg:px-0;
+  }
+
+  .two-col {
+    @apply grid max-w-7xl grid-cols-1 gap-12 p-8 lg:grid-cols-12 lg:p-4;
+  }
+
   .article {
-    @apply prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0;
+    @apply prose lg:prose-xl dark:prose-invert lg:col-span-9;
+  }
+
+  .sidebar {
+    @apply prose lg:prose-xl dark:prose-invert lg:col-span-3;
   }
 }
 

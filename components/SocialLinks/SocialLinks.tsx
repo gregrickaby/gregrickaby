@@ -21,7 +21,7 @@ export function SocialLinks() {
           className={clsx('button', styles.socialButton)}
           href={social.url}
           key={social.name}
-          rel="noopener noreferrer"
+          rel="author"
           title={`Follow on ${social.name}`}
         >
           {social.icon && createElement(social.icon)}

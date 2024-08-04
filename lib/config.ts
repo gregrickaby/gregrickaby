@@ -48,7 +48,7 @@ const config = {
     },
     {
       name: 'Photos',
-      url: 'https://www.threads.net/@gregoryrickaby'
+      url: '/photos'
     },
     {
       name: 'Resources',
