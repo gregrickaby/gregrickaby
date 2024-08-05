@@ -17,7 +17,7 @@ const latestPosts = new WP_Query({
  */
 export default async function Home() {
   const posts = await latestPosts.getPosts()
-  const repos = await getGithubRepos(7)
+  const repos = await getGithubRepos(5)
 
   return (
     <div className="two-col">
@@ -50,11 +50,22 @@ export default async function Home() {
         {posts.map((post) => (
           <ArticleCard key={post.id} post={post} />
         ))}
+
+        <footer className="mt-8 text-center">
+          <Link href="/blog">See all blog posts</Link>
+        </footer>
       </article>
+
       <aside className="sidebar">
         <div>
-          <h3>Hobby Apps</h3>
+          <h3>My Hobby Apps</h3>
           <ul>
+            <li>
+              <a href="https://redditviewer.vercel.app">Reddit Viewer</a>
+            </li>
+            <li>
+              <a href="https://localwx.vercel.app">Local Weather</a>
+            </li>
             <li>
               <a href="https://spellingscramble.vercel.app">
                 Spelling Scramble
@@ -65,16 +76,10 @@ export default async function Home() {
                 Preschool Flashcards
               </a>
             </li>
-            <li>
-              <a href="https://redditviewer.vercel.app">Reddit Viewer</a>
-            </li>
-            <li>
-              <a href="https://localwx.vercel.app">Local Weather</a>
-            </li>
           </ul>
         </div>
         <div>
-          <h3>Popular GitHub Repos</h3>
+          <h3>Popular Repos</h3>
           <ul>
             {repos.map((repo) => (
               <li key={repo.id}>
