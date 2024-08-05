@@ -57,12 +57,6 @@ exports[`Navigation > should match snapshot 1`] = `
     </a>
     <a
       class="_link_2c0fa0"
-      href="/cv"
-    >
-      CV
-    </a>
-    <a
-      class="_link_2c0fa0"
       href="/media"
     >
       Media
@@ -78,6 +72,12 @@ exports[`Navigation > should match snapshot 1`] = `
       href="/resources"
     >
       Resources
+    </a>
+    <a
+      class="_link_2c0fa0"
+      href="/resume"
+    >
+      Resume
     </a>
     <a
       class="_link_2c0fa0"

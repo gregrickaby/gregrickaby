@@ -39,10 +39,6 @@ const config = {
       url: '/contact'
     },
     {
-      name: 'CV',
-      url: '/cv'
-    },
-    {
       name: 'Media',
       url: '/media'
     },
@@ -53,6 +49,10 @@ const config = {
     {
       name: 'Resources',
       url: '/resources'
+    },
+    {
+      name: 'Resume',
+      url: '/resume'
     },
     {
       name: 'RSS',
