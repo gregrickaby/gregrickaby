@@ -61,7 +61,7 @@ export default async function Home() {
           <h3>My Hobby Apps</h3>
           <ul>
             <li>
-              <a href="https://redditviewer.vercel.app">Reddit Viewer</a>
+              <a href="https://reddit-viewer.com">Reddit Viewer</a>
             </li>
             <li>
               <a href="https://localwx.vercel.app">Local Weather</a>
