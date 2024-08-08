@@ -40,7 +40,7 @@
     "xml-escape": "^1.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.13",
+    "@tailwindcss/typography": "^0.5.14",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -62,13 +62,13 @@
     "jsdom": "^24.1.1",
     "lefthook": "^1.7.11",
     "msw": "^2.3.5",
-    "postcss": "^8.4.40",
+    "postcss": "^8.4.41",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "rimraf": "^6.0.1",
     "stylelint": "^16.8.1",
     "stylelint-config-standard": "^36.0.1",
-    "tailwindcss": "^3.4.7",
+    "tailwindcss": "^3.4.8",
     "typescript": "^5.5.4",
     "vitest": "^2.0.5"
   }
