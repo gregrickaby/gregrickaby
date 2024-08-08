@@ -41,7 +41,7 @@ describe('getThreads', () => {
     )
 
     await expect(getThreads(5)).rejects.toThrow(
-      'Error fetching threads: Internal Server Error'
+      'Unexpected error fetching threads'
     )
   })
 
@@ -52,7 +52,9 @@ describe('getThreads', () => {
       })
     )
 
-    await expect(getThreads(5)).rejects.toThrow('No data returned')
+    await expect(getThreads(5)).rejects.toThrow(
+      'Unexpected error fetching threads'
+    )
   })
 
   it('should throw an error if the access token is missing', async () => {
