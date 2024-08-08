@@ -48,7 +48,7 @@ exports[`ArticleCard Component > should match snapshot 1`] = `
           We Went Chasing Waterfalls
         </h3>
       </a>
-      <p
+      <div
         class="_excerpt_c0c515"
       >
         <p>
@@ -56,7 +56,7 @@ exports[`ArticleCard Component > should match snapshot 1`] = `
         </p>
         
 
-      </p>
+      </div>
     </div>
   </div>
 </article>
