@@ -35,7 +35,7 @@ export function ArticleCard({post}: {post: Post}) {
           <Link className={styles.title} href={`/blog/${post.slug}`}>
             <h3 dangerouslySetInnerHTML={{__html: post.title.rendered}} />
           </Link>
-          <p
+          <div
             className={styles.excerpt}
             dangerouslySetInnerHTML={{__html: post.excerpt.rendered}}
           />
