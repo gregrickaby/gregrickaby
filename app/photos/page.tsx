@@ -12,7 +12,7 @@ export default async function Photos() {
   return (
     <article className="article">
       <h1 className="flex items-center gap-2">
-        Recent Photos{' '}
+        Photos{' '}
         <a
           aria-label="follow on Threads"
           className="button"
