@@ -21,7 +21,8 @@ describe('Github Repos', () => {
     const repos = await getGithubRepos(1)
     expect(repos).toEqual([mockRepos[0]])
     expect(mockFetch).toHaveBeenCalledWith(
-      'https://api.github.com/users/gregrickaby/repos?per_page=100'
+      'https://api.github.com/users/gregrickaby/repos?per_page=100',
+      {next: {revalidate: 3600}}
     )
   })
 

@@ -160,13 +160,8 @@ export class WP_Query {
     const url = this.buildQuery()
 
     try {
-      // Try to fetch the posts.
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      // Send the request to the WordPress API.
+      const response = await fetch(url, {next: {revalidate: 3600}})
 
       // If the response is not OK, throw an error.
       if (!response.ok) {
@@ -175,6 +170,11 @@ export class WP_Query {
 
       // Parse the JSON response.
       const data: Post[] = await response.json()
+
+      // If there are no posts, throw an error.
+      if (!data || data.length === 0) {
+        throw new Error('No posts found.')
+      }
 
       // Return the data.
       return data

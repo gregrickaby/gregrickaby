@@ -13,9 +13,10 @@ export interface Repo {
  */
 export async function getGithubRepos(limit: number): Promise<Repo[]> {
   try {
-    // Fetch 100 repos from the GitHub API.
+    // Send the request to the GitHub API.
     const response = await fetch(
-      `https://api.github.com/users/gregrickaby/repos?per_page=100`
+      `https://api.github.com/users/gregrickaby/repos?per_page=100`,
+      {next: {revalidate: 3600}}
     )
 
     // If the response status is not 200, throw an error.

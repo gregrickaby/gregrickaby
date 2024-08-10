@@ -121,12 +121,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+      {next: {revalidate: 3600}}
     )
     expect(posts).toEqual(mockPost)
   })
@@ -142,12 +137,23 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+      {next: {revalidate: 3600}}
+    )
+    expect(posts).toEqual([])
+  })
+
+  it('should handle empty responses', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => []
+    })
+
+    const query = new WP_Query()
+    const posts = await query.getPosts()
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
+      {next: {revalidate: 3600}}
     )
     expect(posts).toEqual([])
   })
@@ -160,12 +166,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+      {next: {revalidate: 3600}}
     )
     expect(posts).toEqual([])
   })

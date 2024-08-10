@@ -65,7 +65,7 @@ export async function getThreads(posts: number): Promise<Threads> {
 
   try {
     // Send the request to the Threads API.
-    const response = await fetch(url.toString())
+    const response = await fetch(url.toString(), {next: {revalidate: 3600}})
 
     // If the response is not ok, throw an error.
     if (!response.ok) {
