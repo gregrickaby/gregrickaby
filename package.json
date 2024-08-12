@@ -47,7 +47,7 @@
     "@types/imagesloaded": "^4.1.6",
     "@types/jest-axe": "^3.5.9",
     "@types/masonry-layout": "^4.2.8",
-    "@types/node": "^22.1.0",
+    "@types/node": "^22.2.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/xml-escape": "^1.1.3",
