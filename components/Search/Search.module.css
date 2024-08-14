@@ -1,9 +1,14 @@
 .search {
-  @apply flex items-center;
+  @apply relative flex flex-col items-center;
+}
+
+.loading {
+  @apply animate-spin duration-1000 ease-linear motion-reduce:hidden;
 }
 
 .results {
-  @apply m-auto;
+  @apply absolute left-0 right-0 top-14 z-50;
+  @apply rounded-lg bg-gray-100 px-4 shadow-lg dark:bg-gray-800;
 }
 
 .number {

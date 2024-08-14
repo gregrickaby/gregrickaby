@@ -2,6 +2,7 @@
 
 import {searchQuery} from '@/lib/api/search'
 import {SearchResults} from '@/lib/types'
+import {IconLoader} from '@tabler/icons-react'
 import {useDebounce} from '@uidotdev/usehooks'
 import Link from 'next/link'
 import {useEffect, useState} from 'react'
@@ -59,36 +60,40 @@ export function Search() {
           type="search"
           value={query}
         />
+
+        {!results && query.length > 0 && (
+          <IconLoader className={styles.loading} />
+        )}
+
+        {error && <p className={styles.error}>{error}</p>}
+
+        {results && results.length === 0 && !error && <p>No results found.</p>}
+
+        {results && results.length > 0 && (
+          <div className={styles.results} aria-live="polite">
+            <p>
+              Nice! You found{' '}
+              <span className={styles.number}>{results.length}</span> results
+              for <span className={styles.query}>{debouncedQuery}</span>
+            </p>
+            <ol>
+              {results.map((result) => (
+                <li key={result.id}>
+                  <Link
+                    href={result.url.replace('https://blog.', 'https://')}
+                    onClick={resetSearch}
+                  >
+                    <span
+                      className={styles.title}
+                      dangerouslySetInnerHTML={{__html: result.title}}
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
-
-      {error && <p className={styles.error}>{error}</p>}
-
-      {results && results.length === 0 && !error && <p>No results found.</p>}
-
-      {results && results.length > 0 && (
-        <div className={styles.results} aria-live="polite">
-          <p>
-            Nice! You found{' '}
-            <span className={styles.number}>{results.length}</span> results for{' '}
-            <span className={styles.query}>{debouncedQuery}</span>
-          </p>
-          <ol>
-            {results.map((result) => (
-              <li key={result.id}>
-                <Link
-                  href={result.url.replace('https://blog.', 'https://')}
-                  onClick={resetSearch}
-                >
-                  <span
-                    className={styles.title}
-                    dangerouslySetInnerHTML={{__html: result.title}}
-                  />
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
     </>
   )
 }
