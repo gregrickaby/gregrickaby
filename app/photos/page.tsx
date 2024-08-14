@@ -2,6 +2,21 @@ import {Gallery} from '@/components/Gallery'
 import {getThreads} from '@/lib/api'
 import {IconBrandThreads} from '@tabler/icons-react'
 
+import config from '@/lib/config'
+import {Metadata} from 'next'
+
+/**
+ * Generate metadata.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
+export function generateMetadata(): Metadata {
+  return {
+    title: `Photos - ${config.siteName}`,
+    description: 'My latest photos.'
+  }
+}
+
 /**
  * The photos page route.
  */
