@@ -15,26 +15,17 @@
   }
 
   input[type='search'] {
-    @apply w-full;
     @apply bg-gray-100 dark:bg-gray-800;
     @apply border border-gray-300 dark:border-gray-700;
-    @apply rounded p-2;
+    @apply w-full rounded p-2;
   }
 
   .main {
-    @apply mx-auto max-w-3xl px-16 xl:max-w-4xl xl:px-0;
-  }
-
-  .two-col {
-    @apply grid max-w-7xl grid-cols-1 gap-12 p-8 lg:grid-cols-12 lg:p-4;
+    @apply container mx-auto px-8 lg:px-0;
   }
 
   .article {
-    @apply prose lg:prose-xl dark:prose-invert lg:col-span-9;
-  }
-
-  .sidebar {
-    @apply prose lg:prose-xl dark:prose-invert lg:col-span-3;
+    @apply prose mx-auto lg:prose-xl dark:prose-invert;
   }
 }
 
