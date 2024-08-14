@@ -123,6 +123,12 @@ exports[`Header > should match snapshot 1`] = `
       </a>
       <a
         class="_link_2c0fa0"
+        href="/search"
+      >
+        Search
+      </a>
+      <a
+        class="_link_2c0fa0"
         href="/feed.xml"
       >
         RSS
