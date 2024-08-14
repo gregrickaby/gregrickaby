@@ -14,8 +14,15 @@
     @apply transition-colors duration-200 ease-in-out;
   }
 
+  input[type='search'] {
+    @apply w-full;
+    @apply bg-gray-100 dark:bg-gray-800;
+    @apply border border-gray-300 dark:border-gray-700;
+    @apply rounded p-2;
+  }
+
   .main {
-    @apply flex w-full flex-wrap items-start justify-center px-8 lg:px-0;
+    @apply mx-auto max-w-3xl px-16 xl:max-w-4xl xl:px-0;
   }
 
   .two-col {

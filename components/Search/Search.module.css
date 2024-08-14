@@ -1,0 +1,19 @@
+.search {
+  @apply flex items-center;
+}
+
+.results {
+  @apply m-auto;
+}
+
+.number {
+  @apply border-b border-b-orange-300 font-bold;
+}
+
+.query {
+  @apply bg-orange-300 p-1 text-zinc-800;
+}
+
+.title {
+  @apply m-0 p-0;
+}

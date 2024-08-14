@@ -55,6 +55,10 @@ const config = {
       url: '/resume'
     },
     {
+      name: 'Search',
+      url: '/search'
+    },
+    {
       name: 'RSS',
       url: '/feed.xml'
     }
