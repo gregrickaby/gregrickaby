@@ -16,10 +16,10 @@ export function Header() {
           <Image
             alt="Greg Rickaby"
             className={styles.logo}
-            height={96}
+            height={80}
             loading="eager"
             src={Logo}
-            width={96}
+            width={80}
           />
         </Link>
         <div className={styles.brandingContainer}>

@@ -1,10 +1,10 @@
 .header {
-  @apply mb-16 flex items-center justify-between gap-12 p-8 text-center;
-  @apply md:flex-row md:justify-between md:p-12;
+  @apply mb-16 flex flex-row items-center justify-between px-8 py-8 text-center;
+  @apply md:flex-row;
 }
 
 .headerContainer {
-  @apply flex flex-row items-center gap-4 lg:flex-row lg:text-left;
+  @apply flex flex-row items-center gap-4;
 }
 
 .logo {
@@ -17,9 +17,9 @@
 }
 
 .siteTitle {
-  @apply mb-1 text-2xl font-bold leading-none tracking-tighter md:text-4xl;
+  @apply mb-1 text-2xl font-bold leading-none tracking-tighter xl:text-4xl;
 }
 
 .siteDescription {
-  @apply m-0 max-w-sm p-0 md:ml-1 md:text-lg;
+  @apply m-0 max-w-sm p-0 xl:ml-1 xl:text-lg;
 }

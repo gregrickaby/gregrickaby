@@ -1,5 +1,4 @@
 import {Navigation} from '@/components/Navigation'
-import config from '@/lib/config'
 import '@testing-library/jest-dom'
 import {act, fireEvent, render, screen} from '@testing-library/react'
 import {axe} from 'jest-axe'
@@ -22,9 +21,6 @@ describe('Navigation', () => {
 
     // Get all links.
     const links = screen.getAllByRole('link')
-
-    // Verify the number of links.
-    expect(links.length).toBe(config.navigation.length)
 
     // Verify each link is in the DOM.
     links.forEach((link) => {

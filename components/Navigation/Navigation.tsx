@@ -1,7 +1,7 @@
 'use client'
 
 import config from '@/lib/config'
-import {IconMenu, IconX} from '@tabler/icons-react'
+import {IconMenu, IconRss, IconSearch, IconX} from '@tabler/icons-react'
 import clsx from 'clsx'
 import Link from 'next/link'
 import {MouseEvent, useEffect, useRef, useState} from 'react'
@@ -68,6 +68,26 @@ export function Navigation() {
             {item.name}
           </Link>
         ))}
+
+        <div className={styles.icons}>
+          <Link
+            aria-label="rss feed"
+            className={styles.icon}
+            href="/feed.xml"
+            onClick={handleLinkClick}
+          >
+            <IconRss size={24} stroke={2} />
+          </Link>
+
+          <Link
+            aria-label="search"
+            className={styles.icon}
+            href="/search"
+            onClick={handleLinkClick}
+          >
+            <IconSearch size={24} stroke={2} />
+          </Link>
+        </div>
       </div>
     </nav>
   )

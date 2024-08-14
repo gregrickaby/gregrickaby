@@ -11,12 +11,20 @@
 }
 
 .linkContainer {
-  @apply absolute right-0 top-12 z-10 text-right;
-  @apply flex-col gap-4 rounded-lg pb-8 pl-8 pr-0 pt-8;
-  @apply xl:static xl:flex xl:flex-row xl:rounded-none xl:bg-transparent xl:shadow-none;
-  @apply bg-white dark:bg-gray-950;
+  @apply absolute right-0 top-12 z-10 text-left;
+  @apply flex-col gap-4 rounded-lg p-8;
+  @apply xl:static xl:flex xl:flex-row xl:items-center xl:justify-center xl:rounded-none xl:bg-transparent xl:shadow-none;
+  @apply bg-white dark:bg-gray-800 xl:dark:bg-gray-950;
 }
 
 .link {
   @apply text-xl hover:underline;
+}
+
+.icons {
+  @apply flex gap-8 xl:gap-4;
+}
+
+.icon {
+  @apply hover:text-gray-400;
 }
