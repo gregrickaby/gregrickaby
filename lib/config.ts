@@ -33,10 +33,13 @@ const config = {
       name: 'Blog',
       url: '/blog'
     },
-
     {
       name: 'Contact',
       url: '/contact'
+    },
+    {
+      name: 'Github',
+      url: 'https://github.com/gregrickaby'
     },
     {
       name: 'Media',
@@ -53,14 +56,6 @@ const config = {
     {
       name: 'Resume',
       url: '/resume'
-    },
-    {
-      name: 'Search',
-      url: '/search'
-    },
-    {
-      name: 'RSS',
-      url: '/feed.xml'
     }
   ],
   socials: [
