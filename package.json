@@ -22,6 +22,7 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint \"**/*.css\" --fix",
     "lint:js": "tsc --noEmit && next lint",
+    "sonar": "./scripts/run-sonar.sh",
     "start": "next start -p 3001",
     "test": "vitest",
     "test:ci": "vitest run"
