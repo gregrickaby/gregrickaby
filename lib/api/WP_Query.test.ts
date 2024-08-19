@@ -121,7 +121,28 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {next: {revalidate: 3600}}
+      {next: {tags: ['']}}
+    )
+    expect(posts).toEqual(mockPost)
+  })
+
+  it('should fetch a post and set the slug as tag for on-demand revalidation', async () => {
+    mockFetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockPost
+    })
+
+    const query = new WP_Query({
+      fields: ['id', 'title', 'slug'],
+      post_type: 'posts',
+      slug: 'we-went-chasing-waterfalls',
+      status: 'publish'
+    })
+    const posts = await query.getPosts()
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish&fields=id%2Ctitle%2Cslug&slug=we-went-chasing-waterfalls',
+      {next: {tags: ['we-went-chasing-waterfalls']}}
     )
     expect(posts).toEqual(mockPost)
   })
@@ -137,7 +158,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {next: {revalidate: 3600}}
+      {next: {tags: ['']}}
     )
     expect(posts).toEqual([])
   })
@@ -153,7 +174,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {next: {revalidate: 3600}}
+      {next: {tags: ['']}}
     )
     expect(posts).toEqual([])
   })
@@ -166,7 +187,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {next: {revalidate: 3600}}
+      {next: {tags: ['']}}
     )
     expect(posts).toEqual([])
   })

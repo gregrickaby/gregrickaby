@@ -163,7 +163,7 @@ export class WP_Query {
       // Send the request to the WordPress API.
       const response = await fetch(url, {
         next: {
-          tags: [`${this.params.slug}`]
+          tags: [(this.params.slug && `${this.params.slug}`) || '']
         }
       })
 
