@@ -21,7 +21,7 @@
   }
 
   .main {
-    @apply container mx-auto px-8 lg:px-0;
+    @apply container mx-auto;
   }
 
   .article {
