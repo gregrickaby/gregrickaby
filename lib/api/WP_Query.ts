@@ -161,7 +161,11 @@ export class WP_Query {
 
     try {
       // Send the request to the WordPress API.
-      const response = await fetch(url, {next: {revalidate: 3600}})
+      const response = await fetch(url, {
+        next: {
+          tags: [`${this.params.slug}`]
+        }
+      })
 
       // If the response is not OK, throw an error.
       if (!response.ok) {
