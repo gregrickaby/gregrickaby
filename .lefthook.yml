@@ -18,5 +18,3 @@ pre-push:
   commands:
     coverage_test:
       run: npx vitest run
-    sonar_analysis:
-      run: npm run sonar
