@@ -15,7 +15,7 @@
   },
   "homepage": "https://gregrickaby.com",
   "scripts": {
-    "build": "rimraf .next && next build",
+    "build": "next build",
     "coverage": "vitest run --coverage",
     "dev": "rimraf .next && next dev",
     "format": "prettier --write .",
@@ -23,7 +23,7 @@
     "lint:css": "stylelint \"**/*.css\" --fix",
     "lint:js": "tsc --noEmit && next lint",
     "sonar": "./scripts/run-sonar.sh",
-    "start": "next start -p 3001",
+    "start": "next start",
     "test": "vitest",
     "test:ci": "vitest run"
   },
