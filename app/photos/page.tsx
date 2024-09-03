@@ -38,6 +38,7 @@ export default async function Photos() {
           <IconBrandThreads />
         </a>
       </h1>
+
       <Gallery photos={threads} />
     </article>
   )

@@ -12,7 +12,7 @@ export interface GalleryProps {
 /**
  * Photos component.
  */
-export function Gallery({photos}: GalleryProps) {
+export function Gallery({photos}: Readonly<GalleryProps>) {
   // Manage whether the lightbox is open.
   const [isOpen, setIsOpen] = useState(false)
   // Manage the index of the currently selected photo.
@@ -49,13 +49,28 @@ export function Gallery({photos}: GalleryProps) {
           role="button"
           tabIndex={0}
         >
-          <img
-            alt={photo.text}
-            height={300}
-            loading="lazy"
-            src={photo.media_url}
-            width={425}
-          />
+          {photo.media_type === 'VIDEO' ? (
+            <video
+              autoPlay
+              controls
+              height={270}
+              loop
+              muted
+              playsInline
+              poster={photo.media_url}
+              src={photo.media_url}
+              width={480}
+            >
+              <source src={photo.media_url} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              alt={photo.text}
+              className={styles.image}
+              loading="lazy"
+              src={photo.media_url}
+            />
+          )}
         </div>
       ))}
 

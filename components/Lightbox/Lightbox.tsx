@@ -127,13 +127,27 @@ export function Lightbox({photos, onClose, startIndex}: LightboxProps) {
             href={photos.data[currentIndex].permalink}
             title="View post on Threads.net"
           >
-            <img
-              alt={`${currentIndex + 1} of ${photos.data.length}`}
-              className={styles.image}
-              data-testid="image"
-              loading="eager"
-              src={photos.data[currentIndex].media_url}
-            />
+            {photos.data[currentIndex].media_type === 'VIDEO' ? (
+              <video
+                autoPlay
+                controls
+                height={1080}
+                loop
+                muted
+                playsInline
+                poster={photos.data[currentIndex].media_url}
+                src={photos.data[currentIndex].media_url}
+                width={1920}
+              />
+            ) : (
+              <img
+                alt={`${currentIndex + 1} of ${photos.data.length}`}
+                className={styles.image}
+                data-testid="image"
+                loading="eager"
+                src={photos.data[currentIndex].media_url}
+              />
+            )}
           </a>
           <figcaption className={styles.caption}>
             {photos.data[currentIndex].text}
