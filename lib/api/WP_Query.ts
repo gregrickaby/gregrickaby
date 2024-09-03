@@ -177,13 +177,13 @@ export class WP_Query {
 
       // If there are no posts, throw an error.
       if (!data || data.length === 0) {
-        throw new Error('No posts found.')
+        throw new Error(`No posts found for url: ${url}`)
       }
 
       // Return the data.
       return data
     } catch (error) {
-      console.error('Error fetching posts:', error)
+      console.error(error)
       return []
     }
   }
