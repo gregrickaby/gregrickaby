@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@fancyapps/ui": "^5.0.36",
-    "@tabler/icons-react": "^3.16.0",
+    "@tabler/icons-react": "^3.17.0",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "imagesloaded": "^5.0.0",
