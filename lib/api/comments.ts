@@ -16,7 +16,7 @@ export async function fetchComments(postId: number): Promise<Comment[]> {
     }
 
     // Build the URL
-    const url = new URL(`${process.env.WORDPRESS_API_URL}/comments`)
+    const url = new URL(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/comments`)
 
     // Build the query parameters.
     url.searchParams.append('post', postId.toString())

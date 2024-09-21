@@ -20,7 +20,7 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
     const timeoutId = setTimeout(() => controller.abort(), 5000)
 
     // Create a new URL.
-    const url = new URL(`${process.env.WORDPRESS_API_URL}/search`)
+    const url = new URL(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/search`)
 
     // Add the query parameters.
     url.searchParams.append('search', sanitizedQuery)
