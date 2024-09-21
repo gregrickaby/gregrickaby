@@ -1,3 +1,31 @@
+export interface Comment {
+  id: number
+  post: number
+  parent: number
+  author: number
+  author_name: string
+  author_url: string
+  date: string
+  date_gmt: string
+  content: {
+    rendered: string
+  }
+  link: string
+  status: string
+  type: string
+  author_avatar_urls: {
+    '24': string
+    '48': string
+    '96': string
+  }
+  meta: any[]
+  acf: any[]
+}
+
+export interface CommentsProps {
+  postId: number
+}
+
 export interface SearchResults {
   id: number
   title: string
@@ -288,4 +316,48 @@ export interface Cury {
   name: string
   href: string
   templated: boolean
+}
+
+export interface Repo {
+  id: number
+  name: string
+  description: string
+  stargazers_count: number
+  html_url: string
+}
+
+export interface Threads {
+  data: Thread[]
+  paging: Paging
+}
+
+export interface Thread {
+  id: string
+  media_product_type: string
+  media_type: string
+  media_url: string
+  permalink: string
+  text: string
+  timestamp: string
+  username: string
+  is_quote_post: boolean
+  children?: Children
+}
+
+export interface Children {
+  data: Thread2[]
+}
+
+export interface Thread2 {
+  id: string
+}
+
+export interface Paging {
+  cursors: Cursors
+  next: string
+}
+
+export interface Cursors {
+  before: string
+  after: string
 }

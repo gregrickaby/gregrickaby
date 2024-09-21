@@ -1,5 +1,7 @@
 import {Blocks} from '@/components/Blocks'
+import {Comments} from '@/components/Comments'
 import {WP_Query} from '@/lib/api'
+import {fetchComments} from '@/lib/api/comments'
 import {formatDate, yoastSeo} from '@/lib/functions'
 import {notFound} from 'next/navigation'
 
@@ -46,7 +48,7 @@ export async function generateMetadata({params}: BlogPostProps) {
 /**
  * Blog Post.
  */
-export default async function BlogPost({params}: BlogPostProps) {
+export default async function BlogPost({params}: Readonly<BlogPostProps>) {
   const query = new WP_Query({
     slug: params.slug,
     fields: [
@@ -69,6 +71,9 @@ export default async function BlogPost({params}: BlogPostProps) {
     return notFound()
   }
 
+  // Fetch comments.
+  const comments = await fetchComments(post.id)
+
   return (
     <article className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0">
       <header>
@@ -90,6 +95,7 @@ export default async function BlogPost({params}: BlogPostProps) {
           </span>
         </p>
       </footer>
+      <Comments comments={comments} />
     </article>
   )
 }
