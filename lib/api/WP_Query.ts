@@ -135,7 +135,10 @@ export class WP_Query {
    * @param endpoint - The endpoint to query. Defaults to WP_Query.defaultEndpoint.
    */
   constructor(args: WP_QueryArgs = {}, endpoint: string = '') {
-    this.endpoint = endpoint || 'https://blog.gregrickaby.com/wp-json/wp/v2'
+    this.endpoint =
+      endpoint ??
+      process.env.WORDPRESS_API_URL ??
+      'https://blog.gregrickaby.com/wp-json/wp/v2/'
     this.postType = args.post_type || 'posts'
     this.params = {
       // Set default query parameters.
