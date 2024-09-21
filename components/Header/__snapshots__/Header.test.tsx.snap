@@ -76,7 +76,7 @@ exports[`Header > should match snapshot 1`] = `
       </button>
     </div>
     <div
-      class="_linkContainer_2c0fa0 hidden"
+      class="_linkContainer_2c0fa0 hidden xl:flex"
       data-testid="nav-links"
     >
       <a

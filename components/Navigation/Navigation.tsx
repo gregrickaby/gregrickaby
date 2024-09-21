@@ -55,7 +55,11 @@ export function Navigation() {
         </button>
       </div>
       <div
-        className={clsx(styles.linkContainer, {flex: isOpen, hidden: !isOpen})}
+        className={clsx(
+          styles.linkContainer,
+          isOpen ? 'flex' : 'hidden',
+          'xl:flex'
+        )}
         data-testid="nav-links"
       >
         {config.navigation.map((item) => (
