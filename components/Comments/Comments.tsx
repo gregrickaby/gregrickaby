@@ -90,9 +90,9 @@ export function Comments({comments}: Readonly<CommentsProps>) {
   // Filter out top-level comments .
   const topLevelComments = comments.filter((comment) => comment.parent === 0)
 
-  // If there are no comments, display a message.
+  // If there are no comments, return.
   if (topLevelComments.length === 0) {
-    return <p>No comments yet. Be the first to comment!</p>
+    return null
   }
 
   // Render the comments.
