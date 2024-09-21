@@ -135,10 +135,7 @@ export class WP_Query {
    * @param endpoint - The endpoint to query. Defaults to WP_Query.defaultEndpoint.
    */
   constructor(args: WP_QueryArgs = {}, endpoint: string = '') {
-    this.endpoint =
-      endpoint ??
-      process.env.WORDPRESS_API_URL ??
-      'https://blog.gregrickaby.com/wp-json/wp/v2/'
+    this.endpoint = endpoint || 'https://blog.gregrickaby.com/wp-json/wp/v2'
     this.postType = args.post_type || 'posts'
     this.params = {
       // Set default query parameters.
@@ -163,10 +160,10 @@ export class WP_Query {
     const url = this.buildQuery()
 
     try {
-      // Fetch the data.
+      // Send the request to the WordPress API.
       const response = await fetch(url, {
         next: {
-          revalidate: 86400, // 24 hours.
+          revalidate: 86400, // 1 hour.
           tags: [(this.params.slug && `${this.params.slug}`) || '']
         }
       })
@@ -176,7 +173,7 @@ export class WP_Query {
         throw new Error(`HTTP error! status: ${response.status}, url: ${url}`)
       }
 
-      // Parse the response.
+      // Parse the JSON response.
       const data: Post[] = await response.json()
 
       // If there are no posts, throw an error.
