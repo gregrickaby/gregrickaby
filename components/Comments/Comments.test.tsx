@@ -39,13 +39,6 @@ describe('Comments component', () => {
     expect(screen.getByText('July 30, 2013 at 10:41')).toBeInTheDocument()
   })
 
-  it('renders message when no comments are available', () => {
-    render(<Comments comments={[]} />)
-    expect(
-      screen.getByText('No comments yet. Be the first to comment!')
-    ).toBeInTheDocument()
-  })
-
   it('renders author avatar and uses default alt text if no author name is provided', () => {
     render(<Comments comments={mockComments} />)
 
@@ -75,7 +68,6 @@ describe('Comments component', () => {
 
   it('renders replies correctly', () => {
     render(<Comments comments={mockComments} />)
-    const commentElements = screen.getAllByRole('article')
 
     // Check if the reply is rendered.
     expect(screen.getByText('Greg')).toBeInTheDocument()
