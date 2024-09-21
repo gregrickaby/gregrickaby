@@ -1,40 +1,4 @@
-// Types generated with: https://transform.tools/json-to-typescript
-
-export interface Threads {
-  data: Thread[]
-  paging: Paging
-}
-
-export interface Thread {
-  id: string
-  media_product_type: string
-  media_type: string
-  media_url: string
-  permalink: string
-  text: string
-  timestamp: string
-  username: string
-  is_quote_post: boolean
-  children?: Children
-}
-
-export interface Children {
-  data: Thread2[]
-}
-
-export interface Thread2 {
-  id: string
-}
-
-export interface Paging {
-  cursors: Cursors
-  next: string
-}
-
-export interface Cursors {
-  before: string
-  after: string
-}
+import {Threads} from '@/lib/types'
 
 /**
  * Get the latest posts from Threads.
@@ -65,7 +29,9 @@ export async function getThreads(posts: number): Promise<Threads> {
 
   try {
     // Send the request to the Threads API.
-    const response = await fetch(url.toString(), {next: {revalidate: 3600}})
+    const response = await fetch(url.toString(), {
+      next: {revalidate: 3600} // 1 hour.
+    })
 
     // If the response is not ok, throw an error.
     if (!response.ok) {
@@ -90,6 +56,6 @@ export async function getThreads(posts: number): Promise<Threads> {
     return threads
   } catch (error) {
     console.error('Unexpected error fetching threads:', error)
-    throw new Error('Unexpected error fetching threads')
+    throw error
   }
 }

@@ -6,27 +6,37 @@ import type {SearchResults} from '@/lib/types'
  * @see https://developer.wordpress.org/rest-api/reference/search-results/
  */
 export async function searchQuery(query: string): Promise<SearchResults[]> {
-  // Sanitize the search query.
-  const sanitizedQuery = encodeURIComponent(query.trim())
-
   try {
+    // If no query is provided, throw an error.
+    if (!query) {
+      throw new Error('Please enter a search query.')
+    }
+
+    // Sanitize the search query.
+    const sanitizedQuery = encodeURIComponent(query.trim())
+
     // Perform the fetch request with a timeout.
     const controller = new AbortController()
     const timeoutId = setTimeout(() => controller.abort(), 5000)
 
+    // Create a new URL.
+    const url = new URL(`${process.env.WORDPRESS_API_URL}/search`)
+
+    // Add the query parameters.
+    url.searchParams.append('search', sanitizedQuery)
+    url.searchParams.append('subtype', 'any')
+    url.searchParams.append('per_page', '100')
+
     // Fetch the search results.
-    const response = await fetch(
-      `https://blog.gregrickaby.com/wp-json/wp/v2/search?search=${sanitizedQuery}&subtype=any&per_page=100`,
-      {
-        cache: 'no-cache',
-        signal: controller.signal
-      }
-    )
+    const response = await fetch(url.toString(), {
+      cache: 'no-cache',
+      signal: controller.signal
+    })
 
     // Clear the timeout.
     clearTimeout(timeoutId)
 
-    // Check if the response is OK (status 200).
+    // Check if the response is OK.
     if (!response.ok) {
       console.error('Response Status:', response.status)
       if (response.status >= 400 && response.status < 500) {
@@ -40,8 +50,8 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
       }
     }
 
-    // Parse the response as JSON.
-    const data = await response.json()
+    // Parse the response.
+    const data: SearchResults[] = await response.json()
 
     // Validate the response data.
     if (!Array.isArray(data) || data.length === 0) {
@@ -49,9 +59,9 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
     }
 
     // Return the data as SearchResults.
-    return data as SearchResults[]
+    return data
   } catch (error) {
-    console.error('Error fetching data:', error)
-    throw new Error('Failed to fetch search results. Please try again later.')
+    console.error('Exception thrown in searchQuery():', error)
+    throw error
   }
 }

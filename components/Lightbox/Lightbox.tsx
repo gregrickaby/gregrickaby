@@ -1,6 +1,6 @@
 'use client'
 
-import {Threads} from '@/lib/api'
+import {Threads} from '@/lib/types'
 import {
   IconArrowNarrowLeft,
   IconArrowNarrowRight,

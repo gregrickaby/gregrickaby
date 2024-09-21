@@ -1,7 +1,7 @@
 'use client'
 
 import {Lightbox} from '@/components/Lightbox'
-import {Threads} from '@/lib/api'
+import {Threads} from '@/lib/types'
 import {useCallback, useState} from 'react'
 import styles from './Gallery.module.css'
 

@@ -121,7 +121,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {next: {tags: ['']}}
+      {next: {revalidate: 86400, tags: ['']}}
     )
     expect(posts).toEqual(mockPost)
   })
@@ -142,7 +142,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish&fields=id%2Ctitle%2Cslug&slug=we-went-chasing-waterfalls',
-      {next: {tags: ['we-went-chasing-waterfalls']}}
+      {next: {revalidate: 86400, tags: ['we-went-chasing-waterfalls']}}
     )
     expect(posts).toEqual(mockPost)
   })
@@ -158,7 +158,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {next: {tags: ['']}}
+      {next: {revalidate: 86400, tags: ['']}}
     )
     expect(posts).toEqual([])
   })
@@ -174,7 +174,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {next: {tags: ['']}}
+      {next: {revalidate: 86400, tags: ['']}}
     )
     expect(posts).toEqual([])
   })
@@ -187,7 +187,7 @@ describe('WP_Query', () => {
 
     expect(mockFetch).toHaveBeenCalledWith(
       'https://blog.gregrickaby.com/wp-json/wp/v2/posts?context=view&order=desc&orderby=date&page=1&per_page=10&status=publish',
-      {next: {tags: ['']}}
+      {next: {revalidate: 86400, tags: ['']}}
     )
     expect(posts).toEqual([])
   })

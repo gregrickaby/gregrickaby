@@ -1,6 +1,6 @@
 import {Post} from '@/lib/types'
 
-export const mockPost = {
+export const mockPost: Post = {
   id: 26166,
   date: '2023-07-21T17:01:57',
   date_gmt: '2023-07-21T22:01:57',
@@ -313,4 +313,4 @@ export const mockPost = {
     ],
     curies: [{name: 'wp', href: 'https://api.w.org/{rel}', templated: true}]
   }
-} satisfies Post
+}

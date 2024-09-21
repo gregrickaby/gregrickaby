@@ -1,7 +1,6 @@
 import config from '@/lib/config'
 import {yoastSeo} from '@/lib/functions'
 import {mockPost} from '@/lib/mocks'
-import {describe, expect, it} from 'vitest'
 
 describe('yoastSeo() tests', () => {
   it('should return the correct metadata for a post', () => {

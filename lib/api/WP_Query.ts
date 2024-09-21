@@ -1,4 +1,4 @@
-import type {Post} from '@/lib/types'
+import {Post} from '@/lib/types'
 
 /**
  * WP_Query arguments.
@@ -160,9 +160,10 @@ export class WP_Query {
     const url = this.buildQuery()
 
     try {
-      // Send the request to the WordPress API.
+      // Fetch the data.
       const response = await fetch(url, {
         next: {
+          revalidate: 86400, // 24 hours.
           tags: [(this.params.slug && `${this.params.slug}`) || '']
         }
       })
@@ -172,7 +173,7 @@ export class WP_Query {
         throw new Error(`HTTP error! status: ${response.status}, url: ${url}`)
       }
 
-      // Parse the JSON response.
+      // Parse the response.
       const data: Post[] = await response.json()
 
       // If there are no posts, throw an error.

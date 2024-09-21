@@ -1,4 +1,4 @@
-import {Threads} from '../api/threads'
+import {Threads} from '@/lib/types'
 
 export const mockEmptyThreads: Threads = {
   data: [],

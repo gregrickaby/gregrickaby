@@ -1,4 +1,4 @@
-import {Repo} from '@/lib/api'
+import {Repo} from '@/lib/types'
 
 export const mockRepos: Repo[] = [
   {

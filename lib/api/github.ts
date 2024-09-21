@@ -1,10 +1,4 @@
-export interface Repo {
-  id: number
-  name: string
-  description: string
-  stargazers_count: number
-  html_url: string
-}
+import {Repo} from '@/lib/types'
 
 /**
  * Get most starred GitHub repos.
@@ -16,7 +10,7 @@ export async function getGithubRepos(limit: number): Promise<Repo[]> {
     // Send the request to the GitHub API.
     const response = await fetch(
       `https://api.github.com/users/gregrickaby/repos?per_page=100`,
-      {next: {revalidate: 3600}}
+      {next: {revalidate: 3600}} // 1 hour.
     )
 
     // If the response status is not 200, throw an error.
@@ -26,7 +20,7 @@ export async function getGithubRepos(limit: number): Promise<Repo[]> {
     }
 
     // Read the response as JSON.
-    const repos = await response.json()
+    const repos: Repo[] = await response.json()
 
     // Verify data has repos.
     if (!repos || repos.length === 0) {
@@ -41,7 +35,7 @@ export async function getGithubRepos(limit: number): Promise<Repo[]> {
     // Return the top N repos.
     return sortedRepos.slice(0, limit)
   } catch (error) {
-    console.error(error)
+    console.error(`Exception thrown in getGithubRepos():`, error)
     throw error
   }
 }

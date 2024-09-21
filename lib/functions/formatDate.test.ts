@@ -1,5 +1,4 @@
 import {formatDate} from '@/lib/functions'
-import {describe, expect, it} from 'vitest'
 
 describe('formatDate', () => {
   it('should format a date object correctly', () => {
