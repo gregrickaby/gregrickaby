@@ -6,12 +6,12 @@ import {beforeEach, describe, expect, it, vi} from 'vitest'
 const mockFetch = vi.fn()
 global.fetch = mockFetch
 
-describe('WP_Query', () => {
-  beforeEach(() => {
-    mockFetch.mockClear()
-    vi.spyOn(console, 'error').mockImplementation(() => {})
-  })
+beforeEach(() => {
+  mockFetch.mockClear()
+  vi.spyOn(console, 'error').mockImplementation(() => {})
+})
 
+describe('WP_Query', () => {
   it('should initialize with default parameters', () => {
     const query = new WP_Query()
     expect(query).toBeInstanceOf(WP_Query)

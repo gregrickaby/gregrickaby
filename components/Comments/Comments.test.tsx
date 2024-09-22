@@ -18,7 +18,7 @@ vi.mock('@/lib/functions', () => ({
 
 describe('Comments component', () => {
   it('renders top-level comments correctly', () => {
-    render(<Comments comments={mockComments} />)
+    render(<Comments comments={mockComments} postId={123} />)
     const commentElements = screen.getAllByRole('article')
 
     // Check if top-level comment is rendered.
@@ -40,7 +40,7 @@ describe('Comments component', () => {
   })
 
   it('renders author avatar and uses default alt text if no author name is provided', () => {
-    render(<Comments comments={mockComments} />)
+    render(<Comments comments={mockComments} postId={123} />)
 
     const avatarImage = screen.getByAltText('Graeme')
     expect(avatarImage).toHaveAttribute(
@@ -56,7 +56,7 @@ describe('Comments component', () => {
   })
 
   it('sanitizes the comment content', () => {
-    render(<Comments comments={mockComments} />)
+    render(<Comments comments={mockComments} postId={123} />)
 
     expect(sanitizeComment).toHaveBeenCalledWith(
       mockComments[0].content.rendered
@@ -67,7 +67,7 @@ describe('Comments component', () => {
   })
 
   it('renders replies correctly', () => {
-    render(<Comments comments={mockComments} />)
+    render(<Comments comments={mockComments} postId={123} />)
 
     // Check if the reply is rendered.
     expect(screen.getByText('Greg')).toBeInTheDocument()

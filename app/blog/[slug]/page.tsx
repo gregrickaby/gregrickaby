@@ -95,7 +95,7 @@ export default async function BlogPost({params}: Readonly<BlogPostProps>) {
           </span>
         </p>
       </footer>
-      <Comments comments={comments} />
+      <Comments comments={comments} postId={post.id} />
     </article>
   )
 }

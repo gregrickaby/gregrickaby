@@ -7,14 +7,20 @@
     --grd-photo-gallery-gutter: 24px;
   }
 
-  .button {
+  button,
+  .button,
+  input[type='submit'] {
+    @apply flex items-center justify-between gap-4 rounded p-2;
     @apply bg-gray-700 hover:bg-gray-500 dark:bg-gray-800 hover:dark:bg-gray-600;
-    @apply text-2xl text-white;
-    @apply rounded p-2 shadow;
+    @apply text-2xl text-white shadow;
     @apply transition-colors duration-200 ease-in-out;
   }
 
-  input[type='search'] {
+  input[type='search'],
+  input[type='text'],
+  input[type='email'],
+  input[type='url'],
+  textarea {
     @apply bg-gray-100 dark:bg-gray-800;
     @apply border border-gray-300 dark:border-gray-700;
     @apply w-full rounded p-2;
@@ -26,6 +32,10 @@
 
   .article {
     @apply prose mx-auto lg:prose-xl dark:prose-invert;
+  }
+
+  .loading {
+    @apply animate-spin duration-1000 ease-linear motion-reduce:hidden;
   }
 }
 

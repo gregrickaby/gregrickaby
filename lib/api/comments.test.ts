@@ -1,9 +1,12 @@
 import {mockComments} from '@/lib/mocks'
 import {vi} from 'vitest'
-import {fetchComments} from './comments'
+import {createComment, fetchComments} from './comments'
+
+// Mock the fetch API.
+const mockFetch = vi.fn()
+global.fetch = mockFetch
 
 beforeEach(() => {
-  global.fetch = vi.fn()
   vi.spyOn(console, 'error').mockImplementation(() => {})
 })
 
@@ -74,5 +77,56 @@ describe('fetchComments', () => {
         'Exception thrown in fetchComments(): Error: Network error'
       )
     )
+  })
+})
+
+describe('createComment', () => {
+  it('should create a comment successfully', async () => {
+    const mockResponse = {
+      id: 1,
+      post: 123,
+      content: {rendered: 'Test comment'},
+      author_name: 'John Doe',
+      status: 'approved'
+    }
+
+    // Mock the fetch API call.
+    ;(global.fetch as vi.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse
+    })
+
+    const result = await createComment({
+      postId: 123,
+      comment: 'Test comment',
+      authorName: 'John Doe',
+      authorEmail: 'john.doe@example.com'
+    })
+
+    expect(result).toEqual(
+      'Your comment has been successfully submitted and is now live. Thank you!'
+    )
+    expect(global.fetch).toHaveBeenCalledWith(
+      expect.stringContaining('/comments'),
+      expect.objectContaining({
+        method: 'POST'
+      })
+    )
+  })
+
+  it('should throw an error when the API call fails', async () => {
+    ;(global.fetch as vi.Mock).mockResolvedValueOnce({
+      ok: false,
+      status: 500
+    })
+
+    await expect(
+      createComment({
+        postId: 123,
+        comment: 'Test comment',
+        authorName: 'John Doe',
+        authorEmail: ''
+      })
+    ).rejects.toThrow('Missing required parameters')
   })
 })

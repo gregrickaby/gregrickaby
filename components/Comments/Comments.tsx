@@ -1,10 +1,12 @@
 import {formatDate, sanitizeComment} from '@/lib/functions'
 import {Comment} from '@/lib/types'
 import clsx from 'clsx'
+import {CommentForm} from './CommentForm'
 import styles from './Comments.module.css'
 
 interface CommentsProps {
   comments: Comment[]
+  postId: number
 }
 
 interface CommentItemProps {
@@ -64,21 +66,18 @@ function CommentItem({
         />
       </article>
 
-      {
-        // If there are replies, render them.
-        replies.length > 0 && (
-          <div className={styles.replies}>
-            {replies.map((reply) => (
-              <CommentItem
-                allComments={allComments}
-                comment={reply}
-                key={reply.id}
-                level={level + 1}
-              />
-            ))}
-          </div>
-        )
-      }
+      {replies.length > 0 && (
+        <div className={styles.replies}>
+          {replies.map((reply) => (
+            <CommentItem
+              allComments={allComments}
+              comment={reply}
+              key={reply.id}
+              level={level + 1}
+            />
+          ))}
+        </div>
+      )}
     </>
   )
 }
@@ -86,28 +85,28 @@ function CommentItem({
 /**
  * Comments component.
  */
-export function Comments({comments}: Readonly<CommentsProps>) {
-  // Filter out top-level comments .
+export function Comments({comments, postId}: Readonly<CommentsProps>) {
+  // Filter out top-level comments.
   const topLevelComments = comments.filter((comment) => comment.parent === 0)
 
-  // If there are no comments, return.
-  if (topLevelComments.length === 0) {
-    return null
-  }
-
-  // Render the comments.
   return (
     <section className={clsx(styles.container, 'not-prose')}>
       <h2 className={styles.heading} id="comments">
         Comments
       </h2>
-      {topLevelComments.map((comment) => (
-        <CommentItem
-          allComments={comments}
-          comment={comment}
-          key={comment.id}
-        />
-      ))}
+      {topLevelComments.length === 0 ? (
+        <p>No comments yet. Be the first to comment!</p>
+      ) : (
+        topLevelComments.map((comment) => (
+          <CommentItem
+            allComments={comments}
+            comment={comment}
+            key={comment.id}
+          />
+        ))
+      )}
+      {/* Add the CommentForm below the comments */}
+      <CommentForm postId={postId} />
     </section>
   )
 }
