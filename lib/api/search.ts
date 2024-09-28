@@ -7,9 +7,10 @@ import type {SearchResults} from '@/lib/types'
  */
 export async function searchQuery(query: string): Promise<SearchResults[]> {
   try {
-    // If no query is provided, throw an error.
+    // If no query is provided, return an empty array.
     if (!query) {
-      throw new Error('Please enter a search query.')
+      console.warn('No search query provided.')
+      return []
     }
 
     // Sanitize the search query.
@@ -53,15 +54,10 @@ export async function searchQuery(query: string): Promise<SearchResults[]> {
     // Parse the response.
     const data: SearchResults[] = await response.json()
 
-    // Validate the response data.
-    if (!Array.isArray(data) || data.length === 0) {
-      throw new Error('No posts found.')
-    }
-
-    // Return the data as SearchResults.
+    // Return the data, even if it's an empty array (no results).
     return data
   } catch (error) {
     console.error('Exception thrown in searchQuery():', error)
-    throw error
+    return []
   }
 }
