@@ -31,7 +31,7 @@
   }
 
   .article {
-    @apply prose mx-auto lg:prose-xl dark:prose-invert;
+    @apply prose mx-auto p-8 lg:prose-xl dark:prose-invert xl:p-0;
   }
 
   .loading {
