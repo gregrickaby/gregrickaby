@@ -5,7 +5,7 @@ import {SearchResults} from '@/lib/types'
 import {IconLoader} from '@tabler/icons-react'
 import {useDebounce} from '@uidotdev/usehooks'
 import Link from 'next/link'
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import styles from './Search.module.css'
 
 /**
@@ -15,7 +15,18 @@ export function Search() {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState<SearchResults[] | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [noResults, setNoResults] = useState<boolean>(false)
   const debouncedQuery = useDebounce(query, 300)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  /**
+   * Set focus to the input when the component mounts.
+   */
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   /**
    * Perform the search when the debounced query changes.
@@ -25,18 +36,31 @@ export function Search() {
       if (debouncedQuery.length === 0 || debouncedQuery.length > 100) {
         setResults(null)
         setError(null)
+        setNoResults(false)
         return
       }
 
       setError(null)
+      setNoResults(false)
 
       try {
         const data = await searchQuery(debouncedQuery)
-        setResults(data)
+
+        // Check if there are no results.
+        if (data.length === 0) {
+          setNoResults(true)
+          setResults([]) // Set empty results, no need for error.
+        } else {
+          setResults(data)
+          setNoResults(false) // There are results.
+        }
       } catch (error) {
         console.error('Search failed:', error)
-        setError('An error occurred while searching. Please try again.')
-        setResults([])
+        setError(
+          'Something went wrong while searching. Please try again later.'
+        )
+        setResults(null) // Clear results on error.
+        setNoResults(false)
       }
     }
 
@@ -47,6 +71,7 @@ export function Search() {
     setQuery('')
     setResults(null)
     setError(null)
+    setNoResults(false)
   }
 
   return (
@@ -56,15 +81,18 @@ export function Search() {
         name="search"
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Begin typing to search..."
+        ref={inputRef}
         type="search"
         value={query}
       />
 
-      {!results && query.length > 0 && <IconLoader className="loading" />}
+      {!results && query.length > 0 && !error && (
+        <IconLoader className="loading" />
+      )}
 
       {error && <p className={styles.error}>{error}</p>}
 
-      {results && results.length === 0 && !error && <p>No results found.</p>}
+      {noResults && !error && <p>No results found. Try a different search.</p>}
 
       {results && results.length > 0 && (
         <div className={styles.results} aria-live="polite">
