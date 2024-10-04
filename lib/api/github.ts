@@ -28,7 +28,7 @@ export async function getGithubRepos(limit: number): Promise<Repo[]> {
     }
 
     // Sort repositories by stargazers_count in descending order.
-    const sortedRepos = repos.sort(
+    const sortedRepos = repos.toSorted(
       (a: Repo, b: Repo) => b.stargazers_count - a.stargazers_count
     )
 
