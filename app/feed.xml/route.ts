@@ -16,24 +16,16 @@ const query = new WP_Query({
   post_type: 'posts'
 })
 
-/**
- * Route handler for generating RSS feed.
- *
- * @see https://nextjs.org/docs/app/api-reference/file-conventions/route
- */
 export async function GET() {
   try {
-    // Fetch all blog posts.
     const posts = await query.getPosts()
 
-    // No posts? Bail.
     if (!posts) {
       return new Response('No posts found.', {
         headers: {'Content-Type': 'application/xml; charset=utf-8'}
       })
     }
 
-    // Construct the RSS header.
     const rssHeader = `
       <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
       <channel>
@@ -50,7 +42,6 @@ export async function GET() {
         <atom:link href="${config.siteUrl}/feed.xml" rel="self" type="application/rss+xml" />
     `
 
-    // Construct the RSS items.
     const rssItems = posts
       .map(
         (post) => `
@@ -63,15 +54,18 @@ export async function GET() {
           <enclosure url="${post.featured_image_data?.url}" length="1024" type="image/jpeg" />
           <pubDate>${new Date(post.date).toUTCString()}</pubDate>
           <guid>${config.siteUrl}/blog/${post.slug}</guid>
+          ${
+            post.modified && post.modified !== post.date
+              ? `<atom:updated>${new Date(post.modified).toUTCString()}</atom:updated>`
+              : ''
+          }
         </item>
     `
       )
       .join('')
 
-    // Merge the header and items.
     const rss = `${rssHeader}${rssItems}</channel></rss>`
 
-    // Return the RSS feed.
     return new Response(rss, {
       headers: {
         'Content-Type': 'application/xml; charset=utf-8',
