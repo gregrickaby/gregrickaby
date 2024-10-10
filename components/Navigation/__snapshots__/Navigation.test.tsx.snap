@@ -69,12 +69,6 @@ exports[`Navigation > should match snapshot 1`] = `
     </a>
     <a
       class="_link_2c0fa0"
-      href="/photos"
-    >
-      Photos
-    </a>
-    <a
-      class="_link_2c0fa0"
       href="/resources"
     >
       Resources
