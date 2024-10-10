@@ -48,6 +48,22 @@ export default async function BlogPost({params}: Readonly<BlogPostProps>) {
       itemScope
       itemType="https://schema.org/Article"
     >
+      {/* Article featured image */}
+      {!post.acf.hide_featured_image && (
+        <img
+          alt={post.featured_image_data.alt}
+          className="-mx-[100px] h-auto w-[calc(100%+200px)] max-w-none"
+          height={post.featured_image_data.height}
+          itemProp="image"
+          loading="eager"
+          sizes="(max-width: 640px) 100vw, 1200px"
+          src={post.featured_image_data.url}
+          srcSet={`${post.featured_image_data.url}?w=400 400w, ${post.featured_image_data.url}?w=800 800w, ${post.featured_image_data.url}?w=1200 1200w`}
+          width={post.featured_image_data.width}
+        />
+      )}
+
+      {/* Article metadata */}
       <header>
         <h1
           dangerouslySetInnerHTML={{__html: post.title.rendered}}
@@ -59,6 +75,7 @@ export default async function BlogPost({params}: Readonly<BlogPostProps>) {
             className="inline font-bold not-italic"
             itemScope
             itemType="http://schema.org/Person"
+            itemProp="author"
           >
             <span itemProp="name">{post.author_name}</span>
           </address>{' '}
