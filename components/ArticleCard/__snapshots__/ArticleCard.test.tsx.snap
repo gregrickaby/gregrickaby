@@ -37,7 +37,7 @@ exports[`ArticleCard Component > should match snapshot 1`] = `
         <time
           datetime="2023-07-21T17:01:57"
         >
-          July 21, 2023 at 17:01
+          Jul 21, 2023
         </time>
       </div>
       <a
