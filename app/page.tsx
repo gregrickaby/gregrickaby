@@ -30,7 +30,15 @@ export default async function Home() {
         >
           full-stack engineer
         </a>
-        , <Link href="/photos">photography enthusiast</Link>, and{' '}
+        ,{' '}
+        <Link
+          aria-label="follow on Threads"
+          href="https://www.threads.net/@gregoryrickaby"
+          rel="author"
+        >
+          photography enthusiast
+        </Link>
+        , and{' '}
         <a
           aria-label="view my amazon author profile"
           href="https://www.amazon.com/author/gregrickaby"
