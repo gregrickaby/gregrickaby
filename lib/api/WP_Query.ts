@@ -8,6 +8,7 @@ interface WP_QueryArgs {
   post_type?: 'posts' | 'pages'
   /** Optional. Number of posts to return per page. Defaults to 10. */
   per_page?: number
+
   /** Optional. Current page of the query. Defaults to 1. */
   paged?: number
   /** Optional. Field to order the posts by. Defaults to 'date'. */
@@ -26,7 +27,11 @@ interface WP_QueryArgs {
   order?: 'asc' | 'desc'
   /** Optional. A search term to query posts by. */
   search?: string
-  /** Optional. Array of fields to include in the response. */
+  /** Optional. Limit the response to these fields. */
+  _fields?: string[]
+  /** Optional. Include the linked resources. */
+  _embed?: boolean
+  /** Optional. Include these fields in the response. */
   fields?: Array<
     | 'acf'
     | 'author_gravatar_url'

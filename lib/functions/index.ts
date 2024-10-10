@@ -1,3 +1,5 @@
+export * from './fetchPageBySlug'
 export * from './formatDate'
 export * from './sanitizeComment'
+export * from './sanitizeText'
 export * from './yoastSeo'
