@@ -19,7 +19,7 @@ export default async function Home() {
   const posts = await latestPosts.getPosts()
 
   return (
-    <div className="article px-12 pt-16 lg:px-0">
+    <div className="article px-12 lg:px-0">
       <h1>Hello There 👋</h1>
       <p>
         I&apos;m a{' '}

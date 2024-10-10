@@ -54,7 +54,7 @@ export default async function BlogPost({params}: Readonly<PageProps>) {
   }
 
   return (
-    <article className="article pt-16">
+    <article className="article">
       <header>
         <h1 dangerouslySetInnerHTML={{__html: page.title.rendered}} />
       </header>
