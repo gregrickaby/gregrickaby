@@ -32,7 +32,7 @@ export default async function Blog() {
   const posts = await initialQuery.getPosts()
 
   return (
-    <article className="article">
+    <article className="article pt-16">
       <h1>Blog</h1>
       <BlogArchive initialPosts={posts} />
     </article>
