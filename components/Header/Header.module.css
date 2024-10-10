@@ -1,5 +1,5 @@
 .header {
-  @apply mb-16 flex flex-row items-center justify-between px-8 py-8 text-center;
+  @apply flex flex-row items-center justify-between px-8 pt-8 text-center;
   @apply md:flex-row;
 }
 

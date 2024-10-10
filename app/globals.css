@@ -37,6 +37,15 @@
   .loading {
     @apply animate-spin duration-1000 ease-linear motion-reduce:hidden;
   }
+
+  .full-width {
+    @apply relative left-1/2 right-1/2 -mx-[50vw] h-auto w-[100vw] max-w-none;
+    @apply text-center;
+  }
+}
+
+figcaption.wp-element-caption {
+  @apply m-0 p-0 text-center text-sm text-gray-600 dark:text-gray-400;
 }
 
 /* ACF Photo Gallery */

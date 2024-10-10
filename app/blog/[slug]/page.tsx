@@ -2,7 +2,7 @@ import {Blocks} from '@/components/Blocks'
 import {Comments} from '@/components/Comments'
 import {WP_Query} from '@/lib/api'
 import {fetchComments} from '@/lib/api/comments'
-import {formatDate} from '@/lib/functions'
+import {formatDate, yoastSeo} from '@/lib/functions'
 import {notFound} from 'next/navigation'
 
 /**
@@ -19,7 +19,32 @@ interface BlogPostProps {
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
+export async function generateMetadata({params}: BlogPostProps) {
+  // Setup the query.
+  const query = new WP_Query({
+    post_type: 'posts',
+    slug: params.slug,
+    fields: ['content', 'title', 'yoast_head_json']
+  })
+
+  // Get the post by slug.
+  const [post] = await query.getPosts()
+
+  // No post? No problem.
+  if (!post) {
+    return notFound()
+  }
+
+  return yoastSeo(post)
+}
+
+/**
+ * Generate metadata.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
 export default async function BlogPost({params}: Readonly<BlogPostProps>) {
+  // Setup the query.
   const query = new WP_Query({
     slug: params.slug,
     fields: [
@@ -34,12 +59,15 @@ export default async function BlogPost({params}: Readonly<BlogPostProps>) {
     ]
   })
 
+  // Get the post by slug.
   const [post] = await query.getPosts()
 
+  // No post? No problem.
   if (!post) {
     return notFound()
   }
 
+  // Fetch the comments for the post.
   const comments = await fetchComments(post.id)
 
   return (
@@ -48,67 +76,72 @@ export default async function BlogPost({params}: Readonly<BlogPostProps>) {
       itemScope
       itemType="https://schema.org/Article"
     >
-      {/* Article featured image */}
-      {!post.acf.hide_featured_image && (
-        <img
-          alt={post.featured_image_data.alt}
-          className="-mx-[100px] h-auto w-[calc(100%+200px)] max-w-none"
-          height={post.featured_image_data.height}
-          itemProp="image"
-          loading="eager"
-          sizes="(max-width: 640px) 100vw, 1200px"
-          src={post.featured_image_data.url}
-          srcSet={`${post.featured_image_data.url}?w=400 400w, ${post.featured_image_data.url}?w=800 800w, ${post.featured_image_data.url}?w=1200 1200w`}
-          width={post.featured_image_data.width}
-        />
-      )}
+      <header className="mb-16">
+        {/* Article featured image */}
+        {!post.acf.hide_featured_image && (
+          <img
+            alt={post.featured_image_data.alt}
+            className="full-width"
+            height={post.featured_image_data.height}
+            itemProp="image"
+            loading="eager"
+            src={post.featured_image_data.url}
+            width={post.featured_image_data.width}
+          />
+        )}
 
-      {/* Article metadata */}
-      <header>
+        {/* Article title */}
         <h1
           dangerouslySetInnerHTML={{__html: post.title.rendered}}
           itemProp="headline"
         />
-        <div className="font-sans text-sm">
-          Published by{' '}
-          <address
-            className="inline font-bold not-italic"
-            itemScope
-            itemType="http://schema.org/Person"
-            itemProp="author"
-          >
-            <span itemProp="name">{post.author_name}</span>
-          </address>{' '}
-          in{' '}
-          <span className="font-bold">
-            {post.category_names.map((category, index) => (
-              <span key={category.id} itemProp="articleSection">
-                {category.name}
-                {index < post.category_names.length - 1 && ', '}
+
+        {/* Article metadata */}
+        <div className="flex items-center justify-start gap-2 text-base">
+          <img
+            alt={post.author_name}
+            className="not-prose rounded-full"
+            height={56}
+            loading="lazy"
+            src={post.author_gravatar_url}
+            width={56}
+          />
+          <div>
+            By{' '}
+            <address
+              className="inline not-italic"
+              itemScope
+              itemType="http://schema.org/Person"
+              itemProp="author"
+            >
+              <span itemProp="name">{post.author_name}</span>
+            </address>{' '}
+            <div>
+              <span className="text-sm">
+                Published{' '}
+                <time
+                  dateTime={post.date_gmt}
+                  itemProp="datePublished"
+                  content={post.date_gmt}
+                >
+                  {formatDate(post.date)}
+                </time>
               </span>
-            ))}
-          </span>{' '}
-          on{' '}
-          <time
-            dateTime={post.date_gmt}
-            itemProp="datePublished"
-            content={post.date_gmt}
-          >
-            {formatDate(post.date)}
-          </time>
-          {post.modified && post.modified !== post.date && (
-            <span className="font-sans text-sm">
-              {' '}
-              &middot; Updated on{' '}
-              <time
-                dateTime={post.modified_gmt}
-                itemProp="dateModified"
-                content={post.modified_gmt}
-              >
-                {formatDate(post.modified)}
-              </time>
-            </span>
-          )}
+              {post.modified && post.modified !== post.date && (
+                <span className="font-sans text-sm italic">
+                  {' '}
+                  (Updated{' '}
+                  <time
+                    dateTime={post.modified_gmt}
+                    itemProp="dateModified"
+                    content={post.modified_gmt}
+                  >
+                    {formatDate(post.modified)})
+                  </time>
+                </span>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
@@ -117,9 +150,22 @@ export default async function BlogPost({params}: Readonly<BlogPostProps>) {
         <Blocks content={post.content.rendered} />
       </div>
 
-      <footer>
+      <footer className="border-b border-t">
         <p className="font-bold">
-          Tagged with:{' '}
+          Category:{' '}
+          {post.category_names.map((category, index) => (
+            <span
+              className="font-normal"
+              key={category.id}
+              itemProp="articleSection"
+            >
+              {category.name}
+              {index < post.category_names.length - 1 && ', '}
+            </span>
+          ))}
+        </p>
+        <p className="font-bold">
+          Tags:{' '}
           <span className="font-normal" itemProp="keywords">
             {post.tag_names.map((tag) => tag.name).join(', ')}
           </span>

@@ -17,7 +17,7 @@ interface PageProps {
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export async function generateMetadata({params}: PageProps) {
+export async function generateMetadata({params}: Readonly<PageProps>) {
   const query = new WP_Query({
     post_type: 'pages',
     slug: params.slug,
@@ -38,7 +38,7 @@ export async function generateMetadata({params}: PageProps) {
 /**
  * Single Page.
  */
-export default async function BlogPost({params}: PageProps) {
+export default async function BlogPost({params}: Readonly<PageProps>) {
   const query = new WP_Query({
     post_type: 'pages',
     slug: params.slug,
@@ -54,7 +54,7 @@ export default async function BlogPost({params}: PageProps) {
   }
 
   return (
-    <article className="article">
+    <article className="article pt-16">
       <header>
         <h1 dangerouslySetInnerHTML={{__html: page.title.rendered}} />
       </header>
