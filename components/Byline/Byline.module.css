@@ -1,0 +1,20 @@
+.byline {
+  @apply flex items-center gap-2;
+}
+
+.container {
+  @apply flex flex-col leading-none;
+}
+
+.gravatar {
+  @apply rounded-full;
+}
+
+.author {
+  @apply inline text-base font-bold not-italic;
+}
+
+.published,
+.updated {
+  @apply text-xs text-gray-600 dark:text-gray-400;
+}
