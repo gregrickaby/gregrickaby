@@ -7,7 +7,6 @@
     --grd-photo-gallery-gutter: 24px;
   }
 
-  button,
   .button,
   input[type='submit'] {
     @apply flex items-center justify-between gap-4 rounded p-2;

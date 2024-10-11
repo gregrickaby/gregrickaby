@@ -48,7 +48,7 @@ export function Navigation() {
       <div className={styles.navContainer}>
         <button
           aria-label="Toggle navigation"
-          className={clsx('button', styles.navButton)}
+          className={styles.navButton}
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <IconX size={24} /> : <IconMenu size={24} />}
