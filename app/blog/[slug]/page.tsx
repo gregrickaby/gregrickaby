@@ -16,6 +16,33 @@ interface BlogPostProps {
 }
 
 /**
+ * Generate the static routes.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-static-params
+ */
+export async function generateStaticParams() {
+  // Setup the query.
+  const query = new WP_Query({
+    post_type: 'posts',
+    per_page: 100,
+    _fields: ['slug']
+  })
+
+  // Get the posts by slug.
+  const posts = await query.getPosts()
+
+  // No posts? Bail...
+  if (!posts) {
+    return []
+  }
+
+  // Return the slugs for each post.
+  return posts.map((post: {slug: string}) => ({
+    slug: post.slug
+  }))
+}
+
+/**
  * Generate metadata.
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
