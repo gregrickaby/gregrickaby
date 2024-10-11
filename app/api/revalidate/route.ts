@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
   const slug = request.nextUrl.searchParams.get('slug')
 
   // Validate the secret.
-  if (secret !== process.env.NEXTJS_REVALIDATION_SECRET) {
+  if (secret !== process.env.REVALIDATION_SECRET) {
     return new Response(
       JSON.stringify({revalidated: false, message: 'Invalid secret'}),
       {
