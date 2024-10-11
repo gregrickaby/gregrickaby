@@ -12,7 +12,7 @@ interface PageProps {
 }
 
 /**
- * Generate the static routes.
+ * Generate all routes at build time.
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-static-params
  */

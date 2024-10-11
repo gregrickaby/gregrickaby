@@ -2,6 +2,11 @@ import {ArticleCard} from '@/components/ArticleCard'
 import {WP_Query} from '@/lib/api'
 import Link from 'next/link'
 
+/**
+ * The latest posts query.
+ *
+ * @see https://developer.wordpress.org/rest-api/reference/posts/#arguments
+ */
 const latestPosts = new WP_Query({
   fields: ['id', 'title', 'slug'],
   order: 'desc',
