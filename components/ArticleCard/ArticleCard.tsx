@@ -1,4 +1,4 @@
-import {formatDate} from '@/lib/functions'
+import {formatDate, sanitizeText} from '@/lib/functions'
 import {Post} from '@/lib/types'
 import clsx from 'clsx'
 import Image from 'next/image'
@@ -8,7 +8,7 @@ import styles from './ArticleCard.module.css'
 /**
  * Article Card component.
  */
-export function ArticleCard({post}: {post: Post}) {
+export function ArticleCard({post}: Readonly<{post: Post}>) {
   return (
     <article
       className={clsx('not-prose', styles.card)}
@@ -33,12 +33,11 @@ export function ArticleCard({post}: {post: Post}) {
             <time dateTime={post.date}>{formatDate(post.date)}</time>
           </div>
           <Link className={styles.title} href={`/blog/${post.slug}`}>
-            <h3 dangerouslySetInnerHTML={{__html: post.title.rendered}} />
+            <h3>{sanitizeText(post.title.rendered)}</h3>
           </Link>
-          <div
-            className={styles.excerpt}
-            dangerouslySetInnerHTML={{__html: post.excerpt.rendered}}
-          />
+          <div className={styles.excerpt}>
+            {sanitizeText(post.excerpt.rendered)}
+          </div>
         </div>
       </div>
     </article>

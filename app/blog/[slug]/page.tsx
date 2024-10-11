@@ -1,8 +1,9 @@
+import {Byline} from '@/components'
 import {Blocks} from '@/components/Blocks'
 import {Comments} from '@/components/Comments'
 import {WP_Query} from '@/lib/api'
 import {fetchComments} from '@/lib/api/comments'
-import {formatDate, yoastSeo} from '@/lib/functions'
+import {sanitizeText, yoastSeo} from '@/lib/functions'
 import {notFound} from 'next/navigation'
 
 /**
@@ -91,58 +92,10 @@ export default async function BlogPost({params}: Readonly<BlogPostProps>) {
         )}
 
         {/* Article title */}
-        <h1
-          dangerouslySetInnerHTML={{__html: post.title.rendered}}
-          itemProp="headline"
-        />
+        <h1 itemProp="headline">{sanitizeText(post.title.rendered)}</h1>
 
-        {/* Article metadata */}
-        <div className="flex items-center justify-start gap-2 text-base">
-          <img
-            alt={post.author_name}
-            className="not-prose rounded-full"
-            height={56}
-            loading="lazy"
-            src={post.author_gravatar_url}
-            width={56}
-          />
-          <div>
-            By{' '}
-            <address
-              className="inline not-italic"
-              itemScope
-              itemType="http://schema.org/Person"
-              itemProp="author"
-            >
-              <span itemProp="name">{post.author_name}</span>
-            </address>{' '}
-            <div>
-              <span className="text-sm">
-                Published{' '}
-                <time
-                  dateTime={post.date_gmt}
-                  itemProp="datePublished"
-                  content={post.date_gmt}
-                >
-                  {formatDate(post.date)}
-                </time>
-              </span>
-              {post.modified && post.modified !== post.date && (
-                <span className="font-sans text-sm italic">
-                  {' '}
-                  (Updated{' '}
-                  <time
-                    dateTime={post.modified_gmt}
-                    itemProp="dateModified"
-                    content={post.modified_gmt}
-                  >
-                    {formatDate(post.modified)})
-                  </time>
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
+        {/* Article byline */}
+        <Byline post={post} />
       </header>
 
       {/* Main article content */}
