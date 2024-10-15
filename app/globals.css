@@ -7,6 +7,10 @@
     --grd-photo-gallery-gutter: 24px;
   }
 
+  body {
+    @apply bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50;
+  }
+
   .button,
   input[type='submit'] {
     @apply flex items-center justify-between gap-4 rounded p-2;
@@ -25,7 +29,7 @@
     @apply w-full rounded p-2;
   }
 
-  .main {
+  main {
     @apply container mx-auto;
   }
 

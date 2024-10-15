@@ -1,7 +1,9 @@
 import {BackToTop, Footer, Header, JsonLD} from '@/components'
 import config from '@/lib/config'
+import clsx from 'clsx'
 import type {Metadata, Viewport} from 'next'
 import {Aleo, Fira_Code, Open_Sans} from 'next/font/google'
+import NextTopLoader from 'nextjs-toploader'
 import './globals.css'
 
 const serif = Aleo({
@@ -24,12 +26,6 @@ const mono = Fira_Code({
 
 /**
  * Setup default sitewide metadata.
- *
- * Note: Much of this is overridden by the metadata returned
- * from the `generateMetadata()` function on individual routes.
- *
- * @see https://nextjs.org/docs/app/building-your-application/optimizing/metadata
- * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#basic-fields
  */
 export const metadata: Metadata = {
   metadataBase: new URL(config.siteUrl),
@@ -66,8 +62,6 @@ export const metadata: Metadata = {
 
 /**
  * Setup viewport.
- *
- * @see https://nextjs.org/docs/app/api-reference/functions/generate-viewport#the-viewport-object
  */
 export const viewport: Viewport = {
   colorScheme: 'dark',
@@ -82,12 +76,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${serif.variable} ${mono.variable} bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50`}
+      className={clsx(sans.variable, serif.variable, mono.variable)}
     >
       <body>
         <JsonLD />
+        <NextTopLoader />
         <Header />
-        <main className="main">{children}</main>
+        <main>{children}</main>
         <Footer />
         <BackToTop />
       </body>

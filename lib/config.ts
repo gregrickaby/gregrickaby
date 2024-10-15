@@ -38,10 +38,6 @@ const config = {
       url: '/contact'
     },
     {
-      name: 'Github',
-      url: 'https://github.com/gregrickaby'
-    },
-    {
       name: 'Media',
       url: '/media'
     },

@@ -36,6 +36,7 @@
     "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
     "next": "^14.2.15",
+    "nextjs-toploader": "^3.7.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-infinite-scroll-component": "^6.1.0",
