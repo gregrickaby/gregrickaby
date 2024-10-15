@@ -20,9 +20,5 @@
     "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit"
     }
-  },
-  "sonarlint.connectedMode.project": {
-    "connectionId": "http-localhost-4000",
-    "projectKey": "gregrickaby"
   }
 }
