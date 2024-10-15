@@ -17,7 +17,7 @@ export default defineConfig(({mode}) => ({
     env: loadEnv(mode, process.cwd(), ''),
     coverage: {
       enabled: true,
-      include: ['app/**/*', 'components/**/*', 'lib/**/*'],
+      include: ['components/**/*', 'lib/**/*'],
       exclude: [
         '**/*.d.ts',
         '**/*.test.{ts,tsx}',

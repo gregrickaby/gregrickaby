@@ -1,6 +1,6 @@
-import {mockComments} from '@/lib/mocks'
+import {createComment, fetchComments} from '@/lib/api/comments'
+import {mockComments} from '@/mocks'
 import {vi} from 'vitest'
-import {createComment, fetchComments} from './comments'
 
 // Mock the fetch API.
 const mockFetch = vi.fn()

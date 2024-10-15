@@ -2,7 +2,6 @@
 
 exports[`ArticleCard Component > should match snapshot 1`] = `
 <article
-  class="not-prose _card_c0c515"
   data-testid="article-card"
 >
   <div
@@ -11,22 +10,18 @@ exports[`ArticleCard Component > should match snapshot 1`] = `
     <div
       class="_imageWrap_c0c515"
     >
-      <a
-        href="/blog/we-went-chasing-waterfalls"
-      >
-        <img
-          alt="We Went Chasing Waterfalls"
-          class="_image_c0c515"
-          data-nimg="1"
-          decoding="async"
-          height="192"
-          loading="lazy"
-          src="/_next/image?url=https%3A%2F%2Fblog.gregrickaby.com%2Fwp-content%2Fuploads%2F2023%2F07%2FDSC9490_Daves-Falls_Amberg_WI_20230711.jpg&w=1200&q=75"
-          srcset="/_next/image?url=https%3A%2F%2Fblog.gregrickaby.com%2Fwp-content%2Fuploads%2F2023%2F07%2FDSC9490_Daves-Falls_Amberg_WI_20230711.jpg&w=640&q=75 1x, /_next/image?url=https%3A%2F%2Fblog.gregrickaby.com%2Fwp-content%2Fuploads%2F2023%2F07%2FDSC9490_Daves-Falls_Amberg_WI_20230711.jpg&w=1200&q=75 2x"
-          style="color: transparent;"
-          width="594"
-        />
-      </a>
+      <img
+        alt="We Went Chasing Waterfalls"
+        class="_image_c0c515"
+        data-nimg="1"
+        decoding="async"
+        height="192"
+        loading="lazy"
+        src="/_next/image?url=https%3A%2F%2Fblog.gregrickaby.com%2Fwp-content%2Fuploads%2F2023%2F07%2FDSC9490_Daves-Falls_Amberg_WI_20230711.jpg&w=1200&q=75"
+        srcset="/_next/image?url=https%3A%2F%2Fblog.gregrickaby.com%2Fwp-content%2Fuploads%2F2023%2F07%2FDSC9490_Daves-Falls_Amberg_WI_20230711.jpg&w=640&q=75 1x, /_next/image?url=https%3A%2F%2Fblog.gregrickaby.com%2Fwp-content%2Fuploads%2F2023%2F07%2FDSC9490_Daves-Falls_Amberg_WI_20230711.jpg&w=1200&q=75 2x"
+        style="color: transparent;"
+        width="594"
+      />
     </div>
     <div
       class="_inner_c0c515"
@@ -40,21 +35,15 @@ exports[`ArticleCard Component > should match snapshot 1`] = `
           Jul 21, 2023
         </time>
       </div>
-      <a
+      <h3
         class="_title_c0c515"
-        href="/blog/we-went-chasing-waterfalls"
       >
-        <h3>
-          We Went Chasing Waterfalls
-        </h3>
-      </a>
+        We Went Chasing Waterfalls
+      </h3>
       <div
         class="_excerpt_c0c515"
       >
-        <p>
-          This post showcases some photos of waterfalls at Dave’s Falls County Park in Amberg Wisconsin
-        </p>
-        
+        This post showcases some photos of waterfalls at Dave’s Falls County Park in Amberg Wisconsin
 
       </div>
     </div>

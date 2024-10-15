@@ -10,7 +10,7 @@ exports[`Navigation > should match snapshot 1`] = `
   >
     <button
       aria-label="Toggle navigation"
-      class="button _navButton_2c0fa0"
+      class="_navButton_2c0fa0"
     >
       <svg
         class="tabler-icon tabler-icon-menu "
@@ -54,12 +54,6 @@ exports[`Navigation > should match snapshot 1`] = `
       href="/contact"
     >
       Contact
-    </a>
-    <a
-      class="_link_2c0fa0"
-      href="https://github.com/gregrickaby"
-    >
-      Github
     </a>
     <a
       class="_link_2c0fa0"

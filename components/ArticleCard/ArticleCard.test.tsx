@@ -1,4 +1,4 @@
-import {mockPost} from '@/lib/mocks'
+import {mockPost} from '@/mocks'
 import '@testing-library/jest-dom'
 import {render} from '@testing-library/react'
 import {axe} from 'jest-axe'

@@ -1,5 +1,5 @@
 import {sanitizeComment} from '@/lib/functions'
-import {mockComments} from '@/lib/mocks/mockComments'
+import {mockComments} from '@/mocks/mockComments'
 import {render, screen} from '@testing-library/react'
 import {vi} from 'vitest'
 import {Comments} from './Comments'

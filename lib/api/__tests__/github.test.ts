@@ -1,5 +1,5 @@
 import {getGithubRepos} from '@/lib/api'
-import {mockRepos} from '@/lib/mocks'
+import {mockRepos} from '@/mocks'
 import {describe, expect, it, vi} from 'vitest'
 
 // Mock the fetch API.

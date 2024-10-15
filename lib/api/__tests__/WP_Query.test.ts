@@ -1,5 +1,5 @@
 import {WP_Query} from '@/lib/api'
-import {mockPost} from '@/lib/mocks'
+import {mockPost} from '@/mocks'
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 
 // Mock the fetch API.

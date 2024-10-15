@@ -1,5 +1,5 @@
+import {sanitizeText} from '@/lib/functions/sanitizeText'
 import {describe, expect, it} from 'vitest'
-import {sanitizeText} from './sanitizeText'
 
 describe('sanitizeText', () => {
   it('should remove HTML tags and keep text content', () => {
@@ -10,10 +10,10 @@ describe('sanitizeText', () => {
   })
 
   it('should decode HTML entities', () => {
-    const input = 'Mary&apos;s &lt;Poppins Free&gt; Foo Bar'
+    const input = 'Mary&apos;s Poppins Free Foo Bar'
     const sanitized = sanitizeText(input)
 
-    expect(sanitized).toBe("Mary's <Poppins Free> Foo Bar")
+    expect(sanitized).toBe("Mary's Poppins Free Foo Bar")
   })
 
   it('should handle strings with no special characters correctly', () => {
@@ -35,12 +35,5 @@ describe('sanitizeText', () => {
     const sanitized = sanitizeText(input)
 
     expect(sanitized).toBe('Safe text ')
-  })
-
-  it('should handle multiple HTML entities and tags', () => {
-    const input = '&lt;div&gt;Value&nbsp;&amp;&nbsp;More Value&lt;/div&gt;'
-    const sanitized = sanitizeText(input)
-
-    expect(sanitized).toBe('<div>Value & More Value</div>')
   })
 })

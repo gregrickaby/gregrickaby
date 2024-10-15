@@ -1,5 +1,5 @@
 import {Gallery} from '@/components/Gallery'
-import {mockEmptyThreads, mockThreads} from '@/lib/mocks/mockThreads'
+import {mockEmptyThreads, mockThreads} from '@/mocks/mockThreads'
 import '@testing-library/jest-dom'
 import {render, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'

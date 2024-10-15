@@ -1,5 +1,5 @@
 import {getThreads} from '@/lib/api/threads'
-import {mockThreads} from '@/lib/mocks/mockThreads'
+import {mockThreads} from '@/mocks/mockThreads'
 import {http, HttpResponse} from 'msw'
 import {setupServer} from 'msw/node'
 import {afterAll, afterEach, beforeAll, describe, expect, it, vi} from 'vitest'

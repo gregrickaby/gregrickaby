@@ -1,5 +1,5 @@
 import {Lightbox, LightboxProps} from '@/components/Lightbox'
-import {mockEmptyThreads, mockThreads} from '@/lib/mocks/mockThreads'
+import {mockEmptyThreads, mockThreads} from '@/mocks/mockThreads'
 import '@testing-library/jest-dom'
 import {act, fireEvent, render, waitFor} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
