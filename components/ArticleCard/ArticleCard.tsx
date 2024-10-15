@@ -10,14 +10,14 @@ import styles from './ArticleCard.module.css'
  */
 export function ArticleCard({post}: Readonly<{post: Post}>) {
   return (
-    <article
+    <Link
       className={clsx('not-prose', styles.card)}
+      href={`/blog/${post.slug}`}
       key={post.id}
-      data-testid="article-card"
     >
-      <div className={styles.wrap}>
-        <div className={styles.imageWrap}>
-          <Link href={`/blog/${post.slug}`}>
+      <article data-testid="article-card">
+        <div className={styles.wrap}>
+          <div className={styles.imageWrap}>
             <Image
               alt={post.title.rendered}
               className={styles.image}
@@ -25,21 +25,23 @@ export function ArticleCard({post}: Readonly<{post: Post}>) {
               src={post.featured_image_data.url}
               width={594}
             />
-          </Link>
-        </div>
+          </div>
 
-        <div className={styles.inner}>
-          <div className={styles.meta}>
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-          </div>
-          <Link className={styles.title} href={`/blog/${post.slug}`}>
-            <h3>{sanitizeText(post.title.rendered)}</h3>
-          </Link>
-          <div className={styles.excerpt}>
-            {sanitizeText(post.excerpt.rendered)}
+          <div className={styles.inner}>
+            <div className={styles.meta}>
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
+            </div>
+
+            <h3 className={styles.title}>
+              {sanitizeText(post.title.rendered)}
+            </h3>
+
+            <div className={styles.excerpt}>
+              {sanitizeText(post.excerpt.rendered)}
+            </div>
           </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </Link>
   )
 }

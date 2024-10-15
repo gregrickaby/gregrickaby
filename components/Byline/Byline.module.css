@@ -6,10 +6,6 @@
   @apply flex flex-col leading-none;
 }
 
-.gravatar {
-  @apply rounded-full;
-}
-
 .author {
   @apply inline text-base font-bold not-italic;
 }

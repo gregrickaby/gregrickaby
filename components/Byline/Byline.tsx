@@ -1,6 +1,5 @@
 import {formatDate} from '@/lib/functions'
 import {Post} from '@/lib/types'
-import clsx from 'clsx'
 import styles from './Byline.module.css'
 
 function AuthorInfo({
@@ -68,14 +67,6 @@ export function Byline({post}: Readonly<{post: Post}>) {
 
   return (
     <div className={styles.byline}>
-      <img
-        alt={author_name}
-        className={clsx('not-prose', styles.gravatar)}
-        height={56}
-        loading="lazy"
-        src={author_gravatar_url}
-        width={56}
-      />
       <div className={styles.container}>
         <AuthorInfo name={author_name} gravatarUrl={author_gravatar_url} />
         <div>
