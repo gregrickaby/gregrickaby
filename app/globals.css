@@ -8,7 +8,7 @@
   }
 
   body {
-    @apply bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50;
+    @apply overflow-x-hidden bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50;
   }
 
   .button,
