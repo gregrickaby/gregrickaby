@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "abc190a8-ea2d-4bbc-bee8-896a082faf08",
+		"name": "gregrickaby.com",
+		"description": "Postman collection for gregrickaby.com. To get started, import the Postman environment, then add the secrets, usernames, and passwords. Finally, click \"Send\" on Get JWT Token.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1299256"
+	},
+	"item": [
+		{
+			"name": "Authorize",
+			"item": [
+				{
+					"name": "Get JWT Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parse the response.",
+									"const jsonResponse = pm.response.json();",
+									"",
+									"// If the response contains token.",
+									"if (jsonResponse.token) {",
+									"    //  Store token in environment variable.",
+									"    pm.environment.set(\"JWT_TOKEN\", jsonResponse.token);",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{WORDPRESS_USERNAME}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{WORDPRESS_PASSWORD}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://blog.gregrickaby.com/wp-json/jwt-auth/v1/token",
+							"protocol": "https",
+							"host": [
+								"blog",
+								"gregrickaby",
+								"com"
+							],
+							"path": [
+								"wp-json",
+								"jwt-auth",
+								"v1",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Get Posts",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WORDPRESS_API_URL}}/posts?context=view&status=publish&per_page=10&page=1&orderby=date&order=desc&_fields=id, slug, title, excerpt, featured_image_data, date",
+							"host": [
+								"{{WORDPRESS_API_URL}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "context",
+									"value": "view"
+								},
+								{
+									"key": "status",
+									"value": "publish"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "orderby",
+									"value": "date"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "_fields",
+									"value": "id, slug, title, excerpt, featured_image_data, date"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Post",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WORDPRESS_API_URL}}/posts?slug=we-went-chasing-waterfalls&context=view&status=publish&_fields=category_names,content,date,id,slug,tag_names,title,acf,yoast_head_json",
+							"host": [
+								"{{WORDPRESS_API_URL}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "slug",
+									"value": "we-went-chasing-waterfalls"
+								},
+								{
+									"key": "context",
+									"value": "view"
+								},
+								{
+									"key": "status",
+									"value": "publish"
+								},
+								{
+									"key": "_fields",
+									"value": "category_names,content,date,id,slug,tag_names,title,acf,yoast_head_json"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Get Post Comments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WORDPRESS_API_URL}}/comments?post=24981&order=asc&orderby=date&page=1&per_page=100&status=approve",
+							"host": [
+								"{{WORDPRESS_API_URL}}"
+							],
+							"path": [
+								"comments"
+							],
+							"query": [
+								{
+									"key": "post",
+									"value": "24981"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								},
+								{
+									"key": "orderby",
+									"value": "date"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "100"
+								},
+								{
+									"key": "status",
+									"value": "approve"
+								},
+								{
+									"key": "_fields",
+									"value": "id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post A Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{WORDPRESS_API_URL}}/comments?post=27140&author_email=janedoe@example.com&author_name=Jane Doe&author_url=http://example.com&content=nice. i appreciate it",
+							"host": [
+								"{{WORDPRESS_API_URL}}"
+							],
+							"path": [
+								"comments"
+							],
+							"query": [
+								{
+									"key": "post",
+									"value": "27140"
+								},
+								{
+									"key": "author_email",
+									"value": "janedoe@example.com"
+								},
+								{
+									"key": "author_name",
+									"value": "Jane Doe"
+								},
+								{
+									"key": "author_url",
+									"value": "http://example.com"
+								},
+								{
+									"key": "content",
+									"value": "nice. i appreciate it"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pages",
+			"item": [
+				{
+					"name": "Get Pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WORDPRESS_API_URL}}/pages?context=view&per_page=100&_fields=slug,title",
+							"host": [
+								"{{WORDPRESS_API_URL}}"
+							],
+							"path": [
+								"pages"
+							],
+							"query": [
+								{
+									"key": "context",
+									"value": "view"
+								},
+								{
+									"key": "per_page",
+									"value": "100"
+								},
+								{
+									"key": "_fields",
+									"value": "slug,title"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
