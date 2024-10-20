@@ -15,13 +15,13 @@ export function yoastSeo(post: Post): Metadata {
       index: post.yoast_head_json.robots.index === 'index'
     },
     alternates: {
-      canonical: post.yoast_head_json.canonical
+      canonical: post.yoast_head_json.canonical.replace(/\/$/, '')
     },
     openGraph: {
       type: 'article',
       title: post.yoast_head_json.og_title,
       description: post.yoast_head_json.og_description,
-      url: post.yoast_head_json.og_url,
+      url: post.yoast_head_json.og_url.replace(/\/$/, ''),
       publishedTime: post.yoast_head_json.article_published_time,
       modifiedTime: post.yoast_head_json.article_modified_time,
       images: [
