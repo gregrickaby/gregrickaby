@@ -9,7 +9,7 @@ export async function fetchPageBySlug(slug: string) {
   const query = new WP_Query({
     post_type: 'pages',
     slug: slug,
-    fields: ['content', 'title', 'yoast_head_json']
+    _fields: ['content', 'title', 'yoast_head_json']
   })
 
   // Get the page by slug.

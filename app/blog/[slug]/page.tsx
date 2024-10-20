@@ -52,7 +52,7 @@ export async function generateMetadata({params}: BlogPostProps) {
   const query = new WP_Query({
     post_type: 'posts',
     slug: params.slug,
-    fields: ['content', 'title', 'yoast_head_json']
+    _fields: ['content', 'title', 'yoast_head_json']
   })
 
   // Get the post by slug.
@@ -75,11 +75,16 @@ export default async function BlogPost({params}: Readonly<BlogPostProps>) {
   // Setup the query.
   const query = new WP_Query({
     slug: params.slug,
-    fields: [
+    _fields: [
+      'acf',
+      'author_gravatar_url',
+      'author_name',
       'category_names',
       'content',
       'date',
+      'featured_image_data',
       'id',
+      'modified',
       'slug',
       'tag_names',
       'title',

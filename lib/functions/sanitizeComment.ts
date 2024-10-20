@@ -17,7 +17,7 @@ export function sanitizeComment(content: string): string {
     transformTags: {
       a: (tagName, attribs) => {
         // Ensure target="_blank" and rel="noopener noreferrer" for <a> tags
-        if (!attribs.rel || !attribs.rel.includes('noopener')) {
+        if (!attribs.rel?.includes('noopener')) {
           attribs.rel = 'noopener noreferrer'
         }
         attribs.target = '_blank' // Open links in a new tab

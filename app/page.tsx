@@ -8,7 +8,7 @@ import Link from 'next/link'
  * @see https://developer.wordpress.org/rest-api/reference/posts/#arguments
  */
 const latestPosts = new WP_Query({
-  fields: ['id', 'title', 'slug'],
+  _fields: ['id', 'title', 'slug', 'excerpt', 'featured_image_data', 'date'],
   order: 'desc',
   orderby: 'date',
   post_type: 'posts',

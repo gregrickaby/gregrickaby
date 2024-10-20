@@ -3,7 +3,7 @@ import config from '@/lib/config'
 import escape from 'xml-escape'
 
 const query = new WP_Query({
-  fields: [
+  _fields: [
     'slug',
     'title',
     'excerpt',

@@ -3,7 +3,7 @@ import {Post} from '@/lib/types'
 /**
  * WP_Query arguments.
  */
-interface WP_QueryArgs {
+interface WPQueryQrgs {
   /** Optional. A post type slug to query. Defaults to 'posts'. */
   post_type?: 'posts' | 'pages'
   /** Optional. Number of posts to return per page. Defaults to 10. */
@@ -103,17 +103,17 @@ export class WP_Query {
   /**
    * The endpoint to query.
    */
-  private endpoint: string
+  private readonly endpoint: string
 
   /**
    * The post type to query.
    */
-  private postType: WP_QueryArgs['post_type']
+  private readonly postType: WPQueryQrgs['post_type']
 
   /**
    * The query parameters.
    */
-  private params: WP_QueryArgs
+  private readonly params: WPQueryQrgs
 
   /**
    * Constructs a new WP_Query instance.
@@ -139,9 +139,9 @@ export class WP_Query {
    * @param args - The arguments used to configure the query.
    * @param endpoint - The endpoint to query. Defaults to WP_Query.defaultEndpoint.
    */
-  constructor(args: WP_QueryArgs = {}, endpoint: string = '') {
+  constructor(args: WPQueryQrgs = {}, endpoint: string = '') {
     this.endpoint = endpoint || 'https://blog.gregrickaby.com/wp-json/wp/v2'
-    this.postType = args.post_type || 'posts'
+    this.postType = args.post_type ?? 'posts'
     this.params = {
       // Set default query parameters.
       context: 'view',

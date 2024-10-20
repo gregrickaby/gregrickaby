@@ -6,7 +6,7 @@ import {Metadata} from 'next'
 const initialQuery = new WP_Query({
   per_page: 10,
   page: 1,
-  fields: ['id', 'slug', 'title', 'excerpt', 'featured_image_data', 'date'],
+  _fields: ['id', 'slug', 'title', 'excerpt', 'featured_image_data', 'date'],
   orderby: 'date',
   order: 'desc'
 })
