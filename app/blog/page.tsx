@@ -22,7 +22,7 @@ export function generateMetadata(): Metadata {
     description:
       'Welcome to my blog. Here you will find posts dating back to 2013.',
     alternates: {
-      canonical: `${config.siteUrl}/blog`
+      canonical: '/blog'
     }
   }
 }

@@ -12,7 +12,7 @@ export function generateMetadata(): Metadata {
     title: `Search - ${config.siteName}`,
     description: 'Use the search form to look for posts or pages.',
     alternates: {
-      canonical: `${config.siteUrl}/search`
+      canonical: '/search'
     }
   }
 }
