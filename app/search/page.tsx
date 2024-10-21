@@ -10,7 +10,10 @@ import {Metadata} from 'next'
 export function generateMetadata(): Metadata {
   return {
     title: `Search - ${config.siteName}`,
-    description: 'Use the search form to look for posts or pages.'
+    description: 'Use the search form to look for posts or pages.',
+    alternates: {
+      canonical: `${config.siteUrl}/search`
+    }
   }
 }
 

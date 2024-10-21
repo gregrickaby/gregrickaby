@@ -20,7 +20,10 @@ export function generateMetadata(): Metadata {
   return {
     title: `Blog - ${config.siteName}`,
     description:
-      'Welcome to my blog. Here you will find posts dating back to 2013.'
+      'Welcome to my blog. Here you will find posts dating back to 2013.',
+    alternates: {
+      canonical: `${config.siteUrl}/blog`
+    }
   }
 }
 
