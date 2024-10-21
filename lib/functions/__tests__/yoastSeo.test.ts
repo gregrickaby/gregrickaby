@@ -15,13 +15,13 @@ describe('yoastSeo() tests', () => {
         index: true
       },
       alternates: {
-        canonical: mockPost.yoast_head_json.canonical
+        canonical: mockPost.yoast_head_json.canonical.replace(/\/$/, '')
       },
       openGraph: {
         type: 'article',
         title: mockPost.yoast_head_json.og_title,
         description: mockPost.yoast_head_json.og_description,
-        url: mockPost.yoast_head_json.og_url,
+        url: mockPost.yoast_head_json.og_url.replace(/\/$/, ''),
         publishedTime: mockPost.yoast_head_json.article_published_time,
         modifiedTime: mockPost.yoast_head_json.article_modified_time,
         images: [
