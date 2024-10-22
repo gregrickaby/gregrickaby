@@ -3,7 +3,6 @@ import config from '@/lib/config'
 import clsx from 'clsx'
 import type {Metadata, Viewport} from 'next'
 import {Aleo, Fira_Code, Open_Sans} from 'next/font/google'
-import NextTopLoader from 'nextjs-toploader'
 import './globals.css'
 
 const serif = Aleo({
@@ -80,7 +79,6 @@ export default function RootLayout({
     >
       <body>
         <JsonLD />
-        <NextTopLoader />
         <Header />
         <main>{children}</main>
         <Footer />

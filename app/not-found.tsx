@@ -8,7 +8,7 @@ import Image from 'next/image'
  * @see https://nextjs.org/docs/app/api-reference/functions/not-found
  */
 export default async function NotFound() {
-  const headersList = headers()
+  const headersList = await headers()
   const referer = headersList.get('referer')
 
   return (

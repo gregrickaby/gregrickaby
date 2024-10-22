@@ -1,6 +1,6 @@
 import {createComment, fetchComments} from '@/lib/api/comments'
 import {mockComments} from '@/mocks'
-import {vi} from 'vitest'
+import {Mock, vi} from 'vitest'
 
 // Mock the fetch API.
 const mockFetch = vi.fn()
@@ -16,14 +16,14 @@ afterEach(() => {
 
 describe('fetchComments', () => {
   const mockFetchSuccess = (data = mockComments) => {
-    ;(global.fetch as vi.Mock).mockResolvedValue({
+    ;(global.fetch as Mock).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(data)
     })
   }
 
   const mockFetchError = (message = 'Failed to fetch comments') => {
-    ;(global.fetch as vi.Mock).mockResolvedValue({
+    ;(global.fetch as Mock).mockResolvedValue({
       ok: false,
       json: () => Promise.resolve({})
     })
@@ -56,7 +56,7 @@ describe('fetchComments', () => {
   })
 
   it('should throw an error when the response is not an array', async () => {
-    // Mock response with invalid data format
+    // @ts-ignore: This is a test, so we're intentionally providing the wrong type
     mockFetchSuccess({}) // Invalid response, expecting array
 
     await expect(fetchComments(1)).rejects.toThrow(
@@ -66,10 +66,10 @@ describe('fetchComments', () => {
   })
 
   it('should log an error and throw an exception if fetch throws', async () => {
-    const consoleErrorSpy = vi.spyOn(console, 'error') // We already mock this in beforeEach
+    const consoleErrorSpy = vi.spyOn(console, 'error')
 
     // Mock fetch to throw an error
-    ;(global.fetch as vi.Mock).mockRejectedValue(new Error('Network error'))
+    ;(global.fetch as Mock).mockRejectedValue(new Error('Network error'))
 
     await expect(fetchComments(1)).rejects.toThrow('Network error')
     expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -91,7 +91,7 @@ describe('createComment', () => {
     }
 
     // Mock the fetch API call.
-    ;(global.fetch as vi.Mock).mockResolvedValueOnce({
+    ;(global.fetch as Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => mockResponse
     })
@@ -115,7 +115,7 @@ describe('createComment', () => {
   })
 
   it('should throw an error when the API call fails', async () => {
-    ;(global.fetch as vi.Mock).mockResolvedValueOnce({
+    ;(global.fetch as Mock).mockResolvedValueOnce({
       ok: false,
       status: 500
     })

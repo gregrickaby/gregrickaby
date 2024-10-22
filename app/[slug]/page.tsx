@@ -6,9 +6,9 @@ import {fetchPageBySlug, sanitizeText, yoastSeo} from '@/lib/functions'
  * Page props.
  */
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 /**
@@ -43,7 +43,8 @@ export async function generateStaticParams() {
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export async function generateMetadata({params}: Readonly<PageProps>) {
+export async function generateMetadata(props: Readonly<PageProps>) {
+  const params = await props.params
   const page = await fetchPageBySlug(params.slug)
   return yoastSeo(page)
 }
@@ -51,7 +52,8 @@ export async function generateMetadata({params}: Readonly<PageProps>) {
 /**
  * Single Page.
  */
-export default async function SinglePage({params}: Readonly<PageProps>) {
+export default async function SinglePage(props: Readonly<PageProps>) {
+  const params = await props.params
   const page = await fetchPageBySlug(params.slug)
 
   return (

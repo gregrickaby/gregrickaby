@@ -10,9 +10,9 @@ import {notFound} from 'next/navigation'
  * Blog Post props.
  */
 interface BlogPostProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 /**
@@ -47,7 +47,8 @@ export async function generateStaticParams() {
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export async function generateMetadata({params}: BlogPostProps) {
+export async function generateMetadata(props: BlogPostProps) {
+  const params = await props.params
   // Setup the query.
   const query = new WP_Query({
     post_type: 'posts',
@@ -71,7 +72,8 @@ export async function generateMetadata({params}: BlogPostProps) {
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export default async function BlogPost({params}: Readonly<BlogPostProps>) {
+export default async function BlogPost(props: Readonly<BlogPostProps>) {
+  const params = await props.params
   // Setup the query.
   const query = new WP_Query({
     slug: params.slug,

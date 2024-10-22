@@ -6,7 +6,9 @@ import {useEffect, useRef} from 'react'
 /**
  * Initialize photo gallery.
  */
-export async function galleryInit(contentRef: React.RefObject<HTMLDivElement>) {
+export async function galleryInit(
+  contentRef: React.RefObject<HTMLDivElement | null>
+) {
   // On the server? Bail.
   if (typeof window === 'undefined') {
     return
