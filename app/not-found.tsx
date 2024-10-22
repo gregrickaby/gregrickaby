@@ -1,6 +1,33 @@
 import {Search} from '@/components/Search'
+import config from '@/lib/config'
+import {Metadata} from 'next'
 import {headers} from 'next/headers'
 import Image from 'next/image'
+
+/**
+ * Generate metadata.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
+export function generateMetadata(): Metadata {
+  return {
+    title: `${config.siteName} | 404 - Not Found`,
+    description: `Sorry, the page you're looking for doesn't exist. Please check the URL or return to the homepage.`,
+    robots: {
+      index: false,
+      follow: false
+    },
+    alternates: {
+      canonical: `${config.siteUrl}/404`
+    },
+    openGraph: {
+      title: `${config.siteName} | 404 - Not Found`,
+      description: `Sorry, the page you're looking for doesn't exist. Please check the URL or return to the homepage.`,
+      url: `${config.siteUrl}/404`,
+      type: 'website'
+    }
+  }
+}
 
 /**
  * Not Found route.
