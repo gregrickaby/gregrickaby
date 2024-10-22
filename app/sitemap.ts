@@ -4,15 +4,17 @@ import {Post} from '@/lib/types'
 import {MetadataRoute} from 'next'
 
 const pageQuery = new WP_Query({
-  _fields: ['slug', 'yoast_head_json'],
   per_page: 100,
-  post_type: 'pages'
+  post_type: 'pages',
+  status: 'publish',
+  _fields: ['slug', 'yoast_head_json']
 })
 
 const postQuery = new WP_Query({
-  _fields: ['slug', 'yoast_head_json'],
   per_page: 100,
-  post_type: 'posts'
+  post_type: 'posts',
+  status: 'publish',
+  _fields: ['slug', 'yoast_head_json']
 })
 
 /**
