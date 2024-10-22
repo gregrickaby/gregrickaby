@@ -8,7 +8,6 @@ interface WPQueryQrgs {
   post_type?: 'posts' | 'pages'
   /** Optional. Number of posts to return per page. Defaults to 10. */
   per_page?: number
-
   /** Optional. Current page of the query. Defaults to 1. */
   paged?: number
   /** Optional. Field to order the posts by. Defaults to 'date'. */
