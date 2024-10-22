@@ -65,6 +65,11 @@ const nextConfig = {
         source: '/using-the-golden-ratio-and-rems',
         destination: '/blog/using-the-golden-ratio-and-rems',
         permanent: true
+      },
+      {
+        source: '/create-mu-plugin-for-wordpress',
+        destination: '/blog/create-mu-plugin-for-wordpress',
+        permanent: true
       }
     ]
   },
