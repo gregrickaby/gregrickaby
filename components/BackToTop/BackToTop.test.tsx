@@ -1,8 +1,8 @@
 import {BackToTop} from '@/components/BackToTop'
-import '@testing-library/jest-dom'
-import {act, fireEvent, render, screen, waitFor} from '@testing-library/react'
+import {act, render, screen, waitFor} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import {axe} from 'jest-axe'
-import {describe, expect, vi} from 'vitest'
+import {vi} from 'vitest'
 
 // Mock the IconArrowUp component to avoid rendering actual SVG during tests.
 vi.mock('@tabler/icons-react', () => ({
@@ -36,9 +36,7 @@ describe('BackToTop Component', () => {
       scrollTo(201)
     })
 
-    await waitFor(() => {
-      expect(screen.getByTestId('back-to-top')).toBeInTheDocument()
-    })
+    expect(await screen.findByTestId('back-to-top')).toBeInTheDocument()
   })
 
   it('scrolls to top when button is clicked', async () => {
@@ -48,11 +46,8 @@ describe('BackToTop Component', () => {
       scrollTo(201)
     })
 
-    const button = await waitFor(() => screen.getByTestId('back-to-top'))
-
-    act(() => {
-      fireEvent.click(button)
-    })
+    const button = await screen.findByTestId('back-to-top')
+    await userEvent.click(button)
 
     await waitFor(() => {
       expect(window.scrollTo).toHaveBeenCalledWith({top: 0, behavior: 'smooth'})
@@ -66,7 +61,7 @@ describe('BackToTop Component', () => {
       scrollTo(201)
     })
 
-    const button = await waitFor(() => screen.getByTestId('back-to-top'))
+    const button = await screen.findByTestId('back-to-top')
 
     expect(button).toHaveAttribute(
       'aria-label',
@@ -82,7 +77,7 @@ describe('BackToTop Component', () => {
       scrollTo(201)
     })
 
-    const button = await waitFor(() => screen.getByTestId('back-to-top'))
+    const button = await screen.findByTestId('back-to-top')
     const results = await axe(button)
     expect(results).toHaveNoViolations()
   })
@@ -94,7 +89,7 @@ describe('BackToTop Component', () => {
       scrollTo(201)
     })
 
-    await waitFor(() => screen.getByTestId('back-to-top'))
+    await screen.findByTestId('back-to-top')
     expect(container).toMatchSnapshot()
   })
 })

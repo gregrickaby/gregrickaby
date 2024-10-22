@@ -1,8 +1,7 @@
 import {Navigation} from '@/components/Navigation'
-import '@testing-library/jest-dom'
-import {act, fireEvent, render, screen} from '@testing-library/react'
+import {act, render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import {axe} from 'jest-axe'
-import {describe, expect, it} from 'vitest'
 
 describe('Navigation', () => {
   it('should render', () => {
@@ -10,32 +9,26 @@ describe('Navigation', () => {
     expect(container).toBeInTheDocument()
   })
 
-  it('should render navigation links', () => {
+  it('should render navigation links', async () => {
     render(<Navigation />)
     const button = screen.getByRole('button')
 
     // Open the menu.
-    act(() => {
-      fireEvent.click(button)
-    })
-
-    // Get all links.
+    await userEvent.click(button)
     const links = screen.getAllByRole('link')
 
-    // Verify each link is in the DOM.
+    // Verify the navigation links are rendered.
     links.forEach((link) => {
       expect(link).toBeInTheDocument()
     })
   })
 
-  it('should toggle the hamburger menu', () => {
+  it('should toggle the hamburger menu', async () => {
     render(<Navigation />)
     const button = screen.getByRole('button')
 
     // Open the menu.
-    act(() => {
-      fireEvent.click(button)
-    })
+    await userEvent.click(button)
 
     // Get the navigation links container.
     const navLinks = screen.getByTestId('nav-links')
@@ -44,30 +37,24 @@ describe('Navigation', () => {
     expect(navLinks).toHaveClass(/flex/i)
 
     // Close the menu.
-    act(() => {
-      fireEvent.click(button)
-    })
+    await userEvent.click(button)
 
     // Verify the navigation links are hidden.
     expect(navLinks).toHaveClass(/hidden/i)
   })
 
-  it('should close the menu when clicking on a link', () => {
+  it('should close the menu when clicking on a link', async () => {
     render(<Navigation />)
     const button = screen.getByRole('button')
 
     // Open the menu.
-    act(() => {
-      fireEvent.click(button)
-    })
+    await userEvent.click(button)
 
     // Get all links.
     const links = screen.getAllByRole('link')
 
     // Click the first link.
-    act(() => {
-      fireEvent.click(links[0])
-    })
+    await userEvent.click(links[0])
 
     // Get the navigation links container.
     const navLinks = screen.getByTestId('nav-links')
@@ -76,19 +63,15 @@ describe('Navigation', () => {
     expect(navLinks).toHaveClass(/hidden/i)
   })
 
-  it('should close the menu when clicking outside', () => {
+  it('should close the menu when clicking outside', async () => {
     render(<Navigation />)
     const button = screen.getByRole('button')
 
     // Open the menu.
-    act(() => {
-      fireEvent.click(button)
-    })
+    await userEvent.click(button)
 
     // Click outside the menu.
-    act(() => {
-      fireEvent.mouseDown(document)
-    })
+    await userEvent.click(document.body)
 
     // Get the navigation links container.
     const navLinks = screen.getByTestId('nav-links')
@@ -98,26 +81,21 @@ describe('Navigation', () => {
   })
 
   it('should not have any accessibility issues', async () => {
-    const {container, getByRole} = render(<Navigation />)
-    const button = getByRole('button')
+    const {container} = render(<Navigation />)
+    const button = screen.getByRole('button')
 
-    // Open the menu.
+    await userEvent.click(button)
+
+    let results
     await act(async () => {
-      fireEvent.click(button)
+      results = await axe(container)
     })
-
-    // Get the container.
-    const results = await act(async () => {
-      return await axe(container)
-    })
-
-    // Verify there are no violations.
     expect(results).toHaveNoViolations()
   })
 
   it('should match snapshot', () => {
-    const {getByTestId} = render(<Navigation />)
-    const nav = getByTestId('nav')
+    render(<Navigation />)
+    const nav = screen.getByTestId('nav')
     expect(nav).toMatchSnapshot()
   })
 })

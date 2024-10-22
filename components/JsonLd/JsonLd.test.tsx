@@ -1,6 +1,6 @@
 import {JsonLD} from '@/components/JsonLd'
 import '@testing-library/jest-dom'
-import {render} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import {describe, expect, it} from 'vitest'
 
 /**
@@ -8,14 +8,14 @@ import {describe, expect, it} from 'vitest'
  */
 describe('JsonLD', () => {
   it('should render', () => {
-    const {getByTestId} = render(<JsonLD />)
-    const jsonLd = getByTestId('json-ld')
+    render(<JsonLD />)
+    const jsonLd = screen.getByTestId('json-ld')
     expect(jsonLd).toBeInTheDocument()
   })
 
   it('should match snapshot', () => {
-    const {getByTestId} = render(<JsonLD />)
-    const jsonLd = getByTestId('json-ld')
+    render(<JsonLD />)
+    const jsonLd = screen.getByTestId('json-ld')
     expect(jsonLd).toMatchSnapshot()
   })
 })

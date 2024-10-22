@@ -1,7 +1,0 @@
-.gallery {
-  @apply columns-1 gap-1 sm:columns-2 sm:gap-8 md:columns-3 [&>img:not(:first-child)]:mt-8;
-}
-
-.photo {
-  @apply cursor-pointer p-2;
-}

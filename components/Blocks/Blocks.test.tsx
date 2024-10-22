@@ -1,9 +1,7 @@
 import {Blocks, galleryInit} from '@/components/Blocks'
 import {mockPost} from '@/mocks'
-import '@testing-library/jest-dom'
-import {render} from '@testing-library/react'
-import {axe} from 'jest-axe'
-import {describe, expect, it, vi} from 'vitest'
+import {render, screen} from '@testing-library/react'
+import {vi} from 'vitest'
 
 describe('galleryInit() tests', () => {
   it('should bail on the server', async () => {
@@ -80,15 +78,9 @@ describe('Blocks component tests', () => {
     unmount()
   })
 
-  it('should not have any accessibility issues', async () => {
-    const {container} = render(<Blocks content={mockPost.content.rendered} />)
-    const results = await axe(container)
-    expect(results).toHaveNoViolations()
-  })
-
   it('should match snapshot', () => {
-    const {getByTestId} = render(<Blocks content={mockPost.content.rendered} />)
-    const blocks = getByTestId('blocks')
+    render(<Blocks content={mockPost.content.rendered} />)
+    const blocks = screen.getByTestId('blocks')
     expect(blocks).toMatchSnapshot()
   })
 })

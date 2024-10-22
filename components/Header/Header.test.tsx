@@ -1,59 +1,53 @@
 import {Header} from '@/components/Header'
 import config from '@/lib/config'
-import '@testing-library/jest-dom'
-import {act, fireEvent, render} from '@testing-library/react'
+import {act, render, screen} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import {axe} from 'jest-axe'
-import {describe, expect, it} from 'vitest'
 
 /**
  * Test suite for the Header component.
  */
 describe('Header', () => {
   it('should render', () => {
-    const {getByTestId} = render(<Header />)
-    const header = getByTestId('header')
+    render(<Header />)
+    const header = screen.getByTestId('header')
     expect(header).toBeInTheDocument()
   })
 
   it('should render the logo', () => {
-    const {getByAltText} = render(<Header />)
-    const logo = getByAltText(config.siteName)
+    render(<Header />)
+    const logo = screen.getByAltText(config.siteName)
     expect(logo).toBeInTheDocument
   })
 
   it('should render the site name', () => {
-    const {getByText} = render(<Header />)
-    const text = getByText(config.siteName)
+    render(<Header />)
+    const text = screen.getByText(config.siteName)
     expect(text).toBeInTheDocument()
   })
 
   it('should render the description text', () => {
-    const {getByText} = render(<Header />)
-    const text = getByText(config.siteDescription)
+    render(<Header />)
+    const text = screen.getByText(config.siteDescription)
     expect(text).toBeInTheDocument
   })
 
   it('should not have accessibility issues', async () => {
-    const {container, getByRole} = render(<Header />)
-    const button = getByRole('button')
+    const {container} = render(<Header />)
+    const button = screen.getByRole('button')
 
-    // Open the menu.
-    await act(async () => {
-      fireEvent.click(button)
-    })
+    await userEvent.click(button)
 
-    // Get the container.
     const results = await act(async () => {
       return await axe(container)
     })
 
-    // Verify there are no violations.
     expect(results).toHaveNoViolations()
   })
 
   it('should match snapshot', () => {
-    const {getByTestId} = render(<Header />)
-    const header = getByTestId('header')
+    render(<Header />)
+    const header = screen.getByTestId('header')
     expect(header).toMatchSnapshot()
   })
 })

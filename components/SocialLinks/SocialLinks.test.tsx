@@ -1,16 +1,14 @@
 import {SocialLinks} from '@/components/SocialLinks'
-import '@testing-library/jest-dom'
-import {render} from '@testing-library/react'
+import {render, screen} from '@testing-library/react'
 import {axe} from 'jest-axe'
-import {describe, expect, it} from 'vitest'
 
 /**
  * Test suite for the SocialLinks component.
  */
 describe('SocialLinks', () => {
   it('should render', () => {
-    const {getByTestId} = render(<SocialLinks />)
-    const socialLinks = getByTestId('social-links')
+    render(<SocialLinks />)
+    const socialLinks = screen.getByTestId('social-links')
     expect(socialLinks).toBeInTheDocument()
   })
 
@@ -21,8 +19,8 @@ describe('SocialLinks', () => {
   })
 
   it('should match snapshot', () => {
-    const {getByTestId} = render(<SocialLinks />)
-    const socialLinks = getByTestId('social-links')
+    render(<SocialLinks />)
+    const socialLinks = screen.getByTestId('social-links')
     expect(socialLinks).toMatchSnapshot()
   })
 })
