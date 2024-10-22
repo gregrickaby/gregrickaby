@@ -47,6 +47,11 @@ const nextConfig = {
         permanent: true
       },
       {
+        source: '/homepage',
+        destination: '/',
+        permanent: true
+      },
+      {
         source: '/genesis-code-snippets',
         destination: '/blog/genesis-code-snippets',
         permanent: true
@@ -72,13 +77,18 @@ const nextConfig = {
         permanent: true
       },
       {
-        source: '/manifest.json',
-        destination: '/manifest.webmanifest',
+        source: '/how-to-install-lamp-on-ubuntu',
+        destination: '/blog/how-to-install-lamp-on-ubuntu',
         permanent: true
       },
       {
-        source: '/homepage',
-        destination: '/',
+        source: '/blog/modify-wordpress-custom-post-type-2',
+        destination: '/blog/modify-wordpress-custom-post-type',
+        permanent: true
+      },
+      {
+        source: '/manifest.json',
+        destination: '/manifest.webmanifest',
         permanent: true
       }
     ]
