@@ -70,6 +70,11 @@ const nextConfig = {
         source: '/create-mu-plugin-for-wordpress',
         destination: '/blog/create-mu-plugin-for-wordpress',
         permanent: true
+      },
+      {
+        source: '/manifest.json',
+        destination: '/manifest.webmanifest',
+        permanent: true
       }
     ]
   },
