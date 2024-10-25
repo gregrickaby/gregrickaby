@@ -38,7 +38,8 @@
     "react": "19.0.0-rc-1631855f-20241023",
     "react-dom": "19.0.0-rc-1631855f-20241023",
     "react-infinite-scroll-component": "^6.1.0",
-    "sanitize-html": "^2.13.1"
+    "sanitize-html": "^2.13.1",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
@@ -52,7 +53,7 @@
     "@types/imagesloaded": "^4.1.6",
     "@types/jest-axe": "^3.5.9",
     "@types/masonry-layout": "^4.2.8",
-    "@types/node": "^22.7.9",
+    "@types/node": "^22.8.0",
     "@types/react": "npm:types-react@^19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@^19.0.0-rc.1",
     "@types/sanitize-html": "^2.13.0",
