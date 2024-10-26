@@ -49,71 +49,19 @@
   }
 }
 
+/* Image captions. */
 figcaption.wp-element-caption {
   @apply m-0 p-0 text-center text-sm text-gray-600 dark:text-gray-400;
 }
 
-/* ACF Photo Gallery */
-#grd-photo-gallery-gallery {
-  @apply relative left-1/2 right-1/2 -mx-[50vw] h-auto w-[100vw] max-w-none;
-}
+/* oEmbeds */
+embed,
+iframe,
+object {
+  @apply max-w-full;
 
-.grd-photo-gallery-grid {
-  @apply m-auto my-16;
-
-  column-gap: 16px;
-  columns: 3 300px;
-  width: min(70%, 100%);
-
-  .grd-photo-gallery-image {
-    @apply relative mb-4 mt-0 flex w-full justify-center p-2;
-
-    a {
-      @apply cursor-zoom-in text-white no-underline;
-    }
-
-    img {
-      @apply m-0 rounded transition-all duration-200 ease-in-out;
-
-      backface-visibility: hidden;
-    }
-
-    &:hover {
-      img {
-        @apply scale-105 transform shadow-lg;
-      }
-
-      .grd-photo-gallery-image-caption {
-        @apply visible opacity-100;
-      }
-    }
-  }
-
-  /* Optional captions. */
-  .grd-photo-gallery-image-caption {
-    @apply invisible absolute bottom-1 max-w-[90%] p-3 opacity-0 transition-all duration-200 ease-in-out;
-    @apply bg-zinc-900/50 text-left text-white shadow-lg;
-
-    backface-visibility: hidden;
-  }
-
-  .fancybox__caption {
-    @apply text-center;
-
-    .exif {
-      @apply text-xs;
-    }
-  }
-
-  /* oEmbeds */
-  embed,
-  iframe,
-  object {
-    @apply max-w-full;
-
-    @media screen and (width <= 768px) {
-      height: 56.25vw;
-      max-height: 500px;
-    }
+  @media screen and (width <= 768px) {
+    height: 56.25vw;
+    max-height: 500px;
   }
 }
