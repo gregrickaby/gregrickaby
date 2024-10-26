@@ -28,25 +28,7 @@ export async function galleryInit(
   }
 
   // Import the libraries on demand.
-  const Masonry = (await import('masonry-layout')).default
   const Fancybox = (await import('@fancyapps/ui')).Fancybox
-  const imagesLoaded = (await import('imagesloaded')).default
-
-  // Initialize ImagesLoaded.
-  const imagesLoadedInstance = imagesLoaded(gallery)
-
-  // Initialize Masonry.
-  const masonryGrid = new Masonry(gallery, {
-    gutter: 24,
-    itemSelector: '.grd-photo-gallery-image',
-    columnWidth: '.grd-photo-gallery-grid-sizer',
-    percentPosition: true
-  })
-
-  // When ImagesLoaded is done, initialize Masonry.
-  imagesLoadedInstance.on('done', () => {
-    masonryGrid?.layout?.()
-  })
 
   // Initialize Fancybox.
   Fancybox.bind('[data-fancybox]', {
