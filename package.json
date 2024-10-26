@@ -28,7 +28,6 @@
     "test:ci": "vitest run"
   },
   "dependencies": {
-    "@fancyapps/ui": "^5.0.36",
     "@tabler/icons-react": "^3.20.0",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
@@ -48,7 +47,7 @@
     "@testing-library/react": "^16.0.1",
     "@testing-library/user-event": "^14.5.2",
     "@types/jest-axe": "^3.5.9",
-    "@types/node": "^22.8.0",
+    "@types/node": "^22.8.1",
     "@types/react": "npm:types-react@^19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@^19.0.0-rc.1",
     "@types/sanitize-html": "^2.13.0",
