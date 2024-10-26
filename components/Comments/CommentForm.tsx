@@ -95,11 +95,12 @@ export function CommentForm({postId}: Readonly<{postId: number}>) {
           required
         />
       </label>
-      <button>
-        Submit Comment
-        {loading && <IconLoader className="loading" />}
-      </button>
-
+      <div className="flex items-center justify-end">
+        <button className="button text-normal px-6">
+          Submit
+          {loading && <IconLoader className="loading" />}
+        </button>
+      </div>
       <div aria-live="polite">{statusMessage && <p>{statusMessage}</p>}</div>
     </form>
   )

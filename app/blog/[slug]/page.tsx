@@ -4,6 +4,7 @@ import {Comments} from '@/components/Comments'
 import {WP_Query} from '@/lib/api'
 import {fetchComments} from '@/lib/api/comments'
 import {sanitizeText, yoastSeo} from '@/lib/functions'
+import {IconFolder, IconTags} from '@tabler/icons-react'
 import {notFound} from 'next/navigation'
 
 /**
@@ -137,26 +138,24 @@ export default async function BlogPost(props: Readonly<BlogPostProps>) {
         <Blocks content={post.content.rendered} />
       </div>
 
-      <footer className="border-b border-t">
-        <p className="font-bold">
-          Category:{' '}
+      <footer className="border-b pb-8 pt-4 dark:border-gray-900">
+        <div className="flex items-center gap-2">
+          <IconFolder />
+          <span className="sr-only">catergorized in</span>
           {post.category_names.map((category, index) => (
-            <span
-              className="font-normal"
-              key={category.id}
-              itemProp="articleSection"
-            >
+            <span key={category.id} itemProp="articleSection">
               {category.name}
               {index < post.category_names.length - 1 && ', '}
             </span>
           ))}
-        </p>
-        <p className="font-bold">
-          Tags:{' '}
-          <span className="font-normal" itemProp="keywords">
+        </div>
+        <div className="flex items-center gap-2">
+          <IconTags />
+          <span className="sr-only">tagged with</span>
+          <span itemProp="keywords">
             {post.tag_names.map((tag) => tag.name).join(', ')}
           </span>
-        </p>
+        </div>
       </footer>
 
       {/* Comments section */}

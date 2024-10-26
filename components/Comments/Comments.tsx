@@ -95,7 +95,7 @@ export function Comments({comments, postId}: Readonly<CommentsProps>) {
         Comments
       </h2>
       {topLevelComments.length === 0 ? (
-        <p>No comments yet. Be the first to comment!</p>
+        <p>No comments yet. Be the first to write one!</p>
       ) : (
         topLevelComments.map((comment) => (
           <CommentItem
