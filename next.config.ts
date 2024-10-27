@@ -52,6 +52,11 @@ const nextConfig = {
         permanent: true
       },
       {
+        source: '/articles',
+        destination: '/blog',
+        permanent: true
+      },
+      {
         source: '/genesis-code-snippets',
         destination: '/blog/genesis-code-snippets',
         permanent: true
