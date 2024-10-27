@@ -1,0 +1,11 @@
+.form {
+  @apply flex flex-col gap-4;
+}
+
+.submitWrapper {
+  @apply flex items-center justify-end;
+}
+
+.button {
+  @apply px-4 text-lg;
+}

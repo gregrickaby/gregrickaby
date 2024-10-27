@@ -1,7 +1,7 @@
+import {CommentForm} from '@/components'
 import {formatDate, sanitizeComment} from '@/lib/functions'
 import {Comment} from '@/lib/types'
 import clsx from 'clsx'
-import {CommentForm} from './CommentForm'
 import styles from './Comments.module.css'
 
 interface CommentsProps {

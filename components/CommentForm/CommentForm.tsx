@@ -3,6 +3,7 @@
 import {createComment} from '@/lib/api'
 import {IconLoader} from '@tabler/icons-react'
 import {useState} from 'react'
+import styles from './CommentForm.module.css'
 
 /**
  * CommentForm component for submitting comments.
@@ -56,7 +57,7 @@ export function CommentForm({postId}: Readonly<{postId: number}>) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <label>
         Name*:
         <input
@@ -95,8 +96,8 @@ export function CommentForm({postId}: Readonly<{postId: number}>) {
           required
         />
       </label>
-      <div className="flex items-center justify-end">
-        <button className="button text-normal px-6">
+      <div className={styles.submitWrapper}>
+        <button className={styles.button}>
           Submit
           {loading && <IconLoader className="loading" />}
         </button>

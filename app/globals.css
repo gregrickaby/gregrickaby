@@ -13,6 +13,7 @@
     @apply overflow-x-hidden bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50;
   }
 
+  button,
   .button,
   input[type='submit'] {
     @apply flex items-center justify-between gap-4 rounded p-2;
@@ -27,8 +28,12 @@
   input[type='url'],
   textarea {
     @apply bg-gray-100 dark:bg-gray-800;
-    @apply border border-gray-300 dark:border-gray-700;
-    @apply w-full rounded p-2;
+    @apply w-full rounded p-2 text-white shadow;
+    @apply border-gray-200 outline-gray-200 dark:border-gray-500 dark:outline-gray-500;
+  }
+
+  label {
+    @apply flex flex-col gap-1 text-lg font-bold;
   }
 
   main {
