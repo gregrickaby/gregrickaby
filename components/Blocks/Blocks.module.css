@@ -6,7 +6,7 @@
     @apply m-auto my-16;
 
     column-gap: 16px;
-    columns: 3 300px;
+    columns: 4 300px;
     width: min(70%, 100%);
   }
 
@@ -32,8 +32,6 @@
     @apply invisible absolute bottom-8 max-w-[90%] p-3 opacity-0;
     @apply rounded-lg bg-zinc-900/50 text-left text-sm text-white shadow-lg;
     @apply transition-all duration-200 ease-in-out;
-
-    backface-visibility: hidden;
   }
 }
 
