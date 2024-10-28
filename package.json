@@ -31,7 +31,7 @@
     "@tabler/icons-react": "^3.20.0",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
-    "next": "15.0.2-canary.6",
+    "next": "15.0.2-canary.9",
     "react": "19.0.0-rc-1631855f-20241023",
     "react-dom": "19.0.0-rc-1631855f-20241023",
     "react-infinite-scroll-component": "^6.1.0",
