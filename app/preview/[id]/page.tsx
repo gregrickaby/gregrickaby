@@ -1,6 +1,12 @@
+import {Blocks} from '@/components/Blocks'
+import {sanitizeText, yoastSeo} from '@/lib/functions'
+
+/**
+ * Preview props.
+ */
 interface PreviewProps {
-  params: {id: string}
-  searchParams: {[key: string]: string | string[] | undefined}
+  params: Promise<{id: string}>
+  searchParams: Promise<{[key: string]: string | string[] | undefined}>
 }
 
 /**
@@ -11,26 +17,53 @@ interface PreviewProps {
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config
  */
 export const dynamic = 'force-dynamic'
-export const runtime = 'edge'
 
-async function getPreview(postId: number) {
-  const token = process.env.WORDPRESS_JWT_TOKEN
-  const response = await fetch(
-    `https://blog.gregrickaby.com/wp-json/wp/v2/posts/${postId}?preview=true`,
-    {
+/**
+ * Get the preview.
+ *
+ * @param postId The post ID.
+ */
+async function getPreview(postId: string) {
+  try {
+    // Get the JWT token and API URL.
+    const token = process.env.WORDPRESS_JWT_TOKEN
+    const apiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
+
+    // No token or API URL? Bail.
+    if (!token || !apiUrl) {
+      throw new Error('WordPress API URL and JWT token are required.')
+    }
+
+    // Fetch the preview.
+    const response = await fetch(`${apiUrl}/posts/${postId}?preview=true`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       }
+    })
+
+    // Bail if the response is not OK.
+    if (!response.ok) {
+      throw new Error(`Failed to fetch preview: ${response.statusText}`)
     }
-  )
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch preview: ${response.statusText}`)
+    return response.json()
+  } catch (error) {
+    console.error(error)
+    return null
   }
+}
 
-  return response.json()
+/**
+ * Generate metadata.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
+ */
+export async function generateMetadata(props: Readonly<PreviewProps>) {
+  const params = await props.params
+  const page = await getPreview(params.id)
+  return yoastSeo(page)
 }
 
 /**
@@ -47,9 +80,9 @@ export default async function Preview({
   params,
   searchParams
 }: Readonly<PreviewProps>) {
-  // Get the secret from the query parameters.
-  const secret = searchParams.secret
-  const id = params.id
+  // Get the secret and post ID.
+  const {secret} = await searchParams
+  const {id} = await params
 
   // No secret? Bail.
   if (!secret || secret !== process.env.PREVIEW_SECRET) {
@@ -75,9 +108,7 @@ export default async function Preview({
         <h1>Preview Error</h1>
         <p>
           Couldn&apos;t find a WordPress post with the Post ID:{' '}
-          <span className="bg-yellow-200 p-1 font-mono text-black">
-            {params.id}
-          </span>
+          <span className="bg-yellow-200 p-1 font-mono text-black">{id}</span>
         </p>
         <p>Please verify the Post ID and try again.</p>
       </div>
@@ -85,9 +116,11 @@ export default async function Preview({
   }
 
   return (
-    <>
-      <h1>Preview</h1>
-      <pre>{JSON.stringify(post, null, 2)}</pre>
-    </>
+    <article className="article">
+      <header>
+        <h1>{sanitizeText(post.title.rendered)}</h1>
+      </header>
+      <Blocks content={post.content.rendered} />
+    </article>
   )
 }
