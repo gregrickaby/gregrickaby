@@ -64,7 +64,7 @@
     "jest-axe": "^9.0.0",
     "jsdom": "^25.0.1",
     "lefthook": "^1.9.2",
-    "msw": "^2.6.8",
+    "msw": "^2.6.9",
     "postcss": "^8.4.49",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
