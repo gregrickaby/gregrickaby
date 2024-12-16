@@ -28,7 +28,7 @@
     "test:ci": "vitest run"
   },
   "dependencies": {
-    "@tabler/icons-react": "^3.24.0",
+    "@tabler/icons-react": "^3.26.0",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "next": "^15.1.0",
