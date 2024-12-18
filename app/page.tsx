@@ -33,14 +33,10 @@ export default async function Home() {
           href="https://www.linkedin.com/in/gregrickaby/"
           rel="author"
         >
-          full-stack engineer
+          full-stack developer
         </a>
         ,{' '}
-        <Link
-          aria-label="follow on Threads"
-          href="https://www.threads.net/@gregoryrickaby"
-          rel="author"
-        >
+        <Link aria-label="view my blog" href="/blog">
           photography enthusiast
         </Link>
         , and{' '}
@@ -52,7 +48,10 @@ export default async function Home() {
           published author
         </a>{' '}
         living in Southeast Alabama. I&apos;m married with three kids and some
-        of my other hobbies include cooking, traveling, and reading.
+        of my hobbies include cooking, traveling, and reading. Currently,
+        I&apos;m a Technical Lead at{' '}
+        <a href="https://mindsize.com/">Mindsize</a> where I support a team
+        building enterprise solutions with Next.js.
       </p>
 
       <h2>Latest Posts</h2>
