@@ -35,7 +35,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-infinite-scroll-component": "^6.1.0",
-    "sanitize-html": "^2.13.1",
+    "sanitize-html": "^2.14.0",
     "sharp": "^0.33.5"
   },
   "devDependencies": {
@@ -48,7 +48,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/jest-axe": "^3.5.9",
     "@types/node": "^22.10.2",
-    "@types/react": "^19.0.1",
+    "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "@types/sanitize-html": "^2.13.0",
     "@types/xml-escape": "^1.1.3",

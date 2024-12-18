@@ -1,6 +1,6 @@
-# 👋 Hello There!
+# 👋 Hello There
 
-I'm a [full-stack engineer](https://www.linkedin.com/in/gregrickaby/), [photography enthusiast](https://gregrickaby.com/blog), and [published author](https://www.amazon.com/author/gregrickaby) living in Southeast Alabama. I'm married with three kids and some of my other hobbies include cooking, traveling, and reading. Currently, I'm a Tech Lead at [Mindsize](https://mindsize.com/) helping lead a team building enterprise solutions with Next.js.
+I'm a [full-stack developer](https://www.linkedin.com/in/gregrickaby/), [photography enthusiast](https://gregrickaby.com/blog), and [published author](https://www.amazon.com/author/gregrickaby) living in Southeast Alabama. I'm married with three kids and some of my hobbies include cooking, traveling, and reading. Currently, I'm a Technical Lead at [Mindsize](https://mindsize.com/) where I support a team building enterprise solutions with Next.js.
 
 ## Social Media
 
