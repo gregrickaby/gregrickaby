@@ -1,15 +1,7 @@
 import {
   IconBook,
-  IconBrandAmazon,
-  IconBrandBluesky,
-  IconBrandCodepen,
-  IconBrandFacebook,
-  IconBrandFeedly,
   IconBrandGithub,
-  IconBrandInstagram,
   IconBrandLinkedin,
-  IconBrandThreads,
-  IconBrandWordpress,
   IconBrandYoutube,
   IconRss
 } from '@tabler/icons-react'
@@ -22,7 +14,7 @@ const config = {
   siteOgImage: '/og.webp',
   jobTitle: 'Technical Lead',
   email: 'greg@gregrickaby.com',
-  intro: 'Disney Dad. Full-Stack Developer. Photographer. Author.',
+  intro: 'Full-Stack Developer. Photographer. Author.',
   gravatarApiUrl:
     'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
   navigation: [
@@ -43,6 +35,10 @@ const config = {
       url: '/media'
     },
     {
+      name: 'Photos',
+      url: '/photos'
+    },
+    {
       name: 'Resources',
       url: '/resources'
     },
@@ -52,26 +48,6 @@ const config = {
     }
   ],
   socials: [
-    {
-      name: 'Bluesky',
-      url: 'https://bsky.app/profile/gregrickaby.bsky.social',
-      icon: IconBrandBluesky
-    },
-    {
-      name: 'Instagram',
-      url: 'https://www.instagram.com/gregoryrickaby/',
-      icon: IconBrandInstagram
-    },
-    {
-      name: 'Threads',
-      url: 'https://www.threads.net/@gregoryrickaby',
-      icon: IconBrandThreads
-    },
-    {
-      name: 'Facebook',
-      url: 'https://www.facebook.com/gregrickaby',
-      icon: IconBrandFacebook
-    },
     {
       name: 'GitHub',
       url: 'https://github.com/gregrickaby/',
@@ -83,34 +59,14 @@ const config = {
       icon: IconBrandLinkedin
     },
     {
-      name: 'WordPress',
-      url: 'https://profiles.wordpress.org/gregrickaby/',
-      icon: IconBrandWordpress
-    },
-    {
-      name: 'Amazon Author',
-      url: 'https://www.amazon.com/author/gregrickaby',
-      icon: IconBrandAmazon
-    },
-    {
       name: 'Goodreads',
       url: 'https://www.goodreads.com/author/show/16999736.Greg_Rickaby',
       icon: IconBook
     },
     {
-      name: 'CodePen',
-      url: 'https://codepen.io/gregrickaby',
-      icon: IconBrandCodepen
-    },
-    {
       name: 'YouTube',
       url: 'https://www.youtube.com/@GregRickaby',
       icon: IconBrandYoutube
-    },
-    {
-      name: 'Feedly',
-      url: 'https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fgregrickaby.com%2Ffeed.xml',
-      icon: IconBrandFeedly
     },
     {
       name: 'RSS Feed',
