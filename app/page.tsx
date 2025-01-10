@@ -36,7 +36,7 @@ export default async function Home() {
           full-stack developer
         </a>
         ,{' '}
-        <Link aria-label="view my blog" href="/blog">
+        <Link aria-label="view my photos" href="/photos">
           photography enthusiast
         </Link>
         , and{' '}
