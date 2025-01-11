@@ -24,7 +24,10 @@ export function generateMetadata(): Metadata {
  */
 export default async function PhotosPage() {
   // Get all photos from Cloudinary.
-  const {resources} = await getPhotos()
+  const photos = await getPhotos()
+
+  // Get the Cloudinary cloud name.
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME ?? ''
 
   return (
     <div className="article px-12 lg:px-0">
@@ -34,7 +37,7 @@ export default async function PhotosPage() {
         landscapes from camping adventures, and breathtaking astrophotography.
         Each image invites you into unique worlds of beauty and discovery.
       </p>
-      <Photos resources={resources} />
+      <Photos photos={photos} cloudName={cloudName} />
     </div>
   )
 }

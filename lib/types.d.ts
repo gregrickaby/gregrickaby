@@ -1,3 +1,9 @@
+declare global {
+  interface Window {
+    Fancybox: any
+  }
+}
+
 export interface Comment {
   id: number
   post: number

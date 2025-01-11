@@ -5,17 +5,18 @@ import clsx from 'clsx'
 import {useEffect} from 'react'
 import styles from './Photos.module.css'
 
-// Declare a global window property for Fancybox.
-declare global {
-  interface Window {
-    Fancybox: any
-  }
+/**
+ * Photos component props.
+ */
+interface PhotosProps {
+  photos: CloudinaryResponse
+  cloudName: string
 }
 
 /**
  * Displays photos fetched from Cloudinary.
  */
-export default function Photos({resources}: CloudinaryResponse) {
+export default function Photos({photos, cloudName}: Readonly<PhotosProps>) {
   /**
    * Load Fancybox and initialize it when the component mounts.
    */
@@ -73,7 +74,7 @@ export default function Photos({resources}: CloudinaryResponse) {
   }, [])
 
   // If there are no photos, display a message.
-  if (!resources || resources.length === 0) {
+  if (!photos || !cloudName) {
     return (
       <p>There was an error fetching the images. Please try again later.</p>
     )
@@ -82,7 +83,7 @@ export default function Photos({resources}: CloudinaryResponse) {
   return (
     <div className={styles.photos}>
       <ul className={clsx('not-prose', styles.grid)}>
-        {resources.map((photo) => (
+        {photos.resources.map((photo) => (
           <figure className={styles.figure} key={photo.public_id}>
             <a data-fancybox="gallery" href={photo.secure_url}>
               <img
@@ -90,7 +91,7 @@ export default function Photos({resources}: CloudinaryResponse) {
                 className={styles.image}
                 height={photo.height}
                 loading="lazy"
-                src={photo.secure_url}
+                src={`https://res.cloudinary.com/${cloudName}/${photo.resource_type}/${photo.type}/q_auto:good/${photo.public_id}.${photo.format}`}
                 width={photo.width}
               />
             </a>
