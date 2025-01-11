@@ -33,9 +33,16 @@ export default async function PhotosPage() {
     <div className="article px-12 lg:px-0">
       <h1 className="text-center">Photos</h1>
       <p className="text-center">
-        Explore my portfolio featuring the magic of Disney World, serene
-        landscapes from camping adventures, and breathtaking astrophotography.
-        Each image invites you into unique worlds of beauty and discovery.
+        Discover my diverse collection of photographs, each showcasing unique
+        style and technique. For the best viewing experience, please use{' '}
+        <a
+          href="https://www.google.com/chrome/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Google Chrome
+        </a>{' '}
+        on an HDR display.
       </p>
       <Photos photos={photos} cloudName={cloudName} />
     </div>
