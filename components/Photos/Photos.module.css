@@ -1,13 +1,13 @@
 .photos {
-  @apply relative left-1/2 right-1/2 -mx-[50vw] h-auto w-[100vw] max-w-none;
+  @apply relative left-1/2 right-1/2 -mx-[50vw] h-auto w-[100vw] max-w-[100vw];
 }
 
 .grid {
   @apply m-auto my-16;
 
   column-gap: 16px;
-  columns: 4 300px;
-  width: min(70%, 100%);
+  columns: 3 300px;
+  width: min(85%, 100%);
 }
 
 .figure {
