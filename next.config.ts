@@ -57,6 +57,16 @@ const nextConfig = {
         permanent: true
       },
       {
+        source: '/resources',
+        destination: '/',
+        permanent: true
+      },
+      {
+        source: '/media',
+        destination: '/',
+        permanent: true
+      },
+      {
         source: '/articles',
         destination: '/blog',
         permanent: true
