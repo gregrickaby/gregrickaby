@@ -31,16 +31,8 @@ const config = {
       url: '/contact'
     },
     {
-      name: 'Media',
-      url: '/media'
-    },
-    {
       name: 'Photos',
       url: '/photos'
-    },
-    {
-      name: 'Resources',
-      url: '/resources'
     },
     {
       name: 'Resume',
