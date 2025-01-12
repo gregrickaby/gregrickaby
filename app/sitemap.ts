@@ -18,14 +18,14 @@ const postQuery = new WP_Query({
 })
 
 /**
- * Helper function to generate sitemap entries.
+ * Generate sitemap entries from WordPress pages and posts.
  */
-function generateSitemapEntries(
+function generateWPEntries(
   items: Post[],
   urlPrefix: string
 ): MetadataRoute.Sitemap {
   return items
-    .filter((item) => item.yoast_head_json.robots.index !== 'noindex') // Exclude noindex items.
+    .filter((item) => item.yoast_head_json.robots.index !== 'noindex')
     .map((item) => ({
       url: `${config.siteUrl}${urlPrefix}${item.slug}`,
       lastModified: new Date(
@@ -37,27 +37,89 @@ function generateSitemapEntries(
 }
 
 /**
- * The sitemap.xml route.
- *
- * @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
+ * Generate sitemap entries for hardcoded pages.
+ */
+function generateHardcodedEntries(
+  pages: {
+    slug: string
+    priority: number
+    noindex: boolean
+    lastModified: string
+  }[],
+  siteUrl: string
+): MetadataRoute.Sitemap {
+  return pages
+    .filter((page) => !page.noindex)
+    .map((page) => ({
+      url: `${siteUrl}${page.slug}`,
+      lastModified: new Date(page.lastModified).toISOString(),
+      changeFrequency: 'monthly',
+      priority: page.priority
+    }))
+}
+
+/**
+ * Generate sitemap for the website.
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Fetch all the pages and posts.
-  const allPages = await pageQuery.getPosts()
-  const allPosts = await postQuery.getPosts()
+  try {
+    // Fetch WordPress pages and posts.
+    const allPages = await pageQuery.getPosts().catch(() => [])
+    const allPosts = await postQuery.getPosts().catch(() => [])
 
-  // Generate sitemap entries for pages.
-  const pagesSitemapEntries = generateSitemapEntries(
-    allPages.filter((page) => page.slug !== 'home'), // Exclude the home page.
-    '/'
-  )
+    // Hardcoded pages with metadata.
+    const hardcodedPages = [
+      {
+        slug: '',
+        priority: 1.0,
+        noindex: false,
+        lastModified: '2025-01-10T10:00:00.000Z'
+      },
+      {
+        slug: '/blog',
+        priority: 0.8,
+        noindex: false,
+        lastModified: '2025-01-05T08:00:00.000Z'
+      },
+      {
+        slug: '/contact',
+        priority: 0.6,
+        noindex: false,
+        lastModified: '2024-12-31T15:00:00.000Z'
+      },
+      {
+        slug: '/photos',
+        priority: 0.6,
+        noindex: false,
+        lastModified: '2025-01-01T12:00:00.000Z'
+      },
+      {
+        slug: '/search',
+        priority: 0.5,
+        noindex: true,
+        lastModified: '2025-01-12T18:54:34.458Z'
+      }
+    ]
 
-  // Generate sitemap entries for posts.
-  const postsSitemapEntries = generateSitemapEntries(allPosts, '/blog/')
+    // Generate sitemap entries.
+    const pagesSitemapEntries = generateWPEntries(
+      allPages.filter((page) => page.slug !== 'home'),
+      '/'
+    )
+    const postsSitemapEntries = generateWPEntries(allPosts, '/blog/')
+    const hardcodedSitemapEntries = generateHardcodedEntries(
+      hardcodedPages,
+      config.siteUrl
+    )
 
-  // Combine entries.
-  const sitemapEntries = [...pagesSitemapEntries, ...postsSitemapEntries]
-
-  // Return the sitemap.
-  return sitemapEntries
+    // Combine entries and return sitemap.
+    return [
+      ...hardcodedSitemapEntries,
+      ...pagesSitemapEntries,
+      ...postsSitemapEntries
+    ]
+  } catch (error) {
+    console.error('Error generating sitemap:', error)
+    return []
+  }
 }
