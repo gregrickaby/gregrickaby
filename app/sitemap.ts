@@ -1,4 +1,4 @@
-import {WP_Query} from '@/lib/api'
+import {WP_Query} from '@/lib/api/WP_Query'
 import config from '@/lib/config'
 import {Post} from '@/lib/types'
 import {MetadataRoute} from 'next'

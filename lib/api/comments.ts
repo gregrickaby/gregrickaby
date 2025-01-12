@@ -28,6 +28,14 @@ interface CreateCommentResponse {
  * @returns A promise that resolves to an array of comments.
  */
 export async function fetchComments(postId: number): Promise<Comment[]> {
+  // Set the API URL.
+  const wordpressUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
+
+  // If the API URL is not set, throw an error.
+  if (!wordpressUrl) {
+    throw new Error('WordPress API URL is not set')
+  }
+
   try {
     // If no post ID is provided, throw an error.
     if (!postId) {
@@ -35,7 +43,7 @@ export async function fetchComments(postId: number): Promise<Comment[]> {
     }
 
     // Build the URL
-    const url = new URL(`${process.env.NEXT_PUBLIC_WORDPRESS_API_URL}/comments`)
+    const url = new URL(`${wordpressUrl}/comments`)
 
     // Build the query parameters.
     url.searchParams.append('post', postId.toString())

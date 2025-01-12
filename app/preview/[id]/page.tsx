@@ -1,5 +1,6 @@
 import {Blocks} from '@/components/Blocks'
-import {sanitizeText, yoastSeo} from '@/lib/functions'
+import {sanitizeText} from '@/lib/functions/sanitizeText'
+import {yoastSeo} from '@/lib/functions/yoastSeo'
 
 /**
  * Preview props.

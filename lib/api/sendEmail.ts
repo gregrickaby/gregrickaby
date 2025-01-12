@@ -1,6 +1,6 @@
 'use server'
 
-import {sanitizeText} from '@/lib/functions'
+import {sanitizeText} from '@/lib/functions/sanitizeText'
 
 /**
  * The props for the email handler function.

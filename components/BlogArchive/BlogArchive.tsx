@@ -1,7 +1,7 @@
 'use client'
 
 import {ArticleCard} from '@/components/ArticleCard'
-import {WP_Query} from '@/lib/api'
+import {WP_Query} from '@/lib/api/WP_Query'
 import {Post} from '@/lib/types'
 import {useCallback, useState} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -9,7 +9,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 /**
  * Blog Archive route.
  */
-export function BlogArchive({initialPosts}: {initialPosts: Post[]}) {
+export function BlogArchive({initialPosts}: Readonly<{initialPosts: Post[]}>) {
   // Set up state.
   const [posts, setPosts] = useState<Post[]>(initialPosts)
   const [page, setPage] = useState<number>(2)
@@ -69,7 +69,7 @@ export function BlogArchive({initialPosts}: {initialPosts: Post[]}) {
       }
     >
       {posts.map((post, index) => (
-        <ArticleCard key={index} post={post} />
+        <ArticleCard key={post.id} post={post} />
       ))}
     </InfiniteScroll>
   )

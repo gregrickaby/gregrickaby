@@ -1,5 +1,5 @@
 import {BlogArchive} from '@/components/BlogArchive'
-import {WP_Query} from '@/lib/api'
+import {WP_Query} from '@/lib/api/WP_Query'
 import config from '@/lib/config'
 import {Metadata} from 'next'
 

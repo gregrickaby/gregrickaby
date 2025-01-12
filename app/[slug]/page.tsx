@@ -1,6 +1,8 @@
 import {Blocks} from '@/components/Blocks'
-import {WP_Query} from '@/lib/api'
-import {fetchPageBySlug, sanitizeText, yoastSeo} from '@/lib/functions'
+import {WP_Query} from '@/lib/api/WP_Query'
+import {fetchPageBySlug} from '@/lib/functions/fetchPageBySlug'
+import {sanitizeText} from '@/lib/functions/sanitizeText'
+import {yoastSeo} from '@/lib/functions/yoastSeo'
 
 /**
  * Page props.

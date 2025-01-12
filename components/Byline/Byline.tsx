@@ -1,4 +1,4 @@
-import {formatDate} from '@/lib/functions'
+import {formatDate} from '@/lib/functions/formatDate'
 import {Post} from '@/lib/types'
 import styles from './Byline.module.css'
 

@@ -1,6 +1,6 @@
 'use client'
 
-import {createComment} from '@/lib/api'
+import {createComment} from '@/lib/api/comments'
 import {IconLoader} from '@tabler/icons-react'
 import {useState} from 'react'
 import styles from './CommentForm.module.css'

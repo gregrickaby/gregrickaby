@@ -1,5 +1,5 @@
 import {ArticleCard} from '@/components/ArticleCard'
-import {WP_Query} from '@/lib/api'
+import {WP_Query} from '@/lib/api/WP_Query'
 import Link from 'next/link'
 
 /**

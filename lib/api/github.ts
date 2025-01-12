@@ -1,3 +1,5 @@
+'use server'
+
 import {Repo} from '@/lib/types'
 
 /**
@@ -10,7 +12,10 @@ export async function getGithubRepos(limit: number): Promise<Repo[]> {
     // Send the request to the GitHub API.
     const response = await fetch(
       `https://api.github.com/users/gregrickaby/repos?per_page=100`,
-      {next: {revalidate: 3600}} // 1 hour.
+      {
+        method: 'GET',
+        next: {revalidate: 3600} // 1 hour.
+      }
     )
 
     // If the response status is not 200, throw an error.

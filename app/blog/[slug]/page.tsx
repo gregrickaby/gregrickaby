@@ -1,9 +1,10 @@
-import {Byline} from '@/components'
 import {Blocks} from '@/components/Blocks'
+import {Byline} from '@/components/Byline'
 import {Comments} from '@/components/Comments'
-import {WP_Query} from '@/lib/api'
+import {WP_Query} from '@/lib/api/WP_Query'
 import {fetchComments} from '@/lib/api/comments'
-import {sanitizeText, yoastSeo} from '@/lib/functions'
+import {sanitizeText} from '@/lib/functions/sanitizeText'
+import {yoastSeo} from '@/lib/functions/yoastSeo'
 import {IconFolder, IconTags} from '@tabler/icons-react'
 import {notFound} from 'next/navigation'
 

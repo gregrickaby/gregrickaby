@@ -1,4 +1,5 @@
-import {formatDate, sanitizeText} from '@/lib/functions'
+import {formatDate} from '@/lib/functions/formatDate'
+import {sanitizeText} from '@/lib/functions/sanitizeText'
 import {Post} from '@/lib/types'
 import clsx from 'clsx'
 import Image from 'next/image'

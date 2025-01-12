@@ -1,5 +1,4 @@
 import {ContactForm} from '@/components/ContactForm/ContactForm'
-
 import config from '@/lib/config'
 import {Metadata} from 'next'
 

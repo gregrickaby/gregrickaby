@@ -1,6 +1,6 @@
-import {WP_Query} from '@/lib/api'
+import {WP_Query} from '@/lib/api/WP_Query'
 import config from '@/lib/config'
-import {sanitizeText} from '@/lib/functions'
+import {sanitizeText} from '@/lib/functions/sanitizeText'
 import {Post} from '@/lib/types'
 import {NextRequest} from 'next/server'
 
