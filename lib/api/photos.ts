@@ -65,6 +65,10 @@ export async function fetchPhotos() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
+      },
+      next: {
+        revalidate: 86400, // 24 hours.
+        tags: ['photos']
       }
     })
 
