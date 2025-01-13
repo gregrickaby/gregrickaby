@@ -1,4 +1,4 @@
-import {sanitizeComment} from '@/lib/functions'
+import {sanitizeComment} from '@/lib/functions/sanitizeComment'
 
 describe('sanitizeComment', () => {
   it('should remove disallowed tags', () => {

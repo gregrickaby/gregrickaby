@@ -65,7 +65,19 @@ const config = {
       url: 'https://gregrickaby.com/feed.xml',
       icon: IconRss
     }
-  ]
+  ],
+  fancyboxOptions: {
+    animated: false,
+    groupAll: true,
+    defaultDisplay: 'flex',
+    Toolbar: {
+      display: {
+        left: ['infobar'],
+        middle: ['zoomIn', 'zoomOut', 'toggle1to1'],
+        right: ['slideshow', 'thumbs', 'download', 'close']
+      }
+    }
+  }
 }
 
 export default config

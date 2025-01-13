@@ -1,4 +1,4 @@
-import {getGithubRepos} from '@/lib/api'
+import {getGithubRepos} from '@/lib/api/github'
 import {mockRepos} from '@/mocks'
 import {describe, expect, it, vi} from 'vitest'
 

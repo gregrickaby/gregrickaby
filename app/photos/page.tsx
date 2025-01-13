@@ -1,5 +1,5 @@
-import Photos from '@/components/Photos/Photos'
-import getPhotos from '@/lib/api/cloudinary'
+import Portfolio from '@/components/Portfolio/Portfolio'
+import {fetchPhotos} from '@/lib/api/photos'
 import config from '@/lib/config'
 import {Metadata} from 'next'
 
@@ -20,14 +20,11 @@ export function generateMetadata(): Metadata {
 }
 
 /**
- * Photos page.
+ * Photos page component.
  */
 export default async function PhotosPage() {
-  // Get all photos from Cloudinary.
-  const photos = await getPhotos()
-
-  // Get the Cloudinary cloud name.
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME ?? ''
+  // Get photos from the API.
+  const photos = await fetchPhotos()
 
   return (
     <div className="article px-12 lg:px-0">
@@ -44,7 +41,8 @@ export default async function PhotosPage() {
         </a>{' '}
         on an HDR display.
       </p>
-      <Photos photos={photos} cloudName={cloudName} />
+
+      <Portfolio photos={photos} />
     </div>
   )
 }

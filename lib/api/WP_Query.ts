@@ -5,7 +5,7 @@ import {Post} from '@/lib/types'
  */
 interface WPQueryQrgs {
   /** Optional. A post type slug to query. Defaults to 'posts'. */
-  post_type?: 'posts' | 'pages'
+  post_type?: 'posts' | 'pages' | 'media'
   /** Optional. Number of posts to return per page. Defaults to 10. */
   per_page?: number
   /** Optional. Current page of the query. Defaults to 1. */
@@ -64,9 +64,9 @@ interface WPQueryQrgs {
   /** Optional. Ensure result set excludes posts assigned to specific authors. */
   author_exclude?: number
   /** Optional. Limit result set to specific post IDs. */
-  include?: number
+  include?: number[] | string[]
   /** Optional. Ensure result set excludes specific post IDs. */
-  exclude?: number
+  exclude?: number | number[]
   /** Optional. Offset the result set by a specific number of items. */
   offset?: number
   /** Optional. Limit result set to posts with one or more specific statuses. */
@@ -167,7 +167,7 @@ export class WP_Query {
       // Send the request to the WordPress API.
       const response = await fetch(url, {
         next: {
-          revalidate: 86400, // 1 hour.
+          revalidate: 86400, // 24 hours.
           tags: [(this.params.slug && `${this.params.slug}`) || '']
         }
       })

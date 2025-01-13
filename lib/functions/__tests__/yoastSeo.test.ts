@@ -1,5 +1,5 @@
 import config from '@/lib/config'
-import {yoastSeo} from '@/lib/functions'
+import {yoastSeo} from '@/lib/functions/yoastSeo'
 import {mockPost} from '@/mocks'
 
 describe('yoastSeo() tests', () => {
