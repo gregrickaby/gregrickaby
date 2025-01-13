@@ -59,6 +59,8 @@ export async function fetchPhotos() {
         'id'
       ].join(',')
     )
+    url.searchParams.set('orderby', 'id')
+    url.searchParams.set('order', 'asc')
 
     // Fetch photos.
     const response = await fetch(url.toString(), {
