@@ -59,8 +59,6 @@ export async function fetchPhotos() {
         'id'
       ].join(',')
     )
-    url.searchParams.set('orderby', 'id')
-    url.searchParams.set('order', 'asc')
 
     // Fetch photos.
     const response = await fetch(url.toString(), {
@@ -82,7 +80,12 @@ export async function fetchPhotos() {
     // Parse response.
     const photos = await response.json()
 
-    return photos
+    // Sort the photos to match the order of `photosList`.
+    const sortedPhotos = photosList.map((id) =>
+      photos.find((photo: {id: number}) => photo.id === id)
+    )
+
+    return sortedPhotos
   } catch (error) {
     console.error('Error fetching photos:', error)
     throw error
