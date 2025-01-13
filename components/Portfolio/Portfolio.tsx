@@ -1,22 +1,21 @@
 'use client'
 
-import {CloudinaryResponse} from '@/lib/types'
+import {Photo} from '@/lib/types'
 import clsx from 'clsx'
 import {useEffect} from 'react'
-import styles from './Photos.module.css'
+import styles from './Portfolio.module.css'
 
 /**
- * Photos component props.
+ * Portfolio component props.
  */
-interface PhotosProps {
-  photos: CloudinaryResponse
-  cloudName: string
+interface PortfolioProps {
+  photos: Photo[]
 }
 
 /**
  * Displays photos fetched from Cloudinary.
  */
-export default function Photos({photos, cloudName}: Readonly<PhotosProps>) {
+export default function Portfolio({photos}: Readonly<PortfolioProps>) {
   /**
    * Load Fancybox and initialize it when the component mounts.
    */
@@ -74,7 +73,7 @@ export default function Photos({photos, cloudName}: Readonly<PhotosProps>) {
   }, [])
 
   // If there are no photos, display a message.
-  if (!photos || !cloudName) {
+  if (!photos) {
     return (
       <p>There was an error fetching the images. Please try again later.</p>
     )
@@ -83,16 +82,16 @@ export default function Photos({photos, cloudName}: Readonly<PhotosProps>) {
   return (
     <div className={styles.photos}>
       <ul className={clsx('not-prose', styles.grid)}>
-        {photos.resources.map((photo) => (
-          <figure className={styles.figure} key={photo.public_id}>
-            <a data-fancybox="gallery" href={photo.secure_url}>
+        {photos.map((photo: Photo) => (
+          <figure className={styles.figure} key={photo.id}>
+            <a data-fancybox="gallery" href={photo.source_url}>
               <img
-                alt={photo.public_id}
+                alt={photo.alt_text}
                 className={styles.image}
-                height={photo.height}
+                height={photo.media_details.height}
                 loading="lazy"
-                src={`https://res.cloudinary.com/${cloudName}/${photo.resource_type}/${photo.type}/q_auto:good/${photo.public_id}.${photo.format}`}
-                width={photo.width}
+                src={photo.media_details.sizes.medium.source_url}
+                width={photo.media_details.width}
               />
             </a>
           </figure>

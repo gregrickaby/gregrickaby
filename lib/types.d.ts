@@ -122,7 +122,8 @@ export interface FeaturedImageData {
 }
 
 export interface Acf {
-  hide_featured_image: boolean
+  hide_featured_image?: boolean
+  portfolio?: number[]
 }
 
 export interface YoastHeadJson {
@@ -333,10 +334,10 @@ export interface Repo {
 }
 
 export interface CloudinaryResponse {
-  resources: Photos[]
+  resources: CloudinaryPhotos[]
 }
 
-export interface Photos {
+export interface CloudinaryPhotos {
   asset_id: string
   public_id: string
   format: string
@@ -350,4 +351,78 @@ export interface Photos {
   folder: string
   url: string
   secure_url: string
+}
+
+export interface Photo {
+  id: number
+  title: Title
+  description: Description
+  caption: Caption
+  alt_text: string
+  media_details: MediaDetails
+  source_url: string
+}
+
+export interface Title {
+  rendered: string
+}
+
+export interface Description {
+  rendered: string
+}
+
+export interface Caption {
+  rendered: string
+}
+
+export interface MediaDetails {
+  width: number
+  height: number
+  file: string
+  filesize: number
+  sizes: Sizes
+  image_meta: ImageMeta
+}
+
+export interface Sizes {
+  medium: ImageDetails
+  large?: ImImageDetailsage
+  thumbnail: ImageDetails
+  medium_large: ImageDetails
+  '1536x1536': ImageDetails
+  '2048x2048': ImageDetails
+  'nineteen-twenty': Image
+  full: Full
+}
+
+export interface ImageDetails {
+  file: string
+  width: number
+  height: number
+  filesize: number
+  mime_type: string
+  source_url: string
+}
+
+export interface Full {
+  file: string
+  width: number
+  height: number
+  mime_type: string
+  source_url: string
+}
+
+export interface ImageMeta {
+  aperture: string
+  credit: string
+  camera: string
+  caption: string
+  created_timestamp: string
+  copyright: string
+  focal_length: string
+  iso: string
+  shutter_speed: string
+  title: string
+  orientation: string
+  keywords: string[]
 }

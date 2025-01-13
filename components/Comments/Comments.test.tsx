@@ -1,4 +1,4 @@
-import {sanitizeComment} from '@/lib/functions'
+import {sanitizeComment} from '@/lib/functions/sanitizeComment'
 import {mockComments} from '@/mocks/mockComments'
 import {render, screen} from '@testing-library/react'
 import {vi} from 'vitest'

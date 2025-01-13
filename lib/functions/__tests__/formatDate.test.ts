@@ -1,4 +1,4 @@
-import {formatDate} from '@/lib/functions'
+import {formatDate} from '@/lib/functions/formatDate'
 
 describe('formatDate', () => {
   it('should format a date object correctly', () => {
