@@ -167,7 +167,7 @@ export class WP_Query {
       // Send the request to the WordPress API.
       const response = await fetch(url, {
         next: {
-          revalidate: 86400, // 1 hour.
+          revalidate: 86400, // 24 hours.
           tags: [(this.params.slug && `${this.params.slug}`) || '']
         }
       })
