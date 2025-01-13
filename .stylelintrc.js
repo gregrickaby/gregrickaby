@@ -4,14 +4,13 @@ module.exports = {
     'at-rule-no-deprecated': [
       true,
       {
-        ignoreAtRules: [
-          'tailwind',
-          'apply',
-          'layer',
-          'variants',
-          'responsive',
-          'screen'
-        ]
+        ignoreAtRules: ['apply', 'variants', 'responsive', 'screen']
+      }
+    ],
+    'at-rule-no-unknown': [
+      true,
+      {
+        ignoreAtRules: ['tailwind']
       }
     ],
     'no-descending-specificity': null,
