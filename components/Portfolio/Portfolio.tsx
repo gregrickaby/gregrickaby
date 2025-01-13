@@ -1,6 +1,11 @@
 'use client'
 
+import config from '@/lib/config'
+import {formatShutterSpeed} from '@/lib/functions/formatShutterSpeed'
+import {sanitizeText} from '@/lib/functions/sanitizeText'
 import {Photo} from '@/lib/types'
+import {Fancybox} from '@fancyapps/ui'
+import '@fancyapps/ui/dist/fancybox/fancybox.css'
 import clsx from 'clsx'
 import {useEffect} from 'react'
 import styles from './Portfolio.module.css'
@@ -13,90 +18,73 @@ interface PortfolioProps {
 }
 
 /**
- * Displays photos fetched from Cloudinary.
+ * Portfolio component to display a grid of photos.
  */
 export default function Portfolio({photos}: Readonly<PortfolioProps>) {
-  /**
-   * Load Fancybox and initialize it when the component mounts.
-   */
   useEffect(() => {
-    const loadFancybox = async () => {
-      // Check and load Fancybox CSS only if it's not already loaded.
-      if (!document.querySelector('link[href*="fancybox.css"]')) {
-        const link = document.createElement('link')
-        link.rel = 'stylesheet'
-        link.href =
-          '//cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.css'
-        document.head.appendChild(link)
-      }
+    // Initialize Fancybox with options.
+    Fancybox.bind('[data-fancybox]', config.fancyboxOptions)
 
-      // Check and load Fancybox JavaScript only if it's not already loaded.
-      if (!document.querySelector('script[src*="fancybox.umd.js"]')) {
-        await new Promise((resolve, reject) => {
-          const script = document.createElement('script')
-          script.src =
-            '//cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.js'
-          script.async = true
-          script.defer = true
-          script.onload = resolve
-          script.onerror = () => reject(new Error('Failed to load Fancybox'))
-          document.head.appendChild(script)
-        })
-
-        // Initialize Fancybox after loading the JavaScript.
-        const Fancybox = window.Fancybox
-        Fancybox.bind('[data-fancybox]', {
-          animated: false,
-          groupAll: true,
-          defaultDisplay: 'flex',
-          Toolbar: {
-            display: {
-              left: ['infobar'],
-              middle: ['zoomIn', 'zoomOut', 'toggle1to1'],
-              right: ['slideshow', 'thumbs', 'download', 'close']
-            }
-          }
-        })
-      }
-    }
-
-    // Catch and log any errors during Fancybox loading.
-    loadFancybox().catch(console.error)
-
+    // Cleanup Fancybox when component is unmounted.
     return () => {
-      // Clean up Fancybox bindings if necessary when component unmounts.
-      const Fancybox = window.Fancybox
-      if (Fancybox?.destroy) {
-        Fancybox.destroy()
-      }
+      Fancybox.destroy()
     }
   }, [])
 
   // If there are no photos, display a message.
-  if (!photos) {
+  if (!photos || photos.length === 0) {
     return (
-      <p>There was an error fetching the images. Please try again later.</p>
+      <p>
+        There are no photos available at this time. Please check back later.
+      </p>
     )
   }
 
   return (
-    <div className={styles.photos}>
-      <ul className={clsx('not-prose', styles.grid)}>
-        {photos.map((photo: Photo) => (
-          <figure className={styles.figure} key={photo.id}>
-            <a data-fancybox="gallery" href={photo.source_url}>
-              <img
-                alt={photo.alt_text}
-                className={styles.image}
-                height={photo.media_details.height}
-                loading="lazy"
-                src={photo.media_details.sizes.medium.source_url}
-                width={photo.media_details.width}
-              />
-            </a>
-          </figure>
-        ))}
-      </ul>
+    <div className={styles.portfolio}>
+      <div className={clsx('not-prose', styles.grid)}>
+        {photos.map((photo) => {
+          // Extract photo caption and extended metadata.
+          const caption = photo?.caption?.rendered || ''
+          const extendedMeta = photo?.media_details?.image_meta || {}
+
+          // Create a fancy caption with extended metadata.
+          const fancyCaption = `<div style="text-align:center;"><p>${sanitizeText(caption)}</p>
+            <span style="font-size: 0.8em; color: #666; text-align: center;">
+              ${extendedMeta.camera || ''} | ƒ/${extendedMeta.aperture || ''} |
+              ${extendedMeta.focal_length || ''}mm |
+              ${formatShutterSpeed(extendedMeta.shutter_speed)} | ISO${extendedMeta.iso || ''}
+            </span>
+            </div>`
+
+          return (
+            <figure className={styles.figure} key={photo.id}>
+              <a
+                aria-label={`View full size image of ${photo.alt_text}`}
+                data-caption={fancyCaption}
+                data-fancybox
+                href={photo.media_details.sizes?.full?.source_url || ''}
+              >
+                <img
+                  alt={photo.alt_text || 'Photo'}
+                  className={styles.image}
+                  height={photo.media_details?.height || 'auto'}
+                  loading="lazy"
+                  src={
+                    photo.media_details.sizes?.medium_large?.source_url || ''
+                  }
+                  width={photo.media_details?.width || 'auto'}
+                />
+                {caption && (
+                  <figcaption className={styles.caption}>
+                    {sanitizeText(caption)}
+                  </figcaption>
+                )}
+              </a>
+            </figure>
+          )
+        })}
+      </div>
     </div>
   )
 }
