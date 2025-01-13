@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['stylelint-config-standard'],
   rules: {
-    'at-rule-no-unknown': [
+    'at-rule-no-deprecated': [
       true,
       {
         ignoreAtRules: [
