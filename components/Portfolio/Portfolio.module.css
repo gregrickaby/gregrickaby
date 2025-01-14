@@ -2,36 +2,28 @@
   @apply relative left-1/2 right-1/2 -mx-[50vw] h-auto w-[100vw] max-w-[100vw];
 }
 
-.grid {
-  @apply m-auto my-16;
-
-  column-gap: 16px;
-  columns: 3 300px;
-  width: min(85%, 100%);
+.photoGrid {
+  @apply m-auto mt-16 grid grid-cols-1 gap-4 px-8 md:grid-cols-2 lg:px-32 xl:grid-cols-3;
 }
 
 .figure {
-  @apply relative flex items-start justify-center;
-
-  .image {
-    @apply mb-4 rounded-lg p-1;
-    @apply hover:cursor-zoom-in;
-  }
+  @apply relative;
 
   &:hover {
-    .image {
-      @apply cursor-zoom-in;
-    }
-
     .caption {
       @apply visible opacity-100;
     }
   }
 }
 
+.image {
+  @apply h-auto w-full cursor-zoom-in rounded-lg;
+  @apply hover:cursor-zoom-in;
+}
+
 .caption {
-  @apply invisible absolute bottom-8 max-w-[90%] p-3 opacity-0;
-  @apply rounded-lg bg-zinc-900/50 text-left text-sm text-white shadow-lg;
+  @apply invisible absolute top-8 max-w-[90%] p-3 opacity-0;
+  @apply rounded-r-lg bg-zinc-900/50 text-left text-sm text-white shadow-lg;
   @apply transition-all duration-200 ease-in-out;
 }
 

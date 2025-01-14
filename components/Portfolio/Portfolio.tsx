@@ -42,20 +42,14 @@ export default function Portfolio({photos}: Readonly<PortfolioProps>) {
 
   return (
     <div className={styles.portfolio}>
-      <div className={clsx('not-prose', styles.grid)}>
+      <div className={clsx('not-prose', styles.photoGrid)}>
         {photos.map((photo) => {
           // Extract photo caption and extended metadata.
           const caption = photo?.caption?.rendered || ''
           const extendedMeta = photo?.media_details?.image_meta || {}
 
           // Create a fancy caption with extended metadata.
-          const fancyCaption = `<div style="text-align:center;"><p>${sanitizeText(caption)}</p>
-            <span style="font-size: 0.8em; color: #666; text-align: center;">
-              ${extendedMeta.camera || ''} | ƒ/${extendedMeta.aperture || ''} |
-              ${extendedMeta.focal_length || ''}mm |
-              ${formatShutterSpeed(extendedMeta.shutter_speed)} | ISO${extendedMeta.iso || ''}
-            </span>
-            </div>`
+          const fancyCaption = `<div style="text-align:center;"><p>${sanitizeText(caption)}</p><span style="font-size: 0.8em; color: #666; text-align: center;">${extendedMeta.camera || ''} | ƒ/${extendedMeta.aperture || ''} | ${extendedMeta.focal_length || ''}mm | ${formatShutterSpeed(extendedMeta.shutter_speed)} | ISO${extendedMeta.iso || ''}</span></div>`
 
           return (
             <figure className={styles.figure} key={photo.id}>
