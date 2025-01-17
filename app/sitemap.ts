@@ -24,8 +24,13 @@ function generateWPEntries(
   items: Post[],
   urlPrefix: string
 ): MetadataRoute.Sitemap {
+  const excludedSlugs = ['home', 'homepage', 'photos'] // Exclude these slugs from sitemap.
   return items
-    .filter((item) => item.yoast_head_json.robots.index !== 'noindex')
+    .filter(
+      (item) =>
+        item.yoast_head_json.robots.index !== 'noindex' &&
+        !excludedSlugs.includes(item.slug)
+    )
     .map((item) => ({
       url: `${config.siteUrl}${urlPrefix}${item.slug}`,
       lastModified: new Date(
