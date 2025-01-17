@@ -40,11 +40,11 @@ export default function robots(): MetadataRoute.Robots {
 
   // Rules for the robots.txt.
   const rules = [
+    ...disallowRules,
     {
       userAgent: '*',
       allow: '/'
-    },
-    ...disallowRules
+    }
   ]
 
   // Return the rules and the sitemap URL.
