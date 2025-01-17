@@ -50,7 +50,7 @@ export default async function Home() {
         living in Southeast Alabama. I&apos;m married with three kids and some
         of my hobbies include cooking, traveling, and reading. Currently,
         I&apos;m a Technical Lead at{' '}
-        <a href="https://mindsize.com/">Mindsize</a> where I support a team
+        <a href="https://mindsize.com/">Mindsize</a>, where I support a team
         building enterprise solutions with Next.js.
       </p>
 
