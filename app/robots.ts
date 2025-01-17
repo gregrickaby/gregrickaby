@@ -9,13 +9,27 @@ import {MetadataRoute} from 'next'
 export default function robots(): MetadataRoute.Robots {
   // List of user agents to block.
   const disallowedUserAgents = [
+    'AhrefsBot',
+    'Amazonbot',
+    'Applebot',
+    'Bytespider',
     'CCBot',
     'ChatGPT-User',
     'Claude-Web',
+    'ClaudeBot',
+    'Diffbot',
     'GPTBot',
-    'Google-Extended',
+    'ImagesiftBot',
+    'OAI-SearchBot',
+    'Omgili',
+    'Omgilibot',
     'PerplexityBot',
-    'anthropic-ai'
+    'Pinterestbot',
+    'Semrush',
+    'SemrushBot',
+    'YouBot',
+    'anthropic-ai',
+    'dotbot'
   ]
 
   // Create disallow rules for specific user agents.
