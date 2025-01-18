@@ -52,7 +52,7 @@ export async function sendEmail(data: SendEmailProps) {
 
     // Create the payload.
     const body = new URLSearchParams({
-      from: `${sanitizeText(name)} <no-reply@mg.gregrickaby.com>`,
+      from: `${sanitizeText(name)} <postmaster@mg.gregrickaby.com>`,
       to: sanitizeText(to),
       subject: sanitizeText(subject),
       text: sanitizeText(text),
