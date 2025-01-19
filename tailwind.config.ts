@@ -13,7 +13,6 @@ const config = {
         sans: ['var(--font-sans)', 'Helvetica Neue', 'Arial', 'sans-serif'],
         serif: ['var(--font-serif)', 'Georgia', 'Times', 'serif']
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       typography: (theme: any) => ({
         DEFAULT: {
           // Default Prose styles.

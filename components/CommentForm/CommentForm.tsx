@@ -6,7 +6,7 @@ import {useState} from 'react'
 import styles from './CommentForm.module.css'
 
 /**
- * CommentForm component for submitting comments.
+ * CommentForm component.
  */
 export function CommentForm({postId}: Readonly<{postId: number}>) {
   // State for the form fields.

@@ -1,4 +1,4 @@
-import {Search} from '@/components/Search'
+import {Search} from '@/components/Search/Search'
 import config from '@/lib/config'
 import {Metadata} from 'next'
 import {headers} from 'next/headers'

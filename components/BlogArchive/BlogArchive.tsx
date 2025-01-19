@@ -1,13 +1,13 @@
 'use client'
 
-import {ArticleCard} from '@/components/ArticleCard'
+import {ArticleCard} from '@/components/ArticleCard/ArticleCard'
 import {WP_Query} from '@/lib/api/WP_Query'
 import {Post} from '@/lib/types'
 import {useCallback, useState} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 /**
- * Blog Archive route.
+ * Blog Archive component.
  */
 export function BlogArchive({initialPosts}: Readonly<{initialPosts: Post[]}>) {
   // Set up state.

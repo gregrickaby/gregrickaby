@@ -1,4 +1,4 @@
-import {Blocks} from '@/components/Blocks'
+import {Blocks} from '@/components/Blocks/Blocks'
 import {sanitizeText} from '@/lib/functions/sanitizeText'
 import {yoastSeo} from '@/lib/functions/yoastSeo'
 

@@ -11,11 +11,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.gregrickaby.**',
         pathname: '/**'
-      },
-      {
-        protocol: 'https',
-        hostname: '**.cloudinary.**',
-        pathname: '/**'
       }
     ]
   },

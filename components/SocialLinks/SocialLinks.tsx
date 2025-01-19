@@ -3,6 +3,9 @@ import clsx from 'clsx'
 import {createElement} from 'react'
 import styles from './SocialLinks.module.css'
 
+/**
+ * Social Link props.
+ */
 interface SocialLink {
   name: string
   url: string

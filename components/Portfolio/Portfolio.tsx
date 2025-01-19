@@ -18,7 +18,7 @@ interface PortfolioProps {
 }
 
 /**
- * Portfolio component to display a grid of photos.
+ * Portfolio component.
  */
 export default function Portfolio({photos}: Readonly<PortfolioProps>) {
   useEffect(() => {

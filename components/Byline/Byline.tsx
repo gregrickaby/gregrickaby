@@ -2,10 +2,10 @@ import {formatDate} from '@/lib/functions/formatDate'
 import {Post} from '@/lib/types'
 import styles from './Byline.module.css'
 
-function AuthorInfo({
-  name,
-  gravatarUrl
-}: Readonly<{name: string; gravatarUrl: string}>) {
+/**
+ * AuthorInfo component.
+ */
+function AuthorInfo({name}: Readonly<{name: string; gravatarUrl: string}>) {
   return (
     <address
       className={styles.author}

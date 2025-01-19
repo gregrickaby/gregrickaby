@@ -1,4 +1,4 @@
-import {CommentForm} from '@/components/CommentForm'
+import {CommentForm} from '@/components/CommentForm/CommentForm'
 import {formatDate} from '@/lib/functions/formatDate'
 import {sanitizeComment} from '@/lib/functions/sanitizeComment'
 import {Comment} from '@/lib/types'

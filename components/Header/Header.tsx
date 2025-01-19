@@ -1,5 +1,5 @@
 import Logo from '@/app/icon.png'
-import {Navigation} from '@/components/Navigation'
+import {Navigation} from '@/components/Navigation/Navigation'
 import config from '@/lib/config'
 import Image from 'next/image'
 import Link from 'next/link'

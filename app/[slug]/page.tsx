@@ -1,4 +1,4 @@
-import {Blocks} from '@/components/Blocks'
+import {Blocks} from '@/components/Blocks/Blocks'
 import {WP_Query} from '@/lib/api/WP_Query'
 import {fetchPageBySlug} from '@/lib/functions/fetchPageBySlug'
 import {sanitizeText} from '@/lib/functions/sanitizeText'

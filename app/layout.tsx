@@ -1,4 +1,7 @@
-import {BackToTop, Footer, Header, JsonLD} from '@/components'
+import {BackToTop} from '@/components/BackToTop/BackToTop'
+import {Footer} from '@/components/Footer/Footer'
+import {Header} from '@/components/Header/Header'
+import {JsonLD} from '@/components/JsonLd/JsonLd'
 import config from '@/lib/config'
 import clsx from 'clsx'
 import type {Metadata, Viewport} from 'next'

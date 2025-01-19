@@ -1,4 +1,4 @@
-import {SocialLinks} from '@/components/SocialLinks'
+import {SocialLinks} from '@/components/SocialLinks/SocialLinks'
 import styles from './Footer.module.css'
 
 /**

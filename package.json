@@ -1,7 +1,7 @@
 {
   "name": "@gregrickaby/gregrickaby",
   "version": "5.0.0",
-  "description": "My homepage on the web",
+  "description": "My personal website",
   "private": true,
   "repository": {
     "type": "git",
@@ -16,16 +16,12 @@
   "homepage": "https://gregrickaby.com",
   "scripts": {
     "build": "next build",
-    "coverage": "vitest run --coverage",
     "dev": "rimraf .next && next dev --turbopack",
     "format": "prettier --write .",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint \"**/*.css\" --fix",
     "lint:js": "tsc --noEmit && next lint",
-    "sonar": "./scripts/run-sonar.sh",
-    "start": "next start",
-    "test": "vitest",
-    "test:ci": "vitest run"
+    "start": "next start"
   },
   "dependencies": {
     "@fancyapps/ui": "^5.0.36",
@@ -43,29 +39,17 @@
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
     "@tailwindcss/typography": "^0.5.16",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.2.0",
-    "@testing-library/user-event": "^14.6.0",
-    "@types/jest-axe": "^3.5.9",
     "@types/node": "^22.10.7",
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
     "@types/sanitize-html": "^2.13.0",
     "@types/xml-escape": "^1.1.3",
-    "@vitejs/plugin-react": "^4.3.4",
-    "@vitest/coverage-v8": "^3.0.2",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.18.0",
     "eslint-config-next": "^15.1.5",
     "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-jest-dom": "^5.5.0",
-    "eslint-plugin-prettier": "^5.2.2",
-    "eslint-plugin-testing-library": "^7.1.1",
-    "jest-axe": "^9.0.0",
-    "jsdom": "^26.0.0",
+    "eslint-plugin-prettier": "^5.2.3",
     "lefthook": "^1.10.8",
-    "msw": "^2.7.0",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.10",
@@ -73,7 +57,6 @@
     "stylelint": "^16.13.2",
     "stylelint-config-standard": "^37.0.0",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3",
-    "vitest": "^3.0.2"
+    "typescript": "^5.7.3"
   }
 }

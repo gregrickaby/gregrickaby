@@ -41,3 +41,4 @@ next-env.d.ts
 
 # sonarqube
 .scannerwork/
+.env*.local
