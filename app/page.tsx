@@ -25,7 +25,7 @@ export default async function Home() {
 
   return (
     <div className="article px-12 lg:px-0">
-      <h1>Hello There 👋</h1>
+      <h1>👋 Hello There!</h1>
       <p>
         I&apos;m a{' '}
         <a
@@ -33,7 +33,7 @@ export default async function Home() {
           href="https://www.linkedin.com/in/gregrickaby/"
           rel="author"
         >
-          full-stack developer
+          web developer
         </a>
         ,{' '}
         <Link aria-label="view my photos" href="/photos">
@@ -45,13 +45,19 @@ export default async function Home() {
           href="https://www.amazon.com/author/gregrickaby"
           rel="author"
         >
-          published author
+          author
         </a>{' '}
-        living in Southeast Alabama. I&apos;m married with three kids and some
-        of my hobbies include cooking, traveling, and reading. Currently,
-        I&apos;m a Technical Lead at{' '}
-        <a href="https://mindsize.com/">Mindsize</a>, where I support a team
-        building enterprise solutions with Next.js.
+        who&apos;s been building websites since the{' '}
+        <a
+          aria-label="view my geocties web page"
+          href="https://gregrickaby.com/geocities"
+          rel="nofollow"
+        >
+          Geocities
+        </a>{' '}
+        days. Married with three kids, I enjoy cooking, traveling, and reading.
+        As a Technical Lead at <a href="https://mindsize.com/">Mindsize</a>, I
+        support a talented team working on e-comm solutions with Next.js.
       </p>
 
       <h2>Latest Posts</h2>

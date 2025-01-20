@@ -118,6 +118,14 @@ const nextConfig = {
       }
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: '/geocities',
+        destination: '/geocities/index.html'
+      }
+    ]
+  },
   logging: {
     fetches: {
       fullUrl: true
