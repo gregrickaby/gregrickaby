@@ -18,7 +18,7 @@
 }
 
 .meta {
-  @apply flex min-w-[170px] flex-row gap-4 text-sm text-gray-500 lg:flex-col lg:gap-1;
+  @apply flex min-w-[170px] flex-wrap gap-4 text-sm text-gray-500 lg:flex-col lg:gap-1;
 }
 
 .link {
