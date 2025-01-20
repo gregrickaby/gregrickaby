@@ -1,6 +1,7 @@
 'use client'
 
 import config from '@/lib/config'
+import {formatCameraName} from '@/lib/functions/formatCameraName'
 import {formatShutterSpeed} from '@/lib/functions/formatShutterSpeed'
 import {sanitizeText} from '@/lib/functions/sanitizeText'
 import {Photo} from '@/lib/types'
@@ -47,35 +48,60 @@ export default function Portfolio({photos}: Readonly<PortfolioProps>) {
           // Extract photo caption and extended metadata.
           const caption = photo?.caption?.rendered || ''
           const extendedMeta = photo?.media_details?.image_meta || {}
+          const aperture = extendedMeta.aperture || ''
+          const focalLength = extendedMeta.focal_length || ''
+          const shutterSpeed = formatShutterSpeed(extendedMeta.shutter_speed)
+          const camera = formatCameraName(extendedMeta.camera || '')
+          const iso = extendedMeta.iso || ''
 
-          // Create a fancy caption with extended metadata.
-          const fancyCaption = `<div style="text-align:center;"><p>${sanitizeText(caption)}</p><span style="font-size: 0.8em; color: #666; text-align: center;">${extendedMeta.camera || ''} | ƒ/${extendedMeta.aperture || ''} | ${extendedMeta.focal_length || ''}mm | ${formatShutterSpeed(extendedMeta.shutter_speed)} | ISO${extendedMeta.iso || ''}</span></div>`
+          // Create a metadata object for display.
+          const meta = {
+            camera,
+            aperture: `ƒ/${aperture}`,
+            focalLength: `${focalLength}mm`,
+            shutterSpeed,
+            iso
+          }
+
+          // Create a fancy caption with extended metadata. Displayed in Fancybox only.
+          const fancyCaption = `<div style="text-align:center;"><p>${sanitizeText(caption)}</p><div style="font-size: 0.8em; color: #666; text-align: center;">${camera} | ${meta.aperture} | ${meta.focalLength} | ${meta.shutterSpeed} | ISO${meta.iso}</div></div>`
 
           return (
-            <figure className={styles.figure} key={photo.id}>
-              <a
-                aria-label={`View full size image of ${photo.alt_text}`}
-                data-caption={fancyCaption}
-                data-fancybox
-                href={photo.media_details.sizes?.full?.source_url || ''}
-              >
-                <img
-                  alt={photo.alt_text || 'Photo'}
-                  className={styles.image}
-                  height={photo.media_details?.height || 'auto'}
-                  loading="lazy"
-                  src={
-                    photo.media_details.sizes?.medium_large?.source_url || ''
-                  }
-                  width={photo.media_details?.width || 'auto'}
-                />
-                {caption && (
-                  <figcaption className={styles.caption}>
-                    {sanitizeText(caption)}
-                  </figcaption>
-                )}
-              </a>
-            </figure>
+            <div className={styles.photo} key={photo.id}>
+              <figure className={styles.figure}>
+                <a
+                  aria-label={`View full size image of ${photo.alt_text}`}
+                  className={styles.link}
+                  data-caption={fancyCaption}
+                  data-fancybox
+                  href={photo.media_details.sizes?.full?.source_url || ''}
+                >
+                  <img
+                    alt={photo.alt_text || 'Photo'}
+                    className={styles.image}
+                    height={photo.media_details?.height || 'auto'}
+                    loading="lazy"
+                    src={
+                      photo.media_details.sizes?.medium_large?.source_url || ''
+                    }
+                    width={photo.media_details?.width || 'auto'}
+                  />
+                  {caption && (
+                    <figcaption className={styles.caption}>
+                      {sanitizeText(caption)}
+                    </figcaption>
+                  )}
+                </a>
+              </figure>
+              <div className={styles.meta}>
+                {Object.entries(meta).map(([key, value]) => (
+                  <div key={key} className={styles.details}>
+                    <span className={styles[key]}></span>
+                    {value}
+                  </div>
+                ))}
+              </div>
+            </div>
           )
         })}
       </div>

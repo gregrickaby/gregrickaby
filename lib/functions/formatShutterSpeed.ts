@@ -15,7 +15,7 @@ export function formatShutterSpeed(decimalSpeed: number | string): string {
 
   // Check if the shutter speed is a whole number.
   if (speed >= 1) {
-    return `${speed} s` // Full seconds
+    return `${speed}s` // Full seconds
   }
 
   // Calculate the denominator for fractional speeds.

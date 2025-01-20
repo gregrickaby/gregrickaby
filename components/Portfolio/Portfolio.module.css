@@ -1,32 +1,78 @@
-.portfolio {
-  @apply relative left-1/2 right-1/2 -mx-[50vw] h-auto w-[100vw] max-w-[100vw];
+@font-face {
+  font-family: camera-icons;
+  font-style: normal;
+  font-weight: normal;
+  src: url('/camera-icons.woff2') format('woff2');
 }
 
 .photoGrid {
-  @apply m-auto mt-16 grid grid-cols-1 gap-4 px-8 md:grid-cols-2 lg:px-32 xl:grid-cols-3;
+  @apply mt-16 flex flex-col gap-16;
 }
 
-.figure {
-  @apply relative;
+.photo {
+  @apply flex flex-col gap-4 rounded-xl p-4 lg:flex-row;
+  @apply shadow-lg shadow-gray-200 dark:shadow-gray-900;
+  @apply border border-gray-200 hover:border-gray-200 dark:border-gray-800 dark:hover:border-gray-900;
+  @apply bg-gray-100 hover:bg-gray-200;
+  @apply dark:bg-gray-900 dark:hover:bg-gray-800;
+}
 
-  &:hover {
-    .caption {
-      @apply visible opacity-100;
-    }
+.meta {
+  @apply flex min-w-[170px] flex-row gap-4 text-sm text-gray-500 lg:flex-col lg:gap-1;
+}
+
+.link {
+  @apply flex flex-col gap-4;
+}
+
+.details {
+  @apply flex items-center justify-start gap-1;
+}
+
+.icon {
+  font-family: camera-icons, sans-serif;
+}
+
+.focalLength {
+  @apply icon;
+
+  &::before {
+    content: '\e600';
   }
 }
 
-.image {
-  @apply h-auto w-full cursor-zoom-in rounded-lg;
-  @apply hover:cursor-zoom-in;
+.shutterSpeed {
+  @apply icon;
+
+  &::before {
+    content: '\e601';
+  }
+}
+
+.iso {
+  @apply icon;
+
+  &::before {
+    content: '\e602';
+  }
+}
+
+.camera {
+  @apply icon;
+
+  &::before {
+    content: '\e603';
+  }
+}
+
+.aperture {
+  @apply icon;
+
+  &::before {
+    content: '\e604';
+  }
 }
 
 .caption {
-  @apply invisible absolute top-8 max-w-[90%] p-3 opacity-0;
-  @apply rounded-r-lg bg-zinc-900/50 text-left text-sm text-white shadow-lg;
-  @apply transition-all duration-200 ease-in-out;
-}
-
-.exif {
-  @apply text-xs;
+  @apply text-left text-base;
 }

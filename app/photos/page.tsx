@@ -28,18 +28,9 @@ export default async function PhotosPage() {
 
   return (
     <div className="article px-12 lg:px-0">
-      <h1 className="text-center">Photos</h1>
-      <p className="text-center">
-        Discover my diverse collection of photographs, each showcasing unique
-        style and technique. For the best viewing experience, please use{' '}
-        <a
-          href="https://www.google.com/chrome/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Google Chrome
-        </a>{' '}
-        on an HDR display.
+      <h1>Photos</h1>
+      <p>
+        My portfolio features wildlife, landscape, street and astrophotography.
       </p>
 
       <Portfolio photos={photos} />
