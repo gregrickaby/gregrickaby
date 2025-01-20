@@ -14,7 +14,7 @@ const config = {
   siteOgImage: '/og.webp',
   jobTitle: 'Technical Lead',
   email: 'greg@gregrickaby.com',
-  intro: 'Full-Stack Developer. Photographer. Author.',
+  intro: 'Web Developer. Photographer. Author.',
   gravatarApiUrl:
     'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
   navigation: [

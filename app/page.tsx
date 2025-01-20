@@ -37,7 +37,7 @@ export default async function Home() {
         </a>
         ,{' '}
         <Link aria-label="view my photos" href="/photos">
-          photography enthusiast
+          photograper
         </Link>
         , and{' '}
         <a
