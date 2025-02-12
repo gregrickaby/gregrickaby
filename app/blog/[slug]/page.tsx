@@ -135,9 +135,9 @@ export default async function BlogPost(props: Readonly<BlogPostProps>) {
       </header>
 
       {/* Main article content */}
-      <div itemProp="articleBody">
+      <main itemProp="articleBody">
         <Blocks content={post.content.rendered} />
-      </div>
+      </main>
 
       <footer className="border-b pb-8 pt-4 dark:border-gray-900">
         <div className="flex items-center gap-2">
