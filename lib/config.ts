@@ -1,6 +1,7 @@
 import {
   IconBook,
   IconBrandGithub,
+  IconBrandInstagram,
   IconBrandLinkedin,
   IconBrandYoutube,
   IconRss
@@ -47,8 +48,13 @@ const config = {
     },
     {
       name: 'LinkedIn',
-      url: 'https://linkedin.com/in/gregrickaby/',
+      url: 'https://www.linkedin.com/in/gregrickaby/',
       icon: IconBrandLinkedin
+    },
+    {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/gregoryrickaby/',
+      icon: IconBrandInstagram
     },
     {
       name: 'Goodreads',
