@@ -31,6 +31,15 @@ export default async function PhotosPage() {
       <h1>Photos</h1>
       <p>
         My portfolio features wildlife, landscape, street and astrophotography.
+        See more photos on{' '}
+        <a
+          href="https://www.instagram.com/gregoryrickaby"
+          rel="author"
+          title="follow on instagram"
+        >
+          Instagram
+        </a>
+        .
       </p>
 
       <Portfolio photos={photos} />
