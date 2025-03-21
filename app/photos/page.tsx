@@ -33,11 +33,11 @@ export default async function PhotosPage() {
         My portfolio features wildlife, landscape, street and astrophotography.
         See more photos on{' '}
         <a
-          href="https://www.instagram.com/gregoryrickaby"
+          href={config.socials.find((social) => social.name === 'Flickr')?.url}
           rel="author"
-          title="follow on instagram"
+          title="follow on flickr"
         >
-          Instagram
+          Flickr
         </a>
         .
       </p>
