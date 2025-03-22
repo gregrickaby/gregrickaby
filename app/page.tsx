@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <>
       <div className="article">
-        <h1 className="pt-16 pb-4 text-center">👋 Hello There!</h1>
+        <h1 className="pb-4 text-center lg:pt-16">👋 Hello There!</h1>
         <p>
           I&apos;m a{' '}
           <a
