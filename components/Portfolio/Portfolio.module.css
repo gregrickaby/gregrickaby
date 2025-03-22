@@ -31,12 +31,10 @@
   @apply flex items-center justify-start gap-1;
 }
 
-.icon {
-  font-family: camera-icons, sans-serif;
-}
-
 .focalLength {
-  @apply icon;
+  .icon {
+    font-family: camera-icons, sans-serif;
+  }
 
   &::before {
     content: '\e600';
@@ -44,7 +42,9 @@
 }
 
 .shutterSpeed {
-  @apply icon;
+  .icon {
+    font-family: camera-icons, sans-serif;
+  }
 
   &::before {
     content: '\e601';
@@ -52,7 +52,9 @@
 }
 
 .iso {
-  @apply icon;
+  .icon {
+    font-family: camera-icons, sans-serif;
+  }
 
   &::before {
     content: '\e602';
@@ -60,7 +62,9 @@
 }
 
 .camera {
-  @apply icon;
+  .icon {
+    font-family: camera-icons, sans-serif;
+  }
 
   &::before {
     content: '\e603';
@@ -68,7 +72,9 @@
 }
 
 .aperture {
-  @apply icon;
+  .icon {
+    font-family: camera-icons, sans-serif;
+  }
 
   &::before {
     content: '\e604';
