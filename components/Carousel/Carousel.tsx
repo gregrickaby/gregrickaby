@@ -50,13 +50,14 @@ export function Carousel({
     <div className={styles.carousel}>
       {images.map((image, index) => (
         <Image
-          key={image.src}
           alt={image.alt}
           className={`${styles.image} ${index === currentIndex ? styles.active : ''}`}
           height={image.height}
-          priority={index === currentIndex}
+          key={image.src}
           loading={index === currentIndex ? 'eager' : 'lazy'}
+          priority={index === currentIndex}
           src={image.src}
+          unoptimized
           width={image.width}
         />
       ))}

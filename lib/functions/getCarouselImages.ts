@@ -23,7 +23,7 @@ export async function getCarouselImages() {
     }
 
     // Image file extensions to include.
-    const validExtensions = ['.jpg', '.jpeg']
+    const validExtensions = ['.jpg', '.jpeg', '.avif', '.webp']
 
     // Read the images from the folder and filter for valid image files.
     const files = fs.readdirSync(imagesPath)
