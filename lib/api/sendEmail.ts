@@ -21,7 +21,9 @@ export interface SendEmailProps {
 /**
  * A server function to POST the form data to the email service.
  */
-export async function sendEmail(data: SendEmailProps) {
+export async function sendEmail(
+  data: Readonly<SendEmailProps>
+): Promise<'success' | 'error'> {
   try {
     // Get the form data from the request.
     const {name, email, subject, text, to} = data

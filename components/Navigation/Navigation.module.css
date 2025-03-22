@@ -5,20 +5,20 @@
 }
 
 .navContainer {
-  @apply flex items-center justify-between xl:hidden;
+  @apply flex items-center justify-between;
 }
 
 .navButton {
-  @apply flex rounded p-2 xl:hidden;
-  @apply bg-zinc-700 hover:bg-zinc-500 dark:bg-zinc-800 hover:dark:bg-zinc-600;
+  @apply flex rounded p-2;
+  @apply bg-zinc-700 hover:cursor-pointer hover:bg-zinc-500 dark:bg-zinc-800 hover:dark:bg-zinc-600;
   @apply text-2xl text-white shadow;
   @apply transition-colors duration-200 ease-in-out;
 }
 
 .linkContainer {
+  @apply bg-zinc-700 text-white dark:bg-zinc-800;
   @apply absolute top-12 right-0 z-10 text-left;
   @apply flex-col gap-4 rounded-lg p-8;
-  @apply xl:static xl:flex xl:flex-row xl:items-center xl:justify-center xl:rounded-none xl:bg-transparent xl:shadow-none;
 }
 
 .link {

@@ -1,10 +1,11 @@
 import {WP_Query} from '@/lib/api/WP_Query'
+import type {Post} from '@/lib/types'
 import {notFound} from 'next/navigation'
 
 /**
  * Fetch the page by slug.
  */
-export async function fetchPageBySlug(slug: string) {
+export async function fetchPageBySlug(slug: string): Promise<Post> {
   // Setup the query.
   const query = new WP_Query({
     post_type: 'pages',

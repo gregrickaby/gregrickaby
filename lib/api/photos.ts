@@ -5,7 +5,7 @@ import {WP_Query} from '@/lib/api/WP_Query'
 /**
  * Fetches the list of photos from the WordPress API.
  */
-async function getPhotosList() {
+async function getPhotosList(): Promise<number[]> {
   try {
     // Fetch photos list.
     const response = new WP_Query({

@@ -20,6 +20,10 @@ const config = {
   email: 'greg@gregrickaby.com',
   navigation: [
     {
+      name: 'Home',
+      url: '/'
+    },
+    {
       name: 'About',
       url: '/about'
     },

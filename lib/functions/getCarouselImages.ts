@@ -11,7 +11,7 @@ export interface CarouselImage {
 /**
  * Build a list of images from the public/carousel folder.
  */
-export async function getCarouselImages() {
+export async function getCarouselImages(): Promise<CarouselImage[]> {
   try {
     // Get the path to the images folder.
     const imagesPath = path.join(process.cwd(), 'public/carousel')

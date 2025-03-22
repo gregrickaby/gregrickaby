@@ -55,11 +55,7 @@ export function Navigation() {
         </button>
       </div>
       <div
-        className={clsx(
-          styles.linkContainer,
-          isOpen ? 'flex' : 'hidden',
-          'xl:flex'
-        )}
+        className={clsx(styles.linkContainer, isOpen ? 'flex' : 'hidden')}
         data-testid="nav-links"
       >
         {config.navigation.map((item) => (
@@ -84,7 +80,7 @@ export function Navigation() {
           </Link>
 
           <Link
-            aria-label="search"
+            aria-label="search this website"
             className={styles.icon}
             href="/search"
             onClick={handleLinkClick}
