@@ -1,6 +1,8 @@
+@reference "../../app/globals.css";
+
 /* ACF Gallery Block */
 .gallery {
-  @apply relative left-1/2 right-1/2 -mx-[50vw] h-auto w-[100vw] max-w-none;
+  @apply relative right-1/2 left-1/2 -mx-[50vw] h-auto w-[100vw] max-w-none;
 
   .grid {
     @apply m-auto my-16;

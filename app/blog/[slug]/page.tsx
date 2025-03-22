@@ -109,7 +109,7 @@ export default async function BlogPost(props: Readonly<BlogPostProps>) {
 
   return (
     <article
-      className="prose mx-auto max-w-3xl px-12 lg:prose-xl dark:prose-invert lg:px-0"
+      className="prose lg:prose-xl dark:prose-invert mx-auto max-w-3xl px-12 lg:px-0"
       itemScope
       itemType="https://schema.org/Article"
     >
@@ -139,7 +139,7 @@ export default async function BlogPost(props: Readonly<BlogPostProps>) {
         <Blocks content={post.content.rendered} />
       </main>
 
-      <footer className="border-b pb-8 pt-4 dark:border-gray-900">
+      <footer className="border-b pt-4 pb-8 dark:border-gray-900">
         <div className="flex items-center gap-2">
           <IconFolder />
           <span className="sr-only">catergorized in</span>

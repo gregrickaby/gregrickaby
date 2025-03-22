@@ -1,3 +1,5 @@
+@reference "../../app/globals.css";
+
 .byline {
   @apply flex items-center gap-2;
 }

@@ -1,3 +1,5 @@
+@reference "../../app/globals.css";
+
 .header {
   @apply mb-8 flex flex-row items-center justify-between px-8 py-8 text-center;
   @apply md:flex-row;
@@ -17,7 +19,7 @@
 }
 
 .siteTitle {
-  @apply mb-1 text-2xl font-bold leading-none tracking-tighter xl:text-4xl;
+  @apply mb-1 text-2xl leading-none font-bold tracking-tighter xl:text-4xl;
 }
 
 .siteDescription {

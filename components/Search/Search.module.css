@@ -1,3 +1,5 @@
+@reference "../../app/globals.css";
+
 .search {
   @apply relative flex flex-col items-center;
 }
@@ -7,7 +9,7 @@
 }
 
 .results {
-  @apply absolute left-0 right-0 top-14 z-50;
+  @apply absolute top-14 right-0 left-0 z-50;
   @apply rounded-lg bg-gray-100 px-4 shadow-lg dark:bg-gray-800;
 }
 

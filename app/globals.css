@@ -1,6 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@config '../tailwind.config.ts';
+@plugin "@tailwindcss/typography";
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 @layer base {
   @property --angle {
@@ -16,9 +35,9 @@
   button,
   .button,
   input[type='submit'] {
-    @apply flex items-center justify-between gap-4 rounded p-2;
-    @apply bg-gray-700 hover:bg-gray-500 dark:bg-gray-800 hover:dark:bg-gray-600;
-    @apply text-2xl text-white shadow;
+    @apply flex items-center justify-between gap-4 rounded-sm p-2;
+    @apply bg-gray-700 hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-600;
+    @apply text-2xl text-white shadow-sm;
     @apply transition-colors duration-200 ease-in-out;
   }
 
@@ -28,7 +47,7 @@
   input[type='url'],
   textarea {
     @apply bg-gray-100 dark:bg-gray-800;
-    @apply w-full rounded p-2 text-white shadow;
+    @apply w-full rounded-sm p-2 text-white shadow-sm;
     @apply border-gray-200 outline-gray-200 dark:border-gray-500 dark:outline-gray-500;
   }
 
@@ -43,7 +62,7 @@
 
 /* Custom classes */
 .article {
-  @apply prose mx-auto p-8 lg:prose-xl dark:prose-invert xl:p-0;
+  @apply prose lg:prose-xl dark:prose-invert mx-auto p-8 xl:p-0;
 }
 
 .loading {
@@ -51,7 +70,7 @@
 }
 
 .full-width {
-  @apply relative left-1/2 right-1/2 -mx-[50vw] h-auto w-[100vw] max-w-none;
+  @apply relative right-1/2 left-1/2 -mx-[50vw] h-auto w-[100vw] max-w-none;
   @apply text-center;
 }
 

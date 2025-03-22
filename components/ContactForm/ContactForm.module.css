@@ -1,3 +1,5 @@
+@reference "../../app/globals.css";
+
 .form {
   @apply flex flex-col gap-4;
 }

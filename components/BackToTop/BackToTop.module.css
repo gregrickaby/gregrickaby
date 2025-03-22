@@ -1,3 +1,5 @@
+@reference "../../app/globals.css";
+
 .backToTop {
-  @apply fixed bottom-8 right-3 lg:right-12;
+  @apply fixed right-3 bottom-8 lg:right-12;
 }

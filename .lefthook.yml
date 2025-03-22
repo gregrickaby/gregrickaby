@@ -6,9 +6,6 @@ pre-commit:
     eslint:
       glob: '*.{js,jsx,ts,tsx}'
       run: 'npx eslint {staged_files} --fix'
-    stylelint:
-      glob: '*.css'
-      run: 'npx stylelint {staged_files} --ignore-path .stylelintignore --fix'
     prettier:
       glob: '*.{js,jsx,ts,tsx,css,html,json,md,mdx,yml,graphql}'
       run: 'npx prettier {staged_files} --ignore-path .prettierignore --write'

@@ -1,3 +1,5 @@
+@reference "../../app/globals.css";
+
 .card {
   @apply mt-8 block overflow-hidden rounded-xl transition-all duration-300;
   @apply shadow-lg shadow-gray-200 dark:shadow-gray-900;
@@ -23,11 +25,11 @@
 }
 
 .meta {
-  @apply mb-4 text-sm font-semibold uppercase tracking-wide text-gray-500;
+  @apply mb-4 text-sm font-semibold tracking-wide text-gray-500 uppercase;
 }
 
 .title {
-  @apply mt-1 block text-xl font-medium leading-tight;
+  @apply mt-1 block text-xl leading-tight font-medium;
 }
 
 .excerpt {
