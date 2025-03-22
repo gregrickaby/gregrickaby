@@ -10,7 +10,7 @@
 
 .navButton {
   @apply flex rounded p-2 xl:hidden;
-  @apply bg-gray-700 hover:bg-gray-500 dark:bg-gray-800 hover:dark:bg-gray-600;
+  @apply bg-zinc-700 hover:bg-zinc-500 dark:bg-zinc-800 hover:dark:bg-zinc-600;
   @apply text-2xl text-white shadow;
   @apply transition-colors duration-200 ease-in-out;
 }
@@ -30,5 +30,5 @@
 }
 
 .icon {
-  @apply hover:text-gray-400;
+  @apply hover:text-zinc-400;
 }

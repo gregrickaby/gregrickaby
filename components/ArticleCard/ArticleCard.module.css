@@ -2,10 +2,10 @@
 
 .card {
   @apply mt-8 block overflow-hidden rounded-xl transition-all duration-300;
-  @apply shadow-lg shadow-gray-200 dark:shadow-gray-900;
-  @apply border border-gray-200 hover:border-gray-200 dark:border-gray-800 dark:hover:border-gray-900;
-  @apply bg-gray-100 hover:bg-gray-200;
-  @apply dark:bg-gray-900 dark:hover:bg-gray-800;
+  @apply shadow-lg shadow-zinc-200 dark:shadow-zinc-900;
+  @apply border border-zinc-200 hover:border-zinc-200 dark:border-zinc-800 dark:hover:border-zinc-900;
+  @apply bg-zinc-100 hover:bg-zinc-200;
+  @apply dark:bg-zinc-900 dark:hover:bg-zinc-800;
 }
 
 .wrap {
@@ -25,7 +25,7 @@
 }
 
 .meta {
-  @apply mb-4 text-sm font-semibold tracking-wide text-gray-500 uppercase;
+  @apply mb-4 text-sm font-semibold tracking-wide text-zinc-500 uppercase;
 }
 
 .title {

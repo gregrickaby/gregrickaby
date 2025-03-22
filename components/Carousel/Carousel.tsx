@@ -22,6 +22,9 @@ export function Carousel({
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
+    // Add the carousel class to the body.
+    document.body.classList.add('carousel')
+
     // Don't set up interval if no images or paused.
     if (images.length === 0) {
       return
@@ -51,7 +54,8 @@ export function Carousel({
           alt={image.alt}
           className={`${styles.image} ${index === currentIndex ? styles.active : ''}`}
           height={image.height}
-          priority={index === 0}
+          priority={index === currentIndex}
+          loading={index === currentIndex ? 'eager' : 'lazy'}
           src={image.src}
           width={image.width}
         />

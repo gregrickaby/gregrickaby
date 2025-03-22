@@ -13,14 +13,14 @@
 
 .photo {
   @apply flex flex-col gap-4 rounded-xl p-4 lg:flex-row;
-  @apply shadow-lg shadow-gray-200 dark:shadow-gray-900;
-  @apply border border-gray-200 hover:border-gray-200 dark:border-gray-800 dark:hover:border-gray-900;
-  @apply bg-gray-100 hover:bg-gray-200;
-  @apply dark:bg-gray-900 dark:hover:bg-gray-800;
+  @apply shadow-lg shadow-zinc-200 dark:shadow-zinc-900;
+  @apply border border-zinc-200 hover:border-zinc-200 dark:border-zinc-800 dark:hover:border-zinc-900;
+  @apply bg-zinc-100 hover:bg-zinc-200;
+  @apply dark:bg-zinc-900 dark:hover:bg-zinc-800;
 }
 
 .meta {
-  @apply flex min-w-[170px] flex-wrap gap-4 text-sm text-gray-500 lg:flex-col lg:gap-1;
+  @apply flex min-w-[170px] flex-wrap gap-4 text-sm text-zinc-500 lg:flex-col lg:gap-1;
 }
 
 .link {

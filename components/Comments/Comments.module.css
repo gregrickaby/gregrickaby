@@ -10,7 +10,7 @@
 
 .comment {
   @apply my-2 flex flex-col gap-4 p-8;
-  @apply border-l-2 border-gray-700 shadow-sm;
+  @apply border-l-2 border-zinc-700 shadow-sm;
 }
 
 .header {
@@ -26,7 +26,7 @@
 }
 
 .date {
-  @apply text-sm text-gray-600 dark:text-gray-300;
+  @apply text-sm text-zinc-600 dark:text-zinc-300;
 }
 
 .message {
@@ -38,9 +38,9 @@
 }
 
 .even {
-  @apply bg-gray-100 dark:bg-gray-900;
+  @apply bg-zinc-100 dark:bg-zinc-900;
 }
 
 .odd {
-  @apply bg-gray-200 dark:bg-gray-800;
+  @apply bg-zinc-200 dark:bg-zinc-800;
 }

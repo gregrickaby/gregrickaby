@@ -139,7 +139,7 @@ export default async function BlogPost(props: Readonly<BlogPostProps>) {
         <Blocks content={post.content.rendered} />
       </main>
 
-      <footer className="border-b pt-4 pb-8 dark:border-gray-900">
+      <footer className="border-b pt-4 pb-8 dark:border-zinc-900">
         <div className="flex items-center gap-2">
           <IconFolder />
           <span className="sr-only">catergorized in</span>

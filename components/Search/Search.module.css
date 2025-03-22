@@ -10,7 +10,7 @@
 
 .results {
   @apply absolute top-14 right-0 left-0 z-50;
-  @apply rounded-lg bg-gray-100 px-4 shadow-lg dark:bg-gray-800;
+  @apply rounded-lg bg-zinc-100 px-4 shadow-lg dark:bg-zinc-800;
 }
 
 .number {

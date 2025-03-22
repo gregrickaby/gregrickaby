@@ -17,7 +17,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-zinc-200, currentColor);
   }
 }
 
@@ -29,14 +29,14 @@
   }
 
   body {
-    @apply overflow-x-hidden bg-white text-gray-800 antialiased dark:bg-gray-950 dark:text-gray-50;
+    @apply overflow-x-hidden bg-white text-zinc-800 antialiased dark:bg-zinc-950 dark:text-zinc-50;
   }
 
   button,
   .button,
   input[type='submit'] {
     @apply flex items-center justify-between gap-4 rounded-sm p-2;
-    @apply bg-gray-700 hover:bg-gray-500 dark:bg-gray-800 dark:hover:bg-gray-600;
+    @apply bg-zinc-700 hover:bg-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-600;
     @apply text-2xl text-white shadow-sm;
     @apply transition-colors duration-200 ease-in-out;
   }
@@ -46,9 +46,9 @@
   input[type='email'],
   input[type='url'],
   textarea {
-    @apply bg-gray-100 dark:bg-gray-800;
+    @apply bg-zinc-100 dark:bg-zinc-800;
     @apply w-full rounded-sm p-2 text-white shadow-sm;
-    @apply border-gray-200 outline-gray-200 dark:border-gray-500 dark:outline-gray-500;
+    @apply border-zinc-200 outline-zinc-200 dark:border-zinc-500 dark:outline-zinc-500;
   }
 
   label {
@@ -61,6 +61,14 @@
 }
 
 /* Custom classes */
+.carousel {
+  h1,
+  p,
+  a {
+    @apply text-white;
+  }
+}
+
 .article {
   @apply prose lg:prose-xl dark:prose-invert mx-auto p-8 xl:p-0;
 }
