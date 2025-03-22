@@ -1,0 +1,18 @@
+@reference "../../app/globals.css";
+
+.carousel {
+  @apply absolute top-0 left-0 -z-30 h-screen w-screen overflow-hidden;
+}
+
+.image {
+  @apply absolute top-0 left-0 -z-20 m-0 h-full w-full object-cover p-0;
+  @apply opacity-0 transition-opacity duration-75 ease-in-out;
+}
+
+.active {
+  @apply opacity-100;
+}
+
+.overlay {
+  @apply absolute inset-0 -z-10 bg-black/50;
+}

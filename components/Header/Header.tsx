@@ -26,7 +26,7 @@ export function Header() {
           <h1 className={styles.siteTitle}>
             <Link href="/">{config.siteName}</Link>
           </h1>
-          <p className={styles.siteDescription}>{config.siteDescription}</p>
+          <p className="sr-only">{config.siteDescription}</p>
         </div>
       </div>
       <Navigation />

@@ -19,7 +19,6 @@
   @apply absolute top-12 right-0 z-10 text-left;
   @apply flex-col gap-4 rounded-lg p-8;
   @apply xl:static xl:flex xl:flex-row xl:items-center xl:justify-center xl:rounded-none xl:bg-transparent xl:shadow-none;
-  @apply bg-white dark:bg-gray-800 xl:dark:bg-gray-950;
 }
 
 .link {

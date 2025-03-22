@@ -1,5 +1,6 @@
 import {
   IconBook,
+  IconBrandBluesky,
   IconBrandFacebook,
   IconBrandFlickr,
   IconBrandGithub,
@@ -11,15 +12,12 @@ import {
 
 const config = {
   siteName: 'Greg Rickaby',
-  siteDescription: 'Cameras and Code',
+  siteDescription: 'Web Developer, Photographer, Author',
   siteUrl: 'https://gregrickaby.com',
   siteLogo: '/logo.webp',
   siteOgImage: '/og.webp',
-  jobTitle: 'Technical Lead',
+  jobTitle: 'Tech Lead',
   email: 'greg@gregrickaby.com',
-  intro: 'Web Developer. Photographer. Author.',
-  gravatarApiUrl:
-    'https://en.gravatar.com/28af3e39c0a1fe4c31367c7e9a8bcac3.json',
   navigation: [
     {
       name: 'About',
@@ -34,19 +32,15 @@ const config = {
       url: '/contact'
     },
     {
-      name: 'Photos',
-      url: '/photos'
-    },
-    {
       name: 'Resume',
       url: '/resume'
     }
   ],
   socials: [
     {
-      name: 'GitHub',
-      url: 'https://github.com/gregrickaby/',
-      icon: IconBrandGithub
+      name: 'Bluesky',
+      url: 'https://bsky.app/profile/gregrickaby.bsky.social',
+      icon: IconBrandBluesky
     },
     {
       name: 'Facebook',
@@ -59,14 +53,9 @@ const config = {
       icon: IconBrandFlickr
     },
     {
-      name: 'LinkedIn',
-      url: 'https://www.linkedin.com/in/gregrickaby/',
-      icon: IconBrandLinkedin
-    },
-    {
-      name: 'Instagram',
-      url: 'https://www.instagram.com/gregoryrickaby/',
-      icon: IconBrandInstagram
+      name: 'GitHub',
+      url: 'https://github.com/gregrickaby/',
+      icon: IconBrandGithub
     },
     {
       name: 'Goodreads',
@@ -74,14 +63,24 @@ const config = {
       icon: IconBook
     },
     {
+      name: 'Instagram',
+      url: 'https://www.instagram.com/gregoryrickaby/',
+      icon: IconBrandInstagram
+    },
+    {
+      name: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/gregrickaby/',
+      icon: IconBrandLinkedin
+    },
+    {
+      name: 'RSS',
+      url: 'https://gregrickaby.com/feed.xml',
+      icon: IconRss
+    },
+    {
       name: 'YouTube',
       url: 'https://www.youtube.com/@GregRickaby',
       icon: IconBrandYoutube
-    },
-    {
-      name: 'RSS Feed',
-      url: 'https://gregrickaby.com/feed.xml',
-      icon: IconRss
     }
   ],
   fancyboxOptions: {
