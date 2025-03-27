@@ -1,7 +1,7 @@
 @reference "../../app/globals.css";
 
 .header {
-  @apply mb-8 flex flex-row items-start justify-between px-8 py-8 text-center;
+  @apply flex flex-row items-start justify-between p-8 text-center lg:mb-8;
   @apply md:flex-row;
 }
 

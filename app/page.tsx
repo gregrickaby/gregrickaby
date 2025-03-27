@@ -10,9 +10,9 @@ export default async function Home() {
 
   return (
     <>
-      <div className="article">
-        <h1 className="pb-4 text-center lg:pt-16">👋 Hello There!</h1>
-        <p>
+      <div className="article spacy-y-8 text-center">
+        <h1>👋 Hello There!</h1>
+        <p className="text-xl">
           I&apos;m a{' '}
           <a
             aria-label="follow on LinkedIn"
@@ -34,7 +34,7 @@ export default async function Home() {
             href="https://www.amazon.com/author/gregrickaby"
             rel="author"
           >
-            author
+            published author
           </a>{' '}
           who&apos;s been building websites since the{' '}
           <a
@@ -44,11 +44,14 @@ export default async function Home() {
           >
             Geocities
           </a>{' '}
-          days. As a Tech Lead at <a href="https://mindsize.com/">Mindsize</a>,
-          I support a talented team working on e-commerce solutions with
-          Next.js. Outside of work, I&apos;m married with three kids, and enjoy
-          cooking, traveling, and reading.
+          days
         </p>
+        <Link
+          href="/about"
+          className="button inline-flex px-4 py-2 text-xl no-underline!"
+        >
+          Learn More{' '}
+        </Link>
       </div>
       <Carousel images={images} />
     </>
