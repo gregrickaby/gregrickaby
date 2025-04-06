@@ -11,8 +11,8 @@ export default async function Home() {
   return (
     <>
       <div className="article spacy-y-8 text-center">
-        <h1>👋 Hello There!</h1>
-        <p className="text-xl">
+        <h1 className="font-mono">👋 Hello there!</h1>
+        <p className="font-sans! text-2xl">
           I&apos;m a{' '}
           <a
             aria-label="follow on LinkedIn"
@@ -28,23 +28,27 @@ export default async function Home() {
           >
             photographer
           </Link>
-          , and{' '}
+          ,{' '}
           <a
             aria-label="view my amazon author profile"
             href="https://www.amazon.com/author/gregrickaby"
             rel="author"
           >
-            published author
+            published author,
           </a>{' '}
-          who&apos;s been building websites since the{' '}
+          and proud survivor of the{' '}
           <a
             aria-label="view my geocties web page"
             href="https://gregrickaby.com/geocities"
             rel="nofollow"
           >
-            Geocities
-          </a>{' '}
-          days
+            Geocities days
+          </a>
+          . Currently, I work as a Tech Lead at{' '}
+          <a href="https://mindsize.com" rel="nofollow">
+            Mindsize
+          </a>
+          .
         </p>
         <Link
           href="/about"

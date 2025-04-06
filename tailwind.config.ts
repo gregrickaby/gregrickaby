@@ -23,22 +23,18 @@ const config = {
                 textDecoration: 'none'
               }
             },
-            h1: {
-              fontFamily: 'var(--font-serif)',
-              letterSpacing: theme('letterSpacing.tight'),
-              textRendering: 'optimizeLegibility',
-              textShadow: '0 2px 0 rgba(0, 0, 0, 0.05)'
-            },
-            h2: {
-              fontFamily: 'var(--font-serif)',
+            'h1, h2, h3, h4, h5, h6': {
+              fontFamily: 'var(--font-sans)',
               letterSpacing: theme('letterSpacing.tight'),
               textRendering: 'optimizeLegibility',
               textShadow: '0 2px 0 rgba(0, 0, 0, 0.05)'
             },
             p: {
+              fontFamily: 'var(--font-serif)',
               textRendering: 'optimizeLegibility'
             },
             pre: {
+              fontFamily: 'var(--font-mono)',
               fontSize: '0.875rem'
             }
           }

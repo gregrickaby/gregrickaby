@@ -35,6 +35,7 @@
   button,
   .button,
   input[type='submit'] {
+    @apply font-mono;
     @apply flex items-center justify-between gap-4 rounded-sm p-2;
     @apply bg-zinc-700 hover:cursor-pointer hover:bg-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-600;
     @apply text-2xl text-white shadow-sm;
@@ -71,6 +72,10 @@
 
 .article {
   @apply prose lg:prose-xl dark:prose-invert mx-auto p-8 xl:p-0;
+}
+
+.prose p:first-of-type::first-letter {
+  @apply float-left mt-2 mr-2 text-7xl leading-14 font-bold;
 }
 
 .loading {

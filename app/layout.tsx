@@ -5,19 +5,21 @@ import {JsonLD} from '@/components/JsonLd/JsonLd'
 import config from '@/lib/config'
 import clsx from 'clsx'
 import type {Metadata, Viewport} from 'next'
-import {Aleo, Fira_Code, Open_Sans} from 'next/font/google'
+import {Fira_Code, IBM_Plex_Sans, IBM_Plex_Serif} from 'next/font/google'
 import './globals.css'
 
-const serif = Aleo({
+const serif = IBM_Plex_Serif({
   display: 'swap',
   subsets: ['latin'],
-  variable: '--font-serif'
+  variable: '--font-serif',
+  weight: ['400', '700']
 })
 
-const sans = Open_Sans({
+const sans = IBM_Plex_Sans({
   display: 'swap',
   subsets: ['latin'],
-  variable: '--font-sans'
+  variable: '--font-sans',
+  weight: ['400', '700']
 })
 
 const mono = Fira_Code({
