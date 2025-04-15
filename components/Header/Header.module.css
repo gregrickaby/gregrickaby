@@ -1,7 +1,7 @@
 @reference "../../app/globals.css";
 
 .header {
-  @apply flex flex-row items-start justify-between p-8 text-center lg:mb-8;
+  @apply flex flex-row items-center justify-between p-8 text-center lg:mb-8;
   @apply md:flex-row;
 }
 
@@ -19,7 +19,7 @@
 }
 
 .siteTitle {
-  @apply mb-1 text-2xl leading-none font-bold tracking-tighter xl:text-4xl;
+  @apply mb-1 text-2xl leading-none font-bold xl:text-4xl;
 }
 
 .siteDescription {

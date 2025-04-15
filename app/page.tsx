@@ -1,6 +1,5 @@
 import {Carousel} from '@/components/Carousel/Carousel'
 import {getCarouselImages} from '@/lib/functions/getCarouselImages'
-import Link from 'next/link'
 
 /**
  * The home page route.
@@ -10,10 +9,20 @@ export default async function Home() {
 
   return (
     <>
-      <div className="article spacy-y-8 text-center">
-        <h1 className="font-mono">👋 Hello there!</h1>
-        <p className="font-sans! text-2xl">
+      <div className="mt-16 text-center md:space-y-16">
+        <h1 className="text-4xl font-bold text-shadow-md md:text-7xl">
+          👋 Hello there!
+        </h1>
+        <p className="mx-auto max-w-3xl p-8 text-xl text-shadow-md md:p-0 md:text-3xl md:leading-12">
           I&apos;m a{' '}
+          <a
+            aria-label="view my photos"
+            href="https://flickr.com/photos/gregrickaby"
+            rel="author"
+          >
+            photographer
+          </a>
+          ,{' '}
           <a
             aria-label="follow on LinkedIn"
             href="https://www.linkedin.com/in/gregrickaby/"
@@ -21,41 +30,20 @@ export default async function Home() {
           >
             web developer
           </a>
-          ,{' '}
-          <Link
-            aria-label="view my photos"
-            href="https://flickr.com/photos/gregrickaby"
-          >
-            photographer
-          </Link>
-          ,{' '}
+          , and{' '}
           <a
             aria-label="view my amazon author profile"
             href="https://www.amazon.com/author/gregrickaby"
             rel="author"
           >
-            published author,
-          </a>{' '}
-          and proud survivor of the{' '}
-          <a
-            aria-label="view my geocties web page"
-            href="https://gregrickaby.com/geocities"
-            rel="nofollow"
-          >
-            Geocities days
+            published author
           </a>
-          . Currently, I work as a Tech Lead at{' '}
+          . Working as Tech Lead at{' '}
           <a href="https://mindsize.com" rel="nofollow">
             Mindsize
           </a>
           .
         </p>
-        <Link
-          href="/about"
-          className="button inline-flex px-4 py-2 text-xl no-underline!"
-        >
-          Learn More{' '}
-        </Link>
       </div>
       <Carousel images={images} />
     </>
