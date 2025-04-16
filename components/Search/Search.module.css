@@ -1,4 +1,4 @@
-@reference "../../app/globals.css";
+@reference "../../app/(default)/globals.css";
 
 .search {
   @apply relative flex flex-col items-center;

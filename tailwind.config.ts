@@ -57,7 +57,21 @@ const config = {
             }
           }
         }
-      })
+      }),
+      keyframes: {
+        fadeInDown: {
+          '0%': {opacity: '0', transform: 'translateY(-10px)'},
+          '100%': {opacity: '1', transform: 'translateY(0)'}
+        },
+        wiggle: {
+          '0%, 100%': {transform: 'rotate(0deg)'},
+          '50%': {transform: 'rotate(3deg)'}
+        }
+      },
+      animation: {
+        fadeInDown: 'fadeInDown 0.8s ease-out both',
+        wiggle: 'wiggle 1s ease-in-out infinite'
+      }
     }
   },
   plugins: [require('@tailwindcss/typography')]

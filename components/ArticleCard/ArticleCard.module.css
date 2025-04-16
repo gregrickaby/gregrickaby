@@ -1,4 +1,4 @@
-@reference "../../app/globals.css";
+@reference "../../app/(default)/globals.css";
 
 .card {
   @apply mt-8 block overflow-hidden rounded-xl transition-all duration-300;

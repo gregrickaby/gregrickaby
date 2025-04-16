@@ -1,4 +1,4 @@
-@reference "../../app/globals.css";
+@reference "../../app/(default)/globals.css";
 
 .socialLinks {
   @apply flex flex-wrap justify-center gap-4 pb-4;

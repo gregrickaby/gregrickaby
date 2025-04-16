@@ -1,4 +1,4 @@
-@reference "../../app/globals.css";
+@reference "../../app/(default)/globals.css";
 
 .footer {
   @apply space-y-1 p-8 text-center text-sm lg:p-12;

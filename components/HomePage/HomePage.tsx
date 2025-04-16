@@ -6,7 +6,12 @@ import styles from './HomePage.module.css'
 export async function HomePage() {
   return (
     <article className={styles.homePage}>
-      <h1 className={styles.title}>👋 Hello there!</h1>
+      <h1 className={styles.title}>
+        <span aria-hidden="true" className={styles.wave}>
+          👋
+        </span>{' '}
+        Hello there!
+      </h1>
       <p className={styles.intro}>
         I’m a Tech Lead at{' '}
         <a

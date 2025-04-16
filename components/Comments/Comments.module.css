@@ -1,4 +1,4 @@
-@reference "../../app/globals.css";
+@reference "../../app/(default)/globals.css";
 
 .container {
   @apply mt-8 flex flex-col gap-4;

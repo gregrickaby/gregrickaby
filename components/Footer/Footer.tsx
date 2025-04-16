@@ -17,7 +17,10 @@ export function Footer() {
         .
       </p>
 
-      <p>&copy; 2008 - {new Date().getFullYear()} Greg Rickaby ✌️</p>
+      <p>
+        &copy; 2008 - {new Date().getFullYear()} Greg Rickaby{' '}
+        <span aria-hidden="true">✌️</span>
+      </p>
     </footer>
   )
 }

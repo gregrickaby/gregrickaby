@@ -1,7 +1,11 @@
-@reference "../../app/globals.css";
+@reference "../../app/(home)/globals.css";
 
 .homePage {
   @apply text-center text-white md:mt-16 md:space-y-16;
+}
+
+.wave {
+  @apply motion-safe:animate-wiggle inline-flex;
 }
 
 .title {
@@ -9,18 +13,18 @@
 }
 
 .intro {
-  @apply mx-auto max-w-3xl p-8 text-xl text-shadow-md md:p-0 md:text-3xl md:leading-12;
+  @apply motion-safe:animate-fade-in-down mx-auto max-w-3xl p-8 text-xl text-shadow-md md:p-0 md:text-3xl md:leading-12;
 
   & > a {
     @apply relative inline-block text-white transition-all duration-300;
 
     &::after {
       content: '';
-      @apply absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-white transition-transform duration-300;
+      @apply absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-100 bg-white transition-transform duration-300;
     }
 
     &:hover::after {
-      @apply scale-x-100;
+      @apply scale-x-30 motion-reduce:scale-x-90;
     }
   }
 }

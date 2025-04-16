@@ -1,4 +1,4 @@
-@reference "../../app/globals.css";
+@reference "../../app/(home)/globals.css";
 
 .carousel {
   @apply absolute top-0 left-0 -z-30 h-screen w-screen overflow-hidden;
@@ -6,7 +6,7 @@
 
 .image {
   @apply absolute top-0 left-0 -z-20 m-0 h-full w-full object-cover p-0;
-  @apply opacity-0 transition-opacity duration-700 ease-in-out;
+  @apply opacity-0 transition-opacity duration-700 ease-linear;
 }
 
 .active {
