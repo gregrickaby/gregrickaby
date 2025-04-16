@@ -22,9 +22,6 @@ export function Carousel({
   const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
-    // Add the carousel class to the body.
-    document.body.classList.add('carousel')
-
     // Don't set up interval if no images or paused.
     if (images.length === 0) {
       return

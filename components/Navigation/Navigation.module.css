@@ -8,13 +8,6 @@
   @apply flex items-center justify-between;
 }
 
-.navButton {
-  @apply flex rounded p-2;
-  @apply bg-zinc-700 hover:cursor-pointer hover:bg-zinc-500 dark:bg-zinc-800 hover:dark:bg-zinc-600;
-  @apply text-2xl text-white shadow;
-  @apply transition-colors duration-200 ease-in-out;
-}
-
 .linkContainer {
   @apply bg-zinc-700 text-white dark:bg-zinc-800;
   @apply absolute top-12 right-0 z-10 text-left;

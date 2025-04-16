@@ -6,7 +6,7 @@ import config from '@/lib/config'
 import clsx from 'clsx'
 import type {Metadata, Viewport} from 'next'
 import {Fira_Code, IBM_Plex_Sans, IBM_Plex_Serif} from 'next/font/google'
-import './globals.css'
+import '../globals.css'
 
 const serif = IBM_Plex_Serif({
   display: 'swap',

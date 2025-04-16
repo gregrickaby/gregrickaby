@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+@config '../../tailwind.config.ts';
+@plugin "@tailwindcss/typography";
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-zinc-200, currentColor);
+  }
+}
+
+@layer base {
+  body {
+    @apply overflow-x-hidden;
+  }
+
+  button,
+  .button {
+    @apply flex items-center justify-between gap-4 rounded-sm p-2;
+    @apply bg-transparent hover:cursor-pointer hover:bg-zinc-950;
+    @apply text-2xl text-white;
+    @apply transition-colors duration-200 ease-in-out;
+
+    & svg {
+      @apply h-8 w-8;
+    }
+  }
+
+  footer {
+    @apply absolute right-0 bottom-0 left-0;
+  }
+}

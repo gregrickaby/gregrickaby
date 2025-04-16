@@ -61,41 +61,6 @@
   }
 }
 
-/* Custom classes */
-.carousel {
-  h1,
-  p,
-  a {
-    @apply text-white;
-  }
-
-  p > a {
-    @apply relative inline-block text-white transition-all duration-300;
-
-    &::after {
-      content: '';
-      @apply absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 bg-white transition-transform duration-300;
-    }
-
-    &:hover::after {
-      @apply scale-x-100;
-    }
-  }
-
-  button,
-  .button {
-    @apply bg-transparent text-3xl text-white shadow-none hover:bg-white hover:text-black;
-
-    & svg {
-      @apply h-8 w-8;
-    }
-  }
-
-  footer {
-    @apply absolute right-0 bottom-0 left-0;
-  }
-}
-
 .article {
   @apply prose lg:prose-xl dark:prose-invert mx-auto p-8 xl:p-0;
 }
