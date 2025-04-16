@@ -1,7 +1,7 @@
 @reference "../../app/globals.css";
 
 .homePage {
-  @apply mt-16 text-center text-white md:space-y-16;
+  @apply text-center text-white md:mt-16 md:space-y-16;
 }
 
 .title {
