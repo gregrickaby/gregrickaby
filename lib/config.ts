@@ -53,7 +53,7 @@ const config = {
     },
     {
       name: 'Flickr',
-      url: 'https://www.flickr.com/photos/gregrickaby/',
+      url: 'https://www.flickr.com/people/gregrickaby/',
       icon: IconBrandFlickr
     },
     {
