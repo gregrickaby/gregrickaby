@@ -3,6 +3,7 @@ import {Footer} from '@/components/Footer/Footer'
 import {Header} from '@/components/Header/Header'
 import {JsonLD} from '@/components/JsonLd/JsonLd'
 import config from '@/lib/config'
+import {Analytics} from '@vercel/analytics/next'
 import clsx from 'clsx'
 import type {Metadata, Viewport} from 'next'
 import {Fira_Code, IBM_Plex_Sans, IBM_Plex_Serif} from 'next/font/google'
@@ -85,7 +86,10 @@ export default function RootLayout({
       <body>
         <JsonLD />
         <Header />
-        <main>{children}</main>
+        <main>
+          {children}
+          <Analytics mode="production" />
+        </main>
         <Footer />
         <BackToTop />
       </body>
