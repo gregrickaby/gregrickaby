@@ -96,7 +96,7 @@ export function Comments({comments, postId}: Readonly<CommentsProps>) {
         Comments
       </h2>
       {topLevelComments.length === 0 ? (
-        <p>No comments yet. Be the first to write one!</p>
+        <>No comments yet. Be the first to write one!</>
       ) : (
         topLevelComments.map((comment) => (
           <CommentItem
@@ -106,7 +106,6 @@ export function Comments({comments, postId}: Readonly<CommentsProps>) {
           />
         ))
       )}
-      {/* Add the CommentForm below the comments */}
       <CommentForm postId={postId} />
     </section>
   )
