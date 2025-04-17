@@ -12,7 +12,7 @@ import {
 
 const config = {
   siteName: 'Greg Rickaby',
-  siteDescription: 'Web Developer, Photographer, Author',
+  siteDescription: 'Web Developer, Photographer, Published Author',
   siteUrl: 'https://gregrickaby.com',
   siteLogo: '/logo.webp',
   siteOgImage: '/og.webp',
@@ -34,6 +34,10 @@ const config = {
     {
       name: 'Contact',
       url: '/contact'
+    },
+    {
+      name: 'Photos',
+      url: '/photos'
     },
     {
       name: 'Resume',
