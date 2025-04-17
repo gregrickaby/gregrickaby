@@ -1,7 +1,7 @@
 @reference "../../app/(home)/globals.css";
 
 .homePage {
-  @apply text-center text-white md:mt-16 md:space-y-16;
+  @apply mt-2 text-center text-white text-shadow-xs md:mt-16 md:space-y-16;
 }
 
 .wave {
@@ -13,7 +13,7 @@
 }
 
 .intro {
-  @apply motion-safe:animate-fade-in-down mx-auto max-w-3xl p-8 text-xl text-shadow-md md:p-0 md:text-3xl md:leading-12;
+  @apply motion-safe:animate-fade-in-down mx-auto max-w-3xl p-8 text-xl leading-8 text-shadow-md md:p-0 md:text-3xl md:leading-12;
 
   & > a {
     @apply relative inline-block text-white transition-all duration-300;
@@ -24,7 +24,7 @@
     }
 
     &:hover::after {
-      @apply scale-x-30 motion-reduce:scale-x-90;
+      @apply scale-x-20 motion-reduce:scale-x-90;
     }
   }
 }

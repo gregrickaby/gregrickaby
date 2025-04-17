@@ -13,7 +13,7 @@ export async function HomePage() {
         Hello there!
       </h1>
       <p className={styles.intro}>
-        I’m a Tech Lead at{' '}
+        I&apos;m a Tech Lead at{' '}
         <a
           href="https://mindsize.com"
           target="_blank"
@@ -26,12 +26,14 @@ export async function HomePage() {
           published author
         </a>
         , and proud survivor of the{' '}
-        <a href="https://gregrickaby.com/geocities">Geocities era</a>. Outside
-        of work, you’ll find me{' '}
-        <a href="https://flickr.com/people/gregrickaby/" rel="author">
-          behind a camera
-        </a>
-        , tossing pizzas, or planning the next family road trip.
+        <a href="https://gregrickaby.com/geocities">Geocities era</a>.{' '}
+        <span className="hidden md:inline">
+          Outside of work, you&apos;ll find me{' '}
+          <a href="https://flickr.com/people/gregrickaby/" rel="author">
+            behind a camera
+          </a>
+          , tossing pizzas, or planning the next family road trip.
+        </span>
       </p>
     </article>
   )

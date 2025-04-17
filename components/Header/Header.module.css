@@ -19,7 +19,7 @@
 }
 
 .siteTitle {
-  @apply mb-1 text-2xl leading-none font-bold xl:text-4xl;
+  @apply mb-1 text-2xl leading-none font-bold text-shadow-xs xl:text-4xl;
 }
 
 .siteDescription {

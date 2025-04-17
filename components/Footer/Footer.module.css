@@ -1,5 +1,9 @@
 @reference "../../app/(default)/globals.css";
 
 .footer {
-  @apply space-y-1 p-8 text-center text-sm lg:p-12;
+  @apply space-y-3 p-8 text-center text-sm text-shadow-xs lg:p-12;
+
+  & a {
+    @apply underline;
+  }
 }
