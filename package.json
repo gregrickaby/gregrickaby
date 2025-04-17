@@ -31,7 +31,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-infinite-scroll-component": "^6.1.0",
-    "sanitize-html": "^2.15.0",
+    "sanitize-html": "^2.16.0",
     "sharp": "^0.34.1"
   },
   "devDependencies": {
