@@ -1,12 +1,5 @@
 @reference "../../app/(default)/globals.css";
 
-@font-face {
-  font-family: camera-icons;
-  font-style: normal;
-  font-weight: normal;
-  src: url('/camera-icons.woff2') format('woff2');
-}
-
 .photoGrid {
   @apply mt-16 flex flex-col gap-16;
 }
@@ -29,56 +22,6 @@
 
 .details {
   @apply flex items-center justify-start gap-1;
-}
-
-.focalLength {
-  .icon {
-    font-family: camera-icons, sans-serif;
-  }
-
-  &::before {
-    content: '\e600';
-  }
-}
-
-.shutterSpeed {
-  .icon {
-    font-family: camera-icons, sans-serif;
-  }
-
-  &::before {
-    content: '\e601';
-  }
-}
-
-.iso {
-  .icon {
-    font-family: camera-icons, sans-serif;
-  }
-
-  &::before {
-    content: '\e602';
-  }
-}
-
-.camera {
-  .icon {
-    font-family: camera-icons, sans-serif;
-  }
-
-  &::before {
-    content: '\e603';
-  }
-}
-
-.aperture {
-  .icon {
-    font-family: camera-icons, sans-serif;
-  }
-
-  &::before {
-    content: '\e604';
-  }
 }
 
 .caption {

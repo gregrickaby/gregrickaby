@@ -96,7 +96,6 @@ export default function Portfolio({photos}: Readonly<PortfolioProps>) {
               <div className={styles.meta}>
                 {Object.entries(meta).map(([key, value]) => (
                   <div key={key} className={styles.details}>
-                    <span className={styles[key]}></span>
                     {value}
                   </div>
                 ))}
