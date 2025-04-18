@@ -31,7 +31,7 @@ function generateRSSHeader() {
       <description>${sanitizeText(config.siteDescription)}</description>
       <language>en</language>
       <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-      <copyright>2008-${new Date().getFullYear()} - Greg Rickaby</copyright>
+      <copyright>1997-${new Date().getFullYear()} - Greg Rickaby</copyright>
       <ttl>60</ttl>
       <docs>https://www.rssboard.org/rss-specification</docs>
       <generator>https://github.com/gregrickaby/gregrickaby</generator>
