@@ -12,7 +12,7 @@ export function generateMetadata(): Metadata {
   return {
     title: `Photos - ${config.siteName}`,
     description:
-      'Explore my portfolio featuring the magic of Disney World, serene landscapes from camping adventures, and breathtaking astrophotography. Each image invites you into unique worlds of beauty and discovery.',
+      'My portfolio features wildlife, landscape, street and astrophotography.',
     alternates: {
       canonical: '/photos'
     }
@@ -27,7 +27,7 @@ export default async function PhotosPage() {
   const photos = await fetchPhotos()
 
   return (
-    <div className="article px-12 lg:px-0">
+    <article className="article px-12 lg:px-0">
       <h1>Photos</h1>
       <p>
         My portfolio features wildlife, landscape, street and astrophotography.
@@ -43,6 +43,6 @@ export default async function PhotosPage() {
       </p>
 
       <Portfolio photos={photos} />
-    </div>
+    </article>
   )
 }

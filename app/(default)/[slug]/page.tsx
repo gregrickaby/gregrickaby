@@ -59,7 +59,7 @@ export default async function SinglePage(props: Readonly<PageProps>) {
   const page = await fetchPageBySlug(params.slug)
 
   return (
-    <article className="article">
+    <article className="article px-12 lg:px-0">
       <header>
         <h1>{sanitizeText(page.title.rendered)}</h1>
       </header>
