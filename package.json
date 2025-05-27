@@ -32,15 +32,15 @@
     "react-dom": "^19.1.0",
     "react-infinite-scroll-component": "^6.1.0",
     "sanitize-html": "^2.17.0",
-    "sharp": "^0.34.1"
+    "sharp": "^0.34.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.27.0",
     "@tailwindcss/postcss": "^4.1.7",
     "@tailwindcss/typography": "^0.5.16",
-    "@types/node": "^22.15.19",
-    "@types/react": "^19.1.4",
+    "@types/node": "^22.15.21",
+    "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
     "@types/sanitize-html": "^2.16.0",
     "@types/xml-escape": "^1.1.3",
