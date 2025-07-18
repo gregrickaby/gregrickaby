@@ -73,6 +73,11 @@
   @apply animate-spin duration-1000 ease-linear motion-reduce:hidden;
 }
 
+.alignwide {
+  @apply relative text-center;
+  @apply -mx-[20%] h-auto w-[140%] max-w-none;
+}
+
 .full-width {
   @apply relative right-1/2 left-1/2 -mx-[50vw] h-auto w-[100vw] max-w-none;
   @apply text-center;
