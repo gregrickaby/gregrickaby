@@ -30,3 +30,11 @@
     }
   }
 }
+
+.button {
+  @apply scale-100 rounded-lg px-5 py-3 opacity-100 shadow-md transition-all duration-100 ease-linear;
+  @apply text-lg font-bold text-white outline outline-zinc-950;
+  @apply bg-gradient-to-t from-zinc-950 to-zinc-900;
+  @apply hover:bg-gradient-to-b;
+  @apply hover:cursor-pointer hover:bg-zinc-900 hover:outline-zinc-700;
+}
