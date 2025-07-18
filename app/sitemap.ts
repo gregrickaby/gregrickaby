@@ -93,12 +93,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: '2024-12-31T15:00:00.000Z'
       },
       {
-        slug: '/photos',
-        priority: 0.6,
-        noindex: false,
-        lastModified: '2025-01-01T12:00:00.000Z'
-      },
-      {
         slug: '/search',
         priority: 0.5,
         noindex: true,
