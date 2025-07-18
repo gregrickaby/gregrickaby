@@ -1,10 +1,8 @@
 import {formatDate} from '@/lib/functions/formatDate'
+import {isModified} from '@/lib/functions/isModified'
 import {Post} from '@/lib/types'
 import styles from './Byline.module.css'
 
-/**
- * AuthorInfo component.
- */
 function AuthorInfo({name}: Readonly<{name: string; gravatarUrl: string}>) {
   return (
     <address
@@ -55,7 +53,6 @@ function ModifiedDate({
 }
 
 export function Byline({post}: Readonly<{post: Post}>) {
-  // Destructure the post object.
   const {
     author_name,
     author_gravatar_url,
@@ -71,7 +68,7 @@ export function Byline({post}: Readonly<{post: Post}>) {
         <AuthorInfo name={author_name} gravatarUrl={author_gravatar_url} />
         <div>
           <PublishDate date={date} dateGmt={date_gmt} />
-          {modified && modified !== date && (
+          {modified && modified !== date && isModified(date, modified) && (
             <ModifiedDate modified={modified} modifiedGmt={modified_gmt} />
           )}
         </div>
