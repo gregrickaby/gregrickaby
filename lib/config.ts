@@ -36,10 +36,6 @@ const config = {
       url: '/contact'
     },
     {
-      name: 'Photos',
-      url: '/photos'
-    },
-    {
       name: 'Resume',
       url: '/resume'
     }
