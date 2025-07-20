@@ -14,7 +14,7 @@ export async function HomePage({bio}: Readonly<{bio: string}>) {
         Hello there!
       </h1>
       <section className={styles.bio} dangerouslySetInnerHTML={{__html: bio}} />
-      <Link href="/blog" className={styles.button}>
+      <Link href="https://blog.gregrickaby.com" className={styles.button}>
         Read my blog
       </Link>
     </article>

@@ -37,8 +37,4 @@
       @apply h-8 w-8;
     }
   }
-
-  footer {
-    @apply absolute right-0 bottom-0 left-0;
-  }
 }

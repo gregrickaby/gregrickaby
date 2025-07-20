@@ -29,7 +29,7 @@ const config = {
     },
     {
       name: 'Blog',
-      url: '/blog'
+      url: 'https://blog.gregrickaby.com'
     },
     {
       name: 'Contact',
