@@ -10,13 +10,6 @@ const pageQuery = new WP_Query({
   _fields: ['slug', 'yoast_head_json']
 })
 
-const postQuery = new WP_Query({
-  per_page: 100,
-  post_type: 'posts',
-  status: 'publish',
-  _fields: ['slug', 'yoast_head_json']
-})
-
 /**
  * Generate sitemap entries from WordPress pages and posts.
  */
@@ -68,23 +61,14 @@ function generateHardcodedEntries(
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
-    // Fetch WordPress pages and posts.
     const allPages = await pageQuery.getPosts().catch(() => [])
-    const allPosts = await postQuery.getPosts().catch(() => [])
 
-    // Hardcoded pages with metadata.
     const hardcodedPages = [
       {
-        slug: '',
+        slug: '', // Homepage
         priority: 1.0,
         noindex: false,
         lastModified: '2025-01-10T10:00:00.000Z'
-      },
-      {
-        slug: '/blog',
-        priority: 0.8,
-        noindex: false,
-        lastModified: '2025-01-05T08:00:00.000Z'
       },
       {
         slug: '/contact',
@@ -100,23 +84,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
     ]
 
-    // Generate sitemap entries.
     const pagesSitemapEntries = generateWPEntries(
       allPages.filter((page) => page.slug !== 'home'),
       '/'
     )
-    const postsSitemapEntries = generateWPEntries(allPosts, '/blog/')
+
     const hardcodedSitemapEntries = generateHardcodedEntries(
       hardcodedPages,
       config.siteUrl
     )
 
-    // Combine entries and return sitemap.
-    return [
-      ...hardcodedSitemapEntries,
-      ...pagesSitemapEntries,
-      ...postsSitemapEntries
-    ]
+    return [...hardcodedSitemapEntries, ...pagesSitemapEntries]
   } catch (error) {
     console.error('Error generating sitemap:', error)
     return []
