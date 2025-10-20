@@ -1,10 +1,9 @@
-import Link from 'next/link'
 import styles from './HomePage.module.css'
 
 /**
  * The homepage component.
  */
-export async function HomePage({bio}: Readonly<{bio: string}>) {
+export async function HomePage() {
   return (
     <article className={styles.homePage}>
       <h1 className={styles.title}>
@@ -13,10 +12,14 @@ export async function HomePage({bio}: Readonly<{bio: string}>) {
         </span>{' '}
         Hello there!
       </h1>
-      <section className={styles.bio} dangerouslySetInnerHTML={{__html: bio}} />
-      <Link href="https://blog.gregrickaby.com" className={styles.button}>
-        Read my blog
-      </Link>
+      <section className={styles.bio}>
+        <p>
+          I&apos;m a Tech Lead at Mindsize, photographer, published author and
+          proud survivor of the Geocities era. Outside of work, you&apos;ll find
+          me behind a camera, tossing pizzas, or planning the next family road
+          trip to Disney World.
+        </p>
+      </section>
     </article>
   )
 }

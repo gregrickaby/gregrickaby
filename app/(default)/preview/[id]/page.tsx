@@ -1,6 +1,7 @@
 import {Blocks} from '@/components/Blocks/Blocks'
 import {sanitizeText} from '@/lib/functions/sanitizeText'
 import {yoastSeo} from '@/lib/functions/yoastSeo'
+import type {Metadata} from 'next'
 
 /**
  * Preview props.
@@ -26,21 +27,19 @@ export const dynamic = 'force-dynamic'
  */
 async function getPreview(postId: string) {
   try {
-    // Get the JWT token and API URL.
-    const token = process.env.WORDPRESS_JWT_TOKEN
+    // Get the API URL.
     const apiUrl = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 
-    // No token or API URL? Bail.
-    if (!token || !apiUrl) {
-      throw new Error('WordPress API URL and JWT token are required.')
+    // No API URL? Bail.
+    if (!apiUrl) {
+      throw new Error('WordPress API URL is required.')
     }
 
     // Fetch the preview.
     const response = await fetch(`${apiUrl}/posts/${postId}?preview=true`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        'Content-Type': 'application/json'
       }
     })
 
@@ -61,7 +60,9 @@ async function getPreview(postId: string) {
  *
  * @see https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
-export async function generateMetadata(props: Readonly<PreviewProps>) {
+export async function generateMetadata(
+  props: Readonly<PreviewProps>
+): Promise<Metadata> {
   const params = await props.params
   const page = await getPreview(params.id)
   return yoastSeo(page)

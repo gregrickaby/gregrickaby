@@ -28,10 +28,6 @@ const config = {
       url: '/about'
     },
     {
-      name: 'Blog',
-      url: 'https://blog.gregrickaby.com'
-    },
-    {
       name: 'Contact',
       url: '/contact'
     },

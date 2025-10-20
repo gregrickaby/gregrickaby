@@ -73,8 +73,7 @@ const config = {
         wiggle: 'wiggle 1s ease-in-out infinite'
       }
     }
-  },
-  plugins: [require('@tailwindcss/typography')]
+  }
 } satisfies Config
 
 export default config
