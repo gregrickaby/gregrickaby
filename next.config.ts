@@ -18,7 +18,6 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     inlineCss: true,
-    globalNotFound: true,
     optimizePackageImports: ["react-icons"],
   },
   logging: {
