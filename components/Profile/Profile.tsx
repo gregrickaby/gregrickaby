@@ -17,12 +17,12 @@ export function Profile({
         <Image
           alt=""
           className="h-full w-full rounded-t-lg object-cover"
-          height={237}
+          height={160}
           placeholder="blur"
           priority
           role="presentation"
           src={cover}
-          width={316}
+          width={512}
         />
 
         <div className="avatar absolute -bottom-10 left-5">
