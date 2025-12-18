@@ -28,8 +28,8 @@ const nextConfig: NextConfig = {
   redirects: async () => {
     return [
       {
-        source: "/:path+",
-        destination: "https://blog.gregrickaby.com/:path",
+        source: "/:path*",
+        destination: "https://blog.gregrickaby.com/:path*",
         permanent: true,
         has: [
           {
