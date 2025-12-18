@@ -19,7 +19,7 @@ export function Profile({
           className="h-full w-full rounded-t-lg object-cover"
           height={160}
           placeholder="blur"
-          priority
+          preload
           role="presentation"
           src={cover}
           width={512}
@@ -31,7 +31,7 @@ export function Profile({
               alt={profile.name}
               height={96}
               placeholder="blur"
-              priority
+              preload
               src={avatar}
               width={96}
             />
