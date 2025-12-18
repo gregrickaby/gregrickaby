@@ -32,8 +32,8 @@ describe("getIcon", () => {
     expect(icon).not.toBeNull();
   });
 
-  it("should return FaYoutube icon for FaYoutube string", () => {
-    const icon = getIcon("FaYoutube");
+  it("should return FaYoutubeSquare icon for FaYoutubeSquare string", () => {
+    const icon = getIcon("FaYoutubeSquare");
     expect(icon).toBeDefined();
     expect(icon).not.toBeNull();
   });

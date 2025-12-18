@@ -1,11 +1,19 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: all;
+  themes:
+    light --default,
+    dark --prefersdark;
 }
 
 body {
-  font-family: var(--font-sans);
-  padding: 40px;
+  background-attachment: fixed;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    url("/background.avif");
+  background-position: center;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 48px;
 }
 
 h1,

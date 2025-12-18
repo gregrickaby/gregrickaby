@@ -1,13 +1,15 @@
 import { z } from "zod";
 
-const urlSchema = z.string().regex(/^(https?|mailto):.+/);
+const urlSchema = z.string().regex(/^(https?|mailto|tel):.+/);
 
 export const ProfileSchema = z.object({
   name: z.string().min(1),
+  siteTitle: z.string().min(1),
   bio: z.string(),
   url: urlSchema,
   company: z.object({
     name: z.string().min(1),
+    role: z.string().min(1),
     url: urlSchema,
   }),
   location: z.string(),
@@ -20,23 +22,15 @@ export const LinkSchema = z.object({
   description: z.string(),
 });
 
-export const SocialLinkSchema = z.object({
+const IconLinkBaseSchema = z.object({
   name: z.string().min(1),
   url: urlSchema,
   icon: z.string().min(1),
 });
 
-export const PaymentLinkSchema = z.object({
-  name: z.string().min(1),
-  url: urlSchema,
-  icon: z.string().min(1),
-});
-
-export const ContactMethodSchema = z.object({
-  name: z.string().min(1),
-  url: urlSchema,
-  icon: z.string().min(1),
-});
+export const SocialLinkSchema = IconLinkBaseSchema;
+export const PaymentLinkSchema = IconLinkBaseSchema;
+export const ContactMethodSchema = IconLinkBaseSchema;
 
 export const ProfileDataSchema = z.object({
   profile: ProfileSchema,

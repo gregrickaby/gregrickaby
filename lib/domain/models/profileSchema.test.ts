@@ -11,10 +11,12 @@ describe("ProfileSchema", () => {
   it("should validate a valid profile", () => {
     const validProfile = {
       name: "John Doe",
+      siteTitle: "John Doe - Software Engineer",
       bio: "Software Engineer",
       url: "https://example.com",
       company: {
         name: "Tech Corp",
+        role: "Software Engineer",
         url: "https://techcorp.com",
       },
       location: "New York",
@@ -27,10 +29,12 @@ describe("ProfileSchema", () => {
   it("should reject profile with empty name", () => {
     const invalidProfile = {
       name: "",
+      siteTitle: "Software Engineer",
       bio: "Software Engineer",
       url: "https://example.com",
       company: {
         name: "Tech Corp",
+        role: "Software Engineer",
         url: "https://techcorp.com",
       },
       location: "New York",
@@ -43,10 +47,12 @@ describe("ProfileSchema", () => {
   it("should reject profile with invalid URL", () => {
     const invalidProfile = {
       name: "John Doe",
+      siteTitle: "John Doe - Software Engineer",
       bio: "Software Engineer",
       url: "not-a-url",
       company: {
         name: "Tech Corp",
+        role: "Software Engineer",
         url: "https://techcorp.com",
       },
       location: "New York",
@@ -138,10 +144,12 @@ describe("ProfileDataSchema", () => {
     const validData = {
       profile: {
         name: "John Doe",
+        siteTitle: "John Doe - Software Engineer",
         bio: "Software Engineer",
         url: "https://example.com",
         company: {
           name: "Tech Corp",
+          role: "Software Engineer",
           url: "https://techcorp.com",
         },
         location: "New York",
@@ -184,10 +192,12 @@ describe("ProfileDataSchema", () => {
     const invalidData = {
       profile: {
         name: "",
+        siteTitle: "Software Engineer",
         bio: "Software Engineer",
         url: "https://example.com",
         company: {
           name: "Tech Corp",
+          role: "Software Engineer",
           url: "https://techcorp.com",
         },
         location: "New York",
@@ -210,6 +220,7 @@ describe("ProfileDataSchema", () => {
         url: "https://example.com",
         company: {
           name: "Tech Corp",
+          role: "Software Engineer",
           url: "https://techcorp.com",
         },
         location: "New York",

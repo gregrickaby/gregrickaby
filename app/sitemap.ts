@@ -1,13 +1,10 @@
+import { getProfileData } from "@/lib/services/dataService";
 import type { MetadataRoute } from "next";
-import data from "./data.json";
 
-/**
- * Generates the sitemap for the application.
- *
- * @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
- */
 export default function sitemap(): MetadataRoute.Sitemap {
+  const data = getProfileData();
   const baseUrl = data.profile.url;
+  const blogUrl = data.links.find((link) => link.title === "Blog")?.url;
   const currentDate = new Date();
 
   return [
@@ -15,7 +12,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: baseUrl,
       lastModified: currentDate,
       changeFrequency: "weekly",
-      priority: 1,
+      priority: 0.8,
     },
+    ...(blogUrl
+      ? [
+          {
+            url: blogUrl,
+            lastModified: currentDate,
+            changeFrequency: "daily" as const,
+            priority: 1,
+          },
+        ]
+      : []),
   ];
 }

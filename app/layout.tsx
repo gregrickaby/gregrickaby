@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import { Roboto, Roboto_Slab } from "next/font/google";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import { BackgroundImage } from "@/components/BackgroundImage";
+import { Footer } from "@/components/Footer";
 import { getProfileData } from "@/lib/services/dataService";
+import type { Metadata, Viewport } from "next";
+import { Roboto, Roboto_Slab } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 
 const roboto = Roboto({
@@ -17,22 +17,51 @@ const robotoSlab = Roboto_Slab({
   variable: "--font-serif",
 });
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const data = getProfileData();
 
   return {
-    title: data.profile.name,
+    title: data.profile.siteTitle,
     description: data.profile.bio,
     authors: [{ name: data.profile.name, url: data.profile.url }],
     creator: data.profile.name,
     publisher: data.profile.name,
+    keywords: [
+      "software engineer",
+      "photographer",
+      "author",
+      data.profile.name,
+      data.profile.location,
+      data.profile.company.name,
+    ],
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     metadataBase: new URL(data.profile.url),
+    alternates: {
+      canonical: data.profile.url,
+    },
     openGraph: {
       type: "profile",
       url: data.profile.url,
       title: data.profile.name,
       description: data.profile.bio,
       siteName: data.profile.name,
+      locale: "en_US",
       images: [
         {
           url: "/icon.jpg",
@@ -43,7 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: data.profile.name,
       description: data.profile.bio,
       images: ["/icon.jpg"],
@@ -56,26 +85,45 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const data = getProfileData();
+  const blogUrl = data.links.find((link) => link.title === "Blog")?.url;
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    mainEntity: {
+      "@type": "Person",
+      name: data.profile.name,
+      url: data.profile.url,
+      image: `${data.profile.url}/icon.jpg`,
+      description: data.profile.bio,
+      mainEntityOfPage: blogUrl || "https://blog.gregrickaby.com",
+      jobTitle: data.profile.company.role,
+      worksFor: {
+        "@type": "Organization",
+        name: data.profile.company.name,
+        url: data.profile.company.url,
+      },
+      sameAs: data.social.map((s) => s.url),
+    },
+  };
+
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning>
+    <html lang="en">
       <head>
+        <link rel="preload" as="image" href="/background.avif" />
         <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                const theme = localStorage.getItem('theme') || 'luxury';
-                document.documentElement.setAttribute('data-theme', theme);
-              })();
-            `,
-          }}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className={`${roboto.variable} ${robotoSlab.variable} antialiased`}>
-        <div className="fixed inset-0 -z-10">
-          <BackgroundImage />
-        </div>
-        <ThemeSwitcher />
+      <body
+        className={`${roboto.variable} ${robotoSlab.variable} optimize-legibility antialiased`}
+      >
         {children}
+        <Suspense fallback={null}>
+          <Footer {...data} />
+        </Suspense>
       </body>
     </html>
   );

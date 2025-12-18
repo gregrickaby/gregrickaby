@@ -1,0 +1,118 @@
+{
+  "profile": {
+    "name": "Greg Rickaby",
+    "siteTitle": "Greg Rickaby - Software Engineer, Photographer, and Author",
+    "bio": "Alabama-based software engineer, self-taught photographer, and published author.",
+    "url": "https://gregrickaby.com",
+    "location": "Alabama",
+    "pronouns": "He/Him",
+    "company": {
+      "name": "Mindsize",
+      "role": "Technical Lead",
+      "url": "https://mindsize.com"
+    }
+  },
+  "social": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/gregrickaby",
+      "icon": "FaGithubSquare"
+    },
+    {
+      "name": "Flickr",
+      "url": "https://www.flickr.com/photos/gregrickaby/",
+      "icon": "FaFlickr"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://linkedin.com/in/gregrickaby",
+      "icon": "FaLinkedin"
+    },
+    {
+      "name": "GoodReads",
+      "url": "https://www.goodreads.com/gregrickaby",
+      "icon": "FaGoodreads"
+    },
+    {
+      "name": "YouTube",
+      "url": "https://www.youtube.com/c/GregRickaby",
+      "icon": "FaYoutubeSquare"
+    },
+    {
+      "name": "Threads",
+      "url": "https://threads.net/gregoryrickaby",
+      "icon": "FaSquareThreads"
+    },
+    {
+      "name": "Facebook",
+      "url": "https://facebook.com/gregrickaby",
+      "icon": "FaFacebookSquare"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://instagram.com/gregrickaby",
+      "icon": "FaInstagramSquare"
+    }
+  ],
+  "contact": [
+    {
+      "name": "Email",
+      "url": "mailto:greg@gregrickaby.com",
+      "icon": "FaEnvelope"
+    },
+    {
+      "name": "Contact Form",
+      "url": "https://blog.gregrickaby.com/contact/",
+      "icon": "FaWpforms"
+    },
+    {
+      "name": "Phone",
+      "url": "tel:4079063420",
+      "icon": "FaPhone"
+    }
+  ],
+  "payment": [
+    {
+      "name": "PayPal",
+      "url": "https://www.paypal.com/paypalme/GregRickaby",
+      "icon": "FaPaypal"
+    },
+    {
+      "name": "Venmo",
+      "url": "https://venmo.com/u/GregRickaby",
+      "icon": "FaVenmo"
+    },
+    {
+      "name": "Buy Me A Coffee",
+      "url": "https://buymeacoffee.com/gregrickaby",
+      "icon": "FaCoffee"
+    }
+  ],
+  "links": [
+    {
+      "title": "Blog",
+      "url": "https://blog.gregrickaby.com",
+      "description": "Read my latest articles and tutorials"
+    },
+    {
+      "title": "Photos",
+      "url": "https://www.flickr.com/photos/gregrickaby/",
+      "description": "View my photography work"
+    },
+    {
+      "title": "Resume",
+      "url": "https://www.linkedin.com/in/gregrickaby/",
+      "description": "View my resume and professional experience"
+    },
+    {
+      "title": "Viewer for Reddit",
+      "url": "https://reddit-viewer.com",
+      "description": "The best way to lurk on Reddit"
+    },
+    {
+      "title": "Magic Waits",
+      "url": "https://magicwaits.gregrickaby.com",
+      "description": "A real time wait time tracker for Walt Disney World attractions"
+    }
+  ]
+}

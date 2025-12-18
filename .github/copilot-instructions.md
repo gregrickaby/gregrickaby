@@ -58,14 +58,11 @@ Presentation → Application → Domain ← Infrastructure
 ```
 app/                    # Next.js App Router pages and layouts
 components/             # React components
-  ui/                   # Reusable UI components (buttons, cards, etc.)
     Component/
       Component.test.tsx     # Tests for the component
       Component.tsx          # Component implementation
       CComponent.types.ts    # Component-specific types
       index.ts               # Barrel export
-  layout/               # Headers, footers, navigation
-  features/             # Feature-specific components
 lib/
   domain/               # Business models, interfaces, types
     models/
@@ -74,7 +71,7 @@ lib/
   services/             # Application logic and orchestration
   api/                  # Infrastructure (API clients, fetch wrappers)
   utils/                # Pure utility functions
-  hooks/              # Custom React hooks for business logic
+  hooks/                # Custom React hooks for business logic
     useHookName/
       useHookName.test.ts  # Tests for the hook
       useHookName.types.ts # Hook-specific types

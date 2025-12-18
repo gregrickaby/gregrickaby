@@ -1,32 +1,26 @@
 import type { IconType } from "react-icons";
-import {
-  FaCcPaypal,
-  FaCcVisa,
-  FaCoffee,
-  FaEnvelope,
-  FaGithubSquare,
-  FaGoodreads,
-  FaLinkedin,
-  FaWpforms,
-  FaFlickr,
-  FaYoutube,
-} from "react-icons/fa";
+import * as BsIcons from "react-icons/bs";
+import * as FaIcons from "react-icons/fa";
+import * as Fa6Icons from "react-icons/fa6";
+import * as MdIcons from "react-icons/md";
+import * as RxIcons from "react-icons/rx";
+import * as SiIcons from "react-icons/si";
 
-type IconMap = Record<string, IconType>;
+const iconLibraries = {
+  ...BsIcons,
+  ...FaIcons,
+  ...Fa6Icons,
+  ...MdIcons,
+  ...RxIcons,
+  ...SiIcons,
+} as Record<string, IconType>;
 
-const iconMap: IconMap = {
-  FaPaypal: FaCcPaypal,
-  FaVenmo: FaCcVisa,
-  FaCoffee,
-  FaGithubSquare,
-  FaGoodreads,
-  FaLinkedin,
-  FaWpforms,
-  FaFlickr,
-  FaYoutube,
-  FaEnvelope,
+const iconAliases: Record<string, string> = {
+  FaPaypal: "FaCcPaypal",
+  FaVenmo: "SiVenmo",
 };
 
 export function getIcon(iconName: string): IconType | null {
-  return iconMap[iconName] || null;
+  const resolvedName = iconAliases[iconName] || iconName;
+  return iconLibraries[resolvedName] || null;
 }
