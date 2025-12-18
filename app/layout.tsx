@@ -111,6 +111,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link
+          rel="preconnect"
+          href="https://static.cloudflareinsights.com"
+          crossOrigin="anonymous"
+        />
         <link rel="preload" as="image" href="/background.avif" />
         <script
           type="application/ld+json"
