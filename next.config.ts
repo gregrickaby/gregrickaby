@@ -5,16 +5,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "github.com",
-      },
-      {
-        protocol: "https",
-        hostname: "**.githubusercontent.com",
-      },
-    ],
+    qualities: [75, 85],
   },
   experimental: {
     inlineCss: true,
@@ -28,7 +19,7 @@ const nextConfig: NextConfig = {
   redirects: async () => {
     return [
       {
-        source: "/:path*",
+        source: "/:path+",
         destination: "https://blog.gregrickaby.com/:path*",
         permanent: true,
         has: [
