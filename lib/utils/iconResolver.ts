@@ -12,6 +12,7 @@ import {
   FaSquareThreads,
   FaSquareYoutube,
 } from "react-icons/fa6";
+import { MdVerified } from "react-icons/md";
 import { SiVenmo } from "react-icons/si";
 
 const iconLibraries = {
@@ -29,6 +30,7 @@ const iconLibraries = {
   FaSquareThreads,
   FaWpforms,
   FaYoutubeSquare: FaSquareYoutube,
+  MdVerified,
   SiVenmo,
 } as Record<string, IconType>;
 
