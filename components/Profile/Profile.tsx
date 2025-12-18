@@ -16,11 +16,13 @@ export function Profile({
       <div className="relative h-40">
         <Image
           alt=""
-          role="presentation"
           className="h-full w-full rounded-t-lg object-cover"
+          height={237}
           placeholder="blur"
           priority
+          role="presentation"
           src={cover}
+          width={316}
         />
 
         <div className="avatar absolute -bottom-10 left-5">
