@@ -5,17 +5,6 @@
     dark --prefersdark;
 }
 
-body {
-  background-attachment: fixed;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url("/background.avif");
-  background-position: center;
-  background-size: cover;
-  min-height: 100vh;
-  padding: 48px;
-}
-
 h1,
 h2,
 h3,

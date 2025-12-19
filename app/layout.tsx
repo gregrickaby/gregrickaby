@@ -127,7 +127,7 @@ export default function RootLayout({
         <Umami />
       </head>
       <body
-        className={`${roboto.variable} ${robotoSlab.variable} optimize-legibility antialiased`}
+        className={`${roboto.variable} ${robotoSlab.variable} optimize-legibility min-h-screen bg-[linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url('/background.avif')] bg-cover bg-fixed bg-center p-8 antialiased lg:p-12`}
       >
         {children}
         <Suspense fallback={null}>
