@@ -20,11 +20,12 @@ export function IconModal({
   return (
     <>
       <button
+        aria-haspopup="dialog"
+        data-umami-event={`open-${modalTitle.toLowerCase().replaceAll(" ", "-")}-modal`}
         className="btn btn-outline btn-primary"
         onClick={() => {
           modalRef.current?.showModal();
         }}
-        aria-haspopup="dialog"
       >
         {buttonText}
       </button>
@@ -38,8 +39,9 @@ export function IconModal({
         <div className="modal-box">
           <form method="dialog">
             <button
-              className="btn btn-circle btn-ghost btn-sm absolute top-2 right-2"
               aria-label="Close modal"
+              className="btn btn-circle btn-ghost btn-sm absolute top-2 right-2"
+              data-umami-event={`close-${modalTitle.toLowerCase().replaceAll(" ", "-")}-modal`}
             >
               ✕
             </button>
@@ -50,22 +52,23 @@ export function IconModal({
           <div className="space-y-3">
             {items.map((item) => (
               <div
-                key={item.url}
                 className="flex items-start gap-3 rounded-lg p-3"
+                key={item.url}
               >
                 <DynamicIcon
+                  className="mt-1"
                   name={item.icon}
                   size={ICON_SIZES.default}
-                  className="mt-1"
                 />
                 <div className="flex flex-col">
                   <span className="font-medium">{item.name}</span>
                   <a
+                    aria-label={`${item.name}: ${item.url}`}
                     className="hover:link text-sm"
+                    data-umami-event={`click-${modalTitle.toLowerCase()}-${item.name.toLowerCase().replaceAll(" ", "-")}`}
                     href={item.url}
                     rel="noopener noreferrer"
                     target="_blank"
-                    aria-label={`${item.name}: ${item.url}`}
                   >
                     {item.url
                       .replace("https://", "")
@@ -78,7 +81,12 @@ export function IconModal({
           </div>
         </div>
         <form className="modal-backdrop" method="dialog">
-          <button aria-label="Close modal">close</button>
+          <button
+            aria-label="Close modal"
+            data-umami-event={`close-${modalTitle.toLowerCase().replaceAll(" ", "-")}-modal-backdrop`}
+          >
+            close
+          </button>
         </form>
       </dialog>
     </>

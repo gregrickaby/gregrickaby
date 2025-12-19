@@ -13,6 +13,7 @@ export function Footer(data: Readonly<ProfileData>) {
       <a
         aria-label="View this site's JSON data"
         className="inline-flex items-center justify-center"
+        data-umami-event="view-json-data"
         href="/data.json"
       >
         <DynamicIcon name="BsFiletypeJson" />

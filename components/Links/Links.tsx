@@ -13,6 +13,7 @@ export function Links({ links }: Readonly<LinksProps>) {
           <Fragment key={link.url}>
             <a
               className="hover:bg-base-300 -ml-2 flex items-start gap-3 rounded-lg p-2 transition"
+              data-umami-event={`click-link-${link.title.toLowerCase().replaceAll(" ", "-")}`}
               href={link.url}
               rel="noopener noreferrer"
               target="_blank"

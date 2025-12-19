@@ -1,4 +1,5 @@
 import { Footer } from "@/components/Footer";
+import { Umami } from "@/components/Umami";
 import { getProfileData } from "@/lib/services/dataService";
 import type { Metadata, Viewport } from "next";
 import { Roboto, Roboto_Slab } from "next/font/google";
@@ -86,6 +87,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const data = getProfileData();
+  const umamiUrl = process.env.UMAMI_URL || "";
   const blogUrl = data.links.find((link) => link.title === "Blog")?.url;
 
   const structuredData = {
@@ -116,11 +118,13 @@ export default function RootLayout({
           href="https://static.cloudflareinsights.com"
           crossOrigin="anonymous"
         />
+        <link rel="preconnect" href={umamiUrl} crossOrigin="anonymous" />
         <link rel="preload" as="image" href="/background.avif" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <Umami />
       </head>
       <body
         className={`${roboto.variable} ${robotoSlab.variable} optimize-legibility antialiased`}

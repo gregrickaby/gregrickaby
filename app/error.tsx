@@ -21,7 +21,11 @@ export default function ErrorPage({
             </div>
           )}
           <div className="card-actions justify-end">
-            <button className="btn btn-primary" onClick={() => reset()}>
+            <button
+              className="btn btn-primary"
+              data-umami-event="error-try-again"
+              onClick={() => reset()}
+            >
               Try again
             </button>
           </div>

@@ -46,6 +46,7 @@ export function Profile({
           </h2>
           <p className="text-base-content/70">
             <a
+              data-umami-event="click-company-link"
               href={profile.company.url}
               rel="noopener noreferrer"
               target="_blank"
@@ -69,6 +70,7 @@ export function Profile({
           {social.map((item) => (
             <a
               aria-label={item.name}
+              data-umami-event={`click-social-${item.name.toLowerCase().replaceAll(" ", "-")}`}
               href={item.url}
               key={item.url}
               rel="noopener noreferrer"
@@ -89,13 +91,13 @@ export function Profile({
 
         <div className="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
           <IconModal
-            items={contact}
             buttonText="Contact"
+            items={contact}
             modalTitle="Contact"
           />
           <IconModal
-            items={payment}
             buttonText="Payments"
+            items={payment}
             modalTitle="Payments"
           />
         </div>
