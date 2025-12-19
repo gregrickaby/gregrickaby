@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
   redirects: async () => {
     return [
       {
-        source: String.raw`/:path((?!.*\..*).*)+ `,
+        source: String.raw`/:path((?!.*\..*).*)+`,
         destination: "https://blog.gregrickaby.com/:path*",
         permanent: true,
         has: [
