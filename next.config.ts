@@ -18,18 +18,17 @@ const nextConfig: NextConfig = {
   redirects: async () => {
     return [
       {
-        source: String.raw`/:path((?!.*\..*).*)+`,
-        destination: "https://blog.gregrickaby.com/:path*",
+        source: "/:path([^.]+)",
+        destination: "https://blog.gregrickaby.com/:path",
         permanent: true,
         has: [
           {
-            type: "host" as const,
+            type: "host",
             value: "gregrickaby.com",
           },
         ],
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ] as any[];
+    ];
   },
   async headers() {
     const isDevelopment = process.env.NODE_ENV === "development";
