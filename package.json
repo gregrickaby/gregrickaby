@@ -20,7 +20,7 @@
     "react-dom": "^19.2.3",
     "react-icons": "^5.5.0",
     "theme-change": "^2.5.0",
-    "zod": "^4.2.1"
+    "zod": "^4.3.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
@@ -37,7 +37,7 @@
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.1",
     "eslint-config-prettier": "^10.1.8",
-    "jsdom": "^27.3.0",
+    "jsdom": "^27.4.0",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "rimraf": "^6.1.2",
