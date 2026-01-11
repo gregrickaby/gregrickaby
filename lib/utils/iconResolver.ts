@@ -1,6 +1,6 @@
 import type { IconType } from "react-icons";
 import { BsFiletypeJson } from "react-icons/bs";
-import { FaCoffee, FaEnvelope, FaPhone, FaWpforms } from "react-icons/fa";
+import { FaCoffee, FaEnvelope, FaPhone } from "react-icons/fa";
 import {
   FaCcPaypal,
   FaFlickr,
@@ -28,7 +28,6 @@ const iconLibraries = {
   FaLinkedin,
   FaPhone,
   FaSquareThreads,
-  FaWpforms,
   FaYoutubeSquare: FaSquareYoutube,
   MdVerified,
   SiVenmo,

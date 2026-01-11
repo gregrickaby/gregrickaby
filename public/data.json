@@ -61,11 +61,6 @@
       "icon": "FaEnvelope"
     },
     {
-      "name": "Contact Form",
-      "url": "https://blog.gregrickaby.com/contact/",
-      "icon": "FaWpforms"
-    },
-    {
       "name": "Phone",
       "url": "tel:4079063420",
       "icon": "FaPhone"
