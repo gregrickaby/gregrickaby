@@ -2,7 +2,7 @@
 
 ## Your Mission (WHY)
 
-You are working on a single page application (SPA) that displays a user's profile, links, and other social information as a "link tree clone" which is hosted on the user's homelab via Coolify using nixpacks.
+You are working on a single page application (SPA) that displays a user's profile, links, and other social information as a "link tree clone" which is hosted on Github pages.
 
 **Goal**: Clean, maintainable TypeScript code following Layered Architecture principles.
 

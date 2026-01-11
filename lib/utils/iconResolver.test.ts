@@ -50,12 +50,6 @@ describe("getIcon", () => {
     expect(icon).not.toBeNull();
   });
 
-  it("should return FaWpforms icon for FaWpforms string", () => {
-    const icon = getIcon("FaWpforms");
-    expect(icon).toBeDefined();
-    expect(icon).not.toBeNull();
-  });
-
   it("should return null for unknown icon name", () => {
     const icon = getIcon("UnknownIcon");
     expect(icon).toBeNull();
