@@ -90,19 +90,9 @@
   ],
   "links": [
     {
-      "title": "Blog",
-      "url": "https://blog.gregrickaby.com",
-      "description": "Read my latest articles and tutorials"
-    },
-    {
       "title": "Photos",
       "url": "https://www.flickr.com/photos/gregrickaby/",
       "description": "View my photography work"
-    },
-    {
-      "title": "Resume",
-      "url": "https://blog.gregrickaby.com/resume/",
-      "description": "View my resume and professional experience"
     },
     {
       "title": "Viewer for Reddit",
