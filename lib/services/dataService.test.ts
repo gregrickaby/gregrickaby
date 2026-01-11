@@ -8,6 +8,7 @@ describe("getProfileData", () => {
     expect(data).toBeDefined();
     expect(data.profile).toBeDefined();
     expect(data.links).toBeInstanceOf(Array);
+    expect(data.contact).toBeInstanceOf(Array);
     expect(data.payment).toBeInstanceOf(Array);
     expect(data.social).toBeInstanceOf(Array);
   });
@@ -18,6 +19,7 @@ describe("getProfileData", () => {
     expect(data.profile.name).toBe("Greg Rickaby");
     expect(data.profile.bio).toBeDefined();
     expect(data.profile.company.name).toBe("Mindsize");
+    expect(data.profile.company.role).toBe("Technical Lead");
     expect(data.profile.company.url).toMatch(/^https?:\/\//);
     expect(data.profile.location).toBe("Alabama");
     expect(data.profile.pronouns).toBe("He/Him");
@@ -29,7 +31,7 @@ describe("getProfileData", () => {
     expect(data.links.length).toBeGreaterThan(0);
     for (const link of data.links) {
       expect(link.title).toBeDefined();
-      expect(link.url).toMatch(/^https?:\/\//);
+      expect(link.url).toMatch(/^(https?:\/\/|\/)/);
       expect(link.description).toBeDefined();
     }
   });

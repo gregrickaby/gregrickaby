@@ -1,4 +1,5 @@
 import { Footer } from "@/components/Footer";
+import { Umami } from "@/components/Umami";
 import { getProfileData } from "@/lib/services/dataService";
 import type { Metadata, Viewport } from "next";
 import { Roboto, Roboto_Slab } from "next/font/google";
@@ -116,11 +117,17 @@ export default function RootLayout({
           href="https://static.cloudflareinsights.com"
           crossOrigin="anonymous"
         />
+        <link
+          rel="preconnect"
+          href="https://cloud.umami.is"
+          crossOrigin="anonymous"
+        />
         <link rel="preload" as="image" href="/background.avif" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <Umami />
       </head>
       <body
         className={`${roboto.variable} ${robotoSlab.variable} optimize-legibility min-h-screen bg-[linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)),url('/background.avif')] bg-cover bg-fixed bg-center p-8 antialiased lg:p-12`}

@@ -85,6 +85,11 @@
   ],
   "links": [
     {
+      "title": "Blog",
+      "url": "/blog",
+      "description": "View my blog posts"
+    },
+    {
       "title": "Photos",
       "url": "https://www.flickr.com/photos/gregrickaby/",
       "description": "View my photography work"

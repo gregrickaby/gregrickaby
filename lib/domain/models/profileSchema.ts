@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 const urlSchema = z.string().regex(/^(https?|mailto|tel):.+/);
+const urlOrPathSchema = z.string().regex(/^(https?|mailto|tel|\/)/);
 
 export const ProfileSchema = z.object({
   name: z.string().min(1),
@@ -18,7 +19,7 @@ export const ProfileSchema = z.object({
 
 export const LinkSchema = z.object({
   title: z.string().min(1),
-  url: urlSchema,
+  url: urlOrPathSchema,
   description: z.string(),
 });
 
