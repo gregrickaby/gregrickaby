@@ -1,0 +1,33 @@
+error_log "{{logs.errorLog}}";
+
+events {
+	worker_connections  1024;
+}
+
+http {
+	include includes/mime-types.conf;
+
+	server_names_hash_bucket_size 128;
+
+	client_max_body_size 1000M;
+	default_type       application/octet-stream;
+	access_log         off;
+	sendfile           off;
+	keepalive_timeout  3;
+
+	fastcgi_buffers 32 32k;
+    fastcgi_buffer_size 32k;
+    fastcgi_read_timeout 1800s;
+
+	map $http_x_forwarded_proto $resolved_scheme {
+        default "http";
+        "https" "https";
+    }
+
+	map $resolved_scheme $fastcgi_https {
+		default '';
+		https on;
+	}
+
+	include site.conf;
+}

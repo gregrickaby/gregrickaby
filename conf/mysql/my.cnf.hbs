@@ -1,0 +1,40 @@
+[mysqld]
+{{#unless os.windows}}
+skip-name-resolve
+{{/unless}}
+
+{{#if disableMysqlx}}
+mysqlx = 0
+{{/if}}
+
+datadir = {{datadir}}
+port = {{port}}
+bind-address = {{bindAddress}}
+socket = {{socket}}
+
+{{#if os.windows}}
+console
+{{/if}}
+
+# Older PHP/client compatibility
+character-set-server = utf8mb3
+
+# Fine Tuning
+performance_schema = off
+max_allowed_packet = 1G
+thread_stack = 192K
+thread_cache_size = 8
+
+# InnoDB
+innodb_buffer_pool_size = 32M
+innodb_log_file_size = 96M
+
+[client]
+{{#unless os.windows}}
+socket = {{socket}}
+{{else}}
+host = {{clientAddress}}
+port = {{port}}
+{{/unless}}
+user = root
+password = root

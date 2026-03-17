@@ -1,0 +1,5 @@
+{{! This file will not be used on Windows due to PHP-FPM not being available on Windows. }}
+[global]
+error_log = "{{phpFpm.logs.errorLog}}"
+daemonize = no
+include=php-fpm.d/*.conf
