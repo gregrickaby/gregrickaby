@@ -42,7 +42,13 @@ export function Header() {
 
           <Group hiddenFrom="sm" gap="xs">
             <SearchButton />
-            <Burger opened={opened} onClick={toggle} />
+            <Burger
+              aria-label={
+                opened ? 'Close navigation menu' : 'Open navigation menu'
+              }
+              opened={opened}
+              onClick={toggle}
+            />
           </Group>
         </Group>
       </Container>

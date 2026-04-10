@@ -55,6 +55,7 @@ export function Article({meta, content}: Readonly<ArticleProps>) {
           <Image
             alt={meta.title}
             height={450}
+            priority
             src={featuredImage}
             style={{width: '100%', height: 'auto'}}
             width={800}

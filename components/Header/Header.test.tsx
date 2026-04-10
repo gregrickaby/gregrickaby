@@ -70,21 +70,15 @@ describe('Header', () => {
 
   it('renders the mobile menu burger button', () => {
     render(<Header />)
-    const buttons = screen.getAllByRole('button')
-    // Burger is the button without an aria-label (Mantine Burger)
-    const burger = buttons.find((b) =>
-      b.classList.toString().includes('Burger')
-    )
-    expect(burger).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', {name: 'Open navigation menu'})
+    ).toBeInTheDocument()
   })
 
   it('opens mobile drawer on burger click', async () => {
     const user = userEvent.setup()
     render(<Header />)
-    const buttons = screen.getAllByRole('button')
-    const burger = buttons.find((b) =>
-      b.classList.toString().includes('Burger')
-    )!
+    const burger = screen.getByRole('button', {name: 'Open navigation menu'})
     await user.click(burger)
     // Drawer should now contain nav links (duplicated from desktop nav)
     const aboutLinks = screen.getAllByRole('link', {name: 'About'})

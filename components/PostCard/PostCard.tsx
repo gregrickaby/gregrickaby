@@ -7,9 +7,10 @@ import styles from './PostCard.module.css'
 
 interface PostCardProps {
   post: PostMeta
+  priority?: boolean
 }
 
-export function PostCard({post}: Readonly<PostCardProps>) {
+export function PostCard({post, priority = false}: Readonly<PostCardProps>) {
   const featuredImage = getFeaturedImagePath(post)
   const href = `/${post.slug}`
 
@@ -20,7 +21,8 @@ export function PostCard({post}: Readonly<PostCardProps>) {
           <AppLink href={href} aria-label={post.title}>
             <Image
               alt={post.title}
-              loading="lazy"
+              loading={priority ? 'eager' : 'lazy'}
+              priority={priority}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               src={featuredImage}
@@ -29,7 +31,7 @@ export function PostCard({post}: Readonly<PostCardProps>) {
           </AppLink>
         </Box>
       )}
-      <Title order={3} mt="md" mb="xs">
+      <Title order={2} mt="md" mb="xs">
         <AppLink href={href}>{post.title}</AppLink>
       </Title>
       {post.description && (

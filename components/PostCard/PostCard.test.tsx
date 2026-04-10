@@ -31,7 +31,7 @@ describe('PostCard', () => {
   it('renders the post title as a link', () => {
     render(<PostCard post={post} />)
     const heading = screen.getByRole('heading', {
-      level: 3,
+      level: 2,
       name: 'My Test Post'
     })
     const link = within(heading).getByRole('link')

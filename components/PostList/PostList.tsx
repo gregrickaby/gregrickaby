@@ -14,7 +14,7 @@ export function PostList({posts}: Readonly<PostListProps>) {
     <>
       <SimpleGrid cols={{base: 1, sm: 2}} spacing="xl" mb="xl">
         {featured.map((post) => (
-          <PostCard key={post.slug} post={post} />
+          <PostCard key={post.slug} post={post} priority />
         ))}
       </SimpleGrid>
       {rest.length > 0 && (
