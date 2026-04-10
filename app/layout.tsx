@@ -1,4 +1,5 @@
 import {cssVariablesResolver, theme} from '@/app/theme'
+import {Analytics} from '@/components/Analytics/Analytics'
 import {Footer} from '@/components/Footer/Footer'
 import {Header} from '@/components/Header/Header'
 import {ScrollToTop} from '@/components/ScrollToTop/ScrollToTop'
@@ -96,6 +97,11 @@ export default function RootLayout({
   const posts = getAllPosts()
   const webSiteGraph = buildWebSiteGraph()
 
+  const analyticsEnabled =
+    process.env.NODE_ENV === 'production' &&
+    !!process.env.ANALYTICS_ID &&
+    !!process.env.ANALYTICS_SCRIPT_URL
+
   return (
     <html
       className={`${sans.variable} ${serif.variable} ${mono.variable}`}
@@ -124,6 +130,11 @@ export default function RootLayout({
           <ScrollToTop />
           <Footer />
         </MantineProvider>
+        <Analytics
+          enabled={analyticsEnabled}
+          scriptUrl={process.env.ANALYTICS_SCRIPT_URL}
+          websiteId={process.env.ANALYTICS_ID}
+        />
       </body>
     </html>
   )
