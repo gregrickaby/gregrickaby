@@ -1,0 +1,75 @@
+.articleContent {
+  font-family: var(--mantine-font-family-headings);
+  font-size: var(--mantine-font-size-xl);
+}
+
+/* Single images: center when alone in a paragraph */
+.articleContent p:has(> img:only-child) img,
+.articleContent p:has(> a:only-child > img) img {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Gallery grid: multiple images in a paragraph (before and after Fancybox wrapping) */
+.articleContent p:has(> img ~ img),
+.articleContent p:has(> a:has(> img) ~ a:has(> img)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.5rem;
+  margin-block: 1.5rem;
+}
+
+.articleContent p:has(> img ~ img) img,
+.articleContent p:has(> a:has(> img) ~ a:has(> img)) img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--mantine-radius-md);
+  transition: transform 0.2s ease;
+}
+
+.articleContent p:has(> img ~ img) img:hover,
+.articleContent p:has(> a:has(> img) ~ a:has(> img)) img:hover {
+  transform: scale(1.03);
+}
+
+/* All images in article content are clickable to open in lightbox */
+.articleContent img {
+  box-shadow: var(--mantine-shadow-xl);
+  border-radius: var(--mantine-radius-md);
+  cursor: zoom-in;
+}
+
+/* Code blocks */
+.articleContent pre {
+  background-color: var(--mantine-color-dark-8);
+  border: 1px solid var(--mantine-color-dark-4);
+  border-radius: var(--mantine-radius-md);
+  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
+  margin-block: var(--mantine-spacing-lg);
+  overflow-x: auto;
+  tab-size: 2;
+}
+
+.articleContent pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-gray-2);
+  font-family: var(--mantine-font-family-monospace);
+  line-height: 1.7;
+  white-space: pre;
+}
+
+/* Inline code */
+.articleContent :not(pre) > code {
+  background-color: var(--mantine-color-dark-6);
+  border: 1px solid var(--mantine-color-dark-4);
+  border-radius: var(--mantine-radius-sm);
+  padding: 0.15em 0.4em;
+  font-size: 0.875em;
+  font-family: var(--mantine-font-family-monospace);
+  color: var(--mantine-color-teal-4);
+}

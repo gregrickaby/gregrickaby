@@ -1,0 +1,7 @@
+.bannerText {
+  align-items: center;
+  color: white;
+  display: flex;
+  font-weight: bold;
+  height: 40px;
+}

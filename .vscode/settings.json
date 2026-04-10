@@ -17,9 +17,5 @@
       "source.organizeImports": "explicit"
     }
   },
-  "cSpell.words": [],
-  "sonarlint.connectedMode.project": {
-    "connectionId": "http-localhost-9000",
-    "projectKey": "viewer-for-reddit"
-  }
+  "cSpell.words": []
 }

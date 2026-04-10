@@ -1,0 +1,8 @@
+.link {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+}
+
+.link:hover {
+  text-decoration: underline;
+}

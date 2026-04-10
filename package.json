@@ -1,0 +1,72 @@
+{
+  "name": "gregrickaby",
+  "version": "7.0.0",
+  "private": true,
+  "description": "My personal website",
+  "scripts": {
+    "build": "node --experimental-strip-types --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/generate-feed.ts && next build",
+    "dev": "rimraf .next && next dev --experimental-https",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "start": "next start",
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "validate": "tsc --noEmit && npm run lint && npm run format && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregrickaby/gregrickaby.git"
+  },
+  "author": "Greg Rickaby",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gregrickaby/gregrickaby/issues"
+  },
+  "homepage": "https://gregrickaby.com",
+  "dependencies": {
+    "@fancyapps/ui": "^6.1.13",
+    "@mantine/core": "^9.0.1",
+    "@mantine/hooks": "^9.0.1",
+    "@mantine/spotlight": "^9.0.1",
+    "@tabler/icons-react": "^3.41.1",
+    "next": "^16.2.3",
+    "nodemailer": "^8.0.5",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "remark-gfm": "^4.0.1",
+    "sanitize-html": "^2.17.2"
+  },
+  "devDependencies": {
+    "@evilmartians/lefthook": "^2.1.5",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^25.6.0",
+    "@types/nodemailer": "^8.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/sanitize-html": "^2.16.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/coverage-v8": "^4.1.4",
+    "@vitest/ui": "^4.1.4",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "^9",
+    "eslint-config-mantine": "^4.0.3",
+    "eslint-config-next": "^16.2.3",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jest-dom": "^5.5.0",
+    "eslint-plugin-testing-library": "^7.16.2",
+    "gray-matter": "^4.0.3",
+    "jsdom": "^29.0.2",
+    "postcss": "^8.5.9",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
+    "prettier": "^3.8.2",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
+    "rimraf": "^6.1.3",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.4"
+  }
+}

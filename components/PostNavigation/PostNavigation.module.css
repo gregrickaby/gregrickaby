@@ -1,0 +1,8 @@
+.navLink {
+  max-width: 45%;
+  display: block;
+}
+
+.navGroup {
+  border-top: 1px solid var(--mantine-color-default-border);
+}

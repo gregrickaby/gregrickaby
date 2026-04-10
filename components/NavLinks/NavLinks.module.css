@@ -1,0 +1,7 @@
+.navLink {
+  font-size: var(--mantine-font-size-md);
+}
+
+.navLink:hover {
+  text-decoration: underline;
+}

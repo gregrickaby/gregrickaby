@@ -1,0 +1,127 @@
+---
+title: "Displaying EXIF Data in WordPress"
+slug: "displaying-exif-data-in-wordpress"
+date: "2020-06-24T09:22:00"
+modified: "2022-12-28T20:39:46"
+type: "post"
+description: "How to display EXIF data (aperture, ISO, shutter speed, focal length) from your WordPress media library using a simple shortcode."
+featuredImage: "./DSC7244-jpg.webp"
+categories: ["Code"]
+tags: ["wordpress"]
+---
+
+Over the last 6-months, I've taken a half-dozen or so courses on LinkedIn Learning read a couple of books, and spent countless hours taking photos trying to level up my skills as a [very amateur photographer](https://gregrickaby.com/category/photos).
+
+For me, the technical side of photography is a lot of fun; so when I'm admiring people's work, I love to look at the technical details behind a photograph. Such as *aperture*, *ISO*, and *shutter speed* (also known as the [exposure triangle](https://photo.stackexchange.com/a/12441)) as a beginner, these details are just as interesting as the photo itself.
+
+The standard for saving all kinds of technical details inside a JPG image is called, "Exchangeable Image File Format" — or [EXIF](https://en.wikipedia.org/wiki/Exif) for short. I'll show you how to quickly display some of those details using a WordPress shortcode.
+
+## Preface
+
+Before I get into how to display the EXIF data, first we need to talk about image compression on the web. [It's kind of a big deal](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/image-optimization) and is a billion-dollar business.
+
+In an effort to achieve perfect scores on [Google PageSpeed](https://developers.google.com/speed/pagespeed/insights/), Web developers will often smush out every byte of data from their codebase, including images. Often a developer will rely on a 3rd party image compression service like Cloudinary, [re.Smush.it](https://resmush.it/), or Ewww. Well, what's the first thing those image compression services do? Strip out any EXIF data for an easy win.
+
+**TL;DR: If you want to share and display EXIF data, you may need to tell your photo editor and any image-smushing services to preserve it.**
+
+![re.Smush.it options page showing the "Keep EXIF data" setting](./screenschot-of-resmushit-options-page.webp)
+
+Make sure your images have EXIF data to begin with.
+
+## WordPress plays nice with EXIF, mostly
+
+When you upload a JPG to WordPress, it will scan and save *most* EXIF data as post meta. No plugin or configuration is *needed*!
+
+![WordPress database showing EXIF data saved as attachment post meta](./screenshot-of-wordpress-database-with-attachment-meta.webp)
+
+EXIF data is stored as post meta in the WordPress database.
+
+WordPress doesn't save all the data though, it ignores both *Location* and *Lens* data. Displaying the EXIF data is a bit more complicated than just clicking "upload" though. Let's move on…
+
+## Finding the EXIF data in the database
+
+Because WordPress saves this as post meta, you can use the `get_post_meta()` function to grab it, *if* you know the image ID. One simple way to find the ID is by opening any image in the Media Library, and looking at your web browser's address bar:
+
+![WordPress Media Library with the image ID visible in the browser address bar](./screenshot-of-item-id-in-address-bar.webp)
+
+The image ID is can be located in the address bar.
+
+Once you have the image ID, you could grab the data:
+
+```php
+$data = get_post_meta( '22579', '_wp_attachment_metadata' );
+```
+
+Which would return:
+
+```text
+Array
+(
+    [0] => Array
+        (
+            [width]  => 2048
+            [height] => 1412
+            [file]   => 2020/06/P1150618.jpg
+            [image_meta] => Array
+                (
+                    [aperture]          => 5.6
+                    [camera]            => DMC-G81
+                    [created_timestamp] => 1592060239
+                    [focal_length]      => 109
+                    [iso]               => 3200
+                    [shutter_speed]     => 0.01
+                )
+        )
+)
+```
+
+Now that you have an array of data, you could use PHP [array destructuring](https://stitcher.io/blog/array-destructuring-with-list-in-php) to both pluck *and* set your data variables at the same time:
+
+```php
+// Destructure image meta array, and set variables.
+[
+    'aperture'          => $aperture,
+    'camera'            => $camera,
+    'created_timestamp' => $timestamp,
+    'focal_length'      => $focal_length,
+    'iso'               => $iso,
+    'shutter_speed'     => $shutter_speed,
+] = $data[0]['image_meta'];
+```
+
+Now that you have the data, you could display it with:
+
+```php
+<?php echo esc_html( $camera ); ?>
+```
+
+## Shortcode
+
+I built a very simple shortcode to display EXIF data. The [code is available on Github](https://github.com/gregrickaby/wordpress-display-exif) and you're free to fork (or contribute) and use however you'd like.
+
+The shortcode is super simple and displays *Timestamp*, *Camera*, *Aperture*, *ISO*, *Shutter Speed*, and *Focal Length*. Because WordPress doesn't save *Location* or *Lens* information, you would have to pass that in yourself using arguments. Here's the basic usage:
+
+```text
+[exif id="12345" location="Enterprise, AL" lens="Panasonic Lumix G Vario 45-150mm"]
+```
+
+ Which would display this:
+
+![Frontend output of the EXIF shortcode showing camera, aperture, ISO, shutter speed, and focal length](./screenshot-of-shortcode-on-frontend.webp)
+
+EXIF data from one of the images on this website.
+
+## Bonus: Browser Extensions
+
+There are a couple of browser extensions that display EXIF data
+
+- [Exify](https://addons.mozilla.org/en-US/firefox/addon/exify/) (Firefox)
+- [Exif Viewer Classic](https://chrome.google.com/webstore/detail/exif-viewer-classic/nafpfdcmppffipmhcpkbplhkoiekndck) (Chrome)
+There's also a JavaScript library for reading EXIF data, and claims to be the fastest and most versatile way to do it:
+
+- [Exifr](https://github.com/MikeKovarik/exifr) (Github)
+## Wrap up
+
+EXIF data can be helpful for budding photographers like me. It's interesting to see what type of gear photographers use, and how they composed their photos using the exposure triangle.
+
+I hope you find [the shortcode](https://github.com/gregrickaby/wordpress-display-exif) helpful!

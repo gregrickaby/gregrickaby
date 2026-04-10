@@ -1,0 +1,116 @@
+---
+title: "Resume"
+slug: "resume"
+date: "2024-07-18T21:50:53"
+modified: "2025-12-03T13:03:50"
+type: "page"
+description: "Learn more about my career history, side hustles and contributions to society."
+---
+
+### Technical Lead **[Mindsize](https://mindsize.com) (Remote)** — *February 2024 – Present*
+
+Leading a remote team building scalable, accessible web applications with Next.js, TypeScript, backed by modern testing tools.
+
+- Lead and mentor a high-performing agile web development team, promoting collaboration, accountability, and continuous improvement.
+- Translate complex design and product requirements into performant, scalable solutions using Next.js and TypeScript.
+- Drive cross-functional alignment with designers, product owners, architects, and engineering managers to ensure cohesive delivery.
+- Oversee the full development lifecycle with a strong focus on quality, maintainability, and long-term scalability.
+- Establish and enforce coding standards, testing practices, and documentation workflows using tools like Vitest, Playwright, and Storybook.
+
+**Tech Stack & Skills:**
+Team Leadership · TypeScript · Next.js · Tailwind CSS · Vitest · Playwright · Storybook · GraphQL · REST APIs · Node.js · Agile/Scrum
+
+### Team Lead **WPForms.com (Remote)** — *May 2023 – January 2024*
+
+Led development and team growth at WPForms.com, driving platform improvements and engineering efforts to boost performance, user experience, and sales conversions.
+
+- Collaborated with the engineering manager, product owner, and cross-functional teams to guide and maintain the wpforms.com marketing platform.
+- Led front-end and back-end development with a strong focus on optimizing site performance and improving conversion rates.
+- Provided technical leadership and mentorship, delivering constructive feedback and conducting performance reviews to support team growth.
+- Ensured clean, maintainable code across the stack using PHP, JavaScript, and modern WordPress practices.
+
+**Tech Stack & Skills:**
+Team Leadership · WordPress Development · Conversion Optimization · PHP · JavaScript · CSS · REST APIs · Node.js · Employee Coaching · Performance Management
+
+### Technical Lead **Americaneagle.com (Remote)** — *May 2022 – April 2023*
+
+Led web projects for clients using WordPress and React, while supporting sales efforts and promoting innovation through internal training and R&D.
+
+- Collaborated with clients and internal teams to deliver custom websites using WordPress, React, and Next.js.
+- Partnered with the business development team on technical scoping and sales proposals.
+- Led internal knowledge-sharing initiatives, including Lunch & Learns and R&D projects focused on modern frameworks and frontend tooling.
+- Championed emerging technologies and ensured the team stayed current with evolving web standards.
+
+**Tech Stack & Skills:**
+Project Leadership · WordPress · React · Next.js · TypeScript · Tailwind CSS · Technical Scoping · Client Collaboration
+
+### Director of Engineering **WebDevStudios (Remote)** — *May 2013 – May 2022*
+
+Directed engineering operations and strategy at WebDevStudios, supporting cross-department goals, technical leadership, and high-profile client delivery.
+
+- Led engineering department operations, including staffing, team wellness, policy creation, and continuing education.
+- Developed technical roadmaps and strategic goals to align engineering efforts with company objectives.
+- Collaborated across departments—supporting Project Management with resource planning and Business Development with technical estimates and solutions engineering.
+- Advised the CEO and COO on execution strategies, and occasionally led projects for high-value clients to ensure technical excellence.
+
+**Tech Stack & Skills:**
+Leadership · Engineering Strategy · Team Development · Interviewing · Constructive Feedback · WordPress · Next.js · TypeScript · Tailwind CSS · Cross-Functional Collaboration
+
+### Chief Engineer **Bluewater Broadcasting – Montgomery, AL** — *January 2010 – May 2013*
+
+Primary engineer for a multi-station radio group, overseeing all technical systems, FCC compliance, and digital platforms—CBT certified.
+
+- Responsible for all technical operations across multiple radio stations, including studios, IT infrastructure, networking, and on-air automation systems.
+- Ensured 24/7 broadcast reliability and maintained full FCC compliance, including EAS, public files, and technical documentation.
+- Managed station websites and social media to support audience engagement and digital growth.
+- Served as the primary technical contact for all regulatory, infrastructure, and emergency operations.
+- Held Certified Broadcast Technologist (CBT) certification from the Society of Broadcast Engineers.
+
+**Skills:**
+FCC Compliance · Broadcast Engineering · IT Infrastructure · Networking · Automation Systems · WordPress · Project Management · CBT Certification
+
+### Chief Engineer **Gulf South Communications – Dothan, AL** — *September 2002 – December 2009*
+
+Served as the sole broadcast engineer for multiple stations, managing all technical systems, automation, and digital infrastructure.
+
+- Responsible for all technical operations across multiple radio stations, including studio equipment, IT infrastructure, networking, and automation systems.
+- Maintained on-air reliability and managed preventative maintenance for studio and transmitter sites.
+- Supported and maintained station websites and digital infrastructure to enhance online presence.
+- Played a key role in technology strategy, system upgrades, and operational continuity across all stations.
+
+**Skills:**
+Broadcast Engineering · IT Infrastructure · Networking · Automation Systems · WordPress · Project Management · Strategic Planning
+
+### Webmaster **Midwest Communications – Wausau, WI** — *June 1999 – September 2002*
+
+Managed country station websites using a custom CMS—writing content, creating graphics, handling photography, and serving as the go-to for Program Directors.
+
+- Managed websites for all country-formatted stations using a custom-built CMS, handling daily updates, promotional content, and design assets.
+- Created original graphics, wrote content, and provided event photography to support station branding and audience engagement.
+- Acted as the primary point of contact for all Program Directors, responding quickly to content needs, promotions, and special requests.
+- Maintained and enhanced site functionality using HTML, CSS, and ASP in an early-era web environment.
+
+**Tech Stack & Skills:**
+Content Creation · Graphic Design · Photography · Custom CMS · HTML · CSS · ASP · Cross-Department Collaboration · Organizational Support
+
+View all my experiences on [LinkedIn](https://www.linkedin.com/in/gregrickaby/) and my code on [GitHub](https://github.com/gregrickaby).
+
+## Other Experience
+
+### Author
+
+In 2017, I wrote a children's book titled [***Creating a Website for Dummies Jr***](https://amzn.to/41eZFfF) which Wiley Global published under the [dummies™️](https://www.dummies.com/) brand.
+
+The book guides young readers through the planning and development processes of building a website. It has been translated into 2 other languages and currently has a 4.5-star rating on Amazon.
+
+Since being published, I've also served as the Technical Editor on three other books:
+
+- *[WordPress for Dummies](https://amzn.to/44EeXgy)* (Sabin-Wilson, 2021)
+- *[Professional WordPress Plugin Development](https://amzn.to/3VN8f3Z)* (Williams et al., 2020)
+- *[WordPress All-In-One For Dummies](https://amzn.to/3B37BG8)* (Sabin-Wilson, 2019)
+
+### Contributor
+
+I was part of the WordPress community from 2008-2023. During that time, I made contributions to core, documentation, plugins, and themes. I've also spoken at WordCamps and meet-ups. I also enjoy contributing to Next.js, Storybook, and other open-source projects.
+
+Outside of tech, I've volunteered my time and efforts at local community organizations. Boy Scouts, Wiregrass Church, and the local High School Band Boosters to name a few.
