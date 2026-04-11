@@ -2,24 +2,8 @@ import type {NextConfig} from 'next'
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
-  images: {
-    contentDispositionType: 'inline',
-    formats: ['image/avif', 'image/webp'],
-    qualities: [80]
-  },
   experimental: {
-    inlineCss: true,
-    prefetchInlining: true,
-    appNewScrollHandler: true,
-    optimizePackageImports: [
-      '@mantine/core',
-      '@mantine/hooks',
-      '@mantine/spotlight',
-      '@tabler/icons-react'
-    ],
-    sri: {
-      algorithm: 'sha256'
-    }
+    cssChunking: true
   },
   logging: {
     fetches: {
