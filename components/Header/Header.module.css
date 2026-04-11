@@ -1,7 +1,74 @@
-.bannerText {
+.header {
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+  box-shadow: var(--mantine-shadow-sm);
+  padding: var(--mantine-spacing-md);
+  position: sticky;
+  top: 0;
+  transition: padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: var(--mantine-z-index-app);
+}
+
+.scrolled {
+  padding: var(--mantine-spacing-xs);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.inner {
   align-items: center;
-  color: white;
   display: flex;
-  font-weight: bold;
-  height: 40px;
+  justify-content: space-between;
+}
+
+.logo {
+  align-items: center;
+  display: flex;
+  gap: var(--mantine-spacing-sm);
+}
+
+.avatar {
+  border-radius: 100%;
+}
+
+.title {
+  font-size: var(--mantine-h3-font-size);
+}
+
+.nav {
+  align-items: center;
+  display: flex;
+  gap: var(--mantine-spacing-lg);
+}
+
+.actions {
+  align-items: center;
+  display: flex;
+  gap: var(--mantine-spacing-md);
+}
+
+.mobile {
+  align-items: center;
+  display: flex;
+  gap: var(--mantine-spacing-xs);
+}
+
+@media (max-width: 768px) {
+  .nav,
+  .actions {
+    display: none;
+  }
+
+  .mobile {
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile {
+    display: none;
+  }
 }

@@ -4,5 +4,6 @@
 }
 
 .link:hover {
+  color: var(--mantine-primary-color-6);
   text-decoration: underline;
 }

@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.card a:hover {
+  color: var(--mantine-primary-color-6);
+}
+
 .imageWrapper {
   height: 200px;
   position: relative;

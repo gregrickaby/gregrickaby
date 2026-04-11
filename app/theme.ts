@@ -1,6 +1,23 @@
 'use client'
 
-import {createTheme, CSSVariablesResolver} from '@mantine/core'
+import {
+  createTheme,
+  CSSVariablesResolver,
+  MantineColorsTuple
+} from '@mantine/core'
+
+const tomato: MantineColorsTuple = [
+  '#fff0e4',
+  '#ffe0cf',
+  '#fac0a1',
+  '#f69e6e',
+  '#f28043',
+  '#f06e27',
+  '#f06418',
+  '#d6530c',
+  '#bf4906',
+  '#a73c00'
+]
 
 export const cssVariablesResolver: CSSVariablesResolver = () => ({
   variables: {},
@@ -12,10 +29,12 @@ export const cssVariablesResolver: CSSVariablesResolver = () => ({
 })
 
 export const theme = createTheme({
-  primaryColor: 'blue',
-  fontFamily: 'var(--font-sans), sans;',
+  colors: {tomato},
+  primaryColor: 'tomato',
+  primaryShade: {light: 5, dark: 6},
+  fontFamily: 'var(--font-sans), sans-serif',
   fontSizes: {md: '18px'},
   headings: {
-    fontFamily: 'var(--font-serif), sans-serif'
+    fontFamily: 'var(--font-serif), serif'
   }
 })

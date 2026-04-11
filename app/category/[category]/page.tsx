@@ -48,7 +48,7 @@ export default async function CategoryPage({
 
   return (
     <>
-      <Title order={1} mb="xl">
+      <Title order={1} mb="xl" ta="center">
         Category: {decoded}
       </Title>
       <PostList posts={posts} />

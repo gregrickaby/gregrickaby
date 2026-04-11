@@ -1,7 +1,11 @@
 .navLink {
+  color: var(--mantine-color-text);
   font-size: var(--mantine-font-size-md);
+  scale: 100%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navLink:hover {
-  text-decoration: underline;
+  color: var(--mantine-primary-color-5);
+  scale: 105%;
 }

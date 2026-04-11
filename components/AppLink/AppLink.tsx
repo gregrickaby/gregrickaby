@@ -11,7 +11,7 @@ type AppLinkProps = ComponentPropsWithoutRef<typeof NextLink>
 export function AppLink({className, ...props}: Readonly<AppLinkProps>) {
   return (
     <NextLink
-      className={[classes.root, className].filter(Boolean).join(' ')}
+      className={[classes.appLink, className].filter(Boolean).join(' ')}
       {...props}
     />
   )

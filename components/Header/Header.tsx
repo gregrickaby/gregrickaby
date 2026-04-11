@@ -6,42 +6,47 @@ import {MobileDrawer} from '@/components/MobileDrawer/MobileDrawer'
 import {NavLinks} from '@/components/NavLinks/NavLinks'
 import {SearchButton} from '@/components/Search/Search'
 import {siteConfig} from '@/lib/config'
-import {Burger, Container, Group, Title, VisuallyHidden} from '@mantine/core'
-import {useDisclosure} from '@mantine/hooks'
+import {Burger, Title, VisuallyHidden} from '@mantine/core'
+import {useDisclosure, useWindowScroll} from '@mantine/hooks'
 import Image from 'next/image'
+import styles from './Header.module.css'
 
 export function Header() {
   const [opened, {toggle, close}] = useDisclosure(false)
+  const [{y}] = useWindowScroll()
+  const scrolled = y > 50
 
   return (
-    <header>
-      <Container py="xl">
-        <Group justify="space-between">
+    <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
+      <div className={styles.container}>
+        <div className={styles.inner}>
           <AppLink href="/">
-            <Group gap="sm">
+            <div className={styles.logo}>
               <Image
                 alt={siteConfig.name}
-                height={64}
+                height={40}
                 priority
                 src="/avatar.jpg"
-                style={{borderRadius: '100%'}}
-                width={64}
+                width={40}
+                className={styles.avatar}
               />
-              <Title order={1} size="h2">
+              <Title order={1} size="h3" className={styles.title}>
                 {siteConfig.name}
               </Title>
               <VisuallyHidden>{siteConfig.description}</VisuallyHidden>
-            </Group>
+            </div>
           </AppLink>
 
-          <Group gap="lg" visibleFrom="sm">
+          <div className={styles.nav}>
             <NavLinks />
+          </div>
+
+          <div className={styles.actions}>
             <SearchButton />
             <ColorSchemeToggle />
-          </Group>
+          </div>
 
-          <Group hiddenFrom="sm" gap="xs">
-            <SearchButton />
+          <div className={styles.mobile}>
             <Burger
               aria-label={
                 opened ? 'Close navigation menu' : 'Open navigation menu'
@@ -49,10 +54,10 @@ export function Header() {
               opened={opened}
               onClick={toggle}
             />
-          </Group>
-        </Group>
-      </Container>
-      <MobileDrawer opened={opened} onClose={close} />
+          </div>
+        </div>
+      </div>
+      <MobileDrawer opened={opened} onClose={close} scrollY={y} />
     </header>
   )
 }

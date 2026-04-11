@@ -46,7 +46,7 @@ export default async function TagPage({
 
   return (
     <>
-      <Title order={1} mb="xl">
+      <Title order={1} mb="xl" ta="center">
         Tag: {decoded}
       </Title>
       <PostList posts={posts} />

@@ -33,13 +33,11 @@ describe('NavLinks', () => {
     )
   })
 
-  it('applies the size style prop to each link', () => {
-    render(<NavLinks size="lg" />)
+  it('applies the correct styles to each link', () => {
+    render(<NavLinks />)
     const links = screen.getAllByRole('link')
     for (const link of links) {
-      expect(link).toHaveStyle({
-        fontSize: 'var(--mantine-font-size-lg)'
-      })
+      expect(link.className).toContain('navLink')
     }
   })
 

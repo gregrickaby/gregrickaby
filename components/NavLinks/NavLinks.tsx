@@ -4,18 +4,16 @@ import classes from './NavLinks.module.css'
 
 interface NavLinksProps {
   onClick?: () => void
-  size?: string
 }
 
-export function NavLinks({onClick, size = 'md'}: Readonly<NavLinksProps>) {
+export function NavLinks({onClick}: Readonly<NavLinksProps>) {
   return (
     <>
       {siteConfig.nav.map((link) => (
         <AppLink
-          key={link.href}
-          href={link.href}
           className={classes.navLink}
-          style={{fontSize: `var(--mantine-font-size-${size})`}}
+          href={link.href}
+          key={link.href}
           onClick={onClick}
         >
           {link.label}

@@ -55,11 +55,17 @@
 }
 
 .tag {
-  background: var(--mantine-color-default);
+  background-color: var(--mantine-primary-color-light);
   border: 1px solid var(--mantine-color-default-border);
   border-radius: var(--mantine-radius-sm);
+  color: var(--mantine-primary-color-filled);
   font-size: var(--mantine-font-size-xs);
   font-weight: 600;
   padding: 2px 10px;
   text-transform: uppercase;
+}
+
+.tag:hover {
+  background-color: var(--mantine-primary-color-light-hover);
+  border-color: var(--mantine-primary-color-filled);
 }
