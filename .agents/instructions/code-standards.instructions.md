@@ -139,7 +139,7 @@ No semicolons, single quotes, trailing commas (es5). Run `npm run format` to app
 
 - Secrets in `.env.local` only — never commit them
 - Server-only secrets must not use `NEXT_PUBLIC_` prefix
-- `dangerouslySetInnerHTML` is only in `Article.tsx` with sanitized input — do not add new usages
+- `dangerouslySetInnerHTML` is only in `ArticleContent.tsx` with sanitized input — do not add new usages
 - Run `npm audit` periodically; address critical/high vulnerabilities
 
 ## Completion

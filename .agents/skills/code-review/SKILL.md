@@ -33,7 +33,7 @@ Goal: verify adherence to [code-standards.instructions.md](../../instructions/co
 ### Security
 
 - [ ] No secrets in source; server-only vars avoid `NEXT_PUBLIC_`
-- [ ] `dangerouslySetInnerHTML` limited to `Article.tsx` with sanitized output
+- [ ] `dangerouslySetInnerHTML` limited to `ArticleContent.tsx` with sanitized output
 - [ ] `npm audit` clean
 
 ### Code Quality

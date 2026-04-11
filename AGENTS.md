@@ -44,7 +44,7 @@ Deployed on Coolify via nixpacks (Node 24). No `output: 'export'`.
 - Use Mantine primitives (`Container`, `Stack`, `Group`, `SimpleGrid`); CSS modules for styles
 - Use `<AppLink>` and `next/image` — never plain `<a>` or `<img>`
 - Secrets in `.env.local` only; no `NEXT_PUBLIC_` prefix for server-only secrets
-- `dangerouslySetInnerHTML` only in `Article.tsx` with sanitized input
+- `dangerouslySetInnerHTML` only in `ArticleContent.tsx` with sanitized input
 - Vitest globals enabled — do not import `describe`, `it`, `expect`; use custom `render` from `test-utils/`; mock `lib/content.ts`
 
 ## Code Style
