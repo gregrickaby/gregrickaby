@@ -1,71 +1,57 @@
 # Project Guidelines
 
-Personal blog. Built with Next.js 16 App Router, React 19, Mantine 9, and TypeScript. Content is Markdown files on disk — no database, no API routes.
+Personal blog. Next.js 16 App Router, React 19, Mantine 9, TypeScript. Markdown content on disk — no database, no API routes.
 
-# Next.js: ALWAYS read docs before coding
-
-Before any Next.js work, find and read the relevant doc in `node_modules/next/dist/docs/`. Your training data is outdated — the docs are the source of truth.
-
-# Mantine UI: ALWAYS read docs before coding
-
-Before any Mantine work, find and read the relevat doc at https://mantine.dev/llms.txt. Your training data is outdate - the docs are the source of truth.
-
-## Build and Test
+## Run
 
 ```bash
-npm run dev          # Start dev server (clears .next, uses HTTPS)
-npm run build        # Generate RSS feed, then Next.js production build
-npm run test         # Vitest with v8 coverage (single run)
-npm run test:watch   # Vitest in watch mode
-npm run validate     # tsc + lint + format + test — run before marking any task complete
+npm run dev          # Dev server (clears .next, HTTPS)
+npm run build        # RSS feed + production build
+npm run test         # Vitest + coverage
+npm run validate     # tsc + lint + format + test
 ```
 
-Pre-commit hooks (via lefthook) auto-run ESLint and Prettier on staged files.
+## Docs First
+
+Before any Next.js or Mantine work, read the relevant docs — training data is outdated.
+
+- **Next.js:** `node_modules/next/dist/docs/`
+- **Mantine:** https://mantine.dev/llms.txt
 
 ## Architecture
 
 ```
-app/              # App Router pages and layouts (server components by default)
-components/       # Reusable UI components, each with .tsx + .module.css + .test.tsx
+app/              # App Router pages/layouts (server components by default)
+components/       # UI components — each has .tsx + .module.css + .test.tsx
 lib/
-  content.ts      # Server-only: reads Markdown from disk via fs — never import in client components
-  types.ts        # Shared types safe for both server and client
-  config.ts       # siteConfig constants (nav, URL, author)
-  utils.ts        # Utility functions
+  content.ts      # Server-only: reads Markdown via fs — never import in client code
+  types.ts        # Shared types (safe for server and client)
+  config.ts       # siteConfig constants
   hooks/          # Custom React hooks (client-side only)
-public/content/   # Markdown content co-located with images
+public/content/   # Markdown + co-located images
   posts/<slug>/content.md
   pages/<slug>/content.md
-scripts/          # Build-time scripts (generate RSS feed)
-test-utils/       # Custom RTL render wrapper (includes MantineProvider)
+scripts/          # Build-time scripts (RSS feed)
+test-utils/       # Custom RTL render wrapper (MantineProvider)
 ```
 
 Deployed on Coolify via nixpacks (Node 24). No `output: 'export'`.
 
-## Conventions
+## Key Rules
 
-**Server vs. client:** All components are server components by default. Add `'use client'` only when using Mantine hooks, React state, effects, or browser APIs. Never import `lib/content.ts` in a client component.
-
-**Content:** Posts and pages live at `public/content/{posts|pages}/<slug>/content.md` with gray-matter frontmatter matching `PostMeta` in `lib/types.ts`. Images are co-located in the same folder. Do not hand-edit `public/feed.xml` — it is generated at build time.
-
-**UI:** Use Mantine layout primitives (`Container`, `Stack`, `Group`, `SimpleGrid`) over custom CSS. Mantine components are client-only. Use CSS modules for styles and limit inline style props to 3-4 single-property overrides. Use `<AppLink>` for all links — never plain `<a>` or Mantine `<Anchor>`.
-
-**Images:** Use `next/image` for all images. Reference post images with `getFeaturedImagePath(slug, filename)` from `lib/types.ts`.
-
-**Testing:** Every component and page needs a `.test.tsx` file. Vitest globals are enabled — do not import `describe`, `it`, `expect`, or `vi`. Always use the custom `render` from `test-utils/`, not the one from `@testing-library/react`. Mock `lib/content.ts` in tests.
-
-**TypeScript:** No `any`. Prefer `interface` for objects, `type` for unions. No plain `.js`/`.jsx` in `app/`, `components/`, or `lib/`.
-
-**Security:** Secrets go in `.env.local` only. No `NEXT_PUBLIC_` prefix for server-only secrets. `dangerouslySetInnerHTML` is used in `Article.tsx` with sanitized input — do not add new usages without sanitizing first.
+- Server components by default; `'use client'` only for Mantine hooks, state, effects, browser APIs
+- Never import `lib/content.ts` in client code — it uses `fs` and throws at runtime
+- Use Mantine primitives (`Container`, `Stack`, `Group`, `SimpleGrid`); CSS modules for styles
+- Use `<AppLink>` and `next/image` — never plain `<a>` or `<img>`
+- Secrets in `.env.local` only; no `NEXT_PUBLIC_` prefix for server-only secrets
+- `dangerouslySetInnerHTML` only in `Article.tsx` with sanitized input
+- Vitest globals enabled — do not import `describe`, `it`, `expect`; use custom `render` from `test-utils/`; mock `lib/content.ts`
 
 ## Code Style
 
-No semicolons, single quotes, trailing commas (es5). Run `npm run format` to apply. See `.github/instructions/code-standards.instructions.md` for full standards.
+No semicolons, single quotes, trailing commas (es5). Run `npm run format` to apply.
 
-## Writing Style
+## References
 
-Prose style rules for conversation, code comments, and blog post editing. See `.github/instructions/writing-style.instructions.md for full instructions.
-
-## Validation
-
-Before declaring any task complete, you must run `npm run validate`. All linting and tests must pass.
+- Code standards: `.agents/instructions/code-standards.instructions.md`
+- Writing style: `.agents/instructions/writing-style.instructions.md`

@@ -1,0 +1,151 @@
+---
+description: 'Code standards and best practices for the Next.js 16 + Mantine 9 personal blog project.'
+applyTo: '**/*.tsx,**/*.ts,**/*.jsx,**/*.js,**/*.mjs,**/*.css,**/*.md'
+---
+
+# Code Standards
+
+## Project Structure
+
+```
+app/                  # App Router pages and layouts
+components/           # Reusable UI components
+  Header/
+    Header.tsx
+    Header.module.css
+    Header.test.tsx
+lib/
+  content.ts          # Server-only: reads Markdown via fs
+  types.ts            # Shared types (safe for server and client)
+  config.ts           # siteConfig constants
+  hooks/              # Custom React hooks (client-side only)
+public/content/       # Markdown content with co-located images
+  <slug>/content.md
+scripts/              # Build-time scripts (generate-feed.mjs)
+test-utils/           # Custom RTL render wrapper with MantineProvider
+```
+
+- Do not create a `src/` directory
+- Place component tests and CSS modules beside the component file
+
+## Server vs. Client Components
+
+- All components are server components by default
+- Add `'use client'` only when a component uses Mantine hooks, React state, effects, or browser APIs
+- **Never import `lib/content.ts` in a client component** — it uses `fs` and throws at runtime
+- Use `lib/types.ts` for types shared across both boundaries
+
+## Routing and Pages
+
+- All pages live in `app/<route>/page.tsx`
+- Every page must export `generateMetadata()` for SEO
+- Dynamic post pages use `generateStaticParams()` to pre-render all slugs
+- Do not create API routes — this is a content blog with no backend
+- Do not configure `output: 'export'`
+
+## Mantine 9 UI
+
+- Use Mantine layout primitives (`Container`, `Stack`, `Group`, `SimpleGrid`) over custom CSS
+- Do not import from `@mantine/core` in server components — Mantine components are client-only
+- Use CSS modules for styles; limit style props to 3-4 single-property overrides
+- Always use the `tomato` theme for colors. Avoid `gray`.
+
+## CSS Modules
+
+- No hardcoded color values (e.g., `#292929`); use Mantine variables or CSS custom properties
+- Use `light-dark()` for colors that must adapt: `color: light-dark(var(--mantine-color-gray-700), var(--mantine-color-gray-300))`
+- Avoid variables that don't adapt to light/dark mode
+- Properties in alphabetical order
+
+## Images and Links
+
+- Use `next/image` for all images — never `<img>`
+- Use `<AppLink>` for all links — never plain `<a>` or Mantine `<Anchor>`
+
+## Content
+
+- Posts/pages live at `public/content/{posts,pages}/<slug>/content.md`
+- Frontmatter fields are defined by `PostMeta` in `lib/types.ts` — do not add undeclared fields
+- Do not hand-edit `public/feed.xml` — it is generated at build time
+
+## Naming Conventions
+
+| Thing                 | Convention                 | Example           |
+| --------------------- | -------------------------- | ----------------- |
+| Directories           | `kebab-case`               | `fun-stuff/`      |
+| Component files       | `PascalCase`               | `PostCard.tsx`    |
+| Utility/lib files     | `camelCase`                | `content.ts`      |
+| Constants             | `UPPER_SNAKE_CASE`         | `SITE_URL`        |
+| Variables & functions | `camelCase`                | `getAllPosts()`   |
+| Types & interfaces    | `PascalCase`               | `PostMeta`        |
+| Test files            | match source + `.test.tsx` | `Header.test.tsx` |
+
+## TypeScript
+
+- Use `interface` for object types; `type` for unions and utility types
+- No `any` — use `unknown` and narrow
+- Explicit types for public-facing functions in `lib/`
+- All interfaces, components, and functions must have full JSDoc comments including parameter and return types.
+
+```ts
+/**
+ * Props for the PostPagination component.
+ */
+interface PostPaginationProps {
+  /* Total number of posts for pagination. */
+  total: number
+  /* Current page number (1-based index). */
+  current: number
+  /* Optional. Number of posts per page. */
+  baseUrl?: string
+}
+
+/**
+ * Get all posts from the content directory.
+ *
+ * @returns An array of post metadata objects.
+ */
+export function getAllPosts(): PostMeta[] {
+  // ...
+}
+
+/**
+ * Component for rendering pagination controls on the posts listing page.
+ *
+ * @param props - The props for the PostPagination component.
+ * @returns A React element representing the pagination controls.
+ */
+export default function PostPagination({
+  total,
+  current,
+  baseUrl = '/posts'
+}: PostPaginationProps) {
+  // ...
+}
+```
+
+## Testing
+
+- Vitest globals enabled — do not import `describe`, `it`, `expect`, or `vi`
+- Always use the custom `render` from `test-utils/`, not `@testing-library/react` directly
+- Mock `lib/content.ts` — never read the filesystem in a test
+- Aim for 100% coverage on new code
+
+## Code Style
+
+No semicolons, single quotes, trailing commas (es5). Run `npm run format` to apply.
+
+## Security
+
+- Secrets in `.env.local` only — never commit them
+- Server-only secrets must not use `NEXT_PUBLIC_` prefix
+- `dangerouslySetInnerHTML` is only in `Article.tsx` with sanitized input — do not add new usages
+- Run `npm audit` periodically; address critical/high vulnerabilities
+
+## Completion
+
+Run `npm run validate` before marking any task complete. Check SonarQube for issues triggered by your code.
+
+```
+
+```
