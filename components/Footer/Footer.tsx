@@ -3,6 +3,12 @@ import {siteConfig} from '@/lib/config'
 import {Container, Group, Stack, Text} from '@mantine/core'
 import classes from './Footer.module.css'
 
+/**
+ * Site footer component displaying the copyright notice, license info,
+ * and social links (GitHub and LinkedIn).
+ *
+ * @returns A React element with the site footer.
+ */
 export function Footer() {
   return (
     <footer>

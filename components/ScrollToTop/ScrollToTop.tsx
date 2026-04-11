@@ -4,6 +4,12 @@ import {ActionIcon, Affix, Transition} from '@mantine/core'
 import {useWindowScroll} from '@mantine/hooks'
 import {IconArrowUp} from '@tabler/icons-react'
 
+/**
+ * A floating button that appears when the user scrolls down and scrolls
+ * smoothly back to the top when clicked.
+ *
+ * @returns A React element with the scroll-to-top button.
+ */
 export function ScrollToTop() {
   const [scroll, scrollTo] = useWindowScroll()
 

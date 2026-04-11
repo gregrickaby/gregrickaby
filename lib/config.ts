@@ -1,3 +1,9 @@
+/**
+ * Site-wide configuration constants including the site name, description,
+ * URL, author details, and navigation links.
+ *
+ * @constant
+ */
 export const siteConfig = {
   name: 'Greg Rickaby',
   description:

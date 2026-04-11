@@ -7,6 +7,9 @@ type AppLinkProps = ComponentPropsWithoutRef<typeof NextLink>
 /**
  * A styled wrapper around `next/link` that inherits the current text color
  * and removes the default underline decoration. Accepts all `next/link` props.
+ *
+ * @param props - The props for the AppLink component.
+ * @returns A React element with the styled link.
  */
 export function AppLink({className, ...props}: Readonly<AppLinkProps>) {
   return (

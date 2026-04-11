@@ -4,11 +4,25 @@ import {Group, Stack, Text} from '@mantine/core'
 import {IconArrowLeft, IconArrowRight} from '@tabler/icons-react'
 import classes from './PostNavigation.module.css'
 
+/**
+ * Props for the PostNavigation component.
+ *
+ * @interface
+ */
 interface PostNavigationProps {
+  /** The previous post (newer), or null if this is the oldest post. */
   prev: PostMeta | null
+  /** The next post (older), or null if this is the newest post. */
   next: PostMeta | null
 }
 
+/**
+ * Navigation component showing links to the previous and next posts.
+ * Renders nothing if both prev and next are null.
+ *
+ * @param props - The props for the PostNavigation component.
+ * @returns A React element with the navigation links, or null.
+ */
 export function PostNavigation({prev, next}: Readonly<PostNavigationProps>) {
   if (!prev && !next) return null
 

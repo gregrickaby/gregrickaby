@@ -23,6 +23,12 @@ const HOW_CAN_I_HELP_OPTIONS = [
   {value: 'other', label: 'Other'}
 ]
 
+/**
+ * Contact form component with fields for name, email, how you can help,
+ * and message. Uses a server action to send the email.
+ *
+ * @returns A React element with the contact form.
+ */
 export function ContactForm() {
   const [state, formAction, pending] = useActionState(
     sendContactEmail,

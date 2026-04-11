@@ -11,6 +11,13 @@ import {useDisclosure, useWindowScroll} from '@mantine/hooks'
 import Image from 'next/image'
 import styles from './Header.module.css'
 
+/**
+ * Site header component with navigation, search, and color scheme toggle.
+ * Displays the site logo, navigation links, and action buttons.
+ * On mobile, shows a hamburger menu that opens the mobile drawer.
+ *
+ * @returns A React element with the site header.
+ */
 export function Header() {
   const [opened, {toggle, close}] = useDisclosure(false)
   const [{y}] = useWindowScroll()

@@ -92,17 +92,34 @@ async function getContentBySlug(
   }
 }
 
-/** Fetches a post by its slug, returning null when not found. Results are memoized per request. */
+/**
+ * Fetches a post by its slug, returning null when not found.
+ * Results are memoized per request.
+ *
+ * @param slug - The URL-safe slug of the post to fetch.
+ * @returns The post data including metadata and rendered content, or null if not found.
+ */
 export const getPostBySlug = cache(
   async (slug: string): Promise<Post | null> => getContentBySlug(slug, 'post')
 )
 
-/** Fetches a page by its slug, returning null when not found. Results are memoized per request. */
+/**
+ * Fetches a page by its slug, returning null when not found.
+ * Results are memoized per request.
+ *
+ * @param slug - The URL-safe slug of the page to fetch.
+ * @returns The page data including metadata and rendered content, or null if not found.
+ */
 export const getPageBySlug = cache(
   async (slug: string): Promise<Post | null> => getContentBySlug(slug, 'page')
 )
 
-/** Returns all post metadata sorted by date descending. Results are memoized per request. */
+/**
+ * Returns all post metadata sorted by date descending.
+ * Results are memoized per request.
+ *
+ * @returns An array of post metadata objects sorted newest first.
+ */
 export const getAllPosts = cache((): PostMeta[] => {
   const postsDir = path.join(contentDir, 'posts')
   if (!fs.existsSync(postsDir)) return []
@@ -125,7 +142,12 @@ export const getAllPosts = cache((): PostMeta[] => {
   return posts
 })
 
-/** Returns posts matching a given tag (case-insensitive). */
+/**
+ * Returns posts matching a given tag (case-insensitive).
+ *
+ * @param tag - The tag to filter posts by.
+ * @returns An array of post metadata matching the tag.
+ */
 export function getPostsByTag(tag: string): PostMeta[] {
   const lower = tag.toLowerCase()
   return getAllPosts().filter((p) =>
@@ -133,7 +155,12 @@ export function getPostsByTag(tag: string): PostMeta[] {
   )
 }
 
-/** Returns posts matching a given category (case-insensitive). */
+/**
+ * Returns posts matching a given category (case-insensitive).
+ *
+ * @param category - The category to filter posts by.
+ * @returns An array of post metadata matching the category.
+ */
 export function getPostsByCategory(category: string): PostMeta[] {
   const lower = category.toLowerCase()
   return getAllPosts().filter((p) =>
@@ -141,7 +168,11 @@ export function getPostsByCategory(category: string): PostMeta[] {
   )
 }
 
-/** Returns all unique tags across all posts, sorted alphabetically. */
+/**
+ * Returns all unique tags across all posts, sorted alphabetically.
+ *
+ * @returns An array of unique tag strings.
+ */
 export function getAllTags(): string[] {
   const tags = new Set<string>()
   for (const post of getAllPosts()) {
@@ -152,7 +183,11 @@ export function getAllTags(): string[] {
   return [...tags].sort((a, b) => a.localeCompare(b))
 }
 
-/** Returns all unique categories across all posts, sorted alphabetically. */
+/**
+ * Returns all unique categories across all posts, sorted alphabetically.
+ *
+ * @returns An array of unique category strings.
+ */
 export function getAllCategories(): string[] {
   const categories = new Set<string>()
   for (const post of getAllPosts()) {

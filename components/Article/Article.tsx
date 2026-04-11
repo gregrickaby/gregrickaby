@@ -10,11 +10,25 @@ import {Box, Group, Text, Title, Typography} from '@mantine/core'
 import Image from 'next/image'
 import styles from './Article.module.css'
 
+/**
+ * Props for the Article component.
+ *
+ * @interface
+ */
 interface ArticleProps {
+  /** The post metadata. */
   meta: PostMeta
+  /** The rendered HTML content. */
   content: string
 }
 
+/**
+ * Full article component rendering a post or page including its title,
+ * metadata, featured image, content, and tags.
+ *
+ * @param props - The props for the Article component.
+ * @returns A React element with the full article.
+ */
 export function Article({meta, content}: Readonly<ArticleProps>) {
   const featuredImage = getFeaturedImagePath(meta)
   const firstContentImage = getFirstContentImageSrc(content)
