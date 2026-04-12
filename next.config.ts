@@ -5,11 +5,6 @@ const nextConfig: NextConfig = {
   experimental: {
     cssChunking: true
   },
-  logging: {
-    fetches: {
-      fullUrl: true
-    }
-  },
   // 301 redirects for old WordPress URLs and other legacy paths.
   async redirects() {
     return [

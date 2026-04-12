@@ -25,8 +25,12 @@ scripts/              # Build-time scripts (generate-feed.mjs)
 test-utils/           # Custom RTL render wrapper with MantineProvider
 ```
 
-- Do not create a `src/` directory
 - Place component tests and CSS modules beside the component file
+
+## Helper/Utility Functions
+
+- All helper/utility functions must be in `lib/`. Never place alongside components or pages.
+- All functions in `lib/` must have explicit TypeScript return types and JSDoc comments along with tests.
 
 ## Server vs. Client Components
 
@@ -131,10 +135,6 @@ export default function PostPagination({
 - Mock `lib/content.ts` — never read the filesystem in a test
 - Aim for 100% coverage on new code
 
-## Code Style
-
-No semicolons, single quotes, trailing commas (es5). Run `npm run format` to apply.
-
 ## Security
 
 - Secrets in `.env.local` only — never commit them
@@ -142,10 +142,6 @@ No semicolons, single quotes, trailing commas (es5). Run `npm run format` to app
 - `dangerouslySetInnerHTML` is only in `ArticleContent.tsx` with sanitized input — do not add new usages
 - Run `npm audit` periodically; address critical/high vulnerabilities
 
-## Completion
+## Task Completion
 
-Run `npm run validate` before marking any task complete. Check SonarQube for issues triggered by your code.
-
-```
-
-```
+Run `npm run validate` before marking any task complete. Check SonarQube for IDE tool issues triggered by your code.

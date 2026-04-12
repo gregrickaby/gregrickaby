@@ -48,6 +48,13 @@ Deployed on Coolify via nixpacks (Node 24). No `output: 'export'`.
 - Vitest globals enabled — do not import `describe`, `it`, `expect`; use custom `render` from `test-utils/`; mock `lib/content.ts`
 - Never commit or push changes on the developer's behalf
 
+## Task Completion
+
+Before declaring a task complete:
+
+1. Run `npm run validate`
+2. No SonarQube for IDE tool issues
+
 ## References
 
 - Code standards: `.agents/instructions/code-standards.instructions.md`
