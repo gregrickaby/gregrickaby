@@ -60,19 +60,32 @@ export function ContactForm() {
         {!state.success && (
           <form action={formAction}>
             <Stack>
-              <TextInput label="Name" name="name" required />
-              <TextInput label="Email" name="email" type="email" required />
+              <TextInput
+                label="Name"
+                name="name"
+                placeholder="Jane Doe"
+                required
+              />
+              <TextInput
+                label="Email"
+                name="email"
+                placeholder="jane.doe@email.com"
+                required
+                type="email"
+              />
               <Select
+                data={HOW_CAN_I_HELP_OPTIONS}
                 label="How Can I Help?"
                 name="howCanIHelp"
-                data={HOW_CAN_I_HELP_OPTIONS}
+                placeholder="Select an option from the list"
                 required
               />
               <Textarea
-                label="Message"
-                name="message"
-                minRows={5}
                 autosize
+                label="Message"
+                minRows={5}
+                name="message"
+                placeholder="Your message"
                 required
               />
               <Button type="submit" loading={pending}>
