@@ -1,6 +1,7 @@
 .articleContent {
   font-family: var(--mantine-font-family-headings);
   font-size: var(--mantine-font-size-xl);
+  word-wrap: break-word;
 }
 
 /* Single images: center when alone in a paragraph */
