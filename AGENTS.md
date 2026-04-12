@@ -46,10 +46,7 @@ Deployed on Coolify via nixpacks (Node 24). No `output: 'export'`.
 - Secrets in `.env.local` only; no `NEXT_PUBLIC_` prefix for server-only secrets
 - `dangerouslySetInnerHTML` only in `ArticleContent.tsx` with sanitized input
 - Vitest globals enabled — do not import `describe`, `it`, `expect`; use custom `render` from `test-utils/`; mock `lib/content.ts`
-
-## Code Style
-
-No semicolons, single quotes, trailing commas (es5). Run `npm run format` to apply.
+- Never commit or push changes on the developer's behalf
 
 ## References
 
