@@ -43,7 +43,7 @@ function formatShutterSpeed(exposure: number): string {
 function fixMojibake(str: string): string {
   if (!/[\x80-\xff]/.test(str)) return str
   try {
-    const bytes = new Uint8Array([...str].map((c) => c.charCodeAt(0)))
+    const bytes = new Uint8Array([...str].map((c) => c.codePointAt(0) ?? 0))
     return new TextDecoder('utf-8', {fatal: true}).decode(bytes)
   } catch {
     return str
@@ -61,6 +61,66 @@ function titleFromFilename(filename: string): string {
     .replace(/\.\w+$/, '')
     .replaceAll(/[-_]/g, ' ')
     .replaceAll(/\b\w/g, (c) => c.toUpperCase())
+}
+
+/**
+ * Derives a camera display name from EXIF Make and Model fields.
+ *
+ * @param exif - The parsed EXIF data record, or null.
+ * @returns A camera string like "Canon EOS R5", or undefined when unavailable.
+ */
+function buildCameraString(
+  exif: Record<string, unknown> | null
+): string | undefined {
+  if (!exif?.Model) return undefined
+  const make = typeof exif.Make === 'string' ? exif.Make.trim() : ''
+  const model = typeof exif.Model === 'string' ? exif.Model.trim() : ''
+  return model.toLowerCase().startsWith(make.toLowerCase())
+    ? model
+    : `${make} ${model}`
+}
+
+/**
+ * Extracts GPS coordinates from parsed EXIF data.
+ *
+ * @param exif - The parsed EXIF data record, or null.
+ * @returns A GpsCoordinates object, or undefined when GPS data is absent.
+ */
+function extractGps(exif: Record<string, unknown> | null): PhotoMeta['gps'] {
+  if (!exif) return undefined
+  const {latitude, longitude} = exif
+  if (typeof latitude !== 'number' || typeof longitude !== 'number')
+    return undefined
+  return {latitude, longitude}
+}
+
+/**
+ * Extracts IPTC title and caption strings from parsed EXIF data.
+ * Falls back to a title derived from the filename when IPTC data is absent.
+ *
+ * @param exif - The parsed EXIF data record, or null.
+ * @param filename - The image filename, used as a title fallback.
+ * @returns An object with title and optional caption strings.
+ */
+function parseIptcMeta(
+  exif: Record<string, unknown> | null,
+  filename: string
+): {title: string; caption: string | undefined} {
+  const iptcTitle =
+    exif?.ObjectName ?? exif?.title ?? exif?.Title ?? exif?.Headline
+  const title =
+    typeof iptcTitle === 'string' && iptcTitle
+      ? fixMojibake(iptcTitle)
+      : titleFromFilename(filename)
+
+  const rawCaption =
+    exif?.Caption ?? exif?.['Caption-Abstract'] ?? exif?.ImageDescription
+  const caption =
+    typeof rawCaption === 'string' && rawCaption
+      ? fixMojibake(rawCaption)
+      : undefined
+
+  return {title, caption}
 }
 
 /**
@@ -99,40 +159,9 @@ async function readPhotoMeta(
     // Some images may not have EXIF data.
   }
 
-  // Build camera string from Make + Model.
-  let camera: string | undefined
-  if (exif?.Model) {
-    const make = String(exif.Make ?? '').trim()
-    const model = String(exif.Model).trim()
-    // Many camera models already include the make name.
-    camera = model.toLowerCase().startsWith(make.toLowerCase())
-      ? model
-      : `${make} ${model}`
-  }
-
-  // IPTC title (ObjectName) or XMP title.
-  const iptcTitle =
-    exif?.ObjectName ?? exif?.title ?? exif?.Title ?? exif?.Headline
-  const title = iptcTitle
-    ? fixMojibake(String(iptcTitle))
-    : titleFromFilename(filename)
-
-  // IPTC caption.
-  const rawCaption =
-    exif?.Caption ?? exif?.['Caption-Abstract'] ?? exif?.ImageDescription
-  const caption = rawCaption ? fixMojibake(String(rawCaption)) : undefined
-
-  // GPS coordinates.
-  let gps: PhotoMeta['gps']
-  if (
-    typeof exif?.latitude === 'number' &&
-    typeof exif?.longitude === 'number'
-  ) {
-    gps = {
-      latitude: exif.latitude as number,
-      longitude: exif.longitude as number
-    }
-  }
+  const camera = buildCameraString(exif)
+  const {title, caption} = parseIptcMeta(exif, filename)
+  const gps = extractGps(exif)
 
   return {
     filename,
@@ -141,23 +170,23 @@ async function readPhotoMeta(
     width,
     height,
     camera,
-    lens: exif?.LensModel ? String(exif.LensModel) : undefined,
+    lens: typeof exif?.LensModel === 'string' ? exif.LensModel : undefined,
     aperture:
       typeof exif?.FNumber === 'number'
-        ? formatAperture(exif.FNumber as number)
+        ? formatAperture(exif.FNumber)
         : undefined,
     shutterSpeed:
       typeof exif?.ExposureTime === 'number'
-        ? formatShutterSpeed(exif.ExposureTime as number)
+        ? formatShutterSpeed(exif.ExposureTime)
         : undefined,
-    iso: exif?.ISO ? String(exif.ISO) : undefined,
+    iso: typeof exif?.ISO === 'number' ? String(exif.ISO) : undefined,
     focalLength:
       typeof exif?.FocalLength === 'number'
-        ? `${Math.round(exif.FocalLength as number)}mm`
+        ? `${Math.round(exif.FocalLength)}mm`
         : undefined,
     dateTaken:
       exif?.DateTimeOriginal instanceof Date
-        ? (exif.DateTimeOriginal as Date).toISOString()
+        ? exif.DateTimeOriginal.toISOString()
         : undefined,
     gps
   }
