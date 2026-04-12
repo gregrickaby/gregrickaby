@@ -1,4 +1,4 @@
-import type {PostMeta} from './types'
+import type {PhotoMeta, PostMeta} from './types'
 
 /**
  * Decodes numeric HTML entities (e.g. `&#38;` → `&`) in a string.
@@ -111,4 +111,43 @@ export function escapeHtml(value: string): string {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#x27;')
+}
+
+/**
+ * Builds a Fancybox caption HTML string for a photo, combining an optional
+ * IPTC caption with a summary of EXIF settings.
+ *
+ * @param photo - The photo metadata.
+ * @returns An HTML string suitable for the `data-caption` attribute.
+ */
+export function buildPhotoCaption(photo: PhotoMeta): string {
+  const parts: string[] = []
+
+  if (photo.caption) parts.push(photo.caption)
+
+  const exifParts: string[] = []
+  if (photo.camera) exifParts.push(photo.camera)
+  if (photo.lens) exifParts.push(photo.lens)
+  if (photo.focalLength) exifParts.push(photo.focalLength)
+  if (photo.aperture) exifParts.push(photo.aperture)
+  if (photo.shutterSpeed) exifParts.push(photo.shutterSpeed)
+  if (photo.iso) exifParts.push(`ISO ${photo.iso}`)
+
+  if (exifParts.length > 0) parts.push(exifParts.join(' · '))
+
+  return parts.join('<br />')
+}
+
+/**
+ * Formats an ISO date string into a short human-readable date for photo cards.
+ *
+ * @param dateString - An ISO 8601 date string (e.g. `'2024-06-01T00:00:00Z'`).
+ * @returns A formatted string such as `'Jun 1, 2024'`.
+ */
+export function formatPhotoDate(dateString: string): string {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  }).format(new Date(dateString))
 }

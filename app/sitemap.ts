@@ -40,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6
     },
     {
+      url: `${siteConfig.url}/photos`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6
+    },
+    {
       url: `${siteConfig.url}/fun-stuff`,
       lastModified: new Date(),
       changeFrequency: 'monthly',

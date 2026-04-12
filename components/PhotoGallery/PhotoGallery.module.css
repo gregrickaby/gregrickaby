@@ -1,0 +1,16 @@
+.gallery {
+  column-count: 3;
+  column-gap: var(--mantine-spacing-md);
+}
+
+@media (max-width: 62em) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 36em) {
+  .gallery {
+    column-count: 1;
+  }
+}

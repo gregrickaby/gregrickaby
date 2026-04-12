@@ -1,7 +1,9 @@
 import type {PostMeta} from './types'
 import {
+  buildPhotoCaption,
   decodeEntities,
   escapeHtml,
+  formatPhotoDate,
   formatPostDate,
   getCaption,
   getFeaturedImagePath,
@@ -196,5 +198,68 @@ describe('resolveImagePaths', () => {
   it('leaves absolute src attributes unchanged', () => {
     const html = '<img src="https://example.com/photo.jpg" />'
     expect(resolveImagePaths(html, 'my-post', 'post')).toBe(html)
+  })
+})
+
+describe('formatPhotoDate', () => {
+  it('formats an ISO date string with abbreviated month', () => {
+    expect(formatPhotoDate('2024-06-01T12:00:00Z')).toBe('Jun 1, 2024')
+  })
+
+  it('formats a different date correctly', () => {
+    expect(formatPhotoDate('2000-01-15T12:00:00Z')).toBe('Jan 15, 2000')
+  })
+})
+
+describe('buildPhotoCaption', () => {
+  it('returns an empty string when photo has no caption or EXIF', () => {
+    expect(
+      buildPhotoCaption({
+        filename: 'test.jpg',
+        title: 'Test',
+        width: 800,
+        height: 600
+      })
+    ).toBe('')
+  })
+
+  it('returns just the caption when there is no EXIF data', () => {
+    expect(
+      buildPhotoCaption({
+        filename: 'test.jpg',
+        title: 'Test',
+        width: 800,
+        height: 600,
+        caption: 'A scenic view'
+      })
+    ).toBe('A scenic view')
+  })
+
+  it('returns just the EXIF summary when there is no caption', () => {
+    expect(
+      buildPhotoCaption({
+        filename: 'test.jpg',
+        title: 'Test',
+        width: 800,
+        height: 600,
+        camera: 'Sony A7 IV',
+        aperture: 'f/2.8',
+        iso: '400'
+      })
+    ).toBe('Sony A7 IV · f/2.8 · ISO 400')
+  })
+
+  it('joins caption and EXIF summary with a line break', () => {
+    expect(
+      buildPhotoCaption({
+        filename: 'test.jpg',
+        title: 'Test',
+        width: 800,
+        height: 600,
+        caption: 'Golden hour',
+        camera: 'Canon R5',
+        shutterSpeed: '1/500s'
+      })
+    ).toBe('Golden hour<br />Canon R5 · 1/500s')
   })
 })

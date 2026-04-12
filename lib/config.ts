@@ -17,9 +17,10 @@ export const siteConfig = {
   },
   nav: [
     {label: 'About', href: '/about'},
-    {label: 'Resume', href: '/resume'},
     {label: 'Contact', href: '/contact'},
     {label: 'Fun Stuff', href: '/fun-stuff'},
+    {label: 'Photos', href: '/photos'},
+    {label: 'Resume', href: '/resume'},
     {label: 'RSS', href: '/feed.xml', external: true}
   ]
 } as const

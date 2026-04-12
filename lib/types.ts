@@ -54,3 +54,49 @@ export interface ContactFormState {
  * @constant
  */
 export const INITIAL_STATE: ContactFormState = {success: false, error: null}
+
+/**
+ * GPS coordinates for a photo.
+ *
+ * @interface
+ */
+export interface GpsCoordinates {
+  /** Latitude in decimal degrees. */
+  latitude: number
+  /** Longitude in decimal degrees. */
+  longitude: number
+}
+
+/**
+ * Metadata for a photo in the /photos gallery, derived from EXIF/IPTC data.
+ *
+ * @interface
+ */
+export interface PhotoMeta {
+  /** The image filename (e.g. "sunset.jpg"). */
+  filename: string
+  /** The photo title from IPTC ObjectName, or a formatted version of the filename. */
+  title: string
+  /** Optional. The caption/description from IPTC Caption-Abstract. */
+  caption?: string
+  /** Image width in pixels. */
+  width: number
+  /** Image height in pixels. */
+  height: number
+  /** Optional. Camera make and model (e.g. "Canon EOS R5"). */
+  camera?: string
+  /** Optional. Lens model (e.g. "RF 70-200mm F2.8L IS USM"). */
+  lens?: string
+  /** Optional. Aperture f-stop value (e.g. "f/2.8"). */
+  aperture?: string
+  /** Optional. Shutter speed (e.g. "1/250s"). */
+  shutterSpeed?: string
+  /** Optional. ISO sensitivity (e.g. "400"). */
+  iso?: string
+  /** Optional. Focal length (e.g. "200mm"). */
+  focalLength?: string
+  /** Optional. Date the photo was taken (ISO 8601). */
+  dateTaken?: string
+  /** Optional. GPS coordinates. */
+  gps?: GpsCoordinates
+}

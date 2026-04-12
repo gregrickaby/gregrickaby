@@ -28,8 +28,8 @@ describe('sitemap.ts', () => {
     const {default: sitemap} = await import('./sitemap')
     const result = sitemap()
 
-    // Should have home + about + resume + contact + fun-stuff + 2 posts = 7 entries
-    expect(result).toHaveLength(7)
+    // Should have home + about + resume + contact + photos + fun-stuff + 2 posts = 8 entries
+    expect(result).toHaveLength(8)
 
     // First entry is the home page
     expect(result[0]).toMatchObject({
@@ -55,18 +55,24 @@ describe('sitemap.ts', () => {
       priority: 0.6
     })
 
-    // Fifth entry is the fun-stuff page
+    // Fifth entry is the photos page
     expect(result[4]).toMatchObject({
+      url: 'https://gregrickaby.com/photos',
+      priority: 0.6
+    })
+
+    // Sixth entry is the fun-stuff page
+    expect(result[5]).toMatchObject({
       url: 'https://gregrickaby.com/fun-stuff',
       priority: 0.6
     })
 
     // Post entries
-    expect(result[5]).toMatchObject({
+    expect(result[6]).toMatchObject({
       url: 'https://gregrickaby.com/first-post',
       priority: 0.7
     })
-    expect(result[6]).toMatchObject({
+    expect(result[7]).toMatchObject({
       url: 'https://gregrickaby.com/second-post',
       priority: 0.7
     })
