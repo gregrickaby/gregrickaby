@@ -47,4 +47,17 @@ describe('NavLinks', () => {
     screen.getByRole('link', {name: 'About'}).click()
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
+
+  it('opens external links in a new tab with noopener noreferrer', () => {
+    render(<NavLinks />)
+    const rssLink = screen.getByRole('link', {name: 'RSS'})
+    expect(rssLink).toHaveAttribute('target', '_blank')
+    expect(rssLink).toHaveAttribute('rel', 'noopener noreferrer')
+  })
+
+  it('does not open internal links in a new tab', () => {
+    render(<NavLinks />)
+    const aboutLink = screen.getByRole('link', {name: 'About'})
+    expect(aboutLink).not.toHaveAttribute('target', '_blank')
+  })
 })

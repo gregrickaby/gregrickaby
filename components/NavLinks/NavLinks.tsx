@@ -28,6 +28,9 @@ export function NavLinks({onClick}: Readonly<NavLinksProps>) {
           href={link.href}
           key={link.href}
           onClick={onClick}
+          {...('external' in link && link.external
+            ? {target: '_blank', rel: 'noopener noreferrer'}
+            : {})}
         >
           {link.label}
         </AppLink>
