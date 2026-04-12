@@ -29,7 +29,7 @@ function getAllPostMeta() {
 
   return slugs
     .map((slug) => {
-      const filePath = join(postsDir, slug, 'content.md')
+      const filePath = join(postsDir, slug, 'content.mdx')
       if (!existsSync(filePath)) return null
       const {data} = matter(readFileSync(filePath, 'utf-8'))
       return data

@@ -5,8 +5,103 @@
     <link>https://gregrickaby.com</link>
     <description>Alabama-based software engineer, self-taught photographer, and published author.</description>
     <language>en-US</language>
-    <lastBuildDate>Sat, 11 Apr 2026 23:50:14 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2026 15:59:39 GMT</lastBuildDate>
     <atom:link href="https://gregrickaby.com/feed.xml" rel="self" type="application/rss+xml"/>
-
+    <item>
+      <title><![CDATA[The Moons of 2023]]></title>
+      <link>https://gregrickaby.com/the-moons-of-2023</link>
+      <guid isPermaLink="true">https://gregrickaby.com/the-moons-of-2023</guid>
+      <pubDate>Thu, 11 Jan 2024 22:13:21 GMT</pubDate>
+      <description><![CDATA[I tried to take a photo of the moon each month in 2023. Was I able to do it?]]></description>
+      <category><![CDATA[Blog]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Brightening the Frame: How Gain Maps Elevate HDR Photography]]></title>
+      <link>https://gregrickaby.com/how-gain-maps-elevate-hdr-photography</link>
+      <guid isPermaLink="true">https://gregrickaby.com/how-gain-maps-elevate-hdr-photography</guid>
+      <pubDate>Fri, 27 Oct 2023 20:00:00 GMT</pubDate>
+      <description><![CDATA[A look at how Gain Maps work, how Adobe Lightroom's HDR workflow enables true High Dynamic Range exports, and real-world photo comparisons between SDR and HDR.]]></description>
+      <category><![CDATA[Blog]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Stable Diffusion XL 1.0 Impresses]]></title>
+      <link>https://gregrickaby.com/stable-diffusion-xl-1-0-impresses</link>
+      <guid isPermaLink="true">https://gregrickaby.com/stable-diffusion-xl-1-0-impresses</guid>
+      <pubDate>Thu, 27 Jul 2023 15:52:17 GMT</pubDate>
+      <description><![CDATA[A hands-on look at Stable Diffusion XL 1.0, comparing its 1024-pixel output against SD 1.5 and testing the new refiner model in both Automatic1111 and ComfyUI.]]></description>
+      <category><![CDATA[Blog]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Behind The Shot: Strawberry Supermoon]]></title>
+      <link>https://gregrickaby.com/behind-the-shot-nearly-strawberry-supermoon</link>
+      <guid isPermaLink="true">https://gregrickaby.com/behind-the-shot-nearly-strawberry-supermoon</guid>
+      <pubDate>Sun, 26 Jun 2022 18:37:00 GMT</pubDate>
+      <description><![CDATA[A behind-the-scenes account of preparing for the June 2022 Strawberry Supermoon.]]></description>
+      <category><![CDATA[Blog]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Displaying EXIF Data in WordPress]]></title>
+      <link>https://gregrickaby.com/displaying-exif-data-in-wordpress</link>
+      <guid isPermaLink="true">https://gregrickaby.com/displaying-exif-data-in-wordpress</guid>
+      <pubDate>Wed, 24 Jun 2020 14:22:00 GMT</pubDate>
+      <description><![CDATA[How to display EXIF data (aperture, ISO, shutter speed, focal length) from your WordPress media library using a simple shortcode.]]></description>
+      <category><![CDATA[Code]]></category>
+    </item>
+    <item>
+      <title><![CDATA[2018: A Year In Review]]></title>
+      <link>https://gregrickaby.com/2018-a-year-in-review</link>
+      <guid isPermaLink="true">https://gregrickaby.com/2018-a-year-in-review</guid>
+      <pubDate>Tue, 01 Jan 2019 15:01:19 GMT</pubDate>
+      <description><![CDATA[A look back at 2018: a promotion to Director of Engineering, a first family vacation to Disney World, major home renovations, and 6,000 miles on the road.]]></description>
+      <category><![CDATA[Blog]]></category>
+    </item>
+    <item>
+      <title><![CDATA[2016: A Year In Review]]></title>
+      <link>https://gregrickaby.com/2016-a-year-in-review</link>
+      <guid isPermaLink="true">https://gregrickaby.com/2016-a-year-in-review</guid>
+      <pubDate>Thu, 02 Feb 2017 20:25:12 GMT</pubDate>
+      <description><![CDATA[Greg reminisces about 2016, in yet another "Year In Review" blog post...because the Internet needed another one of these right?]]></description>
+      <category><![CDATA[Blog]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Hello Chloe Grace]]></title>
+      <link>https://gregrickaby.com/hello-chloe-grace</link>
+      <guid isPermaLink="true">https://gregrickaby.com/hello-chloe-grace</guid>
+      <pubDate>Tue, 18 Mar 2014 18:01:55 GMT</pubDate>
+      <description><![CDATA[My account of the day Chloe Grace was born at Medical Center Enterprise in Enterprise, Alabama.]]></description>
+      <category><![CDATA[Blog]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Genesis Code Snippets]]></title>
+      <link>https://gregrickaby.com/genesis-code-snippets</link>
+      <guid isPermaLink="true">https://gregrickaby.com/genesis-code-snippets</guid>
+      <pubDate>Sun, 19 May 2013 15:37:14 GMT</pubDate>
+      <description><![CDATA[My collection of code snippets that I use while coding the Genesis Framework for WordPress.]]></description>
+      <category><![CDATA[Code]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Microphone Shootout: Behringer B-1 vs Neumann TLM 103]]></title>
+      <link>https://gregrickaby.com/microphone-shootout-behringer-b-1-vs-neumann-tlm-103</link>
+      <guid isPermaLink="true">https://gregrickaby.com/microphone-shootout-behringer-b-1-vs-neumann-tlm-103</guid>
+      <pubDate>Sun, 19 May 2013 13:22:42 GMT</pubDate>
+      <description><![CDATA[Greg gives his interpretation on the differences between a Behringer B-1 and a Neumann TLM 103.]]></description>
+      <category><![CDATA[Blog]]></category>
+    </item>
+    <item>
+      <title><![CDATA[How To: Install LAMP on Ubuntu]]></title>
+      <link>https://gregrickaby.com/how-to-install-lamp-on-ubuntu</link>
+      <guid isPermaLink="true">https://gregrickaby.com/how-to-install-lamp-on-ubuntu</guid>
+      <pubDate>Sun, 19 May 2013 13:12:44 GMT</pubDate>
+      <description><![CDATA[A laundry list of commands to help you install a LAMP stack on Ubuntu+.]]></description>
+      <category><![CDATA[Code]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Web Typography: Using The Golden Ratio and REMs]]></title>
+      <link>https://gregrickaby.com/using-the-golden-ratio-and-rems</link>
+      <guid isPermaLink="true">https://gregrickaby.com/using-the-golden-ratio-and-rems</guid>
+      <pubDate>Sun, 19 May 2013 13:03:21 GMT</pubDate>
+      <description><![CDATA[How to use REM units and the Golden Ratio Typography Calculator to set font sizes, line heights, and margins with mathematical precision.]]></description>
+      <category><![CDATA[Code]]></category>
+    </item>
   </channel>
 </rss>
