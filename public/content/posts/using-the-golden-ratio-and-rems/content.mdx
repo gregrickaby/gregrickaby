@@ -1,22 +1,22 @@
 ---
-title: "Web Typography: Using The Golden Ratio and REMs"
-slug: "using-the-golden-ratio-and-rems"
-date: "2013-05-19T08:03:21"
-modified: "2026-04-09T00:00:00"
-type: "post"
-description: "How to use REM units and the Golden Ratio Typography Calculator to set font sizes, line heights, and margins with mathematical precision."
-featuredImage: "./DSC02796.jpg"
-categories: ["Code"]
-tags: ["css", "how to", "typography"]
+title: 'Web Typography: Using The Golden Ratio and REMs'
+slug: 'using-the-golden-ratio-and-rems'
+date: '2013-05-19T08:03:21'
+modified: '2026-04-09T00:00:00'
+type: 'post'
+description: 'How to use REM units and the Golden Ratio Typography Calculator to set font sizes, line heights, and margins with mathematical precision.'
+featuredImage: './DSC02796.jpg'
+categories: ['Code']
+tags: ['css', 'how to', 'typography']
 ---
 
-[WordPress 3.5 beta 1](https://wordpress.org/news/2012/09/wordpress-3-5-beta-1/) shipped with the a new default theme: [*Twenty Twelve*](http://wordpress.org/extend/themes/twentytwelve). While looking at [style.css](http://core.trac.wordpress.org/browser/trunk/wp-content/themes/twentytwelve/style.css), I noticed the use of "REM" to set font sizes and margins. I had NO idea what REM was. In fact, I just started using EMs in other child themes. Immediately, I turned to Google and started researching.
+[WordPress 3.5 beta 1](https://wordpress.org/news/2012/09/wordpress-3-5-beta-1/) shipped with the a new default theme: [_Twenty Twelve_](http://wordpress.org/extend/themes/twentytwelve). While looking at [style.css](http://core.trac.wordpress.org/browser/trunk/wp-content/themes/twentytwelve/style.css), I noticed the use of "REM" to set font sizes and margins. I had NO idea what REM was. In fact, I just started using EMs in other child themes. Immediately, I turned to Google and started researching.
 
 ## I thought REM was a band?
 
-By definition, the [REM unit](http://www.w3.org/TR/css3-values/#rem-unit) is: *"Equal to the computed value of ‘font-size’ on the root element. When specified on the ‘font-size’ property of the root element, the ‘rem’ units refer to the property's initial value.*"
+By definition, the [REM unit](http://www.w3.org/TR/css3-values/#rem-unit) is: _"Equal to the computed value of ‘font-size’ on the root element. When specified on the ‘font-size’ property of the root element, the ‘rem’ units refer to the property's initial value._"
 
-**tl;dr** The REM is one of the newest font-size standards for CSS3. It stands for "Root EM". You base your calculation on the *default font size* of the HTML element – NOT the parent-like EM. **It's basically "EM v2.0".**
+**tl;dr** The REM is one of the newest font-size standards for CSS3. It stands for "Root EM". You base your calculation on the _default font size_ of the HTML element – NOT the parent-like EM. **It's basically "EM v2.0".**
 
 ## So what?
 
@@ -32,7 +32,7 @@ html {
 }
 ```
 
-*Why 62.5% instead of 100%?* Simplicity.
+_Why 62.5% instead of 100%?_ Simplicity.
 
 Our default font is now `10px`, which makes math easier. Now, `1.0rem = 10px`. This becomes our `--rem-base` CSS custom property.
 
@@ -63,7 +63,7 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 1.6rem; /* 16 ÷ var(--rem-base) */
 }
 
@@ -96,7 +96,7 @@ html {
 }
 
 body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   font-size: 1.6rem;
   line-height: var(--line-height-base);
 }

@@ -3,14 +3,25 @@ import type {Paragraph, Root} from 'mdast'
 import fs from 'node:fs'
 import path from 'node:path'
 import {cache} from 'react'
-import {remark} from 'remark'
+import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeRaw from 'rehype-raw'
+import rehypeStringify from 'rehype-stringify'
 import gfm from 'remark-gfm'
-import html from 'remark-html'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
 import sanitizeHtml from 'sanitize-html'
+import {unified} from 'unified'
 import {visit} from 'unist-util-visit'
 import type {Post, PostMeta} from './types'
 import {normalizeMeta, resolveImagePaths} from './utils'
 
+/**
+ * Remark plugin that converts a lone image with a title attribute into a
+ * `<figure>/<figcaption>` pair. Only applies when the image is the sole child
+ * of its paragraph and the image has a title.
+ *
+ * @returns A unified transformer function.
+ */
 function remarkFigureCaption() {
   return (tree: Root) => {
     visit(tree, 'paragraph', (node: Paragraph, index, parent) => {
@@ -22,6 +33,7 @@ function remarkFigureCaption() {
         index !== undefined
       ) {
         const img = node.children[0]
+        /* v8 ignore next -- MDast types alt as string|null but remark always provides a string */
         const alt = (img.alt ?? '').replaceAll('"', '&quot;')
         const title = img
           .title!.replaceAll('&', '&amp;')
@@ -40,6 +52,11 @@ export type {Post, PostMeta} from './types'
 
 const contentDir = path.join(process.cwd(), 'public', 'content')
 
+/**
+ * sanitize-html options that extend the defaults to allow the extra tags and
+ * attributes used by this site's Markdown pipeline (images, figures, tables,
+ * audio, and shiki code-block markup).
+ */
 const sanitizeOptions: sanitizeHtml.IOptions = {
   allowedTags: [
     ...sanitizeHtml.defaults.allowedTags,
@@ -62,25 +79,45 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
     img: ['src', 'alt', 'title', 'width', 'height', 'loading'],
     audio: ['controls', 'src', 'preload'],
     source: ['src', 'type'],
+    pre: ['tabindex', 'data-language', 'data-theme', 'style'],
+    code: ['data-language', 'data-theme'],
+    span: ['data-line', 'data-highlight', 'style'],
+    figure: ['data-rehype-pretty-code-figure'],
     '*': ['class', 'id']
   }
 }
 
+/**
+ * Reads, processes, and sanitizes the MDX content file for a given slug.
+ * Runs the full remark/rehype pipeline (GFM, figure captions, shiki syntax
+ * highlighting) and strips unsafe HTML before returning.
+ *
+ * @param slug - The URL-safe slug identifying the content directory.
+ * @param type - Whether to look in `posts/` or `pages/`.
+ * @returns The parsed post with metadata and sanitized HTML, or null if not found.
+ */
 async function getContentBySlug(
   slug: string,
   type: 'post' | 'page'
 ): Promise<Post | null> {
   const dir = type === 'post' ? 'posts' : 'pages'
-  const filePath = path.join(contentDir, dir, slug, 'content.md')
+  const filePath = path.join(contentDir, dir, slug, 'content.mdx')
   if (!fs.existsSync(filePath)) return null
 
   const fileContents = fs.readFileSync(filePath, 'utf-8')
   const {data, content} = matter(fileContents)
 
-  const processed = await remark()
+  const processed = await unified()
+    .use(remarkParse)
     .use(gfm)
     .use(remarkFigureCaption)
-    .use(html, {sanitize: false})
+    .use(remarkRehype, {allowDangerousHtml: true})
+    .use(rehypeRaw)
+    .use(rehypePrettyCode, {
+      theme: 'github-dark',
+      keepBackground: true
+    })
+    .use(rehypeStringify)
     .process(content)
   let htmlContent = processed.toString()
   htmlContent = resolveImagePaths(htmlContent, slug, type)
@@ -130,7 +167,7 @@ export const getAllPosts = cache((): PostMeta[] => {
 
   const posts: PostMeta[] = slugs
     .map((slug) => {
-      const filePath = path.join(postsDir, slug, 'content.md')
+      const filePath = path.join(postsDir, slug, 'content.mdx')
       if (!fs.existsSync(filePath)) return null
       const fileContents = fs.readFileSync(filePath, 'utf-8')
       const {data} = matter(fileContents)

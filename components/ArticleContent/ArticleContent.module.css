@@ -41,37 +41,36 @@
   cursor: zoom-in;
 }
 
-/* Code blocks */
-.articleContent pre {
-  background-color: var(--mantine-primary-color-0);
-  border: 1px solid var(--mantine-color-default-border);
-  border-radius: var(--mantine-radius-md);
-  padding: var(--mantine-spacing-md) var(--mantine-spacing-lg);
-  margin-block: var(--mantine-spacing-lg);
-  overflow-x: auto;
-  tab-size: 2;
+/* Remove Mantine code block background to let shiki styles show through */
+.articleContent :where(code) {
+  background-color: transparent;
 }
 
-.articleContent pre code {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: var(--mantine-font-size-sm);
-  color: var(--mantine-color-text);
+/* Code blocks - shiki sets background/color via inline styles on pre */
+.articleContent figure[data-rehype-pretty-code-figure] {
+  margin-block: 0;
+  margin: 0 0 var(--mantine-spacing-md);
+}
+
+.articleContent figure[data-rehype-pretty-code-figure] > pre {
+  border-radius: var(--mantine-radius-md);
+  overflow-x: auto;
+  padding: var(--mantine-spacing-md);
+}
+
+.articleContent figure[data-rehype-pretty-code-figure] code {
+  background: transparent;
+  color: inherit;
+  display: block;
   font-family: var(--mantine-font-family-monospace);
+  font-size: var(--mantine-font-size-sm);
+  line-height: 0;
+}
+
+.articleContent figure[data-rehype-pretty-code-figure] span[data-line] {
+  display: block;
   line-height: 1.7;
   white-space: pre;
-}
-
-/* Inline code */
-.articleContent :not(pre) > code {
-  background-color: var(--mantine-primary-color-1);
-  border: 1px solid var(--mantine-color-default-border);
-  border-radius: var(--mantine-radius-sm);
-  padding: 0.15em 0.4em;
-  font-size: 0.875em;
-  font-family: var(--mantine-font-family-monospace);
-  color: var(--mantine-primary-color-6);
 }
 
 /* Tables */

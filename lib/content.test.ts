@@ -212,6 +212,36 @@ describe('getPostBySlug', () => {
     const result = await getPostBySlug('test-post')
     expect(result?.content).toContain('&quot;quoted alt&quot;')
   })
+
+  it('handles a figure image with no alt text (null alt branch)', async () => {
+    mockExistsSync.mockReturnValue(true)
+    mockReadFileSync.mockReturnValue(
+      '' as unknown as ReturnType<typeof fs.readFileSync>
+    )
+    mockMatter.mockReturnValue({
+      data: baseMeta,
+      content: '![](./img.jpg "Caption")'
+    } as unknown as ReturnType<typeof matter>)
+
+    const result = await getPostBySlug('test-post')
+    expect(result?.content).toContain('<figure>')
+    expect(result?.content).toContain('alt=""')
+    expect(result?.content).toContain('<figcaption>Caption</figcaption>')
+  })
+
+  it('preserves the shiki background-color style attribute on pre elements', async () => {
+    mockExistsSync.mockReturnValue(true)
+    mockReadFileSync.mockReturnValue(
+      '' as unknown as ReturnType<typeof fs.readFileSync>
+    )
+    mockMatter.mockReturnValue({
+      data: baseMeta,
+      content: '```js\nconsole.log("hi")\n```'
+    } as unknown as ReturnType<typeof matter>)
+
+    const result = await getPostBySlug('test-post')
+    expect(result?.content).toMatch(/<pre[^>]+style="[^"]*background-color/)
+  })
 })
 
 describe('getPageBySlug', () => {

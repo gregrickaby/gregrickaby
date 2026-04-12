@@ -1,13 +1,13 @@
 ---
-title: "Displaying EXIF Data in WordPress"
-slug: "displaying-exif-data-in-wordpress"
-date: "2020-06-24T09:22:00"
-modified: "2022-12-28T20:39:46"
-type: "post"
-description: "How to display EXIF data (aperture, ISO, shutter speed, focal length) from your WordPress media library using a simple shortcode."
-featuredImage: "./DSC7244-jpg.webp"
-categories: ["Code"]
-tags: ["wordpress"]
+title: 'Displaying EXIF Data in WordPress'
+slug: 'displaying-exif-data-in-wordpress'
+date: '2020-06-24T09:22:00'
+modified: '2022-12-28T20:39:46'
+type: 'post'
+description: 'How to display EXIF data (aperture, ISO, shutter speed, focal length) from your WordPress media library using a simple shortcode.'
+featuredImage: './DSC7244-jpg.webp'
+categories: ['Code']
+tags: ['wordpress']
 ---
 
 Over the last 6-months, I've taken a half-dozen or so courses on LinkedIn Learning read a couple of books, and spent countless hours taking photos trying to level up my skills as a [very amateur photographer](https://gregrickaby.com/category/photos).
@@ -30,17 +30,17 @@ Make sure your images have EXIF data to begin with.
 
 ## WordPress plays nice with EXIF, mostly
 
-When you upload a JPG to WordPress, it will scan and save *most* EXIF data as post meta. No plugin or configuration is *needed*!
+When you upload a JPG to WordPress, it will scan and save _most_ EXIF data as post meta. No plugin or configuration is _needed_!
 
 ![WordPress database showing EXIF data saved as attachment post meta](./screenshot-of-wordpress-database-with-attachment-meta.webp)
 
 EXIF data is stored as post meta in the WordPress database.
 
-WordPress doesn't save all the data though, it ignores both *Location* and *Lens* data. Displaying the EXIF data is a bit more complicated than just clicking "upload" though. Let's move on…
+WordPress doesn't save all the data though, it ignores both _Location_ and _Lens_ data. Displaying the EXIF data is a bit more complicated than just clicking "upload" though. Let's move on…
 
 ## Finding the EXIF data in the database
 
-Because WordPress saves this as post meta, you can use the `get_post_meta()` function to grab it, *if* you know the image ID. One simple way to find the ID is by opening any image in the Media Library, and looking at your web browser's address bar:
+Because WordPress saves this as post meta, you can use the `get_post_meta()` function to grab it, _if_ you know the image ID. One simple way to find the ID is by opening any image in the Media Library, and looking at your web browser's address bar:
 
 ![WordPress Media Library with the image ID visible in the browser address bar](./screenshot-of-item-id-in-address-bar.webp)
 
@@ -54,7 +54,7 @@ $data = get_post_meta( '22579', '_wp_attachment_metadata' );
 
 Which would return:
 
-```text
+```php
 Array
 (
     [0] => Array
@@ -75,7 +75,7 @@ Array
 )
 ```
 
-Now that you have an array of data, you could use PHP [array destructuring](https://stitcher.io/blog/array-destructuring-with-list-in-php) to both pluck *and* set your data variables at the same time:
+Now that you have an array of data, you could use PHP [array destructuring](https://stitcher.io/blog/array-destructuring-with-list-in-php) to both pluck _and_ set your data variables at the same time:
 
 ```php
 // Destructure image meta array, and set variables.
@@ -99,13 +99,13 @@ Now that you have the data, you could display it with:
 
 I built a very simple shortcode to display EXIF data. The [code is available on Github](https://github.com/gregrickaby/wordpress-display-exif) and you're free to fork (or contribute) and use however you'd like.
 
-The shortcode is super simple and displays *Timestamp*, *Camera*, *Aperture*, *ISO*, *Shutter Speed*, and *Focal Length*. Because WordPress doesn't save *Location* or *Lens* information, you would have to pass that in yourself using arguments. Here's the basic usage:
+The shortcode is super simple and displays *Timestamp*, *Camera*, *Aperture*, *ISO*, *Shutter Speed*, and *Focal Length*. Because WordPress doesn't save *Location* or _Lens_ information, you would have to pass that in yourself using arguments. Here's the basic usage:
 
 ```text
 [exif id="12345" location="Enterprise, AL" lens="Panasonic Lumix G Vario 45-150mm"]
 ```
 
- Which would display this:
+Which would display this:
 
 ![Frontend output of the EXIF shortcode showing camera, aperture, ISO, shutter speed, and focal length](./screenshot-of-shortcode-on-frontend.webp)
 
@@ -117,9 +117,10 @@ There are a couple of browser extensions that display EXIF data
 
 - [Exify](https://addons.mozilla.org/en-US/firefox/addon/exify/) (Firefox)
 - [Exif Viewer Classic](https://chrome.google.com/webstore/detail/exif-viewer-classic/nafpfdcmppffipmhcpkbplhkoiekndck) (Chrome)
-There's also a JavaScript library for reading EXIF data, and claims to be the fastest and most versatile way to do it:
+  There's also a JavaScript library for reading EXIF data, and claims to be the fastest and most versatile way to do it:
 
 - [Exifr](https://github.com/MikeKovarik/exifr) (Github)
+
 ## Wrap up
 
 EXIF data can be helpful for budding photographers like me. It's interesting to see what type of gear photographers use, and how they composed their photos using the exposure triangle.
