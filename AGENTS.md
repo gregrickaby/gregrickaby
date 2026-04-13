@@ -13,10 +13,11 @@ npm run validate     # tsc + lint + format + test
 
 ## Docs First
 
-Before any Next.js or Mantine work, read the relevant docs — training data is outdated.
+Before any Next.js, Mantine, or Axiom work, read the relevant docs — training data is outdated.
 
 - **Next.js:** `node_modules/next/dist/docs/`
 - **Mantine:** https://mantine.dev/llms.txt
+- **Axiom:** https://axiom.co/docs/llms.txt
 
 ## Architecture
 
