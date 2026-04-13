@@ -3,8 +3,14 @@ import {transformMiddlewareRequest} from '@axiomhq/nextjs'
 import {type NextFetchEvent, type NextRequest, NextResponse} from 'next/server'
 
 export async function proxy(request: NextRequest, event: NextFetchEvent) {
-  logger.info(...transformMiddlewareRequest(request))
-  event.waitUntil(logger.flush())
+  const userAgent = request.headers.get('user-agent') ?? ''
+  const isHealthCheck = userAgent.toLowerCase().startsWith('curl/')
+
+  if (!isHealthCheck) {
+    logger.info(...transformMiddlewareRequest(request))
+    event.waitUntil(logger.flush())
+  }
+
   return NextResponse.next()
 }
 
