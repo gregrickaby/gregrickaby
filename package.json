@@ -24,6 +24,9 @@
   },
   "homepage": "https://gregrickaby.com",
   "dependencies": {
+    "@axiomhq/js": "^1.4.0",
+    "@axiomhq/logging": "^0.2.0",
+    "@axiomhq/nextjs": "^0.2.0",
     "@fancyapps/ui": "^6.1.13",
     "@mantine/core": "^9.0.2",
     "@mantine/hooks": "^9.0.2",
