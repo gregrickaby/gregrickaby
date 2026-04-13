@@ -18,7 +18,12 @@ vi.mock('next/link', () => ({
 
 vi.mock('next/headers', () => ({
   headers: vi.fn().mockResolvedValue({
-    get: vi.fn().mockReturnValue('/some-missing-page')
+    get: vi.fn((key: string) => {
+      if (key === 'x-pathname') return '/some-missing-page'
+      if (key === 'x-http-method') return 'GET'
+      if (key === 'user-agent') return 'TestAgent/1.0'
+      return null
+    })
   })
 }))
 

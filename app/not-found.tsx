@@ -5,7 +5,9 @@ import {headers} from 'next/headers'
 export default async function NotFound() {
   const headersList = await headers()
   const pathname = headersList.get('x-pathname') ?? 'unknown'
-  console.info(`[404] Not found: ${pathname}`)
+  const method = headersList.get('x-http-method') ?? 'GET'
+  const ua = headersList.get('user-agent') ?? 'unknown'
+  console.info(`[404] ${method} ${pathname} — ${ua}`)
 
   return (
     <Box ta="center">
