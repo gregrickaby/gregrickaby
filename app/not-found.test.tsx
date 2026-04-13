@@ -16,34 +16,23 @@ vi.mock('next/link', () => ({
   )
 }))
 
-vi.mock('next/headers', () => ({
-  headers: vi.fn().mockResolvedValue({
-    get: vi.fn((key: string) => {
-      if (key === 'x-pathname') return '/some-missing-page'
-      if (key === 'x-http-method') return 'GET'
-      if (key === 'user-agent') return 'TestAgent/1.0'
-      return null
-    })
-  })
-}))
-
 describe('NotFound page', () => {
-  it('renders the 404 heading', async () => {
-    render(await NotFound())
+  it('renders the 404 heading', () => {
+    render(<NotFound />)
     expect(
       screen.getByRole('heading', {level: 1, name: '404'})
     ).toBeInTheDocument()
   })
 
-  it('displays a helpful message', async () => {
-    render(await NotFound())
+  it('displays a helpful message', () => {
+    render(<NotFound />)
     expect(
       screen.getByText("The page you're looking for doesn't exist.")
     ).toBeInTheDocument()
   })
 
-  it('has a link back to home', async () => {
-    render(await NotFound())
+  it('has a link back to home', () => {
+    render(<NotFound />)
     const link = screen.getByRole('link', {name: 'Go back home'})
     expect(link).toHaveAttribute('href', '/')
   })

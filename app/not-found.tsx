@@ -1,14 +1,9 @@
+'use client'
+
 import {AppLink} from '@/components/AppLink/AppLink'
 import {Box, Text, Title} from '@mantine/core'
-import {headers} from 'next/headers'
 
-export default async function NotFound() {
-  const headersList = await headers()
-  const pathname = headersList.get('x-pathname') ?? 'unknown'
-  const method = headersList.get('x-http-method') ?? 'GET'
-  const ua = headersList.get('user-agent') ?? 'unknown'
-  console.info(`[404] ${method} ${pathname} — ${ua}`)
-
+export default function NotFound() {
   return (
     <Box ta="center">
       <Title order={1} mb="md">
