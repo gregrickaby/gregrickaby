@@ -4,6 +4,7 @@ import {Footer} from '@/components/Footer/Footer'
 import {Header} from '@/components/Header/Header'
 import {ScrollToTop} from '@/components/ScrollToTop/ScrollToTop'
 import {Search} from '@/components/Search/Search'
+import {WebVitals} from '@/lib/axiom/client'
 import {siteConfig} from '@/lib/config'
 import {getAllPosts} from '@/lib/content'
 import {buildWebSiteGraph, serializeSchema} from '@/lib/schema'
@@ -109,6 +110,7 @@ export default function RootLayout({
       {...mantineHtmlProps}
     >
       <head>
+        <WebVitals />
         <ColorSchemeScript defaultColorScheme="auto" />
         <meta name="color-scheme" content="light dark" />
         <script
