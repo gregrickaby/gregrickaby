@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
     return [
       // Old WordPress date-based URLs that map to existing posts.
       {
+        source: '/author/gregrickaby_eelz5e/:slug',
+        destination: '/',
+        permanent: true
+      },
+      {
         source: '/2013/05/genesis-code-snippets',
         destination: '/genesis-code-snippets',
         permanent: true
