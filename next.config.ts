@@ -5,7 +5,12 @@ import redirects from './lib/redirects'
 const nextConfig: NextConfig = {
   reactCompiler: true,
   experimental: {
-    cssChunking: true
+    cssChunking: true,
+    optimizePackageImports: [
+      '@mantine/core',
+      '@mantine/hooks',
+      '@mantine/spotlight'
+    ]
   },
   async redirects() {
     return redirects
