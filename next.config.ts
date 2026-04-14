@@ -4,6 +4,10 @@ import redirects from './lib/redirects'
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 2678400
+  },
   experimental: {
     cssChunking: true,
     optimizePackageImports: [
