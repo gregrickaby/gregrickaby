@@ -3,6 +3,7 @@
 import {PhotoCard} from '@/components/PhotoCard/PhotoCard'
 import type {PhotoMeta} from '@/lib/types'
 import {Fancybox} from '@fancyapps/ui/dist/fancybox/'
+import {useMediaQuery} from '@mantine/hooks'
 import {useEffect, useRef} from 'react'
 import styles from './PhotoGallery.module.css'
 
@@ -20,13 +21,22 @@ interface PhotoGalleryProps {
 
 /**
  * Client component that renders a masonry grid of photos with Fancybox
- * lightbox integration. Binds Fancybox on mount and unbinds on cleanup.
+ * lightbox integration. Photos are distributed round-robin across columns
+ * so that the newest photos appear at the top of each column.
  *
  * @param props - The props for the PhotoGallery component.
  * @returns A React element with the photo masonry grid.
  */
 export function PhotoGallery({photos}: Readonly<PhotoGalleryProps>) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const isTablet = useMediaQuery('(max-width: 62em)')
+  const isMobile = useMediaQuery('(max-width: 36em)')
+  const numCols = isMobile ? 1 : isTablet ? 2 : 3
+
+  // Distribute photos round-robin so each column top shows the newest images.
+  const columns = Array.from({length: numCols}, (_, colIdx) =>
+    photos.filter((_, i) => i % numCols === colIdx)
+  )
 
   useEffect(() => {
     const container = containerRef.current
@@ -65,8 +75,16 @@ export function PhotoGallery({photos}: Readonly<PhotoGalleryProps>) {
 
   return (
     <div className={styles.gallery} ref={containerRef}>
-      {photos.map((photo, index) => (
-        <PhotoCard key={photo.filename} photo={photo} priority={index < 6} />
+      {columns.map((colPhotos, colIdx) => (
+        <div key={colIdx} className={styles.column}>
+          {colPhotos.map((photo, index) => (
+            <PhotoCard
+              key={photo.filename}
+              photo={photo}
+              priority={index === 0}
+            />
+          ))}
+        </div>
       ))}
     </div>
   )

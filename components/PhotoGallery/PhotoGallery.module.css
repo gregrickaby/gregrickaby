@@ -1,16 +1,12 @@
 .gallery {
-  column-count: 3;
-  column-gap: var(--mantine-spacing-md);
+  align-items: flex-start;
+  display: flex;
+  gap: var(--mantine-spacing-md);
 }
 
-@media (max-width: 62em) {
-  .gallery {
-    column-count: 2;
-  }
-}
-
-@media (max-width: 36em) {
-  .gallery {
-    column-count: 1;
-  }
+.column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--mantine-spacing-md);
 }
