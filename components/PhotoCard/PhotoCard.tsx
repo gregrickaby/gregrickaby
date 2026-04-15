@@ -1,7 +1,6 @@
 import type {PhotoMeta} from '@/lib/types'
 import {buildPhotoCaption, formatPhotoDate} from '@/lib/utils'
 import {Text} from '@mantine/core'
-import Image from 'next/image'
 import styles from './PhotoCard.module.css'
 
 /**
@@ -37,18 +36,16 @@ export function PhotoCard({photo, priority = false}: Readonly<PhotoCardProps>) {
   return (
     <div className={styles.card}>
       <a
-        href={src}
-        data-fancybox="photos"
-        data-caption={caption}
         className={styles.imageLink}
+        data-caption={caption}
+        data-fancybox="photos"
+        href={src}
       >
-        <Image
+        <img
           alt={photo.title}
           className={styles.image}
           height={photo.height}
           loading={priority ? 'eager' : 'lazy'}
-          priority={priority}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           src={src}
           width={photo.width}
         />

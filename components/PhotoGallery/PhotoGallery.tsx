@@ -33,8 +33,31 @@ export function PhotoGallery({photos}: Readonly<PhotoGalleryProps>) {
     if (!container) return
 
     Fancybox.bind(container, '[data-fancybox]', {
+      theme: 'auto',
+      mainStyle: {
+        '--f-toolbar-padding': '0',
+        '--f-button-svg-stroke-width': '1.5',
+        '--f-arrow-svg-stroke-width': '1.75',
+        '--f-thumb-width': '82px',
+        '--f-thumb-height': '82px',
+        '--f-thumb-border-radius': '8px',
+        '--f-thumb-selected-shadow': 'inset 0 0 0 2px #fff, 0 0 0 1.5px #a73c00'
+      },
+      dragToClose: false,
+      fadeEffect: false,
+      hideClass: false,
       showClass: 'f-fadeIn',
-      hideClass: 'f-fadeOut'
+      zoomEffect: false,
+      Carousel: {
+        Toolbar: {
+          absolute: false,
+          display: {
+            left: [''],
+            middle: ['counter'],
+            right: ['toggleFull', 'close']
+          }
+        }
+      }
     })
 
     return () => Fancybox.unbind(container, '[data-fancybox]')
