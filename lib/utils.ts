@@ -114,8 +114,8 @@ export function escapeHtml(value: string): string {
 }
 
 /**
- * Builds a Fancybox caption HTML string for a photo, combining an optional
- * IPTC caption with a summary of EXIF settings.
+ * Builds a Fancybox caption HTML string for a photo, combining the title,
+ * an optional date, and a summary of EXIF settings.
  *
  * @param photo - The photo metadata.
  * @returns An HTML string suitable for the `data-caption` attribute.
@@ -123,7 +123,10 @@ export function escapeHtml(value: string): string {
 export function buildPhotoCaption(photo: PhotoMeta): string {
   const parts: string[] = []
 
-  if (photo.caption) parts.push(photo.caption)
+  const titleLine = photo.dateTaken
+    ? `${photo.title} - ${formatPhotoDate(photo.dateTaken)}`
+    : photo.title
+  parts.push(titleLine)
 
   const exifParts: string[] = []
   if (photo.camera) exifParts.push(photo.camera)

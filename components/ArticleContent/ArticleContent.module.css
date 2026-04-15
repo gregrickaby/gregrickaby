@@ -91,6 +91,6 @@
 }
 
 .articleContent table th {
-  background-color: var(--mantine-primary-color-1);
+  background-color: var(--mantine-primary-color);
   font-weight: 600;
 }

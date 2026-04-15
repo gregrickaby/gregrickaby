@@ -212,7 +212,7 @@ describe('formatPhotoDate', () => {
 })
 
 describe('buildPhotoCaption', () => {
-  it('returns an empty string when photo has no caption or EXIF', () => {
+  it('returns just the title when there is no date or EXIF data', () => {
     expect(
       buildPhotoCaption({
         filename: 'test.jpg',
@@ -220,46 +220,46 @@ describe('buildPhotoCaption', () => {
         width: 800,
         height: 600
       })
-    ).toBe('')
+    ).toBe('Test')
   })
 
-  it('returns just the caption when there is no EXIF data', () => {
+  it('appends the formatted date to the title', () => {
     expect(
       buildPhotoCaption({
         filename: 'test.jpg',
         title: 'Test',
         width: 800,
         height: 600,
-        caption: 'A scenic view'
+        dateTaken: '2024-06-15T12:00:00Z'
       })
-    ).toBe('A scenic view')
+    ).toBe('Test - Jun 15, 2024')
   })
 
-  it('returns just the EXIF summary when there is no caption', () => {
+  it('includes title with date and EXIF summary', () => {
     expect(
       buildPhotoCaption({
         filename: 'test.jpg',
         title: 'Test',
         width: 800,
         height: 600,
+        dateTaken: '2024-06-15T12:00:00Z',
         camera: 'Sony A7 IV',
         aperture: 'f/2.8',
         iso: '400'
       })
-    ).toBe('Sony A7 IV · f/2.8 · ISO 400')
+    ).toBe('Test - Jun 15, 2024<br />Sony A7 IV · f/2.8 · ISO 400')
   })
 
-  it('joins caption and EXIF summary with a line break', () => {
+  it('includes title without date when date is absent, with EXIF summary', () => {
     expect(
       buildPhotoCaption({
         filename: 'test.jpg',
-        title: 'Test',
+        title: 'Golden Hour',
         width: 800,
         height: 600,
-        caption: 'Golden hour',
         camera: 'Canon R5',
         shutterSpeed: '1/500s'
       })
-    ).toBe('Golden hour<br />Canon R5 · 1/500s')
+    ).toBe('Golden Hour<br />Canon R5 · 1/500s')
   })
 })
