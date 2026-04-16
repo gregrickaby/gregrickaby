@@ -59,7 +59,7 @@ export async function sendContactEmail(
     await transport.sendMail({
       from: `"${headerSafeName}" <${process.env.MAILGUN_LOGIN}>`,
       replyTo: email,
-      to: 'greg@gregrickaby.com',
+      to: 'gregrickaby@gmail.com',
       subject: `Contact form: ${headerSafeHowCanIHelp}`,
       text: `Name: ${name}\nEmail: ${email}\nHow Can I Help: ${howCanIHelp}\n\n${message}`,
       html: `<p><strong>Name:</strong> ${safeName}</p><p><strong>Email:</strong> ${safeEmail}</p><p><strong>How Can I Help:</strong> ${safeHowCanIHelp}</p><p>${safeMessage}</p>`
