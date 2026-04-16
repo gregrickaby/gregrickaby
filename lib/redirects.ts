@@ -6,6 +6,11 @@
 const redirects = [
   // Legacy feed URL.
   {source: '/blog/feed/', destination: '/feed.xml', permanent: true},
+  {source: '/feed/atom', destination: '/feed.xml', permanent: true},
+
+  // Old WordPress routes
+  {source: '/wp-json/:path*', destination: '/', permanent: true},
+  {source: '/wp-admin/:path*', destination: '/', permanent: true},
 
   // Old WordPress date-based URLs that map to existing posts.
   // These must come before the date catch-all below.
