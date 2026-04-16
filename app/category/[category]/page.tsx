@@ -26,7 +26,10 @@ export async function generateMetadata({
   const decoded = decodeURIComponent(category)
   return {
     title: `Posts in "${decoded}" - ${siteConfig.name}`,
-    description: `All posts in the "${decoded}" category.`
+    description: `All posts in the "${decoded}" category.`,
+    alternates: {
+      canonical: `/category/${category}`
+    }
   }
 }
 

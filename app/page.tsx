@@ -7,7 +7,10 @@ const PAGE_SIZE = 14
 
 export const metadata = {
   title: `${siteConfig.name} - My Blog`,
-  description: siteConfig.description
+  description: siteConfig.description,
+  alternates: {
+    canonical: '/'
+  }
 }
 
 interface HomePageProps {

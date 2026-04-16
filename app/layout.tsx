@@ -53,7 +53,6 @@ export const metadata = {
     url: siteConfig.url
   },
   alternates: {
-    canonical: siteConfig.url,
     types: {
       'application/rss+xml': '/feed.xml'
     }

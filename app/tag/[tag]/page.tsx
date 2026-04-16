@@ -24,7 +24,10 @@ export async function generateMetadata({
   const decoded = decodeURIComponent(tag)
   return {
     title: `Posts tagged "${decoded}" - ${siteConfig.name}`,
-    description: `All posts tagged with "${decoded}".`
+    description: `All posts tagged with "${decoded}".`,
+    alternates: {
+      canonical: `/tag/${tag}`
+    }
   }
 }
 

@@ -14,6 +14,9 @@ export function generateMetadata(): Metadata {
   return {
     title: 'Photos',
     description: 'A collection of photographs by Greg Rickaby.',
+    alternates: {
+      canonical: '/photos'
+    },
     openGraph: {
       title: 'Photos',
       description: 'A collection of photographs by Greg Rickaby.',

@@ -17,6 +17,9 @@ export async function generateMetadata(
   return {
     title: 'Contact',
     description: 'Use the form on this page to get in touch.',
+    alternates: {
+      canonical: '/contact'
+    },
     openGraph: {
       title: 'Contact',
       description: 'Use the form on this page to get in touch.',
