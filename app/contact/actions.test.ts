@@ -25,6 +25,13 @@ const INITIAL = {success: false, error: null}
 describe('sendContactEmail action', () => {
   beforeEach(() => {
     mockSendMail.mockClear()
+    process.env.MAILGUN_LOGIN = 'test@mailgun.test'
+    process.env.MAILGUN_PASSWORD = 'test-password'
+  })
+
+  afterEach(() => {
+    delete process.env.MAILGUN_LOGIN
+    delete process.env.MAILGUN_PASSWORD
   })
 
   it('returns an error when a required field is missing', async () => {
@@ -98,5 +105,26 @@ describe('sendContactEmail action', () => {
     const {from} = mockSendMail.mock.calls[0][0] as {from: string}
     expect(from).not.toContain('\r')
     expect(from).not.toContain('\n')
+  })
+
+  it('uses the email address in the replyTo header', async () => {
+    const {sendContactEmail} = await import('../contact/actions')
+    const fd = makeFormData(VALID)
+    await sendContactEmail(INITIAL, fd)
+    const {replyTo} = mockSendMail.mock.calls[0][0] as {replyTo: string}
+    expect(replyTo).toBe('greg@example.com')
+  })
+
+  it('returns an error when MAILGUN credentials are not configured', async () => {
+    delete process.env.MAILGUN_LOGIN
+    delete process.env.MAILGUN_PASSWORD
+    const {sendContactEmail} = await import('../contact/actions')
+    const fd = makeFormData(VALID)
+    const result = await sendContactEmail(INITIAL, fd)
+    expect(result).toEqual({
+      success: false,
+      error: 'Failed to send message. Please try again.'
+    })
+    expect(mockSendMail).not.toHaveBeenCalled()
   })
 })

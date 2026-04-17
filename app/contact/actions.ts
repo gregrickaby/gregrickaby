@@ -1,18 +1,9 @@
 'use server'
 
+import {isValidService} from '@/lib/services'
 import type {ContactFormState} from '@/lib/types'
 import {escapeHtml} from '@/lib/utils'
 import nodemailer from 'nodemailer'
-
-const ALLOWED_SERVICES = [
-  'monthly retainer',
-  'website hosting',
-  'domain management',
-  'custom development',
-  'other'
-] as const
-
-type AllowedService = (typeof ALLOWED_SERVICES)[number]
 
 export async function sendContactEmail(
   _prevState: ContactFormState,
@@ -32,12 +23,19 @@ export async function sendContactEmail(
     return {success: false, error: 'Please enter a valid email address.'}
   }
 
-  if (!ALLOWED_SERVICES.includes(howCanIHelp as AllowedService)) {
+  if (!isValidService(howCanIHelp)) {
     return {success: false, error: 'Invalid service selection.'}
+  }
+
+  const mailgunLogin = process.env.MAILGUN_LOGIN
+  const mailgunPassword = process.env.MAILGUN_PASSWORD
+  if (!mailgunLogin || !mailgunPassword) {
+    return {success: false, error: 'Failed to send message. Please try again.'}
   }
 
   // Strip CRLF from fields used in email headers to prevent header injection.
   const headerSafeName = name.replaceAll(/[\r\n]/g, ' ')
+  const headerSafeEmail = email.replaceAll(/[\r\n]/g, ' ')
   const headerSafeHowCanIHelp = howCanIHelp.replaceAll(/[\r\n]/g, ' ')
 
   const transport = nodemailer.createTransport({
@@ -45,8 +43,8 @@ export async function sendContactEmail(
     port: 587,
     secure: false,
     auth: {
-      user: process.env.MAILGUN_LOGIN,
-      pass: process.env.MAILGUN_PASSWORD
+      user: mailgunLogin,
+      pass: mailgunPassword
     }
   })
 
@@ -57,8 +55,8 @@ export async function sendContactEmail(
 
   try {
     await transport.sendMail({
-      from: `"${headerSafeName}" <${process.env.MAILGUN_LOGIN}>`,
-      replyTo: email,
+      from: `"${headerSafeName}" <${mailgunLogin}>`,
+      replyTo: headerSafeEmail,
       to: 'gregrickaby@gmail.com',
       subject: `Contact form: ${headerSafeHowCanIHelp}`,
       text: `Name: ${name}\nEmail: ${email}\nHow Can I Help: ${howCanIHelp}\n\n${message}`,

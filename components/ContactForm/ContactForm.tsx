@@ -1,6 +1,7 @@
 'use client'
 
 import {sendContactEmail} from '@/app/contact/actions'
+import {serviceOptions} from '@/lib/services'
 import {INITIAL_STATE} from '@/lib/types'
 import {
   Alert,
@@ -14,14 +15,6 @@ import {
   Title
 } from '@mantine/core'
 import {useActionState} from 'react'
-
-const HOW_CAN_I_HELP_OPTIONS = [
-  {value: 'monthly retainer', label: 'Monthly Retainer'},
-  {value: 'website hosting', label: 'Website Hosting'},
-  {value: 'domain management', label: 'Domain Management'},
-  {value: 'custom development', label: 'Custom Development'},
-  {value: 'other', label: 'Other'}
-]
 
 /**
  * Contact form component with fields for name, email, how you can help,
@@ -74,7 +67,7 @@ export function ContactForm() {
                 type="email"
               />
               <Select
-                data={HOW_CAN_I_HELP_OPTIONS}
+                data={serviceOptions}
                 label="How Can I Help?"
                 name="howCanIHelp"
                 placeholder="Select an option from the list"
