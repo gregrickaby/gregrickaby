@@ -5,6 +5,24 @@ vi.mock('@/app/contact/actions', () => ({
   INITIAL_STATE: {success: false, error: null}
 }))
 
+vi.mock('@/lib/content', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/lib/content')>()
+  return {
+    ...actual,
+    getPageBySlug: vi.fn().mockResolvedValue({
+      meta: {
+        title: 'Contact',
+        slug: 'contact',
+        date: '2024-01-01T00:00:00Z',
+        modified: '2024-01-01T00:00:00Z',
+        type: 'page',
+        description: 'Use the form on this page to get in touch.'
+      },
+      content: ''
+    })
+  }
+})
+
 describe('Contact page', () => {
   it('renders the Contact heading', async () => {
     const {default: ContactPage} = await import('./page')

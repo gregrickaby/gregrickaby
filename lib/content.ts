@@ -2,7 +2,7 @@ import matter from 'gray-matter'
 import type {Paragraph, Root} from 'mdast'
 import fs from 'node:fs'
 import path from 'node:path'
-import {cache} from 'react'
+import {cacheLife, cacheTag} from 'next/cache'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeRaw from 'rehype-raw'
 import rehypeStringify from 'rehype-stringify'
@@ -131,33 +131,43 @@ async function getContentBySlug(
 
 /**
  * Fetches a post by its slug, returning null when not found.
- * Results are memoized per request.
+ * Results are cached across requests and invalidated on deploy.
  *
  * @param slug - The URL-safe slug of the post to fetch.
  * @returns The post data including metadata and rendered content, or null if not found.
  */
-export const getPostBySlug = cache(
-  async (slug: string): Promise<Post | null> => getContentBySlug(slug, 'post')
-)
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  'use cache'
+  cacheLife('max')
+  cacheTag('posts', `post-${slug}`)
+  return getContentBySlug(slug, 'post')
+}
 
 /**
  * Fetches a page by its slug, returning null when not found.
- * Results are memoized per request.
+ * Results are cached across requests and invalidated on deploy.
  *
  * @param slug - The URL-safe slug of the page to fetch.
  * @returns The page data including metadata and rendered content, or null if not found.
  */
-export const getPageBySlug = cache(
-  async (slug: string): Promise<Post | null> => getContentBySlug(slug, 'page')
-)
+export async function getPageBySlug(slug: string): Promise<Post | null> {
+  'use cache'
+  cacheLife('max')
+  cacheTag('pages', `page-${slug}`)
+  return getContentBySlug(slug, 'page')
+}
 
 /**
  * Returns all post metadata sorted by date descending.
- * Results are memoized per request.
+ * Results are cached across requests and invalidated on deploy.
  *
  * @returns An array of post metadata objects sorted newest first.
  */
-export const getAllPosts = cache((): PostMeta[] => {
+export async function getAllPosts(): Promise<PostMeta[]> {
+  'use cache'
+  cacheLife('max')
+  cacheTag('posts')
+
   const postsDir = path.join(contentDir, 'posts')
   if (!fs.existsSync(postsDir)) return []
 
@@ -177,7 +187,7 @@ export const getAllPosts = cache((): PostMeta[] => {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   return posts
-})
+}
 
 /**
  * Returns posts matching a given tag (case-insensitive).
@@ -185,9 +195,9 @@ export const getAllPosts = cache((): PostMeta[] => {
  * @param tag - The tag to filter posts by.
  * @returns An array of post metadata matching the tag.
  */
-export function getPostsByTag(tag: string): PostMeta[] {
+export async function getPostsByTag(tag: string): Promise<PostMeta[]> {
   const lower = tag.toLowerCase()
-  return getAllPosts().filter((p) =>
+  return (await getAllPosts()).filter((p) =>
     p.tags?.some((t) => t.toLowerCase() === lower)
   )
 }
@@ -198,9 +208,11 @@ export function getPostsByTag(tag: string): PostMeta[] {
  * @param category - The category to filter posts by.
  * @returns An array of post metadata matching the category.
  */
-export function getPostsByCategory(category: string): PostMeta[] {
+export async function getPostsByCategory(
+  category: string
+): Promise<PostMeta[]> {
   const lower = category.toLowerCase()
-  return getAllPosts().filter((p) =>
+  return (await getAllPosts()).filter((p) =>
     p.categories?.some((c) => c.toLowerCase() === lower)
   )
 }
@@ -210,9 +222,9 @@ export function getPostsByCategory(category: string): PostMeta[] {
  *
  * @returns An array of unique tag strings.
  */
-export function getAllTags(): string[] {
+export async function getAllTags(): Promise<string[]> {
   const tags = new Set<string>()
-  for (const post of getAllPosts()) {
+  for (const post of await getAllPosts()) {
     for (const tag of post.tags ?? []) {
       tags.add(tag)
     }
@@ -225,9 +237,9 @@ export function getAllTags(): string[] {
  *
  * @returns An array of unique category strings.
  */
-export function getAllCategories(): string[] {
+export async function getAllCategories(): Promise<string[]> {
   const categories = new Set<string>()
-  for (const post of getAllPosts()) {
+  for (const post of await getAllPosts()) {
     for (const cat of post.categories ?? []) {
       categories.add(cat)
     }

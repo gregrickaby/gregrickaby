@@ -1,5 +1,4 @@
 import {getAllPosts, getPostBySlug} from '@/lib/content'
-import type {PostMeta} from '@/lib/types'
 import {render, screen} from '@/test-utils'
 
 vi.mock('next/link', () => ({
@@ -37,7 +36,7 @@ vi.mock('@/lib/content', async (importOriginal) => {
       },
       content: '<p>Welcome to my blog.</p>'
     }),
-    getAllPosts: vi.fn((): PostMeta[] => [
+    getAllPosts: vi.fn().mockResolvedValue([
       {
         title: 'Hello World',
         slug: 'hello-world',
@@ -92,7 +91,7 @@ describe('[slug] page', () => {
   })
 
   it('renders prev/next navigation when the post has neighbors', async () => {
-    vi.mocked(getAllPosts).mockReturnValueOnce([
+    vi.mocked(getAllPosts).mockResolvedValueOnce([
       {
         title: 'Newer Post',
         slug: 'newer-post',

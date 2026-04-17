@@ -50,7 +50,7 @@ vi.mock('@/lib/content', async (importOriginal) => {
   return {
     ...actual,
     getPostsByTag: vi.fn(),
-    getAllTags: vi.fn(() => ['photography', 'HDR', 'moon'])
+    getAllTags: vi.fn().mockResolvedValue(['photography', 'HDR', 'moon'])
   }
 })
 
@@ -59,23 +59,23 @@ const searchParams = Promise.resolve({})
 
 describe('Tag page', () => {
   beforeEach(() => {
-    vi.mocked(getPostsByTag).mockReturnValue(mockPosts)
+    vi.mocked(getPostsByTag).mockResolvedValue(mockPosts)
   })
 
   it('renders posts for the tag', async () => {
-    const {default: TagPage} = await import('./page')
-    render(await TagPage({params, searchParams}))
+    const {TagPageContent} = await import('./page')
+    render(await TagPageContent({params, searchParams}))
     expect(screen.getByText('Tag: photography')).toBeInTheDocument()
     expect(screen.getByText('HDR Photography')).toBeInTheDocument()
     expect(screen.getByText('Moon Shot')).toBeInTheDocument()
   })
 
   it('calls notFound when no posts match', async () => {
-    vi.mocked(getPostsByTag).mockReturnValue([])
+    vi.mocked(getPostsByTag).mockResolvedValue([])
     const {notFound} = await import('next/navigation')
-    const {default: TagPage} = await import('./page')
+    const {TagPageContent} = await import('./page')
     try {
-      render(await TagPage({params, searchParams}))
+      render(await TagPageContent({params, searchParams}))
     } catch {
       // notFound may throw
     }

@@ -1,4 +1,7 @@
-vi.mock('react', () => ({cache: (fn: unknown) => fn}))
+vi.mock('next/cache', () => ({
+  cacheLife: vi.fn(),
+  cacheTag: vi.fn()
+}))
 
 vi.mock('node:fs', () => ({
   default: {

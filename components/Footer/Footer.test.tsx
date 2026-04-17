@@ -1,21 +1,25 @@
 import {render, screen} from '@/test-utils'
 import {Footer} from './Footer'
 
+vi.mock('next/cache', () => ({
+  cacheTag: vi.fn()
+}))
+
 describe('Footer', () => {
-  it('renders copyright text', () => {
-    render(<Footer />)
+  it('renders copyright text', async () => {
+    render(await Footer())
     const year = new Date().getFullYear().toString()
     expect(screen.getByText(new RegExp(year))).toBeInTheDocument()
   })
 
-  it('renders the GitHub link', () => {
-    render(<Footer />)
+  it('renders the GitHub link', async () => {
+    render(await Footer())
     const link = screen.getByRole('link', {name: 'GitHub'})
     expect(link).toHaveAttribute('href', 'https://github.com/gregrickaby')
   })
 
-  it('renders the LinkedIn link', () => {
-    render(<Footer />)
+  it('renders the LinkedIn link', async () => {
+    render(await Footer())
     const link = screen.getByRole('link', {name: 'LinkedIn'})
     expect(link).toHaveAttribute(
       'href',
@@ -23,8 +27,8 @@ describe('Footer', () => {
     )
   })
 
-  it('renders the license text and CC BY-NC-ND 4.0 link', () => {
-    render(<Footer />)
+  it('renders the license text and CC BY-NC-ND 4.0 link', async () => {
+    render(await Footer())
     expect(screen.getByText(/unless otherwise noted/i)).toBeInTheDocument()
     const ccLink = screen.getByRole('link', {name: 'CC BY-NC-ND 4.0'})
     expect(ccLink).toHaveAttribute(
@@ -33,8 +37,8 @@ describe('Footer', () => {
     )
   })
 
-  it('opens external links in new tab', () => {
-    render(<Footer />)
+  it('opens external links in new tab', async () => {
+    render(await Footer())
     const links = screen.getAllByRole('link')
     for (const link of links) {
       expect(link).toHaveAttribute('target', '_blank')

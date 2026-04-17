@@ -50,7 +50,7 @@ vi.mock('@/lib/content', async (importOriginal) => {
   return {
     ...actual,
     getPostsByCategory: vi.fn(),
-    getAllCategories: vi.fn(() => ['Blog', 'Code'])
+    getAllCategories: vi.fn().mockResolvedValue(['Blog', 'Code'])
   }
 })
 
@@ -59,23 +59,23 @@ const searchParams = Promise.resolve({})
 
 describe('Category page', () => {
   beforeEach(() => {
-    vi.mocked(getPostsByCategory).mockReturnValue(mockPosts)
+    vi.mocked(getPostsByCategory).mockResolvedValue(mockPosts)
   })
 
   it('renders posts for the category', async () => {
-    const {default: CategoryPage} = await import('./page')
-    render(await CategoryPage({params, searchParams}))
+    const {CategoryPageContent} = await import('./page')
+    render(await CategoryPageContent({params, searchParams}))
     expect(screen.getByText('Category: Code')).toBeInTheDocument()
     expect(screen.getByText('Code Post One')).toBeInTheDocument()
     expect(screen.getByText('Code Post Two')).toBeInTheDocument()
   })
 
   it('calls notFound when no posts match', async () => {
-    vi.mocked(getPostsByCategory).mockReturnValue([])
+    vi.mocked(getPostsByCategory).mockResolvedValue([])
     const {notFound} = await import('next/navigation')
-    const {default: CategoryPage} = await import('./page')
+    const {CategoryPageContent} = await import('./page')
     try {
-      render(await CategoryPage({params, searchParams}))
+      render(await CategoryPageContent({params, searchParams}))
     } catch {
       // notFound may throw
     }

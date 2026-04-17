@@ -12,7 +12,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const posts = getAllPosts()
+  const posts = await getAllPosts()
   return posts.map((post) => ({slug: post.slug}))
 }
 
@@ -56,7 +56,7 @@ export default async function PostPage({params}: Readonly<PageProps>) {
     notFound()
   }
 
-  const allPosts = getAllPosts()
+  const allPosts = await getAllPosts()
   const currentIndex = allPosts.findIndex((p) => p.slug === slug)
   const prev =
     currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null

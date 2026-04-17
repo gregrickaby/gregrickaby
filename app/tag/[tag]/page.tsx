@@ -5,16 +5,22 @@ import {getAllTags, getPostsByTag} from '@/lib/content'
 import {Title} from '@mantine/core'
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
+import {Suspense} from 'react'
 
 const PAGE_SIZE = 14
 
+/**
+ * Props for the tag page and its content component.
+ */
 interface TagPageProps {
+  /** Resolved route params containing the URL-encoded tag slug. */
   params: Promise<{tag: string}>
+  /** Resolved search parameters, including optional page number. */
   searchParams: Promise<{page?: string}>
 }
 
 export async function generateStaticParams() {
-  return getAllTags().map((tag) => ({tag: encodeURIComponent(tag)}))
+  return (await getAllTags()).map((tag) => ({tag: encodeURIComponent(tag)}))
 }
 
 export async function generateMetadata({
@@ -31,14 +37,20 @@ export async function generateMetadata({
   }
 }
 
-export default async function TagPage({
+/**
+ * Renders the paginated post listing for a tag archive page.
+ *
+ * @param props - The tag page props.
+ * @returns A React element with the tag title, post list, and pagination.
+ */
+export async function TagPageContent({
   params,
   searchParams
 }: Readonly<TagPageProps>) {
   const {tag} = await params
   const {page} = await searchParams
   const decoded = decodeURIComponent(tag)
-  const allPosts = getPostsByTag(decoded)
+  const allPosts = await getPostsByTag(decoded)
 
   if (allPosts.length === 0) notFound()
 
@@ -59,5 +71,23 @@ export default async function TagPage({
         baseUrl={`/tag/${tag}`}
       />
     </>
+  )
+}
+
+/**
+ * Tag page entry point. Wraps the content in a Suspense boundary required
+ * by Cache Components mode.
+ *
+ * @param props - The tag page props.
+ * @returns A React element wrapping the tag post list.
+ */
+export default function TagPage({
+  params,
+  searchParams
+}: Readonly<TagPageProps>) {
+  return (
+    <Suspense>
+      <TagPageContent params={params} searchParams={searchParams} />
+    </Suspense>
   )
 }

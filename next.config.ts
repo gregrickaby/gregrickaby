@@ -3,6 +3,7 @@ import headers from './lib/headers'
 import redirects from './lib/redirects'
 
 const nextConfig: NextConfig = {
+  cacheComponents: true,
   reactCompiler: true,
   images: {
     formats: ['image/avif', 'image/webp'],

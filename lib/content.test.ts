@@ -1,4 +1,7 @@
-vi.mock('react', () => ({cache: (fn: unknown) => fn}))
+vi.mock('next/cache', () => ({
+  cacheLife: vi.fn(),
+  cacheTag: vi.fn()
+}))
 
 vi.mock('node:fs', () => ({
   default: {
@@ -62,12 +65,12 @@ afterEach(() => {
 })
 
 describe('getAllPosts', () => {
-  it('returns an empty array when the posts directory does not exist', () => {
+  it('returns an empty array when the posts directory does not exist', async () => {
     mockExistsSync.mockReturnValue(false)
-    expect(getAllPosts()).toEqual([])
+    expect(await getAllPosts()).toEqual([])
   })
 
-  it('returns posts sorted by date descending', () => {
+  it('returns posts sorted by date descending', async () => {
     const old = {...baseMeta, slug: 'old', date: '2023-01-01T00:00:00Z'}
     const recent = {...baseMeta, slug: 'recent', date: '2024-06-01T00:00:00Z'}
     mockExistsSync.mockReturnValue(true)
@@ -88,12 +91,12 @@ describe('getAllPosts', () => {
         content: ''
       } as unknown as ReturnType<typeof matter>)
 
-    const result = getAllPosts()
+    const result = await getAllPosts()
     expect(result[0].slug).toBe('recent')
     expect(result[1].slug).toBe('old')
   })
 
-  it('skips entries that are not directories', () => {
+  it('skips entries that are not directories', async () => {
     mockExistsSync.mockReturnValue(true)
     mockReaddirSync.mockReturnValue([
       '.DS_Store',
@@ -113,10 +116,10 @@ describe('getAllPosts', () => {
       content: ''
     } as unknown as ReturnType<typeof matter>)
 
-    expect(getAllPosts()).toHaveLength(1)
+    expect(await getAllPosts()).toHaveLength(1)
   })
 
-  it('skips slugs without a content.md file', () => {
+  it('skips slugs without a content.md file', async () => {
     mockExistsSync
       .mockReturnValueOnce(true) // postsDir exists
       .mockReturnValueOnce(false) // content.md does not exist
@@ -125,12 +128,12 @@ describe('getAllPosts', () => {
     >)
     mockStatSync.mockReturnValue({isDirectory: () => true} as unknown as Stats)
 
-    expect(getAllPosts()).toEqual([])
+    expect(await getAllPosts()).toEqual([])
   })
 
-  it('decodes HTML entities in post titles', () => {
+  it('decodes HTML entities in post titles', async () => {
     mockSinglePost({...baseMeta, title: 'Hello &#38; World'})
-    expect(getAllPosts()[0].title).toBe('Hello & World')
+    expect((await getAllPosts())[0].title).toBe('Hello & World')
   })
 })
 
@@ -266,46 +269,46 @@ describe('getPageBySlug', () => {
 })
 
 describe('getPostsByTag', () => {
-  it('returns posts matching the tag (case-insensitive)', () => {
+  it('returns posts matching the tag (case-insensitive)', async () => {
     mockSinglePost({...baseMeta, tags: ['JavaScript', 'TypeScript']})
-    expect(getPostsByTag('javascript')).toHaveLength(1)
+    expect(await getPostsByTag('javascript')).toHaveLength(1)
   })
 
-  it('returns an empty array when no posts match the tag', () => {
+  it('returns an empty array when no posts match the tag', async () => {
     mockSinglePost({...baseMeta, tags: ['React']})
-    expect(getPostsByTag('vue')).toHaveLength(0)
+    expect(await getPostsByTag('vue')).toHaveLength(0)
   })
 
-  it('returns an empty array when posts have no tags', () => {
+  it('returns an empty array when posts have no tags', async () => {
     mockSinglePost(baseMeta)
-    expect(getPostsByTag('anything')).toHaveLength(0)
+    expect(await getPostsByTag('anything')).toHaveLength(0)
   })
 })
 
 describe('getPostsByCategory', () => {
-  it('returns posts matching the category (case-insensitive)', () => {
+  it('returns posts matching the category (case-insensitive)', async () => {
     mockSinglePost({...baseMeta, categories: ['Next.js']})
-    expect(getPostsByCategory('next.js')).toHaveLength(1)
+    expect(await getPostsByCategory('next.js')).toHaveLength(1)
   })
 
-  it('returns an empty array when no posts match the category', () => {
+  it('returns an empty array when no posts match the category', async () => {
     mockSinglePost({...baseMeta, categories: ['React']})
-    expect(getPostsByCategory('Vue')).toHaveLength(0)
+    expect(await getPostsByCategory('Vue')).toHaveLength(0)
   })
 
-  it('returns an empty array when posts have no categories', () => {
+  it('returns an empty array when posts have no categories', async () => {
     mockSinglePost(baseMeta)
-    expect(getPostsByCategory('anything')).toHaveLength(0)
+    expect(await getPostsByCategory('anything')).toHaveLength(0)
   })
 })
 
 describe('getAllTags', () => {
-  it('returns all unique tags sorted alphabetically', () => {
+  it('returns all unique tags sorted alphabetically', async () => {
     mockSinglePost({...baseMeta, tags: ['zebra', 'apple', 'mango']})
-    expect(getAllTags()).toEqual(['apple', 'mango', 'zebra'])
+    expect(await getAllTags()).toEqual(['apple', 'mango', 'zebra'])
   })
 
-  it('deduplicates tags across posts', () => {
+  it('deduplicates tags across posts', async () => {
     mockExistsSync.mockReturnValue(true)
     mockReaddirSync.mockReturnValue([
       'post-1',
@@ -325,22 +328,22 @@ describe('getAllTags', () => {
         content: ''
       } as unknown as ReturnType<typeof matter>)
 
-    expect(getAllTags()).toEqual(['css', 'react', 'typescript'])
+    expect(await getAllTags()).toEqual(['css', 'react', 'typescript'])
   })
 
-  it('returns an empty array when no posts have tags', () => {
+  it('returns an empty array when no posts have tags', async () => {
     mockSinglePost(baseMeta)
-    expect(getAllTags()).toEqual([])
+    expect(await getAllTags()).toEqual([])
   })
 })
 
 describe('getAllCategories', () => {
-  it('returns all unique categories sorted alphabetically', () => {
+  it('returns all unique categories sorted alphabetically', async () => {
     mockSinglePost({...baseMeta, categories: ['React', 'CSS', 'JavaScript']})
-    expect(getAllCategories()).toEqual(['CSS', 'JavaScript', 'React'])
+    expect(await getAllCategories()).toEqual(['CSS', 'JavaScript', 'React'])
   })
 
-  it('deduplicates categories across posts', () => {
+  it('deduplicates categories across posts', async () => {
     mockExistsSync.mockReturnValue(true)
     mockReaddirSync.mockReturnValue([
       'post-1',
@@ -360,11 +363,11 @@ describe('getAllCategories', () => {
         content: ''
       } as unknown as ReturnType<typeof matter>)
 
-    expect(getAllCategories()).toEqual(['CSS', 'Next.js', 'React'])
+    expect(await getAllCategories()).toEqual(['CSS', 'Next.js', 'React'])
   })
 
-  it('returns an empty array when no posts have categories', () => {
+  it('returns an empty array when no posts have categories', async () => {
     mockSinglePost(baseMeta)
-    expect(getAllCategories()).toEqual([])
+    expect(await getAllCategories()).toEqual([])
   })
 })

@@ -9,9 +9,14 @@
 
 .imageWrapper {
   height: 200px;
-  position: relative;
   overflow: hidden;
   border-radius: var(--mantine-radius-md);
+}
+
+.imageLink {
+  display: block;
+  position: relative;
+  height: 100%;
 }
 
 .image {

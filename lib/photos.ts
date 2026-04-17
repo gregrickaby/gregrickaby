@@ -2,7 +2,7 @@ import exifr from 'exifr'
 import sizeOf from 'image-size'
 import fs from 'node:fs'
 import path from 'node:path'
-import {cache} from 'react'
+import {cacheLife, cacheTag} from 'next/cache'
 import type {PhotoMeta} from './types'
 
 /**
@@ -197,11 +197,15 @@ async function readPhotoMeta(
  * image dimensions, and returns them sorted newest to oldest by date taken.
  * Falls back to filename sort descending when date is unavailable.
  *
- * Wrapped in React cache() so the work is done once per request.
+ * Results are cached across requests and invalidated on deploy.
  *
  * @returns An array of PhotoMeta objects sorted newest first.
  */
-export const getPhotos = cache(async (): Promise<PhotoMeta[]> => {
+export async function getPhotos(): Promise<PhotoMeta[]> {
+  'use cache'
+  cacheLife('max')
+  cacheTag('photos')
+
   if (!fs.existsSync(photosDir)) return []
 
   const files = fs
@@ -223,4 +227,4 @@ export const getPhotos = cache(async (): Promise<PhotoMeta[]> => {
     if (b.dateTaken) return 1
     return b.filename.localeCompare(a.filename)
   })
-})
+}

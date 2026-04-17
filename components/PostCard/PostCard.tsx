@@ -32,7 +32,11 @@ export function PostCard({post, priority = false}: Readonly<PostCardProps>) {
     <Box className={styles.card}>
       {featuredImage && (
         <Box className={styles.imageWrapper}>
-          <AppLink href={href} aria-label={post.title}>
+          <AppLink
+            href={href}
+            aria-label={post.title}
+            className={styles.imageLink}
+          >
             <Image
               alt={post.title}
               loading={priority ? 'eager' : 'lazy'}

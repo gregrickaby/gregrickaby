@@ -2,10 +2,8 @@ import {siteConfig} from '@/lib/config'
 import {getAllPosts} from '@/lib/content'
 import {MetadataRoute} from 'next'
 
-export const dynamic = 'force-static'
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  const posts = getAllPosts()
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const posts = await getAllPosts()
 
   const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${siteConfig.url}/${post.slug}`,

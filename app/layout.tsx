@@ -89,12 +89,12 @@ const mono = Roboto_Mono({
   variable: '--font-mono'
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const posts = getAllPosts()
+  const posts = await getAllPosts()
   const webSiteGraph = buildWebSiteGraph()
 
   const analyticsEnabled =

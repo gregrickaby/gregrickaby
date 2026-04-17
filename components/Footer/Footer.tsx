@@ -1,21 +1,27 @@
 import {AppLink} from '@/components/AppLink/AppLink'
 import {siteConfig} from '@/lib/config'
 import {Container, Group, Stack, Text} from '@mantine/core'
+import {cacheTag} from 'next/cache'
 import classes from './Footer.module.css'
 
 /**
  * Site footer component displaying the copyright notice, license info,
  * and social links (GitHub and LinkedIn).
  *
+ * Rendered as a Cache Component so that `new Date()` is evaluated at cache
+ * time rather than per-request, satisfying the Next.js 16 prerender rules.
+ *
  * @returns A React element with the site footer.
  */
-export function Footer() {
+export async function Footer() {
+  'use cache'
+  cacheTag('footer')
   return (
     <footer>
       <Container py="xl">
         <Group justify="space-between" align="flex-start">
           <Stack gap={4}>
-            <Text size="sm" c="dimmed">
+            <Text size="sm" c="dimmed" suppressHydrationWarning>
               &copy; 1981-{new Date().getFullYear()} {siteConfig.name}
             </Text>
             <Text size="sm" c="dimmed">

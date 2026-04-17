@@ -61,35 +61,35 @@ const searchParams = Promise.resolve({})
 
 describe('Home page', () => {
   beforeEach(() => {
-    vi.mocked(getAllPosts).mockReturnValue(mockPosts)
+    vi.mocked(getAllPosts).mockResolvedValue(mockPosts)
   })
   it('renders post cards', async () => {
-    const {default: HomePage} = await import('./page')
-    render(await HomePage({searchParams}))
+    const {HomePageContent} = await import('./page')
+    render(await HomePageContent({searchParams}))
     expect(screen.getByText('First Post')).toBeInTheDocument()
     expect(screen.getByText('Second Post')).toBeInTheDocument()
   })
 
   it('renders a next link when there are more pages', async () => {
-    vi.mocked(getAllPosts).mockReturnValueOnce(manyMockPosts)
-    const {default: HomePage} = await import('./page')
-    render(await HomePage({searchParams}))
+    vi.mocked(getAllPosts).mockResolvedValueOnce(manyMockPosts)
+    const {HomePageContent} = await import('./page')
+    render(await HomePageContent({searchParams}))
     const nextLink = document.querySelector('link[rel="next"]')
     expect(nextLink).not.toBeNull()
     expect(nextLink?.getAttribute('href')).toContain('page=2')
   })
 
   it('renders a prev link on page 2', async () => {
-    vi.mocked(getAllPosts).mockReturnValueOnce(manyMockPosts)
-    const {default: HomePage} = await import('./page')
-    render(await HomePage({searchParams: Promise.resolve({page: '2'})}))
+    vi.mocked(getAllPosts).mockResolvedValueOnce(manyMockPosts)
+    const {HomePageContent} = await import('./page')
+    render(await HomePageContent({searchParams: Promise.resolve({page: '2'})}))
     const prevLink = document.querySelector('link[rel="prev"]')
     expect(prevLink).not.toBeNull()
   })
 
   it('does not render next/prev links on a single-page site', async () => {
-    const {default: HomePage} = await import('./page')
-    render(await HomePage({searchParams}))
+    const {HomePageContent} = await import('./page')
+    render(await HomePageContent({searchParams}))
     expect(document.querySelector('link[rel="next"]')).toBeNull()
     expect(document.querySelector('link[rel="prev"]')).toBeNull()
   })
