@@ -254,3 +254,26 @@ export async function getAllCategories(): Promise<string[]> {
   }
   return [...categories].sort((a, b) => a.localeCompare(b))
 }
+
+/**
+ * Return the posts immediately before and after a given slug in a
+ * date-descending list. Posts are sorted newest-first, so "prev" is the
+ * older post (higher index) and "next" is the newer post (lower index).
+ *
+ * Returns `{ prev: null, next: null }` if the slug is not found.
+ *
+ * @param posts - All posts, sorted date-descending.
+ * @param slug  - The slug of the current post.
+ * @returns An object with `prev` (older post) and `next` (newer post), either of which may be `null`.
+ */
+export function getAdjacentPosts(
+  posts: PostMeta[],
+  slug: string
+): {prev: PostMeta | null; next: PostMeta | null} {
+  const index = posts.findIndex((p) => p.slug === slug)
+  if (index === -1) return {prev: null, next: null}
+  return {
+    prev: index < posts.length - 1 ? posts[index + 1] : null,
+    next: index > 0 ? posts[index - 1] : null
+  }
+}

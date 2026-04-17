@@ -1,6 +1,6 @@
 import {Article} from '@/components/Article/Article'
 import {PostNavigation} from '@/components/PostNavigation/PostNavigation'
-import {getAllPosts, getPostBySlug} from '@/lib/content'
+import {getAllPosts, getPostBySlug, getAdjacentPosts} from '@/lib/content'
 import {buildContentMetadata} from '@/lib/metadata'
 import {buildBlogPostingGraph, serializeSchema} from '@/lib/schema'
 import {Metadata, ResolvingMetadata} from 'next'
@@ -35,10 +35,7 @@ export default async function PostPage({params}: Readonly<PageProps>) {
   // getAllPosts() returns posts sorted newest-first, so the previous post
   // (older) is at index + 1 and the next post (newer) is at index - 1.
   const allPosts = await getAllPosts()
-  const currentIndex = allPosts.findIndex((p) => p.slug === slug)
-  const prev =
-    currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null
-  const next = currentIndex > 0 ? allPosts[currentIndex - 1] : null
+  const {prev, next} = getAdjacentPosts(allPosts, slug)
 
   const jsonLd = buildBlogPostingGraph(post.meta)
 

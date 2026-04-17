@@ -19,6 +19,7 @@ vi.mock('gray-matter', () => ({
 import matter from 'gray-matter'
 import fs, {type Stats} from 'node:fs'
 import {
+  getAdjacentPosts,
   getAllCategories,
   getAllPosts,
   getAllTags,
@@ -369,5 +370,60 @@ describe('getAllCategories', () => {
   it('returns an empty array when no posts have categories', async () => {
     mockSinglePost(baseMeta)
     expect(await getAllCategories()).toEqual([])
+  })
+})
+
+describe('getAdjacentPosts', () => {
+  const makePost = (slug: string, date: string) =>
+    ({...baseMeta, slug, date, modified: date}) as typeof baseMeta & {
+      slug: string
+      date: string
+      modified: string
+    }
+
+  // Sorted newest-first: post-3 (2024-03), post-2 (2024-02), post-1 (2024-01)
+  const posts = [
+    makePost('post-3', '2024-03-01T00:00:00Z'),
+    makePost('post-2', '2024-02-01T00:00:00Z'),
+    makePost('post-1', '2024-01-01T00:00:00Z')
+  ]
+
+  it('returns { prev: null, next: null } when slug is not found', () => {
+    expect(getAdjacentPosts(posts, 'does-not-exist')).toEqual({
+      prev: null,
+      next: null
+    })
+  })
+
+  it('returns { prev: olderPost, next: null } for the newest post', () => {
+    const result = getAdjacentPosts(posts, 'post-3')
+    expect(result.prev?.slug).toBe('post-2')
+    expect(result.next).toBeNull()
+  })
+
+  it('returns { prev: null, next: newerPost } for the oldest post', () => {
+    const result = getAdjacentPosts(posts, 'post-1')
+    expect(result.prev).toBeNull()
+    expect(result.next?.slug).toBe('post-2')
+  })
+
+  it('returns correct prev and next for a middle post', () => {
+    const result = getAdjacentPosts(posts, 'post-2')
+    expect(result.prev?.slug).toBe('post-1')
+    expect(result.next?.slug).toBe('post-3')
+  })
+
+  it('returns { prev: null, next: null } for a single-post list', () => {
+    const single = [makePost('only-post', '2024-01-01T00:00:00Z')]
+    expect(getAdjacentPosts(single, 'only-post')).toEqual({
+      prev: null,
+      next: null
+    })
+  })
+
+  it('regression: prev is null (not posts[0]) when slug is not found', () => {
+    const result = getAdjacentPosts(posts, 'does-not-exist')
+    expect(result.prev).not.toBe(posts[0])
+    expect(result.prev).toBeNull()
   })
 })
