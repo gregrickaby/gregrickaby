@@ -16,11 +16,11 @@ export const siteConfig = {
     github: 'https://github.com/gregrickaby'
   },
   nav: [
-    {label: 'About', href: '/about'},
-    {label: 'Contact', href: '/contact'},
-    {label: 'Fun Stuff', href: '/fun-stuff'},
-    {label: 'Photos', href: '/photos'},
-    {label: 'Resume', href: '/resume'},
+    {label: 'About', href: '/about', priority: 0.8},
+    {label: 'Contact', href: '/contact', priority: 0.6},
+    {label: 'Fun Stuff', href: '/fun-stuff', priority: 0.6},
+    {label: 'Photos', href: '/photos', priority: 0.6},
+    {label: 'Resume', href: '/resume', priority: 0.8},
     {label: 'RSS', href: '/feed.xml', external: true}
   ]
 } as const

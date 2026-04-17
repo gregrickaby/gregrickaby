@@ -14,6 +14,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7
   }))
 
+  const navEntries: MetadataRoute.Sitemap = siteConfig.nav
+    .filter((item) => !('external' in item && item.external))
+    .map((item) => ({
+      url: `${siteConfig.url}${item.href}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 'priority' in item ? item.priority : 0.7
+    }))
+
   return [
     {
       url: siteConfig.url,
@@ -21,36 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1
     },
-    {
-      url: `${siteConfig.url}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8
-    },
-    {
-      url: `${siteConfig.url}/resume`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8
-    },
-    {
-      url: `${siteConfig.url}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6
-    },
-    {
-      url: `${siteConfig.url}/photos`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6
-    },
-    {
-      url: `${siteConfig.url}/fun-stuff`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6
-    },
+    ...navEntries,
     ...postEntries
   ]
 }

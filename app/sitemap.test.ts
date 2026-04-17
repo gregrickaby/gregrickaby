@@ -24,57 +24,72 @@ vi.mock('@/lib/content', async (importOriginal) => {
 })
 
 describe('sitemap.ts', () => {
-  it('returns sitemap entries for all posts plus static pages', async () => {
+  it('returns the correct total number of entries', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    // home + 5 nav pages (RSS excluded) + 2 posts = 8
+    expect(sitemap()).toHaveLength(8)
+  })
+
+  it('includes the home page at priority 1', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    const entry = sitemap().find((e) => e.url === 'https://gregrickaby.com')
+    expect(entry).toMatchObject({priority: 1, changeFrequency: 'weekly'})
+  })
+
+  it('includes /about at priority 0.8', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    const entry = sitemap().find(
+      (e) => e.url === 'https://gregrickaby.com/about'
+    )
+    expect(entry).toMatchObject({priority: 0.8})
+  })
+
+  it('includes /resume at priority 0.8', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    const entry = sitemap().find(
+      (e) => e.url === 'https://gregrickaby.com/resume'
+    )
+    expect(entry).toMatchObject({priority: 0.8})
+  })
+
+  it('includes /contact at priority 0.6', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    const entry = sitemap().find(
+      (e) => e.url === 'https://gregrickaby.com/contact'
+    )
+    expect(entry).toMatchObject({priority: 0.6})
+  })
+
+  it('includes /photos at priority 0.6', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    const entry = sitemap().find(
+      (e) => e.url === 'https://gregrickaby.com/photos'
+    )
+    expect(entry).toMatchObject({priority: 0.6})
+  })
+
+  it('includes /fun-stuff at priority 0.6', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    const entry = sitemap().find(
+      (e) => e.url === 'https://gregrickaby.com/fun-stuff'
+    )
+    expect(entry).toMatchObject({priority: 0.6})
+  })
+
+  it('excludes the RSS feed from the sitemap', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    const rssEntry = sitemap().find((e) => e.url.includes('feed.xml'))
+    expect(rssEntry).toBeUndefined()
+  })
+
+  it('includes post entries at priority 0.7', async () => {
     const {default: sitemap} = await import('./sitemap')
     const result = sitemap()
-
-    // Should have home + about + resume + contact + photos + fun-stuff + 2 posts = 8 entries
-    expect(result).toHaveLength(8)
-
-    // First entry is the home page
-    expect(result[0]).toMatchObject({
-      url: 'https://gregrickaby.com',
-      priority: 1
-    })
-
-    // Second entry is the about page
-    expect(result[1]).toMatchObject({
-      url: 'https://gregrickaby.com/about',
-      priority: 0.8
-    })
-
-    // Third entry is the resume page
-    expect(result[2]).toMatchObject({
-      url: 'https://gregrickaby.com/resume',
-      priority: 0.8
-    })
-
-    // Fourth entry is the contact page
-    expect(result[3]).toMatchObject({
-      url: 'https://gregrickaby.com/contact',
-      priority: 0.6
-    })
-
-    // Fifth entry is the photos page
-    expect(result[4]).toMatchObject({
-      url: 'https://gregrickaby.com/photos',
-      priority: 0.6
-    })
-
-    // Sixth entry is the fun-stuff page
-    expect(result[5]).toMatchObject({
-      url: 'https://gregrickaby.com/fun-stuff',
-      priority: 0.6
-    })
-
-    // Post entries
-    expect(result[6]).toMatchObject({
-      url: 'https://gregrickaby.com/first-post',
-      priority: 0.7
-    })
-    expect(result[7]).toMatchObject({
-      url: 'https://gregrickaby.com/second-post',
-      priority: 0.7
-    })
+    expect(
+      result.find((e) => e.url === 'https://gregrickaby.com/first-post')
+    ).toMatchObject({priority: 0.7})
+    expect(
+      result.find((e) => e.url === 'https://gregrickaby.com/second-post')
+    ).toMatchObject({priority: 0.7})
   })
 })
