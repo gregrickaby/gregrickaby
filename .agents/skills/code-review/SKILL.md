@@ -178,6 +178,12 @@ npm run validate
 
 Fix any errors `validate` surfaces (TypeScript, lint, test failures, coverage gaps) and re-run until clean.
 
+After validation passes, run a full build to ensure nothing is broken:
+
+```bash
+npm run build
+```
+
 ### Step 6: Report
 
 Present a final summary:
