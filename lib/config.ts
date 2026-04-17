@@ -24,3 +24,8 @@ export const siteConfig = {
     {label: 'RSS', href: '/feed.xml', external: true}
   ]
 } as const
+
+/**
+ * Type representing the full site configuration object.
+ */
+export type SiteConfig = typeof siteConfig
