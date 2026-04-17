@@ -20,7 +20,7 @@ export function decodeEntities(str: string): string {
  * @returns A correctly typed and decoded `PostMeta` value.
  */
 export function normalizeMeta(data: Record<string, unknown>): PostMeta {
-  const meta = data as unknown as PostMeta
+  const meta = {...data} as unknown as PostMeta
   if (typeof meta.title === 'string') meta.title = decodeEntities(meta.title)
   if (typeof meta.description === 'string')
     meta.description = decodeEntities(meta.description)
@@ -56,7 +56,8 @@ export function formatPostDate(dateString: string): string {
   return new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
+    timeZone: 'UTC'
   }).format(new Date(dateString))
 }
 
@@ -72,7 +73,7 @@ export function getFeaturedImagePath(meta: PostMeta): string | null {
     meta.type === 'post'
       ? `/content/posts/${meta.slug}`
       : `/content/pages/${meta.slug}`
-  return `${basePath}/${meta.featuredImage.replace('./', '')}`
+  return `${basePath}/${meta.featuredImage.replace(/^\.\//, '')}`
 }
 
 /**
@@ -84,6 +85,28 @@ export function getFeaturedImagePath(meta: PostMeta): string | null {
 export function getFirstContentImageSrc(html: string): string | null {
   const match = /<img[^>]+src="([^"]+)"/.exec(html)
   return match ? match[1] : null
+}
+
+/**
+ * Resolves the featured image path to render above article content.
+ *
+ * Returns null if:
+ * - No featured image is set in metadata
+ * - The featured image path matches the first image src in the rendered content
+ *   (prevents showing the same image twice)
+ *
+ * @param meta - The post or page metadata.
+ * @param content - The rendered HTML content string.
+ * @returns The featured image path to display, or null when it should be suppressed.
+ */
+export function resolveFeaturedImage(
+  meta: PostMeta,
+  content: string
+): string | null {
+  const featured = getFeaturedImagePath(meta)
+  if (!featured) return null
+  if (featured === getFirstContentImageSrc(content)) return null
+  return featured
 }
 
 /**
@@ -123,6 +146,7 @@ export function formatPhotoDate(dateString: string): string {
   return new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'short',
-    day: 'numeric'
+    day: 'numeric',
+    timeZone: 'UTC'
   }).format(new Date(dateString))
 }

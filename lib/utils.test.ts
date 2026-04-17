@@ -8,6 +8,7 @@ import {
   getFeaturedImagePath,
   getFirstContentImageSrc,
   normalizeMeta,
+  resolveFeaturedImage,
   resolveImagePaths
 } from './utils'
 
@@ -170,6 +171,18 @@ describe('normalizeMeta', () => {
     expect(result.title).toBeUndefined()
     expect(result.description).toBeUndefined()
   })
+
+  it('does not mutate the input data object', () => {
+    const input = {
+      title: 'Hello &#38; World',
+      slug: 'test',
+      date: '2024-01-01',
+      modified: '2024-01-01',
+      type: 'post'
+    }
+    normalizeMeta(input)
+    expect(input.title).toBe('Hello &#38; World')
+  })
 })
 
 describe('resolveImagePaths', () => {
@@ -207,5 +220,48 @@ describe('formatPhotoDate', () => {
 
   it('formats a different date correctly', () => {
     expect(formatPhotoDate('2000-01-15T12:00:00Z')).toBe('Jan 15, 2000')
+  })
+})
+
+describe('resolveFeaturedImage', () => {
+  const base: PostMeta = {
+    title: 'T',
+    slug: 'my-post',
+    date: '2024-01-01',
+    modified: '2024-01-01',
+    type: 'post'
+  }
+
+  it('returns the path when featured image differs from first content image', () => {
+    const meta = {...base, featuredImage: 'hero.jpg'}
+    const content = '<img src="/content/posts/my-post/other.jpg" />'
+    expect(resolveFeaturedImage(meta, content)).toBe(
+      '/content/posts/my-post/hero.jpg'
+    )
+  })
+
+  it('returns null when featured image matches first content image', () => {
+    const meta = {...base, featuredImage: 'hero.jpg'}
+    const content = '<img src="/content/posts/my-post/hero.jpg" />'
+    expect(resolveFeaturedImage(meta, content)).toBeNull()
+  })
+
+  it('returns null when no featuredImage is set', () => {
+    const content = '<img src="/content/posts/my-post/hero.jpg" />'
+    expect(resolveFeaturedImage(base, content)).toBeNull()
+  })
+
+  it('returns the path when featured image is set and content contains no images', () => {
+    const meta = {...base, featuredImage: 'hero.jpg'}
+    expect(resolveFeaturedImage(meta, '<p>text only</p>')).toBe(
+      '/content/posts/my-post/hero.jpg'
+    )
+  })
+
+  it('returns the path when featured image is set and content is an empty string', () => {
+    const meta = {...base, featuredImage: 'hero.jpg'}
+    expect(resolveFeaturedImage(meta, '')).toBe(
+      '/content/posts/my-post/hero.jpg'
+    )
   })
 })

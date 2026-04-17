@@ -73,8 +73,7 @@ describe('Article', () => {
     const contentWithSameImage =
       '<img src="/content/posts/test-post/featured.jpg" alt="featured" /><p>Hello world</p>'
     render(<Article meta={meta} content={contentWithSameImage} />)
-    // Only one image should be present (from the content), not a duplicate
-    expect(screen.getAllByRole('img')).toHaveLength(1)
+    expect(screen.queryByAltText('Test Post')).not.toBeInTheDocument()
   })
 
   it('does not render the date or categories for pages', () => {

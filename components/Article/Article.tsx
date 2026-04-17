@@ -1,11 +1,7 @@
 import {AppLink} from '@/components/AppLink/AppLink'
 import {ArticleContent} from '@/components/ArticleContent/ArticleContent'
 import type {PostMeta} from '@/lib/types'
-import {
-  formatPostDate,
-  getFeaturedImagePath,
-  getFirstContentImageSrc
-} from '@/lib/utils'
+import {formatPostDate, resolveFeaturedImage} from '@/lib/utils'
 import {Box, Group, Text, Title, Typography} from '@mantine/core'
 import Image from 'next/image'
 import styles from './Article.module.css'
@@ -30,10 +26,7 @@ interface ArticleProps {
  * @returns A React element with the full article.
  */
 export function Article({meta, content}: Readonly<ArticleProps>) {
-  const featuredImage = getFeaturedImagePath(meta)
-  const firstContentImage = getFirstContentImageSrc(content)
-  const showFeaturedImage =
-    featuredImage !== null && featuredImage !== firstContentImage
+  const featuredImage = resolveFeaturedImage(meta, content)
 
   return (
     <article className={styles.article}>
@@ -64,7 +57,7 @@ export function Article({meta, content}: Readonly<ArticleProps>) {
         )}
       </header>
 
-      {showFeaturedImage && (
+      {featuredImage && (
         <Box className={styles.featuredImage}>
           <Image
             alt={meta.title}
