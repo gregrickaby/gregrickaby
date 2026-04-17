@@ -11,11 +11,16 @@ npm run test         # Vitest + coverage
 npm run validate     # tsc + lint + format + test
 ```
 
-## Docs First
+<!-- BEGIN:nextjs-agent-rules -->
 
-Before any Next.js, Mantine, or Axiom work, read the relevant docs — training data is outdated.
+## Next.js: ALWAYS read docs before coding
 
-- **Next.js:** `node_modules/next/dist/docs/`
+Before any Next.js work, find and read the relevant doc in `node_modules/next/dist/docs/`. Your training data is outdated — the docs are the source of truth.
+
+<!-- END:nextjs-agent-rules -->
+
+## Additional Docs
+
 - **Mantine:** https://mantine.dev/llms.txt
 - **Axiom:** https://axiom.co/docs/llms.txt
 
