@@ -1,30 +1,37 @@
-import {PostList} from '@/components/PostList/PostList'
-import {PostPagination} from '@/components/PostPagination/PostPagination'
+import {FilteredPostsContent} from '@/components/FilteredPostsContent/FilteredPostsContent'
 import {siteConfig} from '@/lib/config'
 import {getAllCategories, getPostsByCategory} from '@/lib/content'
-import {Title} from '@mantine/core'
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
 
-const PAGE_SIZE = 14
-
 /**
- * Props for the category page and its content component.
+ * Props for the category listing page and its content component.
  */
 interface CategoryPageProps {
-  /** Resolved route params containing the URL-encoded category slug. */
+  /** Resolved route params containing the category slug. */
   params: Promise<{category: string}>
   /** Resolved search parameters, including optional page number. */
   searchParams: Promise<{page?: string}>
 }
 
+/**
+ * Pre-renders a route segment for each category.
+ *
+ * @returns An array of param objects, one per category.
+ */
 export async function generateStaticParams() {
   return (await getAllCategories()).map((category) => ({
     category: encodeURIComponent(category)
   }))
 }
 
+/**
+ * Generates SEO metadata for the category listing page.
+ *
+ * @param props - The category page props.
+ * @returns Next.js Metadata for the category.
+ */
 export async function generateMetadata({
   params
 }: CategoryPageProps): Promise<Metadata> {
@@ -33,14 +40,12 @@ export async function generateMetadata({
   return {
     title: `Posts in "${decoded}" - ${siteConfig.name}`,
     description: `All posts in the "${decoded}" category.`,
-    alternates: {
-      canonical: `/category/${category}`
-    }
+    alternates: {canonical: `/category/${category}`}
   }
 }
 
 /**
- * Renders the paginated post listing for a category archive page.
+ * Renders the paginated post listing for a category.
  *
  * @param props - The category page props.
  * @returns A React element with the category title, post list, and pagination.
@@ -56,32 +61,21 @@ export async function CategoryPageContent({
 
   if (allPosts.length === 0) notFound()
 
-  const currentPage = Math.max(1, Number.parseInt(page ?? '1', 10))
-  const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
-  const start = (currentPage - 1) * PAGE_SIZE
-  const posts = allPosts.slice(start, start + PAGE_SIZE)
-
   return (
-    <>
-      <Title order={1} mb="xl" ta="center">
-        Category: {decoded}
-      </Title>
-      <PostList posts={posts} />
-      <PostPagination
-        total={totalPages}
-        current={currentPage}
-        baseUrl={`/category/${category}`}
-      />
-    </>
+    <FilteredPostsContent
+      title={`Category: ${decoded}`}
+      posts={allPosts}
+      page={page}
+      baseUrl={`/category/${category}`}
+    />
   )
 }
 
 /**
- * Category page entry point. Wraps the content in a Suspense boundary required
- * by Cache Components mode.
+ * Category page entry point. Wraps the content in a Suspense boundary.
  *
  * @param props - The category page props.
- * @returns A React element wrapping the category post list.
+ * @returns A React element wrapping the paginated category post list.
  */
 export default function CategoryPage({
   params,

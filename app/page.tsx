@@ -2,9 +2,8 @@ import {PostList} from '@/components/PostList/PostList'
 import {PostPagination} from '@/components/PostPagination/PostPagination'
 import {siteConfig} from '@/lib/config'
 import {getAllPosts} from '@/lib/content'
+import {paginate, parsePage} from '@/lib/pagination'
 import {Suspense} from 'react'
-
-const PAGE_SIZE = 14
 
 export const metadata = {
   title: `${siteConfig.name} - My Blog`,
@@ -30,11 +29,12 @@ interface HomePageProps {
  */
 export async function HomePageContent({searchParams}: Readonly<HomePageProps>) {
   const {page} = await searchParams
-  const currentPage = Math.max(1, Number.parseInt(page ?? '1', 10))
   const allPosts = await getAllPosts()
-  const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
-  const start = (currentPage - 1) * PAGE_SIZE
-  const posts = allPosts.slice(start, start + PAGE_SIZE)
+  const {
+    items: posts,
+    currentPage,
+    totalPages
+  } = paginate(allPosts, parsePage(page))
 
   const nextUrl =
     currentPage < totalPages

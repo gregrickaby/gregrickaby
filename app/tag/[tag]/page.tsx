@@ -1,28 +1,35 @@
-import {PostList} from '@/components/PostList/PostList'
-import {PostPagination} from '@/components/PostPagination/PostPagination'
+import {FilteredPostsContent} from '@/components/FilteredPostsContent/FilteredPostsContent'
 import {siteConfig} from '@/lib/config'
 import {getAllTags, getPostsByTag} from '@/lib/content'
-import {Title} from '@mantine/core'
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
 
-const PAGE_SIZE = 14
-
 /**
- * Props for the tag page and its content component.
+ * Props for the tag listing page and its content component.
  */
 interface TagPageProps {
-  /** Resolved route params containing the URL-encoded tag slug. */
+  /** Resolved route params containing the tag slug. */
   params: Promise<{tag: string}>
   /** Resolved search parameters, including optional page number. */
   searchParams: Promise<{page?: string}>
 }
 
+/**
+ * Pre-renders a route segment for each tag.
+ *
+ * @returns An array of param objects, one per tag.
+ */
 export async function generateStaticParams() {
   return (await getAllTags()).map((tag) => ({tag: encodeURIComponent(tag)}))
 }
 
+/**
+ * Generates SEO metadata for the tag listing page.
+ *
+ * @param props - The tag page props.
+ * @returns Next.js Metadata for the tag.
+ */
 export async function generateMetadata({
   params
 }: TagPageProps): Promise<Metadata> {
@@ -31,14 +38,12 @@ export async function generateMetadata({
   return {
     title: `Posts tagged "${decoded}" - ${siteConfig.name}`,
     description: `All posts tagged with "${decoded}".`,
-    alternates: {
-      canonical: `/tag/${tag}`
-    }
+    alternates: {canonical: `/tag/${tag}`}
   }
 }
 
 /**
- * Renders the paginated post listing for a tag archive page.
+ * Renders the paginated post listing for a tag.
  *
  * @param props - The tag page props.
  * @returns A React element with the tag title, post list, and pagination.
@@ -54,32 +59,21 @@ export async function TagPageContent({
 
   if (allPosts.length === 0) notFound()
 
-  const currentPage = Math.max(1, Number.parseInt(page ?? '1', 10))
-  const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
-  const start = (currentPage - 1) * PAGE_SIZE
-  const posts = allPosts.slice(start, start + PAGE_SIZE)
-
   return (
-    <>
-      <Title order={1} mb="xl" ta="center">
-        Tag: {decoded}
-      </Title>
-      <PostList posts={posts} />
-      <PostPagination
-        total={totalPages}
-        current={currentPage}
-        baseUrl={`/tag/${tag}`}
-      />
-    </>
+    <FilteredPostsContent
+      title={`Tag: ${decoded}`}
+      posts={allPosts}
+      page={page}
+      baseUrl={`/tag/${tag}`}
+    />
   )
 }
 
 /**
- * Tag page entry point. Wraps the content in a Suspense boundary required
- * by Cache Components mode.
+ * Tag page entry point. Wraps the content in a Suspense boundary.
  *
  * @param props - The tag page props.
- * @returns A React element wrapping the tag post list.
+ * @returns A React element wrapping the paginated tag post list.
  */
 export default function TagPage({
   params,
