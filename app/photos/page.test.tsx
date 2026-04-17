@@ -1,13 +1,21 @@
 import {render, screen} from '@/test-utils'
 
-vi.mock('@fancyapps/ui/dist/fancybox/', () => ({
-  Fancybox: {
-    bind: vi.fn(),
-    unbind: vi.fn()
-  }
+const {mockLightbox} = vi.hoisted(() => ({
+  mockLightbox: vi.fn().mockReturnValue(null)
 }))
 
-vi.mock('@fancyapps/ui/dist/fancybox/fancybox.css', () => ({}))
+vi.mock('yet-another-react-lightbox', () => ({default: mockLightbox}))
+vi.mock('yet-another-react-lightbox/plugins/captions', () => ({default: {}}))
+vi.mock('yet-another-react-lightbox/styles.css', () => ({}))
+vi.mock('yet-another-react-lightbox/plugins/captions.css', () => ({}))
+
+vi.mock('react-photo-album', () => ({
+  MasonryPhotoAlbum: ({photos}: {photos: Array<{src: string; alt?: string}>}) =>
+    photos.map((photo) => (
+      <img key={photo.src} alt={photo.alt} src={photo.src} />
+    ))
+}))
+vi.mock('react-photo-album/masonry.css', () => ({}))
 
 vi.mock('@/lib/photos', () => ({
   getPhotos: vi.fn().mockResolvedValue([

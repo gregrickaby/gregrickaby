@@ -28,7 +28,6 @@
     "@axiomhq/logging": "^0.2.0",
     "@axiomhq/nextjs": "^0.2.0",
     "@axiomhq/react": "^0.2.0",
-    "@fancyapps/ui": "^6.1.13",
     "@mantine/core": "^9.0.2",
     "@mantine/hooks": "^9.0.2",
     "@mantine/spotlight": "^9.0.2",
@@ -39,13 +38,15 @@
     "nodemailer": "^8.0.5",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-photo-album": "^3.6.0",
     "rehype-pretty-code": "^0.14.3",
     "rehype-raw": "^7.0.0",
     "rehype-stringify": "^10.0.1",
     "remark-gfm": "^4.0.1",
     "remark-rehype": "^11.1.2",
     "sanitize-html": "^2.17.3",
-    "shiki": "^4.0.2"
+    "shiki": "^4.0.2",
+    "yet-another-react-lightbox": "^3.31.0"
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^2.1.6",

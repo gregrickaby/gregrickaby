@@ -1,12 +1,15 @@
 .gallery {
-  align-items: flex-start;
-  display: flex;
-  gap: var(--mantine-spacing-md);
+  margin-left: calc(50% - min(550px, 50vw));
+  padding: 0 var(--mantine-spacing-lg);
+  width: min(1100px, 100vw);
 }
 
-.column {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: var(--mantine-spacing-md);
+.lightbox :global(.yarl__slide_title_container),
+.lightbox :global(.yarl__slide_description_container) {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.lightbox :global(.yarl__slide_description) {
+  font-size: var(--mantine-font-size-sm);
+  margin-top: -12px;
 }

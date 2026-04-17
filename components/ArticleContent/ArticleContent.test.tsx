@@ -1,56 +1,48 @@
 import {render, screen} from '@/test-utils'
-import {ArticleContent} from './ArticleContent'
 
-vi.mock('@fancyapps/ui/dist/fancybox/', () => ({
-  Fancybox: {bind: vi.fn(), unbind: vi.fn()}
+const {mockLightbox} = vi.hoisted(() => ({
+  mockLightbox: vi.fn().mockReturnValue(null)
 }))
-vi.mock('@fancyapps/ui/dist/fancybox/fancybox.css', () => ({}))
+
+vi.mock('yet-another-react-lightbox', () => ({default: mockLightbox}))
+vi.mock('yet-another-react-lightbox/plugins/captions', () => ({default: {}}))
+vi.mock('yet-another-react-lightbox/styles.css', () => ({}))
+vi.mock('yet-another-react-lightbox/plugins/captions.css', () => ({}))
 
 describe('ArticleContent', () => {
-  it('renders HTML content', () => {
+  it('renders HTML content', async () => {
+    const {ArticleContent} = await import('./ArticleContent')
     render(<ArticleContent content="<p>Hello world</p>" />)
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
-  it('wraps images with fancybox links', () => {
+  it('renders images from HTML content', async () => {
+    const {ArticleContent} = await import('./ArticleContent')
     render(<ArticleContent content='<img src="/photo.jpg" alt="A photo" />' />)
-    const link = screen.getByRole('link')
-    expect(link).toHaveAttribute('data-fancybox')
-    expect(link).toHaveAttribute('href', '/photo.jpg')
+    expect(screen.getByAltText('A photo')).toBeInTheDocument()
   })
 
-  it('sets data-caption from alt text', () => {
+  it('renders multiple images from HTML content', async () => {
+    const {ArticleContent} = await import('./ArticleContent')
     render(
-      <ArticleContent content='<img src="/photo.jpg" alt="My caption" />' />
+      <ArticleContent content='<img src="/a.jpg" alt="First" /><img src="/b.jpg" alt="Second" />' />
     )
-    const link = screen.getByRole('link')
-    expect(link).toHaveAttribute('data-caption', 'My caption')
+    expect(screen.getByAltText('First')).toBeInTheDocument()
+    expect(screen.getByAltText('Second')).toBeInTheDocument()
   })
 
-  it('sets data-caption from figcaption when available', () => {
+  it('renders the Lightbox component', async () => {
+    const {ArticleContent} = await import('./ArticleContent')
+    render(<ArticleContent content="<p>Content</p>" />)
+    expect(mockLightbox).toHaveBeenCalled()
+  })
+
+  it('renders with figcaption markup without errors', async () => {
+    const {ArticleContent} = await import('./ArticleContent')
     const html =
-      '<figure><img src="/photo.jpg" alt="alt" /><figcaption>Figure caption</figcaption></figure>'
+      '<figure><img src="/photo.jpg" alt="alt" /><figcaption>Caption</figcaption></figure>'
     render(<ArticleContent content={html} />)
-    const link = screen.getByRole('link')
-    expect(link).toHaveAttribute('data-caption', 'Figure caption')
-  })
-
-  it('groups sibling images under the same data-fancybox value', () => {
-    const html =
-      '<div><img src="/a.jpg" alt="first" /><img src="/b.jpg" alt="second" /></div>'
-    render(<ArticleContent content={html} />)
-    const links = screen.getAllByRole('link')
-    expect(links).toHaveLength(2)
-    expect(links[0]).toHaveAttribute('data-fancybox', 'gallery')
-    expect(links[1]).toHaveAttribute('data-fancybox', 'gallery')
-  })
-
-  it('gives solo images a unique data-fancybox value', () => {
-    render(<ArticleContent content='<img src="/solo.jpg" alt="Solo" />' />)
-    const link = screen.getByRole('link')
-    expect(link).toHaveAttribute(
-      'data-fancybox',
-      expect.stringContaining('single-')
-    )
+    expect(screen.getByAltText('alt')).toBeInTheDocument()
+    expect(screen.getByText('Caption')).toBeInTheDocument()
   })
 })

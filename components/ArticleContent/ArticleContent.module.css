@@ -5,33 +5,29 @@
 }
 
 /* Single images: center when alone in a paragraph */
-.articleContent p:has(> img:only-child) img,
-.articleContent p:has(> a:only-child > img) img {
+.articleContent p:has(> img:only-child) img {
   display: block;
   margin: 0 auto;
 }
 
-/* Gallery grid: multiple images in a paragraph (before and after Fancybox wrapping) */
-.articleContent p:has(> img ~ img),
-.articleContent p:has(> a:has(> img) ~ a:has(> img)) {
+/* Gallery grid: multiple images in a paragraph */
+.articleContent p:has(> img ~ img) {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 0.5rem;
   margin-block: 1.5rem;
 }
 
-.articleContent p:has(> img ~ img) img,
-.articleContent p:has(> a:has(> img) ~ a:has(> img)) img {
-  width: 100%;
+.articleContent p:has(> img ~ img) img {
+  border-radius: var(--mantine-radius-md);
+  display: block;
   height: 200px;
   object-fit: cover;
-  display: block;
-  border-radius: var(--mantine-radius-md);
   transition: transform 0.2s ease;
+  width: 100%;
 }
 
-.articleContent p:has(> img ~ img) img:hover,
-.articleContent p:has(> a:has(> img) ~ a:has(> img)) img:hover {
+.articleContent p:has(> img ~ img) img:hover {
   transform: scale(1.03);
 }
 
@@ -93,4 +89,23 @@
 .articleContent table th {
   background-color: var(--mantine-primary-color);
   font-weight: 600;
+}
+
+/* Wide alignment: breaks out ~210px beyond the article column on each side */
+.articleContent :global(.alignwide) {
+  margin-left: calc(50% - min(550px, 50vw));
+  width: min(1100px, 100vw);
+}
+
+/* Full alignment: spans the full viewport width */
+.articleContent :global(.alignfull) {
+  margin-left: calc(50% - 50vw);
+  width: 100vw;
+}
+
+.articleContent :global(.alignwide) img,
+.articleContent :global(.alignfull) img {
+  display: block;
+  height: auto;
+  width: 100%;
 }

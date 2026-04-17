@@ -1,4 +1,4 @@
-import type {PhotoMeta, PostMeta} from './types'
+import type {PostMeta} from './types'
 
 /**
  * Decodes numeric HTML entities (e.g. `&#38;` → `&`) in a string.
@@ -111,34 +111,6 @@ export function escapeHtml(value: string): string {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#x27;')
-}
-
-/**
- * Builds a Fancybox caption HTML string for a photo, combining the title,
- * an optional date, and a summary of EXIF settings.
- *
- * @param photo - The photo metadata.
- * @returns An HTML string suitable for the `data-caption` attribute.
- */
-export function buildPhotoCaption(photo: PhotoMeta): string {
-  const parts: string[] = []
-
-  const titleLine = photo.dateTaken
-    ? `${photo.title} - ${formatPhotoDate(photo.dateTaken)}`
-    : photo.title
-  parts.push(titleLine)
-
-  const exifParts: string[] = []
-  if (photo.camera) exifParts.push(photo.camera)
-  if (photo.lens) exifParts.push(photo.lens)
-  if (photo.focalLength) exifParts.push(photo.focalLength)
-  if (photo.aperture) exifParts.push(photo.aperture)
-  if (photo.shutterSpeed) exifParts.push(photo.shutterSpeed)
-  if (photo.iso) exifParts.push(`ISO ${photo.iso}`)
-
-  if (exifParts.length > 0) parts.push(exifParts.join(' · '))
-
-  return parts.join('<br />')
 }
 
 /**
