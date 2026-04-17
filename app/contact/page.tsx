@@ -1,41 +1,29 @@
 import {ContactForm} from '@/components/ContactForm/ContactForm'
 import {siteConfig} from '@/lib/config'
 import {getPageBySlug} from '@/lib/content'
+import {buildContentMetadata} from '@/lib/metadata'
 import {buildWebPageGraph, serializeSchema} from '@/lib/schema'
-import {getFeaturedImagePath} from '@/lib/utils'
 import {Metadata, ResolvingMetadata} from 'next'
+import {notFound} from 'next/navigation'
 
 export async function generateMetadata(
   _: object,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const page = await getPageBySlug('contact')
-
-  const featuredImage = page ? getFeaturedImagePath(page.meta) : null
-  const previousImages = (await parent).openGraph?.images ?? []
-
-  return {
-    title: 'Contact',
-    description: 'Use the form on this page to get in touch.',
-    alternates: {
-      canonical: '/contact'
-    },
-    openGraph: {
-      title: 'Contact',
-      description: 'Use the form on this page to get in touch.',
-      url: `${siteConfig.url}/contact`,
-      images: [
-        ...(featuredImage ? [{url: `${siteConfig.url}${featuredImage}`}] : []),
-        ...previousImages
-      ]
-    }
-  }
+  return page ? buildContentMetadata(page.meta, '/contact', parent) : {}
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const page = await getPageBySlug('contact')
+
+  if (!page) {
+    notFound()
+  }
+
   const jsonLd = buildWebPageGraph({
-    title: 'Contact',
-    description: 'Use the form on this page to get in touch.',
+    title: page.meta.title,
+    description: page.meta.description ?? siteConfig.description,
     path: 'contact'
   })
 

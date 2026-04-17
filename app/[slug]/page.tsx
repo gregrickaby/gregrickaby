@@ -1,9 +1,8 @@
 import {Article} from '@/components/Article/Article'
 import {PostNavigation} from '@/components/PostNavigation/PostNavigation'
-import {siteConfig} from '@/lib/config'
 import {getAllPosts, getPostBySlug} from '@/lib/content'
+import {buildContentMetadata} from '@/lib/metadata'
 import {buildBlogPostingGraph, serializeSchema} from '@/lib/schema'
-import {getFeaturedImagePath} from '@/lib/utils'
 import {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
 
@@ -22,30 +21,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const {slug} = await params
   const post = await getPostBySlug(slug)
-  if (!post) return {}
-
-  const featuredImage = getFeaturedImagePath(post.meta)
-  const previousImages = (await parent).openGraph?.images ?? []
-
-  return {
-    title: post.meta.title,
-    description: post.meta.description,
-    alternates: {
-      canonical: `/${slug}`
-    },
-    openGraph: {
-      title: post.meta.title,
-      description: post.meta.description,
-      type: 'article',
-      publishedTime: post.meta.date,
-      modifiedTime: post.meta.modified,
-      url: `${siteConfig.url}/${post.meta.slug}`,
-      images: [
-        ...(featuredImage ? [{url: `${siteConfig.url}${featuredImage}`}] : []),
-        ...previousImages
-      ]
-    }
-  }
+  return post ? buildContentMetadata(post.meta, `/${slug}`, parent) : {}
 }
 
 export default async function PostPage({params}: Readonly<PageProps>) {
@@ -56,6 +32,8 @@ export default async function PostPage({params}: Readonly<PageProps>) {
     notFound()
   }
 
+  // getAllPosts() returns posts sorted newest-first, so the previous post
+  // (older) is at index + 1 and the next post (newer) is at index - 1.
   const allPosts = await getAllPosts()
   const currentIndex = allPosts.findIndex((p) => p.slug === slug)
   const prev =

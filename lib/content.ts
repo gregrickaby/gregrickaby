@@ -3,6 +3,7 @@ import type {Paragraph, Root} from 'mdast'
 import fs from 'node:fs'
 import path from 'node:path'
 import {cacheLife, cacheTag} from 'next/cache'
+import {cache} from 'react'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeRaw from 'rehype-raw'
 import rehypeStringify from 'rehype-stringify'
@@ -131,39 +132,46 @@ async function getContentBySlug(
 
 /**
  * Fetches a post by its slug, returning null when not found.
- * Results are cached across requests and invalidated on deploy.
+ * Results are deduplicated within a render pass via React cache() and
+ * persisted across requests via Next.js 'use cache'.
  *
  * @param slug - The URL-safe slug of the post to fetch.
  * @returns The post data including metadata and rendered content, or null if not found.
  */
-export async function getPostBySlug(slug: string): Promise<Post | null> {
-  'use cache'
-  cacheLife('max')
-  cacheTag('posts', `post-${slug}`)
-  return getContentBySlug(slug, 'post')
-}
+export const getPostBySlug = cache(
+  async (slug: string): Promise<Post | null> => {
+    'use cache'
+    cacheLife('max')
+    cacheTag('posts', `post-${slug}`)
+    return getContentBySlug(slug, 'post')
+  }
+)
 
 /**
  * Fetches a page by its slug, returning null when not found.
- * Results are cached across requests and invalidated on deploy.
+ * Results are deduplicated within a render pass via React cache() and
+ * persisted across requests via Next.js 'use cache'.
  *
  * @param slug - The URL-safe slug of the page to fetch.
  * @returns The page data including metadata and rendered content, or null if not found.
  */
-export async function getPageBySlug(slug: string): Promise<Post | null> {
-  'use cache'
-  cacheLife('max')
-  cacheTag('pages', `page-${slug}`)
-  return getContentBySlug(slug, 'page')
-}
+export const getPageBySlug = cache(
+  async (slug: string): Promise<Post | null> => {
+    'use cache'
+    cacheLife('max')
+    cacheTag('pages', `page-${slug}`)
+    return getContentBySlug(slug, 'page')
+  }
+)
 
 /**
  * Returns all post metadata sorted by date descending.
- * Results are cached across requests and invalidated on deploy.
+ * Results are deduplicated within a render pass via React cache() and
+ * persisted across requests via Next.js 'use cache'.
  *
  * @returns An array of post metadata objects sorted newest first.
  */
-export async function getAllPosts(): Promise<PostMeta[]> {
+export const getAllPosts = cache(async (): Promise<PostMeta[]> => {
   'use cache'
   cacheLife('max')
   cacheTag('posts')
@@ -187,7 +195,7 @@ export async function getAllPosts(): Promise<PostMeta[]> {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   return posts
-}
+})
 
 /**
  * Returns posts matching a given tag (case-insensitive).

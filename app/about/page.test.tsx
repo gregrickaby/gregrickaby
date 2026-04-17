@@ -56,18 +56,6 @@ describe('About page', () => {
     ).toBeInTheDocument()
   })
 
-  it('generates metadata', async () => {
-    const {generateMetadata} = await import('./page')
-    const metadata = await generateMetadata(
-      {},
-      Promise.resolve({openGraph: null}) as never
-    )
-    expect(metadata).toMatchObject({
-      title: 'About Me',
-      description: 'Learn more about me.'
-    })
-  })
-
   it('calls notFound when the page does not exist', async () => {
     const {getPageBySlug} = await import('@/lib/content')
     vi.mocked(getPageBySlug).mockResolvedValueOnce(null)

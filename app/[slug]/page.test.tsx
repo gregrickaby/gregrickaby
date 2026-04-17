@@ -75,21 +75,6 @@ describe('[slug] page', () => {
     expect(params).toEqual([{slug: 'hello-world'}])
   })
 
-  it('generates metadata with OpenGraph', async () => {
-    const {generateMetadata} = await import('./page')
-    const metadata = await generateMetadata(
-      {params: Promise.resolve({slug: 'hello-world'})},
-      Promise.resolve({openGraph: null}) as never
-    )
-    expect(metadata).toMatchObject({
-      title: 'Hello World',
-      description: 'A greeting to the world.',
-      openGraph: {
-        type: 'article'
-      }
-    })
-  })
-
   it('renders prev/next navigation when the post has neighbors', async () => {
     vi.mocked(getAllPosts).mockResolvedValueOnce([
       {

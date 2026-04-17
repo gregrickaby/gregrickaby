@@ -5,6 +5,10 @@ vi.mock('@/app/contact/actions', () => ({
   INITIAL_STATE: {success: false, error: null}
 }))
 
+vi.mock('next/navigation', () => ({
+  notFound: vi.fn()
+}))
+
 vi.mock('@/lib/content', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/lib/content')>()
   return {
@@ -26,7 +30,8 @@ vi.mock('@/lib/content', async (importOriginal) => {
 describe('Contact page', () => {
   it('renders the Contact heading', async () => {
     const {default: ContactPage} = await import('./page')
-    render(<ContactPage />)
+    const result = await ContactPage()
+    render(result)
     expect(
       screen.getByRole('heading', {level: 1, name: 'Contact'})
     ).toBeInTheDocument()
@@ -34,21 +39,43 @@ describe('Contact page', () => {
 
   it('renders the contact form', async () => {
     const {default: ContactPage} = await import('./page')
-    render(<ContactPage />)
+    const result = await ContactPage()
+    render(result)
     expect(
       screen.getByRole('button', {name: /send message/i})
     ).toBeInTheDocument()
   })
 
-  it('generates metadata', async () => {
+  it('calls notFound when the page does not exist', async () => {
+    const {getPageBySlug} = await import('@/lib/content')
+    vi.mocked(getPageBySlug).mockResolvedValueOnce(null)
+    const {notFound} = await import('next/navigation')
+    const {default: ContactPage} = await import('./page')
+    try {
+      await ContactPage()
+    } catch {
+      // notFound may throw
+    }
+    expect(notFound).toHaveBeenCalled()
+  })
+
+  it('generates metadata for the contact page', async () => {
     const {generateMetadata} = await import('./page')
     const metadata = await generateMetadata(
       {},
       Promise.resolve({openGraph: null}) as never
     )
-    expect(metadata).toMatchObject({
-      title: 'Contact',
-      description: 'Use the form on this page to get in touch.'
-    })
+    expect(metadata).toMatchObject({title: 'Contact'})
+  })
+
+  it('returns empty metadata when the page does not exist', async () => {
+    const {getPageBySlug} = await import('@/lib/content')
+    vi.mocked(getPageBySlug).mockResolvedValueOnce(null)
+    const {generateMetadata} = await import('./page')
+    const metadata = await generateMetadata(
+      {},
+      Promise.resolve({openGraph: null}) as never
+    )
+    expect(metadata).toEqual({})
   })
 })

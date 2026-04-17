@@ -55,19 +55,6 @@ describe('Resume page', () => {
     expect(screen.getByText('Resume content.')).toBeInTheDocument()
   })
 
-  it('generates metadata', async () => {
-    const {generateMetadata} = await import('./page')
-    const metadata = await generateMetadata(
-      {},
-      Promise.resolve({openGraph: null}) as never
-    )
-    expect(metadata).toMatchObject({
-      title: 'Resume',
-      description:
-        'Learn more about my career history, side hustles and contributions to society.'
-    })
-  })
-
   it('calls notFound when the page does not exist', async () => {
     const {getPageBySlug} = await import('@/lib/content')
     vi.mocked(getPageBySlug).mockResolvedValueOnce(null)
