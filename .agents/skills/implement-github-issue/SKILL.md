@@ -27,14 +27,13 @@ Read the full body: problem statement, proposed interface, dependency strategy, 
 
 ### 2. Explore All Relevant Source Files
 
-Read every file the issue references **and** their existing test files. Also read:
+Spawn one `Explore` sub-agent with a brief that includes:
 
-- `lib/types.ts` — shared types used by the new/changed code
-- `lib/config.ts` — site constants (often needed)
-- Any existing `lib/*.ts` the new module will call (e.g. `lib/utils.ts`)
-- `test-utils/render.tsx` — to match the existing test style
+- Every file path referenced in the issue
+- A request to also return: existing test files for those paths, `lib/types.ts`, `lib/config.ts`, any `lib/*.ts` the new module will call, and `test-utils/render.tsx`
+- Instruction to report file contents, existing test patterns, types used, and any callers of the affected modules
 
-Use parallel reads wherever files are independent.
+Use the consolidated summary the agent returns as the basis for the plan. Do NOT manually chain file reads — keep the main agent's context clean for implementation.
 
 ### 3. Identify Special Cases and Ambiguities
 
@@ -94,7 +93,11 @@ This runs `tsc --noEmit`, ESLint, Prettier, and Vitest with coverage. Fix every 
 
 If `validate` fails, fix the errors and re-run. Repeat until clean.
 
-### 7. Report
+### 7. Code Review
+
+Load and run the [Code Review skill](../code-review/SKILL.md) on all changed files. This is **required** — do not skip it and do not declare the task done before it completes. Fix every CRITICAL and IMPORTANT finding before moving on.
+
+### 8. Report
 
 Summarise what was done:
 
@@ -102,6 +105,8 @@ Summarise what was done:
 - Files modified
 - Tests added / removed
 - Final test count and pass status
+
+DO NOT COMMIT OR PUSH — the user will review the changes and commit themselves.
 
 ## Project Conventions Quick Reference
 

@@ -5,28 +5,6 @@ applyTo: '**/*.tsx,**/*.ts,**/*.jsx,**/*.js,**/*.mjs,**/*.css,**/*.md'
 
 # Code Standards
 
-## Project Structure
-
-```
-app/                  # App Router pages and layouts
-components/           # Reusable UI components
-  Header/
-    Header.tsx
-    Header.module.css
-    Header.test.tsx
-lib/
-  content.ts          # Server-only: reads Markdown via fs
-  types.ts            # Shared types (safe for server and client)
-  config.ts           # siteConfig constants
-  hooks/              # Custom React hooks (client-side only)
-public/content/       # Markdown content with co-located images
-  <slug>/content.md
-scripts/              # Build-time scripts (generate-feed.mjs)
-test-utils/           # Custom RTL render wrapper with MantineProvider
-```
-
-- Place component tests and CSS modules beside the component file
-
 ## Helper/Utility Functions
 
 - All helper/utility functions must be in `lib/`. Never place alongside components or pages.
@@ -44,7 +22,7 @@ test-utils/           # Custom RTL render wrapper with MantineProvider
 - All pages live in `app/<route>/page.tsx`
 - Every page must export `generateMetadata()` for SEO
 - Dynamic post pages use `generateStaticParams()` to pre-render all slugs
-- Do not create API routes — this is a content blog with no backend
+- API routes are limited to infrastructure concerns (`api/axiom` logging proxy, `api/healthcheck`); do not add business logic API routes
 - Do not configure `output: 'export'`
 
 ## Mantine 9 UI
@@ -135,11 +113,29 @@ export default function PostPagination({
 - Mock `lib/content.ts` — never read the filesystem in a test
 - Aim for 100% coverage on new code
 
+## Logging (Axiom)
+
+- Server-side logging: import `logger` from `lib/axiom/server.ts`; wrap route handlers with `withAxiom`
+- Client-side logging: use the `useLogger` hook from `lib/axiom/client.ts`; it proxies through `api/axiom` so `AXIOM_TOKEN` is never exposed to the browser
+- Web Vitals are reported via the `<WebVitals>` component from `lib/axiom/client.ts`
+- Unhandled request errors are captured via `instrumentation.ts` — do not duplicate error logging in route handlers
+- Never import `lib/axiom/server.ts` in client components — it uses `'server-only'` and throws at runtime
+
+## Cache Components (Next.js 16)
+
+- Enable with `cacheComponents: true` in `next.config.ts` (replaces `experimental.ppr`)
+- Use `'use cache'` directive at file, component, or function level for async data that does not need a fresh fetch every request
+- Call `cacheLife()` inside a `'use cache'` block to set a built-in profile (`'minutes'`, `'hours'`, `'days'`, `'weeks'`, `'max'`)
+- Call `cacheTag()` to tag cached content; use `revalidateTag()` for background revalidation or `updateTag()` when the same request must see fresh data
+- Never call `cookies()`, `headers()`, or read `searchParams` inside `'use cache'` — extract them outside and pass as arguments (cache key includes serializable arguments automatically)
+- Wrap dynamic content (runtime cookies/headers) in `<Suspense>` so the static shell ships immediately
+- Replace all `unstable_cache()` calls with the `'use cache'` directive
+
 ## Security
 
 - Secrets in `.env.local` only — never commit them
 - Server-only secrets must not use `NEXT_PUBLIC_` prefix
-- `dangerouslySetInnerHTML` is only in `ArticleContent.tsx` with sanitized input — do not add new usages
+- `dangerouslySetInnerHTML` is allowed only when the HTML has been run through the sanitizer first — never pass unsanitized input
 - Run `npm audit` periodically; address critical/high vulnerabilities
 
 ## Task Completion
