@@ -110,14 +110,14 @@ DO NOT COMMIT OR PUSH — the user will review the changes and commit themselves
 
 ## Project Conventions Quick Reference
 
-| Concern                   | Rule                                                                                                                    |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Component type            | Server by default; `'use client'` only for hooks/state/effects/browser APIs                                             |
-| `lib/content.ts`          | Server-only — never import in client components                                                                         |
-| Links                     | `<AppLink>` — never `<a>` or Mantine `<Anchor>`                                                                         |
-| Images                    | `next/image` — never `<img>`                                                                                            |
-| Colors                    | `tomato` theme; `light-dark()` in CSS; no hardcoded hex values                                                          |
-| Secrets                   | `.env.local` only; no `NEXT_PUBLIC_` for server-only values                                                             |
-| `dangerouslySetInnerHTML` | Only in `ArticleContent.tsx` with sanitized input                                                                       |
-| Tests                     | Vitest globals (no imports of `describe`/`it`/`expect`/`vi`); custom `render` from `test-utils/`; mock `lib/content.ts` |
-| Naming                    | Dirs: `kebab-case`; Components: `PascalCase`; lib files: `camelCase`; constants: `UPPER_SNAKE_CASE`                     |
+| Concern                   | Rule                                                                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Component type            | Server by default; `'use client'` only for hooks/state/effects/browser APIs                                                     |
+| `lib/content.ts`          | Server-only — never import in client components                                                                                 |
+| Links                     | `<AppLink>` — never `<a>` or Mantine `<Anchor>`                                                                                 |
+| Images                    | `next/image` — never `<img>`                                                                                                    |
+| Colors                    | `tomato` theme; `light-dark()` in CSS; no hardcoded hex values                                                                  |
+| Secrets                   | `.env.local` only; no `NEXT_PUBLIC_` for server-only values                                                                     |
+| `dangerouslySetInnerHTML` | Allowed with sanitized/serialized input — `ArticleContent.tsx` (rendered HTML) and page files (JSON-LD via `serializeSchema()`) |
+| Tests                     | Vitest globals (no imports of `describe`/`it`/`expect`/`vi`); custom `render` from `test-utils/`; mock `lib/content.ts`         |
+| Naming                    | Dirs: `kebab-case`; Components: `PascalCase`; lib files: `camelCase`; constants: `UPPER_SNAKE_CASE`                             |

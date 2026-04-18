@@ -65,7 +65,7 @@ Check every field against `PostMeta`:
 
 - Fix misspellings and clear typos
 - Do not rephrase for style — only correct clear errors
-- Follow `.github/instructions/writing-style.instructions.md`
+- Follow `.agents/instructions/writing-style.instructions.md`
 
 ## Output
 

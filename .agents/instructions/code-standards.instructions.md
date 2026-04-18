@@ -111,7 +111,7 @@ export default function PostPagination({
 - Vitest globals enabled — do not import `describe`, `it`, `expect`, or `vi`
 - Always use the custom `render` from `test-utils/`, not `@testing-library/react` directly
 - Mock `lib/content.ts` — never read the filesystem in a test
-- Aim for 100% coverage on new code
+- Aim for 100% coverage on new code; note coverage is scoped to `app/**` by default (`lib/` and `components/` require explicit test files but are not included in the coverage report)
 
 ## Logging (Axiom)
 
@@ -130,6 +130,11 @@ export default function PostPagination({
 - Never call `cookies()`, `headers()`, or read `searchParams` inside `'use cache'` — extract them outside and pass as arguments (cache key includes serializable arguments automatically)
 - Wrap dynamic content (runtime cookies/headers) in `<Suspense>` so the static shell ships immediately
 - Replace all `unstable_cache()` calls with the `'use cache'` directive
+
+## React Compiler
+
+- `reactCompiler: true` is enabled in `next.config.ts` — the compiler handles memoization automatically
+- Do not add `useMemo`, `useCallback`, or `React.memo` manually
 
 ## Security
 

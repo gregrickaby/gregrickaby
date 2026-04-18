@@ -34,6 +34,7 @@ app/              # App Router pages/layouts (server components by default)
   [slug]/         # Dynamic post/page route
   category/[category]/
   tag/[tag]/
+  not-found.tsx   # Custom 404 page ('use client')
 components/       # UI components — each has .tsx + .module.css + .test.tsx
 instrumentation.ts  # Axiom error reporting (Next.js instrumentation hook)
 proxy.ts          # Request logging middleware (Axiom)
@@ -48,6 +49,9 @@ lib/
   schema.ts       # JSON-LD structured data builders
   staticPage.tsx  # createStaticPage() factory for markdown-backed static pages
   utils.ts        # Shared utility functions
+  pagination.ts   # PAGE_SIZE constant + paginate() helpers
+  services.ts     # serviceOptions list + isValidService()
+  feed.ts         # buildFeedXml() — used by build-time RSS script
   axiom/          # Logging: server.ts (server-only), client.ts (useLogger, WebVitals)
   hooks/          # Custom React hooks (client-side only)
 public/content/   # Markdown + co-located images
@@ -70,6 +74,7 @@ Deployed on Coolify via nixpacks (Node 24). No `output: 'export'`.
 - `dangerouslySetInnerHTML` is allowed only with sanitized input — never pass raw user content
 - Vitest globals enabled — do not import `describe`, `it`, `expect`; use custom `render` from `test-utils/`; mock `lib/content.ts`
 - Cache async data with `'use cache'` + `cacheLife()` + `cacheTag()`; wrap dynamic content in `<Suspense>`
+- `reactCompiler: true` is enabled — do not add `useMemo`, `useCallback`, or `React.memo` manually
 - Server-side logging via `lib/axiom/server.ts`; client-side via `useLogger` from `lib/axiom/client.ts`
 - Never commit or push changes on the developer's behalf
 
