@@ -95,6 +95,11 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const posts = await getAllPosts()
+  const searchPosts = posts.map(({slug, title, description}) => ({
+    slug,
+    title,
+    description
+  }))
   const webSiteGraph = buildWebSiteGraph()
 
   const analyticsEnabled =
@@ -124,7 +129,7 @@ export default async function RootLayout({
           theme={theme}
         >
           <Header />
-          <Search posts={posts} />
+          <Search posts={searchPosts} />
           <Container py="xl" component="main">
             {children}
           </Container>

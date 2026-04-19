@@ -52,8 +52,7 @@ export async function TagPageContent({
   params,
   searchParams
 }: Readonly<TagPageProps>) {
-  const {tag} = await params
-  const {page} = await searchParams
+  const [{tag}, {page}] = await Promise.all([params, searchParams])
   const decoded = decodeURIComponent(tag)
   const allPosts = await getPostsByTag(decoded)
 

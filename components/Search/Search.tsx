@@ -1,10 +1,23 @@
 'use client'
 
-import type {PostMeta} from '@/lib/types'
 import {ActionIcon} from '@mantine/core'
 import {Spotlight, spotlight} from '@mantine/spotlight'
 import {IconSearch} from '@tabler/icons-react'
 import {useRouter} from 'next/navigation'
+
+/**
+ * Minimal post shape needed by the search index.
+ *
+ * @interface
+ */
+interface SearchPost {
+  /** URL slug for the post. */
+  slug: string
+  /** Display title. */
+  title: string
+  /** Optional short description shown in search results. */
+  description?: string
+}
 
 /**
  * Props for the Search component.
@@ -12,8 +25,8 @@ import {useRouter} from 'next/navigation'
  * @interface
  */
 interface SearchProps {
-  /** Array of post metadata for searchable posts. */
-  posts: PostMeta[]
+  /** Array of posts available for search. */
+  posts: SearchPost[]
 }
 
 /**

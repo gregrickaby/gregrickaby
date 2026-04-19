@@ -1,5 +1,17 @@
 import type {PostMeta} from './types'
 
+/** Matches numeric HTML entities like &#38; */
+const NUMERIC_ENTITY_RE = /&#(\d+);/g
+
+/** Matches relative src attributes like src="./filename" */
+const RELATIVE_SRC_RE = /src="\.\/([^"]+)"/g
+
+/** Matches a leading ./ path prefix */
+const RELATIVE_PREFIX_RE = /^\.\//
+
+/** Matches the first img src attribute in an HTML string */
+const FIRST_IMG_SRC_RE = /<img[^>]+src="([^"]+)"/
+
 /**
  * Decodes numeric HTML entities (e.g. `&#38;` → `&`) in a string.
  *
@@ -7,7 +19,7 @@ import type {PostMeta} from './types'
  * @returns The decoded string.
  */
 export function decodeEntities(str: string): string {
-  return str.replaceAll(/&#(\d+);/g, (_, code: string) =>
+  return str.replaceAll(NUMERIC_ENTITY_RE, (_, code: string) =>
     String.fromCodePoint(Number.parseInt(code, 10))
   )
 }
@@ -43,7 +55,7 @@ export function resolveImagePaths(
 ): string {
   const basePath =
     type === 'post' ? `/content/posts/${slug}` : `/content/pages/${slug}`
-  return htmlContent.replaceAll(/src="\.\/([^"]+)"/g, `src="${basePath}/$1"`)
+  return htmlContent.replaceAll(RELATIVE_SRC_RE, `src="${basePath}/$1"`)
 }
 
 /**
@@ -73,7 +85,7 @@ export function getFeaturedImagePath(meta: PostMeta): string | null {
     meta.type === 'post'
       ? `/content/posts/${meta.slug}`
       : `/content/pages/${meta.slug}`
-  return `${basePath}/${meta.featuredImage.replace(/^\.\//, '')}`
+  return `${basePath}/${meta.featuredImage.replace(RELATIVE_PREFIX_RE, '')}`
 }
 
 /**
@@ -83,7 +95,7 @@ export function getFeaturedImagePath(meta: PostMeta): string | null {
  * @returns The image `src` value, or `null` when no image is present.
  */
 export function getFirstContentImageSrc(html: string): string | null {
-  const match = /<img[^>]+src="([^"]+)"/.exec(html)
+  const match = FIRST_IMG_SRC_RE.exec(html)
   return match ? match[1] : null
 }
 

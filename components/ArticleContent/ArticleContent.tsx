@@ -1,11 +1,15 @@
 'use client'
 
 import {useLightbox} from '@/lib/hooks/useLightbox/useLightbox'
-import Lightbox from 'yet-another-react-lightbox'
+import dynamic from 'next/dynamic'
 import Captions from 'yet-another-react-lightbox/plugins/captions'
 import 'yet-another-react-lightbox/plugins/captions.css'
 import 'yet-another-react-lightbox/styles.css'
 import classes from './ArticleContent.module.css'
+
+const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
+  ssr: false
+})
 
 /**
  * Props for the ArticleContent component.

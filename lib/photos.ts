@@ -3,12 +3,28 @@ import sizeOf from 'image-size'
 import fs from 'node:fs'
 import path from 'node:path'
 import {cacheLife, cacheTag} from 'next/cache'
+import {cache} from 'react'
 import type {PhotoMeta} from './types'
 
 /**
  * Directory containing photo files served from the public folder.
  */
 const photosDir = path.join(process.cwd(), 'public', 'content', 'photos')
+
+/** Matches Latin-1 byte range characters indicating possible mojibake. */
+const LATIN1_RANGE_RE = /[\x80-\xff]/
+
+/** Matches the file extension at the end of a filename. */
+const EXTENSION_RE = /\.\w+$/
+
+/** Matches hyphen and underscore word separators in filenames. */
+const SEPARATOR_RE = /[-_]/g
+
+/** Matches the first character of each word for title-casing. */
+const WORD_BOUNDARY_RE = /\b\w/g
+
+/** Matches supported image file extensions. */
+const IMAGE_FILE_RE = /\.(jpe?g|png|webp)$/i
 
 /**
  * Formats an aperture FNumber value into a human-readable f-stop string.
@@ -41,7 +57,7 @@ function formatShutterSpeed(exposure: number): string {
  * @returns The correctly decoded string, or the original if re-decoding fails.
  */
 function fixMojibake(str: string): string {
-  if (!/[\x80-\xff]/.test(str)) return str
+  if (!LATIN1_RANGE_RE.test(str)) return str
   try {
     const bytes = new Uint8Array([...str].map((c) => c.codePointAt(0) ?? 0))
     return new TextDecoder('utf-8', {fatal: true}).decode(bytes)
@@ -58,9 +74,9 @@ function fixMojibake(str: string): string {
  */
 function titleFromFilename(filename: string): string {
   return filename
-    .replace(/\.\w+$/, '')
-    .replaceAll(/[-_]/g, ' ')
-    .replaceAll(/\b\w/g, (c) => c.toUpperCase())
+    .replace(EXTENSION_RE, '')
+    .replaceAll(SEPARATOR_RE, ' ')
+    .replaceAll(WORD_BOUNDARY_RE, (c) => c.toUpperCase())
 }
 
 /**
@@ -201,16 +217,14 @@ async function readPhotoMeta(
  *
  * @returns An array of PhotoMeta objects sorted newest first.
  */
-export async function getPhotos(): Promise<PhotoMeta[]> {
+export const getPhotos = cache(async (): Promise<PhotoMeta[]> => {
   'use cache'
   cacheLife('max')
   cacheTag('photos')
 
   if (!fs.existsSync(photosDir)) return []
 
-  const files = fs
-    .readdirSync(photosDir)
-    .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+  const files = fs.readdirSync(photosDir).filter((f) => IMAGE_FILE_RE.test(f))
 
   const photos = await Promise.all(
     files.map((filename) => {
@@ -219,7 +233,7 @@ export async function getPhotos(): Promise<PhotoMeta[]> {
     })
   )
 
-  return photos.sort((a, b) => {
+  return photos.toSorted((a, b) => {
     if (a.dateTaken && b.dateTaken) {
       return new Date(b.dateTaken).getTime() - new Date(a.dateTaken).getTime()
     }
@@ -227,4 +241,4 @@ export async function getPhotos(): Promise<PhotoMeta[]> {
     if (b.dateTaken) return 1
     return b.filename.localeCompare(a.filename)
   })
-}
+})

@@ -132,8 +132,6 @@ async function getContentBySlug(
 
 /**
  * Fetches a post by its slug, returning null when not found.
- * Results are deduplicated within a render pass via React cache() and
- * persisted across requests via Next.js 'use cache'.
  *
  * @param slug - The URL-safe slug of the post to fetch.
  * @returns The post data including metadata and rendered content, or null if not found.
@@ -149,8 +147,6 @@ export const getPostBySlug = cache(
 
 /**
  * Fetches a page by its slug, returning null when not found.
- * Results are deduplicated within a render pass via React cache() and
- * persisted across requests via Next.js 'use cache'.
  *
  * @param slug - The URL-safe slug of the page to fetch.
  * @returns The page data including metadata and rendered content, or null if not found.
@@ -166,8 +162,6 @@ export const getPageBySlug = cache(
 
 /**
  * Returns all post metadata sorted by date descending.
- * Results are deduplicated within a render pass via React cache() and
- * persisted across requests via Next.js 'use cache'.
  *
  * @returns An array of post metadata objects sorted newest first.
  */
@@ -192,7 +186,7 @@ export const getAllPosts = cache(async (): Promise<PostMeta[]> => {
       return normalizeMeta(data)
     })
     .filter((post): post is PostMeta => post !== null)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   return posts
 })
@@ -203,12 +197,12 @@ export const getAllPosts = cache(async (): Promise<PostMeta[]> => {
  * @param tag - The tag to filter posts by.
  * @returns An array of post metadata matching the tag.
  */
-export async function getPostsByTag(tag: string): Promise<PostMeta[]> {
+export const getPostsByTag = cache(async (tag: string): Promise<PostMeta[]> => {
   const lower = tag.toLowerCase()
   return (await getAllPosts()).filter((p) =>
     p.tags?.some((t) => t.toLowerCase() === lower)
   )
-}
+})
 
 /**
  * Returns posts matching a given category (case-insensitive).
@@ -216,44 +210,44 @@ export async function getPostsByTag(tag: string): Promise<PostMeta[]> {
  * @param category - The category to filter posts by.
  * @returns An array of post metadata matching the category.
  */
-export async function getPostsByCategory(
-  category: string
-): Promise<PostMeta[]> {
-  const lower = category.toLowerCase()
-  return (await getAllPosts()).filter((p) =>
-    p.categories?.some((c) => c.toLowerCase() === lower)
-  )
-}
+export const getPostsByCategory = cache(
+  async (category: string): Promise<PostMeta[]> => {
+    const lower = category.toLowerCase()
+    return (await getAllPosts()).filter((p) =>
+      p.categories?.some((c) => c.toLowerCase() === lower)
+    )
+  }
+)
 
 /**
  * Returns all unique tags across all posts, sorted alphabetically.
  *
  * @returns An array of unique tag strings.
  */
-export async function getAllTags(): Promise<string[]> {
+export const getAllTags = cache(async (): Promise<string[]> => {
   const tags = new Set<string>()
   for (const post of await getAllPosts()) {
     for (const tag of post.tags ?? []) {
       tags.add(tag)
     }
   }
-  return [...tags].sort((a, b) => a.localeCompare(b))
-}
+  return [...tags].toSorted((a, b) => a.localeCompare(b))
+})
 
 /**
  * Returns all unique categories across all posts, sorted alphabetically.
  *
  * @returns An array of unique category strings.
  */
-export async function getAllCategories(): Promise<string[]> {
+export const getAllCategories = cache(async (): Promise<string[]> => {
   const categories = new Set<string>()
   for (const post of await getAllPosts()) {
     for (const cat of post.categories ?? []) {
       categories.add(cat)
     }
   }
-  return [...categories].sort((a, b) => a.localeCompare(b))
-}
+  return [...categories].toSorted((a, b) => a.localeCompare(b))
+})
 
 /**
  * Return the posts immediately before and after a given slug in a

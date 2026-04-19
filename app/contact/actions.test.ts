@@ -118,6 +118,9 @@ describe('sendContactEmail action', () => {
   it('returns an error when MAILGUN credentials are not configured', async () => {
     delete process.env.MAILGUN_LOGIN
     delete process.env.MAILGUN_PASSWORD
+    // Reset module cache so the module re-initialises without credentials,
+    // making the module-level `transport` null.
+    vi.resetModules()
     const {sendContactEmail} = await import('../contact/actions')
     const fd = makeFormData(VALID)
     const result = await sendContactEmail(INITIAL, fd)

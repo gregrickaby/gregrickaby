@@ -28,8 +28,7 @@ interface HomePageProps {
  * @returns A React element with the post list and pagination controls.
  */
 export async function HomePageContent({searchParams}: Readonly<HomePageProps>) {
-  const {page} = await searchParams
-  const allPosts = await getAllPosts()
+  const [{page}, allPosts] = await Promise.all([searchParams, getAllPosts()])
   const {
     items: posts,
     currentPage,
@@ -50,8 +49,8 @@ export async function HomePageContent({searchParams}: Readonly<HomePageProps>) {
 
   return (
     <>
-      {nextUrl && <link rel="next" href={nextUrl} />}
-      {prevUrl && <link rel="prev" href={prevUrl} />}
+      {nextUrl ? <link rel="next" href={nextUrl} /> : null}
+      {prevUrl ? <link rel="prev" href={prevUrl} /> : null}
       <PostList posts={posts} />
       <PostPagination total={totalPages} current={currentPage} />
     </>

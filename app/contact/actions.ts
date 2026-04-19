@@ -5,6 +5,32 @@ import type {ContactFormState} from '@/lib/types'
 import {escapeHtml} from '@/lib/utils'
 import nodemailer from 'nodemailer'
 
+/** Regex for basic email format validation. */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/** Regex for stripping CRLF characters to prevent email header injection. */
+const CRLF_RE = /[\r\n]/g
+
+const mailgunLogin = process.env.MAILGUN_LOGIN
+const mailgunPassword = process.env.MAILGUN_PASSWORD
+
+/**
+ * Nodemailer transport created once at module load time.
+ * `null` when credentials are not configured.
+ */
+const transport =
+  mailgunLogin && mailgunPassword
+    ? nodemailer.createTransport({
+        host: 'smtp.mailgun.org',
+        port: 587,
+        secure: false,
+        auth: {
+          user: mailgunLogin,
+          pass: mailgunPassword
+        }
+      })
+    : null
+
 export async function sendContactEmail(
   _prevState: ContactFormState,
   formData: FormData
@@ -18,8 +44,7 @@ export async function sendContactEmail(
     return {success: false, error: 'All fields are required.'}
   }
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(email)) {
+  if (!EMAIL_RE.test(email)) {
     return {success: false, error: 'Please enter a valid email address.'}
   }
 
@@ -27,26 +52,14 @@ export async function sendContactEmail(
     return {success: false, error: 'Invalid service selection.'}
   }
 
-  const mailgunLogin = process.env.MAILGUN_LOGIN
-  const mailgunPassword = process.env.MAILGUN_PASSWORD
-  if (!mailgunLogin || !mailgunPassword) {
+  if (!transport) {
     return {success: false, error: 'Failed to send message. Please try again.'}
   }
 
   // Strip CRLF from fields used in email headers to prevent header injection.
-  const headerSafeName = name.replaceAll(/[\r\n]/g, ' ')
-  const headerSafeEmail = email.replaceAll(/[\r\n]/g, ' ')
-  const headerSafeHowCanIHelp = howCanIHelp.replaceAll(/[\r\n]/g, ' ')
-
-  const transport = nodemailer.createTransport({
-    host: 'smtp.mailgun.org',
-    port: 587,
-    secure: false,
-    auth: {
-      user: mailgunLogin,
-      pass: mailgunPassword
-    }
-  })
+  const headerSafeName = name.replaceAll(CRLF_RE, ' ')
+  const headerSafeEmail = email.replaceAll(CRLF_RE, ' ')
+  const headerSafeHowCanIHelp = howCanIHelp.replaceAll(CRLF_RE, ' ')
 
   const safeName = escapeHtml(name)
   const safeEmail = escapeHtml(email)

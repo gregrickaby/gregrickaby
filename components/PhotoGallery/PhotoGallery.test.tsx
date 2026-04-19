@@ -64,8 +64,8 @@ describe('PhotoGallery', () => {
   it('renders all photos', async () => {
     const {PhotoGallery} = await import('./PhotoGallery')
     render(<PhotoGallery photos={photos} />)
-    expect(screen.getByAltText('Photo A')).toBeInTheDocument()
-    expect(screen.getByAltText('Photo B')).toBeInTheDocument()
+    expect(await screen.findByAltText('Photo A')).toBeInTheDocument()
+    expect(await screen.findByAltText('Photo B')).toBeInTheDocument()
   })
 
   it('renders the correct number of photo buttons', async () => {

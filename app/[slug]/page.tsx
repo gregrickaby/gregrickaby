@@ -26,15 +26,16 @@ export async function generateMetadata(
 
 export default async function PostPage({params}: Readonly<PageProps>) {
   const {slug} = await params
-  const post = await getPostBySlug(slug)
+
+  const [post, allPosts] = await Promise.all([
+    getPostBySlug(slug),
+    getAllPosts()
+  ])
 
   if (!post) {
     notFound()
   }
 
-  // getAllPosts() returns posts sorted newest-first, so the previous post
-  // (older) is at index + 1 and the next post (newer) is at index - 1.
-  const allPosts = await getAllPosts()
   const {prev, next} = getAdjacentPosts(allPosts, slug)
 
   const jsonLd = buildBlogPostingGraph(post.meta)

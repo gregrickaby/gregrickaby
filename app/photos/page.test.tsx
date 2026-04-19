@@ -41,19 +41,18 @@ vi.mock('@/lib/photos', () => ({
 describe('Photos page', () => {
   it('renders the page title', async () => {
     const {default: PhotosPage} = await import('./page')
-    const result = await PhotosPage()
-    render(result)
+    render(PhotosPage())
     expect(
       screen.getByRole('heading', {level: 1, name: 'Photos'})
     ).toBeInTheDocument()
   })
 
   it('renders photos from getPhotos', async () => {
-    const {default: PhotosPage} = await import('./page')
-    const result = await PhotosPage()
+    const {PhotosContent} = await import('./page')
+    const result = await PhotosContent()
     render(result)
-    expect(screen.getByAltText('Sunset')).toBeInTheDocument()
-    expect(screen.getByAltText('Bird')).toBeInTheDocument()
+    expect(await screen.findByAltText('Sunset')).toBeInTheDocument()
+    expect(await screen.findByAltText('Bird')).toBeInTheDocument()
   })
 
   it('generates metadata', async () => {
@@ -73,8 +72,8 @@ describe('Photos page', () => {
     vi.doMock('@/lib/photos', () => ({
       getPhotos: vi.fn().mockResolvedValue([])
     }))
-    const {default: PhotosPage} = await import('./page')
-    const result = await PhotosPage()
+    const {PhotosContent} = await import('./page')
+    const result = await PhotosContent()
     render(result)
     expect(screen.getByText('No photos yet.')).toBeInTheDocument()
   })

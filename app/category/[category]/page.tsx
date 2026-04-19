@@ -54,8 +54,7 @@ export async function CategoryPageContent({
   params,
   searchParams
 }: Readonly<CategoryPageProps>) {
-  const {category} = await params
-  const {page} = await searchParams
+  const [{category}, {page}] = await Promise.all([params, searchParams])
   const decoded = decodeURIComponent(category)
   const allPosts = await getPostsByCategory(decoded)
 

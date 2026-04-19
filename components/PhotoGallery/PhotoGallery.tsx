@@ -2,10 +2,9 @@
 
 import type {PhotoMeta} from '@/lib/types'
 import {useMediaQuery} from '@mantine/hooks'
+import dynamic from 'next/dynamic'
 import {useState} from 'react'
-import {MasonryPhotoAlbum} from 'react-photo-album'
 import 'react-photo-album/masonry.css'
-import Lightbox from 'yet-another-react-lightbox'
 import Captions from 'yet-another-react-lightbox/plugins/captions'
 import 'yet-another-react-lightbox/plugins/captions.css'
 import Download from 'yet-another-react-lightbox/plugins/download'
@@ -14,6 +13,15 @@ import Slideshow from 'yet-another-react-lightbox/plugins/slideshow'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import 'yet-another-react-lightbox/styles.css'
 import styles from './PhotoGallery.module.css'
+
+const MasonryPhotoAlbum = dynamic(
+  () =>
+    import('react-photo-album').then((m) => ({default: m.MasonryPhotoAlbum})),
+  {ssr: false}
+)
+const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
+  ssr: false
+})
 
 /**
  * Props for the PhotoGallery component.

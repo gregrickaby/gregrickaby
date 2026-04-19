@@ -14,7 +14,8 @@ const nextConfig: NextConfig = {
     optimizePackageImports: [
       '@mantine/core',
       '@mantine/hooks',
-      '@mantine/spotlight'
+      '@mantine/spotlight',
+      '@tabler/icons-react'
     ]
   },
   async redirects() {

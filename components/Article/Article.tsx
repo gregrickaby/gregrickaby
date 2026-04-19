@@ -39,7 +39,7 @@ export function Article({meta, content}: Readonly<ArticleProps>) {
                 {' · '}
                 {meta.categories.map((cat, i) => (
                   <span key={cat}>
-                    {i > 0 && ', '}
+                    {i > 0 ? ', ' : null}
                     <AppLink href={`/category/${encodeURIComponent(cat)}`}>
                       {cat}
                     </AppLink>
@@ -74,7 +74,7 @@ export function Article({meta, content}: Readonly<ArticleProps>) {
         <ArticleContent content={content} />
       </Typography>
 
-      {meta.tags && meta.tags.length > 0 && (
+      {meta.tags && meta.tags.length > 0 ? (
         <footer className={styles.tags}>
           <Group gap="xs">
             {meta.tags.map((tag) => (
@@ -88,7 +88,7 @@ export function Article({meta, content}: Readonly<ArticleProps>) {
             ))}
           </Group>
         </footer>
-      )}
+      ) : null}
     </article>
   )
 }

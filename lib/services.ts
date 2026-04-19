@@ -16,6 +16,8 @@ export const serviceOptions: {value: string; label: string}[] = [
  */
 export type Service = (typeof serviceOptions)[number]['value']
 
+const SERVICE_VALUES = new Set(serviceOptions.map((s) => s.value))
+
 /**
  * Type guard that checks whether a string is a valid service value.
  *
@@ -23,5 +25,5 @@ export type Service = (typeof serviceOptions)[number]['value']
  * @returns `true` if `value` is one of the canonical service values.
  */
 export function isValidService(value: string): value is Service {
-  return serviceOptions.some((s) => s.value === value)
+  return SERVICE_VALUES.has(value)
 }
