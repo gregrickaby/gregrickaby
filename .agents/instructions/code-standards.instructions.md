@@ -16,6 +16,9 @@ applyTo: '**/*.tsx,**/*.ts,**/*.jsx,**/*.js,**/*.mjs,**/*.css,**/*.md'
 - Add `'use client'` only when a component uses Mantine hooks, React state, effects, or browser APIs
 - **Never import `lib/content.ts` in a client component** — it uses `fs` and throws at runtime
 - Use `lib/types.ts` for types shared across both boundaries
+- Client components cannot be async — fetch in a Server Component parent and pass data down
+- Props crossing the server→client boundary must be JSON-serializable; only pass fields the client actually uses — see `next-best-practices` skill (rsc-boundaries)
+- Do not use mutable module-level variables for request-scoped data — concurrent renders will contaminate each other
 
 ## Routing and Pages
 
@@ -24,6 +27,9 @@ applyTo: '**/*.tsx,**/*.ts,**/*.jsx,**/*.js,**/*.mjs,**/*.css,**/*.md'
 - Dynamic post pages use `generateStaticParams()` to pre-render all slugs
 - API routes are limited to infrastructure concerns (`api/axiom` logging proxy, `api/healthcheck`); do not add business logic API routes
 - Do not configure `output: 'export'`
+- `params`, `searchParams`, `cookies()`, and `headers()` are async — always `await` them — see `next-best-practices` skill (async-patterns)
+- Never wrap `redirect()`, `notFound()`, `forbidden()`, or `unauthorized()` in try-catch — use `unstable_rethrow(error)` in catch blocks — see `next-best-practices` skill (error-handling)
+- `error.tsx` must be `'use client'`; `global-error.tsx` must include `<html>` and `<body>` tags
 
 ## Mantine 9 UI
 
@@ -43,12 +49,36 @@ applyTo: '**/*.tsx,**/*.ts,**/*.jsx,**/*.js,**/*.mjs,**/*.css,**/*.md'
 
 - Use `next/image` for all images — never `<img>`
 - Use `<AppLink>` for all links — never plain `<a>` or Mantine `<Anchor>`
+- Add `sizes` on fill/responsive images; add `priority` on LCP/above-fold images — see `next-best-practices` skill (image)
 
 ## Content
 
 - Posts/pages live at `public/content/{posts,pages}/<slug>/content.md`
 - Frontmatter fields are defined by `PostMeta` in `lib/types.ts` — do not add undeclared fields
 - Do not hand-edit `public/feed.xml` — it is generated at build time
+
+## Data Fetching
+
+- Fetch directly in Server Components for reads — no API route needed
+- Use Server Actions (`'use server'`) for mutations; Route Handlers only for external clients, webhooks, or GET endpoints needing HTTP caching
+- Use `Promise.all()` for independent parallel fetches; start promises early and await late
+- Use `React.cache()` for per-request deduplication of non-fetch async work (auth checks, DB queries, file reads)
+- Hoist static I/O (fonts, config files, templates) to module scope — loads once per process instead of per request
+- See `next-best-practices` skill (data-patterns) and `vercel-react-best-practices` skill for full patterns
+
+## Suspense Boundaries
+
+- `useSearchParams()` requires a `<Suspense>` wrapper — without it the entire page becomes client-side rendered
+- `usePathname()` requires `<Suspense>` in dynamic routes (unless `generateStaticParams()` is used)
+- See `next-best-practices` skill (suspense-boundaries)
+
+## Performance
+
+- Do not define components inside other components — they remount on every render
+- Use ternary (`condition ? <A /> : <B />`), not `&&` for conditional rendering to avoid rendering `0`
+- Use `next/dynamic(() => import(...), { ssr: false })` for packages that use browser APIs (`window`, `document`)
+- Use `after()` from `next/server` for non-blocking post-response work (analytics, audit logs)
+- See `vercel-react-best-practices` skill for full optimization patterns
 
 ## Naming Conventions
 
