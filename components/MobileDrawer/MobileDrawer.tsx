@@ -1,3 +1,5 @@
+'use client'
+
 import {ColorSchemeToggle} from '@/components/ColorSchemeToggle/ColorSchemeToggle'
 import {NavLinks} from '@/components/NavLinks/NavLinks'
 import {SearchButton} from '@/components/Search/Search'
