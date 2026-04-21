@@ -5,7 +5,9 @@
 }
 
 /* Single images: center when alone in a paragraph */
-.articleContent p:has(> img:only-child) img {
+.articleContent
+  p:has(> img:only-child)
+  img:not(:global(.alignwide)):not(:global(.alignfull)) {
   display: block;
   margin: 0 auto;
 }
@@ -70,6 +72,15 @@
   white-space: pre;
 }
 
+/* Figure captions */
+.articleContent figcaption {
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-5));
+  font-family: var(--mantine-font-family);
+  font-size: var(--mantine-font-size-sm);
+  margin-top: var(--mantine-spacing-xs);
+  text-align: center;
+}
+
 /* Tables */
 .articleContent table {
   border-collapse: collapse;
@@ -93,13 +104,19 @@
 
 /* Wide alignment: breaks out ~210px beyond the article column on each side */
 .articleContent :global(.alignwide) {
+  display: block;
   margin-left: calc(50% - min(550px, 50vw));
+  margin-top: var(--mantine-spacing-xl);
+  margin-bottom: var(--mantine-spacing-xl);
+  max-width: none;
   width: min(1100px, 100vw);
 }
 
 /* Full alignment: spans the full viewport width */
 .articleContent :global(.alignfull) {
+  display: block;
   margin-left: calc(50% - 50vw);
+  max-width: none;
   width: 100vw;
 }
 
