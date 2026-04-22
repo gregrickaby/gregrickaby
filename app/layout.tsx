@@ -1,3 +1,4 @@
+import '@/app/global.css'
 import {cssVariablesResolver, theme} from '@/app/theme'
 import {Analytics} from '@/components/Analytics/Analytics'
 import {Footer} from '@/components/Footer/Footer'

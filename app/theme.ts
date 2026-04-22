@@ -33,7 +33,6 @@ export const theme = createTheme({
   primaryColor: 'tomato',
   primaryShade: {light: 5, dark: 6},
   fontFamily: 'var(--font-sans), sans-serif',
-  fontSizes: {md: '18px'},
   headings: {
     fontFamily: 'var(--font-serif), serif'
   }
