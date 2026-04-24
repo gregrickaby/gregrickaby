@@ -1,11 +1,12 @@
 import matter from 'gray-matter'
 import type {Paragraph, Root} from 'mdast'
+import {cacheLife, cacheTag} from 'next/cache'
 import fs from 'node:fs'
 import path from 'node:path'
-import {cacheLife, cacheTag} from 'next/cache'
 import {cache} from 'react'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeRaw from 'rehype-raw'
+import rehypeSlug from 'rehype-slug'
 import rehypeStringify from 'rehype-stringify'
 import gfm from 'remark-gfm'
 import remarkParse from 'remark-parse'
@@ -83,7 +84,7 @@ const sanitizeOptions: sanitizeHtml.IOptions = {
     pre: ['tabindex', 'data-language', 'data-theme', 'style'],
     code: ['data-language', 'data-theme'],
     span: ['data-line', 'data-highlight', 'style'],
-    figure: ['data-rehype-pretty-code-figure'],
+    figure: ['data-rehype-pretty-code-figure', 'style'],
     '*': ['class', 'id']
   }
 }
@@ -114,6 +115,7 @@ async function getContentBySlug(
     .use(remarkFigureCaption)
     .use(remarkRehype, {allowDangerousHtml: true})
     .use(rehypeRaw)
+    .use(rehypeSlug)
     .use(rehypePrettyCode, {
       theme: 'github-dark',
       keepBackground: true

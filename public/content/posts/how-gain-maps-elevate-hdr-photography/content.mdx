@@ -2,7 +2,7 @@
 title: 'Brightening the Frame: How Gain Maps Elevate HDR Photography'
 slug: 'how-gain-maps-elevate-hdr-photography'
 date: '2023-10-27T15:00:00'
-modified: '2026-04-23T10:45:37'
+modified: '2026-04-24T09:31:37'
 type: 'post'
 description: "A look at how Gain Maps work, how Adobe Lightroom's HDR workflow enables true High Dynamic Range exports, and real-world photo comparisons."
 featuredImage: './Hollywood-Blvd-Christmas_HDR_20221205.jpg'
@@ -11,6 +11,18 @@ tags: ['gain map', 'HDR', 'how to', 'photography']
 ---
 
 High Dynamic Range (HDR) photos display a wider range of brightness, contrast, and color than Standard Dynamic Range (SDR). On an HDR-capable screen, that difference is visible: brighter highlights, more detail in shadows, and colors that more closely match what the camera actually captured.
+
+**Jump to section:**
+
+- [A Brief History](#a-brief-history)
+- [More Nits and Bits](#the-need-for-more-nits-and-bits)
+- [What Are Gain Maps?](#what-are-gain-maps)
+- [Lightroom Support](#adobe-lightroom-support)
+- [Examples](#examples)
+- [Too Much of a Good Thing](#too-much-of-a-good-thing)
+- [Print in HDR?](#but-can-i-print-in-hdr)
+- [Browser & App Support](#browser-app-and-cms-support)
+- [Further Reading](#further-reading)
 
 ## A Brief History
 
@@ -39,7 +51,7 @@ This post is about _true_ High Dynamic Range photos, which are in a larger color
 
 Most images on the web only contain 8 bits worth of information and are in the sRGB color space. That's strictly a technical limitation of older web-based image formats like .jpg. But did you know that cameras have been capturing RAW photos with more than 8 bits (and in larger colorspace) going back 20+ years?! The extra data was there, but it was essentially invisible to photographers and viewers alike.
 
-<figure>
+<figure style="max-width: 500px; margin: 0 auto;">
   <img
     alt="A graph plotting various color spaces and how they relate to the visible color spectrum. Note how sRGB is a small triangle compared to the larger DCI-P3 and Rec.2020 color spaces."
     src="./color-space-gamut-graph.jpg"
@@ -73,7 +85,7 @@ In October 2023, Adobe [released a new version of Lightroom Classic](https://hel
 
 The new HDR workflow in Lightroom adds HDR-specific sliders to the editing panel:
 
-<figure>
+<figure style="max-width: 420px; margin: 0 auto;">
   <img
     alt="A screenshot of Adobe Lightroom Classic's new HDR histogram and sliders"
     src="./adobe-lightroom-hdr-histogram-sliders.jpg"
@@ -165,13 +177,11 @@ The HDR version brings out the street lamps, the back-lit "50" on the castle fac
 
 ## Too Much of a Good Thing
 
-The HDR highlights and whites sliders are easy to overdo. This shot from Indiana Jones™️ Epic Stunt Spectacular is a good example of what happens when you push them too far.
-
-SDR version:
+The HDR highlights and whites sliders are easy to overdo. This shot from Indiana Jones™️ Epic Stunt Spectacular shows what happens when you push them too far. SDR source:
 
 ![Indiana Jones Stunt Spectacular explosion. SDR (JPG) | Sony a7R IVA | Tamron 35-150mm | 1/1250 sec, f/4, ISO 160](./Indiana-Jones-Epic-Stunt-Spectacular_SDR_20221205.jpg)
 
-HDR version, with the sliders pushed too hard:
+HDR export, with the sliders maxed out:
 
 <figure className="alignwide">
   <img
@@ -233,9 +243,7 @@ Software support is still catching up to hardware. Here's the current state as o
 - Apple Pro Display XDR
 - TVs and monitors supporting HDR10, HDR10+, HLG, or Dolby Vision
 
-## Further Reading
-
-Adobe's [Lightroom HDR documentation](https://helpx.adobe.com/lightroom-classic/help/hdr-output.html) covers the export workflow in detail. For the full technical spec, see Adobe's [Gain Map specification](https://helpx.adobe.com/camera-raw/using/gain-map.html). Greg Benz has written an in-depth breakdown of [JPG HDR Gain Maps in Camera Raw](https://gregbenzphotography.com/hdr-images/jpg-hdr-gain-maps-in-adobe-camera-raw/), a solid [HDR overview](https://gregbenzphotography.com/hdr/), and an [HDR example gallery](https://gregbenzphotography.com/hdr-gain-map-gallery/) worth browsing.
+## Wrap Up
 
 <figure className="alignwide">
   <img
@@ -249,3 +257,7 @@ Adobe's [Lightroom HDR documentation](https://helpx.adobe.com/lightroom-classic/
 </figure>
 
 I'll be using Lightroom's HDR workflow going forward. If you're shooting RAW, the data is already there -- you just need the export pipeline to do something with it. Thanks for reading. 📸
+
+## Further Reading
+
+Adobe's [Lightroom HDR documentation](https://helpx.adobe.com/lightroom-classic/help/hdr-output.html) covers the export workflow in detail. For the full technical spec, see Adobe's [Gain Map specification](https://helpx.adobe.com/camera-raw/using/gain-map.html). Greg Benz has written an in-depth breakdown of [JPG HDR Gain Maps in Camera Raw](https://gregbenzphotography.com/hdr-images/jpg-hdr-gain-maps-in-adobe-camera-raw/), a solid [HDR overview](https://gregbenzphotography.com/hdr/), and an [HDR example gallery](https://gregbenzphotography.com/hdr-gain-map-gallery/) worth browsing.

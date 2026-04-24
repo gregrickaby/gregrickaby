@@ -157,7 +157,7 @@ describe('getPostBySlug', () => {
     const result = await getPostBySlug('test-post')
     expect(result).not.toBeNull()
     expect(result?.meta.title).toBe('Test Post')
-    expect(result?.content).toContain('<h1>Hello</h1>')
+    expect(result?.content).toContain('<h1 id="hello">Hello</h1>')
   })
 
   it('resolves relative image paths within post content', async () => {
