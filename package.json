@@ -24,7 +24,7 @@
   },
   "homepage": "https://gregrickaby.com",
   "dependencies": {
-    "@axiomhq/js": "^1.4.0",
+    "@axiomhq/js": "^1.6.1",
     "@axiomhq/logging": "^0.2.1",
     "@axiomhq/nextjs": "^0.2.1",
     "@axiomhq/react": "^0.2.1",
