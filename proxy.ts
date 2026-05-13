@@ -19,7 +19,7 @@ export async function proxy(request: NextRequest, event: NextFetchEvent) {
    */
   const {pathname} = request.nextUrl
   const isNoiseRoute =
-    pathname.startsWith('/api/healthcheck') || pathname.startsWith('/api/axiom')
+    pathname.startsWith('/api/health') || pathname.startsWith('/api/axiom')
 
   if (!isNoiseRoute) {
     logger.info(...transformMiddlewareRequest(request))
