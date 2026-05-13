@@ -18,7 +18,6 @@ export const siteConfig = {
   nav: [
     {label: 'About', href: '/about', priority: 0.8},
     {label: 'Contact', href: '/contact', priority: 0.6},
-    {label: 'Fun Stuff', href: '/fun-stuff', priority: 0.6},
     {label: 'Photos', href: '/photos', priority: 0.6},
     {label: 'Resume', href: '/resume', priority: 0.8},
     {label: 'RSS', href: '/feed.xml', external: true}

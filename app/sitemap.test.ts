@@ -26,8 +26,8 @@ vi.mock('@/lib/content', async (importOriginal) => {
 describe('sitemap.ts', () => {
   it('returns the correct total number of entries', async () => {
     const {default: sitemap} = await import('./sitemap')
-    // home + 5 nav pages (RSS excluded) + 2 posts = 8
-    expect(await sitemap()).toHaveLength(8)
+    // home + 4 nav pages (RSS excluded) + 2 posts = 7
+    expect(await sitemap()).toHaveLength(7)
   })
 
   it('includes the home page at priority 1', async () => {
@@ -66,14 +66,6 @@ describe('sitemap.ts', () => {
     const {default: sitemap} = await import('./sitemap')
     const entry = (await sitemap()).find(
       (e) => e.url === 'https://gregrickaby.com/photos'
-    )
-    expect(entry).toMatchObject({priority: 0.6})
-  })
-
-  it('includes /fun-stuff at priority 0.6', async () => {
-    const {default: sitemap} = await import('./sitemap')
-    const entry = (await sitemap()).find(
-      (e) => e.url === 'https://gregrickaby.com/fun-stuff'
     )
     expect(entry).toMatchObject({priority: 0.6})
   })

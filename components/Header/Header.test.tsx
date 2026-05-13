@@ -38,10 +38,6 @@ describe('Header', () => {
       'href',
       '/contact'
     )
-    expect(screen.getByRole('link', {name: 'Fun Stuff'})).toHaveAttribute(
-      'href',
-      '/fun-stuff'
-    )
     expect(screen.getByRole('link', {name: 'RSS'})).toHaveAttribute(
       'href',
       '/feed.xml'
