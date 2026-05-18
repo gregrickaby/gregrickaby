@@ -30,7 +30,7 @@
     "@axiomhq/react": "^0.2.2",
     "@mantine/core": "^9.2.0",
     "@mantine/hooks": "^9.2.0",
-    "@mantine/spotlight": "^9.2.0",
+    "@mantine/spotlight": "^9.2.1",
     "@tabler/icons-react": "^3.44.0",
     "exifr": "^7.1.3",
     "image-size": "^2.0.2",
