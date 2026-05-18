@@ -28,7 +28,7 @@
     "@axiomhq/logging": "^0.2.2",
     "@axiomhq/nextjs": "^0.2.2",
     "@axiomhq/react": "^0.2.2",
-    "@mantine/core": "^9.2.0",
+    "@mantine/core": "^9.2.1",
     "@mantine/hooks": "^9.2.0",
     "@mantine/spotlight": "^9.2.0",
     "@tabler/icons-react": "^3.44.0",
