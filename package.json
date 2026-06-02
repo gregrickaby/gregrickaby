@@ -37,7 +37,7 @@
     "next": "^16.2.6",
     "nodemailer": "^8.0.10",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "react-dom": "^19.2.7",
     "react-photo-album": "^3.6.0",
     "rehype-pretty-code": "^0.14.3",
     "rehype-raw": "^7.0.0",
