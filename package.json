@@ -26,7 +26,7 @@
   "dependencies": {
     "@axiomhq/js": "^1.7.0",
     "@axiomhq/logging": "^0.2.2",
-    "@axiomhq/nextjs": "^0.2.2",
+    "@axiomhq/nextjs": "^0.3.0",
     "@axiomhq/react": "^0.2.2",
     "@mantine/core": "^9.4.1",
     "@mantine/hooks": "^9.4.1",
