@@ -45,7 +45,7 @@
     "rehype-stringify": "^10.0.1",
     "remark-gfm": "^4.0.1",
     "remark-rehype": "^11.1.2",
-    "sanitize-html": "^2.17.5",
+    "sanitize-html": "^2.17.6",
     "shiki": "^4.3.1",
     "yet-another-react-lightbox": "^3.32.1"
   },
@@ -72,7 +72,7 @@
     "eslint-plugin-testing-library": "^7.16.2",
     "gray-matter": "^4.0.3",
     "jsdom": "^29.1.1",
-    "postcss": "^8.5.16",
+    "postcss": "^8.5.19",
     "postcss-preset-mantine": "^1.18.0",
     "postcss-simple-vars": "^7.0.1",
     "prettier": "^3.9.5",
