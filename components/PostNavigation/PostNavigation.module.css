@@ -1,6 +1,6 @@
 .navLink {
-  max-width: 45%;
   display: block;
+  max-width: 45%;
 }
 
 .navLink:hover {

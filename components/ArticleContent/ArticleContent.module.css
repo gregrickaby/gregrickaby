@@ -9,8 +9,8 @@
 /* Gallery grid: multiple images in a paragraph */
 .articleContent p:has(> img ~ img) {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 0.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   margin-block: 1.5rem;
 }
 
@@ -29,8 +29,8 @@
 
 /* All images in article content are clickable to open in lightbox */
 .articleContent img {
-  box-shadow: var(--mantine-shadow-xl);
   border-radius: var(--mantine-radius-md);
+  box-shadow: var(--mantine-shadow-xl);
   cursor: zoom-in;
 }
 
@@ -41,7 +41,6 @@
 
 /* Code blocks - shiki sets background/color via inline styles on pre */
 .articleContent figure[data-rehype-pretty-code-figure] {
-  margin-block: 0;
   margin: 0 0 var(--mantine-spacing-md);
 }
 
@@ -87,9 +86,9 @@
 .articleContent table th,
 .articleContent table td {
   border: 1px solid var(--mantine-color-default-border);
+  font-size: var(--mantine-font-size-lg);
   padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
   text-align: left;
-  font-size: var(--mantine-font-size-lg);
 }
 
 .articleContent table th {
@@ -100,9 +99,9 @@
 /* Wide alignment: breaks out ~210px beyond the article column on each side */
 .articleContent :global(.alignwide) {
   display: block;
+  margin-bottom: var(--mantine-spacing-xl);
   margin-left: calc(50% - min(550px, 50vw));
   margin-top: var(--mantine-spacing-xl);
-  margin-bottom: var(--mantine-spacing-xl);
   max-width: none;
   width: min(1100px, 100vw);
 }
