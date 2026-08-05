@@ -30,7 +30,7 @@ export function PostCard({post, priority = false}: Readonly<PostCardProps>) {
 
   return (
     <Box className={styles.card}>
-      {featuredImage && (
+      {featuredImage ? (
         <Box className={styles.imageWrapper}>
           <AppLink
             href={href}
@@ -39,7 +39,6 @@ export function PostCard({post, priority = false}: Readonly<PostCardProps>) {
           >
             <Image
               alt={post.title}
-              loading={priority ? 'eager' : 'lazy'}
               priority={priority}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -48,15 +47,15 @@ export function PostCard({post, priority = false}: Readonly<PostCardProps>) {
             />
           </AppLink>
         </Box>
-      )}
+      ) : null}
       <Title order={2} mt="md" mb="xs">
         <AppLink href={href}>{post.title}</AppLink>
       </Title>
-      {post.description && (
+      {post.description ? (
         <Text c="dimmed" lineClamp={5}>
           {post.description}
         </Text>
-      )}
+      ) : null}
     </Box>
   )
 }

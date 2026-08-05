@@ -31,7 +31,7 @@ export function Article({meta, content}: Readonly<ArticleProps>) {
   return (
     <article className={styles.article}>
       <header>
-        {meta.type === 'post' && (
+        {meta.type === 'post' ? (
           <Text className={styles.meta}>
             {formatPostDate(meta.date)}
             {meta.categories?.length ? (
@@ -48,27 +48,28 @@ export function Article({meta, content}: Readonly<ArticleProps>) {
               </>
             ) : null}
           </Text>
-        )}
+        ) : null}
         <Title order={1} className={styles.title}>
           {meta.title}
         </Title>
-        {meta.description && (
+        {meta.description ? (
           <Text className={styles.description}>{meta.description}</Text>
-        )}
+        ) : null}
       </header>
 
-      {featuredImage && (
+      {featuredImage ? (
         <Box className={styles.featuredImage}>
           <Image
             alt={meta.title}
             height={450}
             priority
+            sizes="(max-width: 768px) 100vw, 800px"
             src={featuredImage}
             style={{width: '100%', height: 'auto'}}
             width={800}
           />
         </Box>
-      )}
+      ) : null}
 
       <Typography>
         <ArticleContent content={content} />

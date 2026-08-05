@@ -38,19 +38,19 @@ export function ContactForm() {
           Use the form below to get in touch.
         </Text>
 
-        {state.success && (
+        {state.success ? (
           <Alert color="green" title="Message sent!">
             Thanks for reaching out. I&apos;ll get back to you soon.
           </Alert>
-        )}
+        ) : null}
 
-        {state.error && (
+        {state.error ? (
           <Alert color="red" title="Something went wrong">
             {state.error}
           </Alert>
-        )}
+        ) : null}
 
-        {!state.success && (
+        {!state.success ? (
           <form action={formAction}>
             <Stack>
               <TextInput
@@ -86,7 +86,7 @@ export function ContactForm() {
               </Button>
             </Stack>
           </form>
-        )}
+        ) : null}
       </Stack>
     </Container>
   )
