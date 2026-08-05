@@ -17,8 +17,10 @@ vi.mock('next/link', () => ({
   )
 }))
 
+const {mockPush} = vi.hoisted(() => ({mockPush: vi.fn()}))
+
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({push: vi.fn()}),
+  useRouter: () => ({push: mockPush}),
   notFound: vi.fn()
 }))
 
@@ -99,5 +101,35 @@ describe('Tag page', () => {
     const metadata = await generateMetadata({params, searchParams})
     expect(metadata.title).toContain('photography')
     expect(metadata.description).toContain('photography')
+  })
+
+  it('encodes a multi-word tag in the canonical URL', async () => {
+    const {generateMetadata} = await import('./page')
+    const metadata = await generateMetadata({
+      params: Promise.resolve({tag: 'how to'}),
+      searchParams
+    })
+    expect(metadata.alternates?.canonical).toBe('/tag/how%20to')
+  })
+
+  it('encodes a multi-word tag in the pagination base URL', async () => {
+    const manyPosts: PostMeta[] = Array.from({length: 15}, (_, i) => ({
+      title: `Post ${i + 1}`,
+      slug: `post-${i + 1}`,
+      date: '2024-01-01T00:00:00Z',
+      modified: '2024-01-01T00:00:00Z',
+      type: 'post' as const
+    }))
+    vi.mocked(getPostsByTag).mockResolvedValue(manyPosts)
+    const {TagPageContent} = await import('./page')
+    render(
+      await TagPageContent({
+        params: Promise.resolve({tag: 'how to'}),
+        searchParams
+      })
+    )
+    const nextPageButton = screen.getByRole('button', {name: /2/})
+    nextPageButton.click()
+    expect(mockPush).toHaveBeenCalledWith('/tag/how%20to?page=2')
   })
 })

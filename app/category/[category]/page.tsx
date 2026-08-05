@@ -1,6 +1,7 @@
 import {FilteredPostsContent} from '@/components/FilteredPostsContent/FilteredPostsContent'
 import {siteConfig} from '@/lib/config'
 import {getAllCategories, getPostsByCategory} from '@/lib/content'
+import {Skeleton} from '@mantine/core'
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
@@ -40,7 +41,7 @@ export async function generateMetadata({
   return {
     title: `Posts in "${decoded}" - ${siteConfig.name}`,
     description: `All posts in the "${decoded}" category.`,
-    alternates: {canonical: `/category/${category}`}
+    alternates: {canonical: `/category/${encodeURIComponent(decoded)}`}
   }
 }
 
@@ -65,7 +66,7 @@ export async function CategoryPageContent({
       title={`Category: ${decoded}`}
       posts={allPosts}
       page={page}
-      baseUrl={`/category/${category}`}
+      baseUrl={`/category/${encodeURIComponent(decoded)}`}
     />
   )
 }
@@ -81,7 +82,7 @@ export default function CategoryPage({
   searchParams
 }: Readonly<CategoryPageProps>) {
   return (
-    <Suspense>
+    <Suspense fallback={<Skeleton height={600} />}>
       <CategoryPageContent params={params} searchParams={searchParams} />
     </Suspense>
   )

@@ -1,6 +1,7 @@
 import {FilteredPostsContent} from '@/components/FilteredPostsContent/FilteredPostsContent'
 import {siteConfig} from '@/lib/config'
 import {getAllTags, getPostsByTag} from '@/lib/content'
+import {Skeleton} from '@mantine/core'
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
@@ -38,7 +39,7 @@ export async function generateMetadata({
   return {
     title: `Posts tagged "${decoded}" - ${siteConfig.name}`,
     description: `All posts tagged with "${decoded}".`,
-    alternates: {canonical: `/tag/${tag}`}
+    alternates: {canonical: `/tag/${encodeURIComponent(decoded)}`}
   }
 }
 
@@ -63,7 +64,7 @@ export async function TagPageContent({
       title={`Tag: ${decoded}`}
       posts={allPosts}
       page={page}
-      baseUrl={`/tag/${tag}`}
+      baseUrl={`/tag/${encodeURIComponent(decoded)}`}
     />
   )
 }
@@ -79,7 +80,7 @@ export default function TagPage({
   searchParams
 }: Readonly<TagPageProps>) {
   return (
-    <Suspense>
+    <Suspense fallback={<Skeleton height={600} />}>
       <TagPageContent params={params} searchParams={searchParams} />
     </Suspense>
   )
