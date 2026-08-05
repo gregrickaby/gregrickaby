@@ -1,6 +1,6 @@
 # Project Guidelines
 
-Personal blog. Next.js 16 App Router, React 19, Mantine 9, TypeScript. Markdown content on disk — no database.
+Personal blog. Next.js 16 App Router, React 19, Mantine 9, TypeScript 6. Markdown content on disk — no database.
 
 ## Run
 
@@ -25,6 +25,14 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - **Mantine:** https://mantine.dev/llms.txt
 - **Axiom:** https://axiom.co/docs/llms.txt
+
+## Always Active
+
+- **Caveman skill, `full` mode**: active every session (persists per its own instructions). Drop for security warnings, irreversible-action confirmations, or on request for normal mode.
+- **Writing style**: `.claude/rules/writing-style.md` has no `paths:` frontmatter, so it loads every session. Follow it for all prose.
+- **Skill gap**: no skill covers the task, or unsure how: invoke `find-skills` before improvising.
+- **Minimize subagent spawning**: each Agent/Task call is a separate billed request. No SDD tasks allowed! Use Read/Grep/Bash directly for single-file lookups or known symbols. Reserve Explore for broad searches (3+ queries, unfamiliar territory); spawn other agents only when asked or when the task needs parallel, isolated work. If possible, choose a lower cost model to save on costs.
+- **Never commit plans**: Plans are internal facing, not public facing. Use temp directories on the local machine, not /docs directories in this repo.
 
 ## Architecture
 
@@ -82,7 +90,7 @@ Deployed on Coolify via Railpack. No `output: 'export'`.
 
 ## Detailed Rules
 
-Full code standards and writing style rules live in `.claude/rules/*.md` (auto-loaded by Claude Code; other agents should read them directly).
+Full code standards and writing style rules live in `.claude/rules/*.md`
 
 ## Definition of Done
 
