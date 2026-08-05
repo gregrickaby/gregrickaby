@@ -33,7 +33,7 @@ description: 'Code standards and best practices for the Next.js 16 + Mantine 9 p
 ## Mantine 9 UI
 
 - Use Mantine layout primitives (`Container`, `Stack`, `Group`, `SimpleGrid`) over custom CSS
-- Do not import from `@mantine/core` in server components — Mantine components are client-only
+- Mantine components ship their own `'use client'` directive internally, so importing and rendering them (e.g. `Container`, `Text`, `Title`) from a Server Component is fine — this is the standard RSC pattern of a server component rendering a pre-built client component. Only add `'use client'` to *your* component when it calls a Mantine **hook** (`useMantineColorScheme`, `useDisclosure`, `useMediaQuery`, etc.), since hooks require the calling component itself to run on the client
 - Use CSS modules for styles; limit style props to 3-4 single-property overrides
 - Always use the `tomato` theme for colors. Avoid `gray`.
 
@@ -81,10 +81,11 @@ description: 'Code standards and best practices for the Next.js 16 + Mantine 9 p
 
 ## Naming Conventions
 
-| Thing                 | Convention                 | Example           |
-| --------------------- | -------------------------- | ----------------- |
-| Directories           | `kebab-case`               | `fun-stuff/`      |
-| Component files       | `PascalCase`               | `PostCard.tsx`    |
+| Thing                            | Convention                 | Example           |
+| -------------------------------- | -------------------------- | ----------------- |
+| Directories (non-component)      | `kebab-case`               | `test-utils/`     |
+| Component directories            | `PascalCase`, matches file | `PostCard/`       |
+| Component files                  | `PascalCase`               | `PostCard.tsx`    |
 | Utility/lib files     | `camelCase`                | `content.ts`      |
 | Constants             | `UPPER_SNAKE_CASE`         | `SITE_URL`        |
 | Variables & functions | `camelCase`                | `getAllPosts()`   |
