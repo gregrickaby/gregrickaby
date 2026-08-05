@@ -4,6 +4,7 @@ import redirects from './lib/redirects'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  deploymentId: process.env.SOURCE_COMMIT,
   partialPrefetching: true,
   reactCompiler: true,
   serverExternalPackages: ['exifr'],
