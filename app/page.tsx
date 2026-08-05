@@ -2,14 +2,24 @@ import {PostList} from '@/components/PostList/PostList'
 import {PostPagination} from '@/components/PostPagination/PostPagination'
 import {siteConfig} from '@/lib/config'
 import {getAllPosts} from '@/lib/content'
-import {paginate, parsePage} from '@/lib/pagination'
+import {buildRelLinks, paginate, parsePage} from '@/lib/pagination'
+import {Skeleton} from '@mantine/core'
+import type {Metadata} from 'next'
+import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
 
-export const metadata = {
-  title: `${siteConfig.name} - My Blog`,
-  description: siteConfig.description,
-  alternates: {
-    canonical: '/'
+/**
+ * Generates SEO metadata for the home page.
+ *
+ * @returns Next.js Metadata for the home page.
+ */
+export function generateMetadata(): Metadata {
+  return {
+    title: `${siteConfig.name} - My Blog`,
+    description: siteConfig.description,
+    alternates: {
+      canonical: '/'
+    }
   }
 }
 
@@ -35,17 +45,13 @@ export async function HomePageContent({searchParams}: Readonly<HomePageProps>) {
     totalPages
   } = paginate(allPosts, parsePage(page))
 
-  const nextUrl =
-    currentPage < totalPages
-      ? `${siteConfig.url}?page=${currentPage + 1}`
-      : undefined
-  let prevUrl: string | undefined
-  if (currentPage > 1) {
-    prevUrl =
-      currentPage === 2
-        ? siteConfig.url
-        : `${siteConfig.url}?page=${currentPage - 1}`
-  }
+  if (currentPage > totalPages) notFound()
+
+  const {nextUrl, prevUrl} = buildRelLinks(
+    siteConfig.url,
+    currentPage,
+    totalPages
+  )
 
   return (
     <>
@@ -66,7 +72,7 @@ export async function HomePageContent({searchParams}: Readonly<HomePageProps>) {
  */
 export default function HomePage({searchParams}: Readonly<HomePageProps>) {
   return (
-    <Suspense>
+    <Suspense fallback={<Skeleton height={800} />}>
       <HomePageContent searchParams={searchParams} />
     </Suspense>
   )

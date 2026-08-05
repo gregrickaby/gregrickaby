@@ -41,6 +41,41 @@ export function getTotalPages(count: number, pageSize: number): number {
   return Math.ceil(count / pageSize) || 1
 }
 
+/** `rel="next"`/`rel="prev"` URLs for a paginated listing, per RFC 5988. */
+export interface RelLinks {
+  /** URL of the next page, or undefined on the last page. */
+  nextUrl?: string
+  /** URL of the previous page, or undefined on the first page. */
+  prevUrl?: string
+}
+
+/**
+ * Build `rel="next"`/`rel="prev"` URLs for a paginated listing.
+ *
+ * The previous-page link omits the `?page=` query string when it points
+ * back to page 1, since that's the canonical URL for the base listing.
+ *
+ * @param baseUrl - The listing's canonical URL with no query string (e.g. `siteConfig.url`).
+ * @param currentPage - The current page number (1-based).
+ * @param totalPages - The total number of pages.
+ * @returns An object with `nextUrl` and `prevUrl`, either of which may be undefined.
+ */
+export function buildRelLinks(
+  baseUrl: string,
+  currentPage: number,
+  totalPages: number
+): RelLinks {
+  const nextUrl =
+    currentPage < totalPages ? `${baseUrl}?page=${currentPage + 1}` : undefined
+
+  let prevUrl: string | undefined
+  if (currentPage > 1) {
+    prevUrl = currentPage === 2 ? baseUrl : `${baseUrl}?page=${currentPage - 1}`
+  }
+
+  return {nextUrl, prevUrl}
+}
+
 /**
  * Slice an array of items for a given page number.
  *

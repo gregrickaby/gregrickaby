@@ -1,4 +1,10 @@
-import {PAGE_SIZE, getTotalPages, paginate, parsePage} from './pagination'
+import {
+  PAGE_SIZE,
+  buildRelLinks,
+  getTotalPages,
+  paginate,
+  parsePage
+} from './pagination'
 
 describe('parsePage()', () => {
   it('returns 1 when page is undefined', () => {
@@ -67,5 +73,31 @@ describe('paginate()', () => {
     expect(result.currentPage).toBe(2)
     expect(result.items).toEqual([6, 7, 8, 9, 10])
     expect(result.totalPages).toBe(6)
+  })
+})
+
+describe('buildRelLinks()', () => {
+  it('returns no links for a single-page listing', () => {
+    const result = buildRelLinks('https://example.com', 1, 1)
+    expect(result.nextUrl).toBeUndefined()
+    expect(result.prevUrl).toBeUndefined()
+  })
+
+  it('returns only a next link on the first page of many', () => {
+    const result = buildRelLinks('https://example.com', 1, 3)
+    expect(result.nextUrl).toBe('https://example.com?page=2')
+    expect(result.prevUrl).toBeUndefined()
+  })
+
+  it('points the prev link at the bare base URL from page 2', () => {
+    const result = buildRelLinks('https://example.com', 2, 3)
+    expect(result.prevUrl).toBe('https://example.com')
+    expect(result.nextUrl).toBe('https://example.com?page=3')
+  })
+
+  it('returns only a prev link on the last page', () => {
+    const result = buildRelLinks('https://example.com', 3, 3)
+    expect(result.nextUrl).toBeUndefined()
+    expect(result.prevUrl).toBe('https://example.com?page=2')
   })
 })

@@ -18,7 +18,8 @@ vi.mock('next/link', () => ({
 }))
 
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({push: vi.fn()})
+  useRouter: () => ({push: vi.fn()}),
+  notFound: vi.fn()
 }))
 
 const mockPosts: PostMeta[] = [
@@ -92,5 +93,18 @@ describe('Home page', () => {
     render(await HomePageContent({searchParams}))
     expect(document.querySelector('link[rel="next"]')).toBeNull()
     expect(document.querySelector('link[rel="prev"]')).toBeNull()
+  })
+
+  it('calls notFound when the requested page exceeds the total pages', async () => {
+    const {notFound} = await import('next/navigation')
+    const {HomePageContent} = await import('./page')
+    await HomePageContent({searchParams: Promise.resolve({page: '99'})})
+    expect(notFound).toHaveBeenCalled()
+  })
+
+  it('generates metadata for the home page', async () => {
+    const {generateMetadata} = await import('./page')
+    const metadata = generateMetadata()
+    expect(metadata.alternates?.canonical).toBe('/')
   })
 })
