@@ -27,6 +27,7 @@ const contentSecurityPolicy = [
   'upgrade-insecure-requests'
 ].join('; ')
 
+/** HTTP security and caching headers, applied via `next.config.ts`. */
 const headers = [
   {
     source: '/:path*',
