@@ -1,7 +1,7 @@
 import type {Metadata, ResolvingMetadata} from 'next'
 import {siteConfig} from './config'
 import type {PostMeta} from './types'
-import {getFeaturedImagePath} from './utils'
+import {getFeaturedImagePath, isValidIsoDate} from './utils'
 
 /**
  * The subset of PostMeta fields consumed by buildContentMetadata.
@@ -38,10 +38,8 @@ export async function buildContentMetadata(
   const featuredImage = getFeaturedImagePath(meta)
   const previousImages = (await parent).openGraph?.images ?? []
 
-  const validDate = !isNaN(Date.parse(meta.date)) ? meta.date : undefined
-  const validModified = !isNaN(Date.parse(meta.modified))
-    ? meta.modified
-    : undefined
+  const validDate = isValidIsoDate(meta.date)
+  const validModified = isValidIsoDate(meta.modified)
 
   return {
     title: meta.title,

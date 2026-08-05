@@ -59,6 +59,16 @@ export function resolveImagePaths(
 }
 
 /**
+ * Checks whether a string parses as a valid date.
+ *
+ * @param value - A date string to validate.
+ * @returns The original string if it parses as a valid date, otherwise undefined.
+ */
+export function isValidIsoDate(value: string): string | undefined {
+  return Number.isNaN(Date.parse(value)) ? undefined : value
+}
+
+/**
  * Formats an ISO date string into a human-readable date.
  *
  * @param dateString - An ISO 8601 date string (e.g. `'2024-06-01T00:00:00Z'`).
@@ -146,19 +156,4 @@ export function escapeHtml(value: string): string {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#x27;')
-}
-
-/**
- * Formats an ISO date string into a short human-readable date for photo cards.
- *
- * @param dateString - An ISO 8601 date string (e.g. `'2024-06-01T00:00:00Z'`).
- * @returns A formatted string such as `'Jun 1, 2024'`.
- */
-export function formatPhotoDate(dateString: string): string {
-  return new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC'
-  }).format(new Date(dateString))
 }

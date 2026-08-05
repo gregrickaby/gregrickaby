@@ -2,11 +2,11 @@ import type {PostMeta} from './types'
 import {
   decodeEntities,
   escapeHtml,
-  formatPhotoDate,
   formatPostDate,
   getCaption,
   getFeaturedImagePath,
   getFirstContentImageSrc,
+  isValidIsoDate,
   normalizeMeta,
   resolveFeaturedImage,
   resolveImagePaths
@@ -19,6 +19,16 @@ const basePost: PostMeta = {
   modified: '2024-06-01T00:00:00Z',
   type: 'post'
 }
+
+describe('isValidIsoDate', () => {
+  it('returns the string when it parses as a valid date', () => {
+    expect(isValidIsoDate('2024-06-01T00:00:00Z')).toBe('2024-06-01T00:00:00Z')
+  })
+
+  it('returns undefined for an unparseable string', () => {
+    expect(isValidIsoDate('not-a-date')).toBeUndefined()
+  })
+})
 
 describe('formatPostDate', () => {
   it('formats an ISO date string into a human-readable date', () => {
@@ -210,16 +220,6 @@ describe('resolveImagePaths', () => {
   it('leaves absolute src attributes unchanged', () => {
     const html = '<img src="https://example.com/photo.jpg" />'
     expect(resolveImagePaths(html, 'my-post', 'post')).toBe(html)
-  })
-})
-
-describe('formatPhotoDate', () => {
-  it('formats an ISO date string with abbreviated month', () => {
-    expect(formatPhotoDate('2024-06-01T12:00:00Z')).toBe('Jun 1, 2024')
-  })
-
-  it('formats a different date correctly', () => {
-    expect(formatPhotoDate('2000-01-15T12:00:00Z')).toBe('Jan 15, 2000')
   })
 })
 
