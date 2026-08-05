@@ -2,12 +2,13 @@ import '@/app/global.css'
 import {cssVariablesResolver, theme} from '@/app/theme'
 import {Footer} from '@/components/Footer/Footer'
 import {Header} from '@/components/Header/Header'
+import {JsonLd} from '@/components/JsonLd/JsonLd'
 import {ScrollToTop} from '@/components/ScrollToTop/ScrollToTop'
 import {Search} from '@/components/Search/Search'
 import {WebVitals} from '@/lib/axiom/client'
 import {siteConfig} from '@/lib/config'
 import {getAllPosts} from '@/lib/content'
-import {buildWebSiteGraph, serializeSchema} from '@/lib/schema'
+import {buildWebSiteGraph} from '@/lib/schema'
 import {
   ColorSchemeScript,
   Container,
@@ -112,10 +113,7 @@ export default async function RootLayout({
         <WebVitals />
         <ColorSchemeScript defaultColorScheme="auto" />
         <meta name="color-scheme" content="light dark" />
-        <script
-          dangerouslySetInnerHTML={{__html: serializeSchema(webSiteGraph)}}
-          type="application/ld+json"
-        />
+        <JsonLd graph={webSiteGraph} />
       </head>
       <body>
         <MantineProvider

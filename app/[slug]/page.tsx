@@ -1,8 +1,9 @@
 import {Article} from '@/components/Article/Article'
+import {JsonLd} from '@/components/JsonLd/JsonLd'
 import {PostNavigation} from '@/components/PostNavigation/PostNavigation'
 import {getAllPosts, getPostBySlug, getAdjacentPosts} from '@/lib/content'
 import {buildContentMetadata} from '@/lib/metadata'
-import {buildBlogPostingGraph, serializeSchema} from '@/lib/schema'
+import {buildBlogPostingGraph} from '@/lib/schema'
 import {Skeleton} from '@mantine/core'
 import {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
@@ -53,10 +54,7 @@ export async function PostContent({params}: Readonly<PageProps>) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{__html: serializeSchema(jsonLd)}}
-      />
+      <JsonLd graph={jsonLd} />
       <Article meta={post.meta} content={post.content} />
       <PostNavigation prev={prev} next={next} />
     </>
