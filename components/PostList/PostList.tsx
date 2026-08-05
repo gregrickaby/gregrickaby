@@ -31,13 +31,13 @@ export function PostList({posts}: Readonly<PostListProps>) {
           <PostCard key={post.slug} post={post} priority />
         ))}
       </SimpleGrid>
-      {rest.length > 0 && (
+      {rest.length > 0 ? (
         <SimpleGrid cols={{base: 1, sm: 2, md: 3}} spacing="xl">
           {rest.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
         </SimpleGrid>
-      )}
+      ) : null}
     </>
   )
 }
