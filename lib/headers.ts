@@ -1,7 +1,34 @@
+/**
+ * Content-Security-Policy value. `unsafe-inline` is required for both
+ * script-src (our own JSON-LD `<script>` tags and Mantine's
+ * `ColorSchemeScript`) and style-src (shiki/rehype-pretty-code inline
+ * `style` attributes on every syntax-highlighted code block, plus Mantine's
+ * CSS variable injection) — nonces would force dynamic rendering on every
+ * route, which conflicts with the static shell Cache Components prerenders.
+ * `experimental.sri` in next.config.ts covers integrity of the JS bundles
+ * this can't lock down further. `unsafe-eval` is added in development only:
+ * React uses `eval()` there to reconstruct server error stack traces in the
+ * browser; it's never used in production.
+ */
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+  'upgrade-insecure-requests'
+].join('; ')
+
 const headers = [
   {
     source: '/:path*',
     headers: [
+      {key: 'X-DNS-Prefetch-Control', value: 'on'},
       {
         key: 'Strict-Transport-Security',
         value: 'max-age=63072000; includeSubDomains; preload'
@@ -12,7 +39,8 @@ const headers = [
       {
         key: 'Permissions-Policy',
         value: 'camera=(), microphone=(), geolocation=()'
-      }
+      },
+      {key: 'Content-Security-Policy', value: contentSecurityPolicy}
     ]
   },
   {

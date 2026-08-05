@@ -6,19 +6,28 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
+  serverExternalPackages: ['exifr'],
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 2678400
   },
   experimental: {
-    cssChunking: true,
+    appNewScrollHandler: true,
     turbopackRustReactCompiler: true,
     optimizePackageImports: [
       '@mantine/core',
       '@mantine/hooks',
       '@mantine/spotlight',
       '@tabler/icons-react'
-    ]
+    ],
+    sri: {
+      algorithm: 'sha256'
+    }
+  },
+  logging: {
+    fetches: {
+      fullUrl: true
+    }
   },
   async redirects() {
     return redirects

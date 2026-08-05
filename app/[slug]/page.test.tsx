@@ -50,8 +50,8 @@ vi.mock('@/lib/content', async (importOriginal) => {
 
 describe('[slug] page', () => {
   it('renders the post title', async () => {
-    const {default: PostPage} = await import('./page')
-    const result = await PostPage({
+    const {PostContent} = await import('./page')
+    const result = await PostContent({
       params: Promise.resolve({slug: 'hello-world'})
     })
     render(result)
@@ -61,12 +61,18 @@ describe('[slug] page', () => {
   })
 
   it('renders the post content', async () => {
-    const {default: PostPage} = await import('./page')
-    const result = await PostPage({
+    const {PostContent} = await import('./page')
+    const result = await PostContent({
       params: Promise.resolve({slug: 'hello-world'})
     })
     render(result)
     expect(screen.getByText('Welcome to my blog.')).toBeInTheDocument()
+  })
+
+  it('renders a loading skeleton behind the default export', async () => {
+    const {default: PostPage} = await import('./page')
+    render(PostPage({params: Promise.resolve({slug: 'hello-world'})}))
+    expect(screen.getByTestId('post-skeleton')).toBeInTheDocument()
   })
 
   it('generates static params', async () => {
@@ -99,8 +105,8 @@ describe('[slug] page', () => {
         type: 'post'
       }
     ])
-    const {default: PostPage} = await import('./page')
-    const result = await PostPage({
+    const {PostContent} = await import('./page')
+    const result = await PostContent({
       params: Promise.resolve({slug: 'hello-world'})
     })
     render(result)
