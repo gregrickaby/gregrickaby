@@ -4,6 +4,7 @@ import redirects from './lib/redirects'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  partialPrefetching: true,
   reactCompiler: true,
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -11,6 +12,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     cssChunking: true,
+    turbopackRustReactCompiler: true,
     optimizePackageImports: [
       '@mantine/core',
       '@mantine/hooks',
