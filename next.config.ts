@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   deploymentId: process.env.SOURCE_COMMIT,
   partialPrefetching: true,
+  poweredByHeader: false,
   reactCompiler: true,
   serverExternalPackages: ['exifr'],
   images: {
@@ -15,6 +16,7 @@ const nextConfig: NextConfig = {
   experimental: {
     appNewScrollHandler: true,
     turbopackRustReactCompiler: true,
+    webVitalsAttribution: ['CLS', 'LCP'],
     optimizePackageImports: [
       '@mantine/core',
       '@mantine/hooks',
