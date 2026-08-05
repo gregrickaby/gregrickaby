@@ -85,7 +85,7 @@ export default defineConfig(
   },
   {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/consistent-generic-constructors': 'error',
       '@typescript-eslint/method-signature-style': ['error', 'property'],
