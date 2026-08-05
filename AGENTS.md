@@ -13,9 +13,11 @@ npm run validate     # tsc + lint + format + test
 
 <!-- BEGIN:nextjs-agent-rules -->
 
-## Next.js: ALWAYS read docs before coding
+# This is NOT the Next.js you know
 
-Before any Next.js work, find and read the relevant doc in `node_modules/next/dist/docs/`. Your training data is outdated — the docs are the source of truth.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
 
@@ -30,7 +32,7 @@ Before any Next.js work, find and read the relevant doc in `node_modules/next/di
 app/              # App Router pages/layouts (server components by default)
   api/
     axiom/        # Client-log proxy route handler
-    healthcheck/  # Container health check
+    health/       # Container health check
   [slug]/         # Dynamic post/page route
   category/[category]/
   tag/[tag]/
@@ -62,7 +64,7 @@ scripts/          # Build-time scripts (RSS feed)
 test-utils/       # Custom RTL render wrapper (MantineProvider)
 ```
 
-Deployed on Coolify via nixpacks (Node 24). No `output: 'export'`.
+Deployed on Coolify via Railpack. No `output: 'export'`.
 
 ## Key Rules
 
@@ -78,15 +80,13 @@ Deployed on Coolify via nixpacks (Node 24). No `output: 'export'`.
 - Server-side logging via `lib/axiom/server.ts`; client-side via `useLogger` from `lib/axiom/client.ts`
 - Never commit or push changes on the developer's behalf
 
-## Task Completion
+## Detailed Rules
+
+Full code standards and writing style rules live in `.claude/rules/*.md` (auto-loaded by Claude Code; other agents should read them directly).
+
+## Definition of Done
 
 Before declaring a task complete:
 
 1. Run `npm run validate`
 2. No SonarQube for IDE tool issues
-
-## References
-
-- Code standards: `.agents/instructions/code-standards.instructions.md`
-- Writing style: `.agents/instructions/writing-style.instructions.md`
-- Update instructions skill: `.agents/skills/update-instructions/SKILL.md`

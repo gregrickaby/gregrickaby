@@ -16,7 +16,7 @@ A common reason developers do this is to access parent variables without passing
 **Incorrect (remounts on every render):**
 
 ```tsx
-function UserProfile({user, theme}) {
+function UserProfile({ user, theme }) {
   // Defined inside to access `theme` - BAD
   const Avatar = () => (
     <img
@@ -47,7 +47,7 @@ Every time `UserProfile` renders, `Avatar` and `Stats` are new component types. 
 **Correct (pass props instead):**
 
 ```tsx
-function Avatar({src, theme}: {src: string; theme: string}) {
+function Avatar({ src, theme }: { src: string; theme: string }) {
   return (
     <img
       src={src}
@@ -56,7 +56,7 @@ function Avatar({src, theme}: {src: string; theme: string}) {
   )
 }
 
-function Stats({followers, posts}: {followers: number; posts: number}) {
+function Stats({ followers, posts }: { followers: number; posts: number }) {
   return (
     <div>
       <span>{followers} followers</span>
@@ -65,7 +65,7 @@ function Stats({followers, posts}: {followers: number; posts: number}) {
   )
 }
 
-function UserProfile({user, theme}) {
+function UserProfile({ user, theme }) {
   return (
     <div>
       <Avatar src={user.avatarUrl} theme={theme} />
@@ -76,7 +76,6 @@ function UserProfile({user, theme}) {
 ```
 
 **Symptoms of this bug:**
-
 - Input fields lose focus on every keystroke
 - Animations restart unexpectedly
 - `useEffect` cleanup/setup runs on every parent render

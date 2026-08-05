@@ -10,7 +10,7 @@
     "todowrite": "allow",
     "question": "allow"
   },
-  "instructions": [".agents/instructions/*.md"],
+  "instructions": [".claude/rules/*.md"],
   "mcp": {
     "next-devtools": {
       "command": ["npx", "-y", "next-devtools-mcp@latest"],

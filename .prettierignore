@@ -43,6 +43,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# vendored agent skills (external content, hash-verified via skills-lock.json)
+/.agents
+/.claude
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -20,8 +20,8 @@ Next.js documentation explicitly states: "Treat Server Actions with the same sec
 
 export async function deleteUser(userId: string) {
   // Anyone can call this! No auth check
-  await db.user.delete({where: {id: userId}})
-  return {success: true}
+  await db.user.delete({ where: { id: userId } })
+  return { success: true }
 }
 ```
 
@@ -30,24 +30,24 @@ export async function deleteUser(userId: string) {
 ```typescript
 'use server'
 
-import {verifySession} from '@/lib/auth'
-import {unauthorized} from '@/lib/errors'
+import { verifySession } from '@/lib/auth'
+import { unauthorized } from '@/lib/errors'
 
 export async function deleteUser(userId: string) {
   // Always check auth inside the action
   const session = await verifySession()
-
+  
   if (!session) {
     throw unauthorized('Must be logged in')
   }
-
+  
   // Check authorization too
   if (session.user.role !== 'admin' && session.user.id !== userId) {
     throw unauthorized('Cannot delete other users')
   }
-
-  await db.user.delete({where: {id: userId}})
-  return {success: true}
+  
+  await db.user.delete({ where: { id: userId } })
+  return { success: true }
 }
 ```
 
@@ -56,8 +56,8 @@ export async function deleteUser(userId: string) {
 ```typescript
 'use server'
 
-import {verifySession} from '@/lib/auth'
-import {z} from 'zod'
+import { verifySession } from '@/lib/auth'
+import { z } from 'zod'
 
 const updateProfileSchema = z.object({
   userId: z.string().uuid(),
@@ -68,28 +68,28 @@ const updateProfileSchema = z.object({
 export async function updateProfile(data: unknown) {
   // Validate input first
   const validated = updateProfileSchema.parse(data)
-
+  
   // Then authenticate
   const session = await verifySession()
   if (!session) {
     throw new Error('Unauthorized')
   }
-
+  
   // Then authorize
   if (session.user.id !== validated.userId) {
     throw new Error('Can only update own profile')
   }
-
+  
   // Finally perform the mutation
   await db.user.update({
-    where: {id: validated.userId},
+    where: { id: validated.userId },
     data: {
       name: validated.name,
       email: validated.email
     }
   })
-
-  return {success: true}
+  
+  return { success: true }
 }
 ```
 

@@ -29,7 +29,7 @@ function Tracker() {
         left: lastX,
         width: 8,
         height: 8,
-        background: 'black'
+        background: 'black',
       }}
     />
   )
@@ -65,7 +65,7 @@ function Tracker() {
         width: 8,
         height: 8,
         background: 'black',
-        transform: 'translateX(0px)'
+        transform: 'translateX(0px)',
       }}
     />
   )
