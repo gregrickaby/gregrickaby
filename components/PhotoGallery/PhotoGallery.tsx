@@ -1,17 +1,16 @@
 'use client'
 
+import {Lightbox} from '@/components/Lightbox/Lightbox'
 import type {PhotoMeta} from '@/lib/types'
 import {useMediaQuery} from '@mantine/hooks'
 import dynamic from 'next/dynamic'
+import Image from 'next/image'
 import {useState} from 'react'
 import 'react-photo-album/masonry.css'
-import Captions from 'yet-another-react-lightbox/plugins/captions'
-import 'yet-another-react-lightbox/plugins/captions.css'
 import Download from 'yet-another-react-lightbox/plugins/download'
 import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen'
 import Slideshow from 'yet-another-react-lightbox/plugins/slideshow'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
-import 'yet-another-react-lightbox/styles.css'
 import styles from './PhotoGallery.module.css'
 
 const MasonryPhotoAlbum = dynamic(
@@ -19,9 +18,26 @@ const MasonryPhotoAlbum = dynamic(
     import('react-photo-album').then((m) => ({default: m.MasonryPhotoAlbum})),
   {ssr: false}
 )
-const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
-  ssr: false
-})
+
+/**
+ * The subset of PhotoMeta fields actually rendered by the gallery and
+ * lightbox. Keeping this narrow (instead of the full PhotoMeta) prevents
+ * unused fields like `gps` and `caption` from being serialized into the
+ * client bundle.
+ */
+export type GalleryPhoto = Pick<
+  PhotoMeta,
+  | 'filename'
+  | 'title'
+  | 'width'
+  | 'height'
+  | 'camera'
+  | 'lens'
+  | 'aperture'
+  | 'shutterSpeed'
+  | 'iso'
+  | 'focalLength'
+>
 
 /**
  * Props for the PhotoGallery component.
@@ -30,7 +46,7 @@ const Lightbox = dynamic(() => import('yet-another-react-lightbox'), {
  */
 interface PhotoGalleryProps {
   /** Array of photo metadata to display. */
-  photos: PhotoMeta[]
+  photos: GalleryPhoto[]
 }
 
 /**
@@ -39,7 +55,7 @@ interface PhotoGalleryProps {
  * @param photo - The photo metadata.
  * @returns A formatted EXIF string, or undefined when no EXIF data is present.
  */
-function buildSlideDescription(photo: PhotoMeta): string | undefined {
+function buildSlideDescription(photo: GalleryPhoto): string | undefined {
   const parts: string[] = []
   if (photo.camera) parts.push(photo.camera)
   if (photo.lens) parts.push(photo.lens)
@@ -86,6 +102,17 @@ export function PhotoGallery({photos}: Readonly<PhotoGalleryProps>) {
           columns={isMobile ? 1 : 3}
           onClick={({index}) => setLightboxIndex(index)}
           photos={albumPhotos}
+          render={{
+            image: (_props, {photo, width, height}) => (
+              <Image
+                alt={photo.alt ?? ''}
+                height={Math.round(height)}
+                sizes={isMobile ? '100vw' : '33vw'}
+                src={photo.src}
+                width={Math.round(width)}
+              />
+            )
+          }}
         />
       </div>
       <Lightbox
@@ -94,7 +121,7 @@ export function PhotoGallery({photos}: Readonly<PhotoGalleryProps>) {
         close={() => setLightboxIndex(-1)}
         index={lightboxIndex}
         open={lightboxIndex >= 0}
-        plugins={[Captions, Download, Fullscreen, Zoom, Slideshow]}
+        plugins={[Download, Fullscreen, Zoom, Slideshow]}
         slides={slides}
       />
     </>

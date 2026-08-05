@@ -117,4 +117,62 @@ describe('PhotoGallery', () => {
     expect(lightboxProps?.open).toBe(true)
     expect(lightboxProps?.index).toBe(1)
   })
+
+  it('builds a slide description from full EXIF metadata', async () => {
+    const {PhotoGallery} = await import('./PhotoGallery')
+    render(
+      <PhotoGallery
+        photos={[
+          {
+            filename: 'photo-c.jpg',
+            title: 'Photo C',
+            width: 1920,
+            height: 1080,
+            camera: 'Canon EOS R5',
+            lens: 'RF 70-200mm F2.8L IS USM',
+            focalLength: '200mm',
+            aperture: 'f/2.8',
+            shutterSpeed: '1/250s',
+            iso: '400'
+          }
+        ]}
+      />
+    )
+    const slide = mockLightbox.mock.calls.at(-1)?.[0]?.slides[0]
+    expect(slide.description).toBe(
+      'Canon EOS R5 · RF 70-200mm F2.8L IS USM · 200mm · f/2.8 · 1/250s · ISO 400'
+    )
+  })
+
+  it('renders each grid photo with next/image using rounded dimensions', async () => {
+    const {PhotoGallery} = await import('./PhotoGallery')
+    render(<PhotoGallery photos={photos} />)
+    const props = mockMasonryPhotoAlbum.mock.calls.at(-1)?.[0]
+    const imageElement = props?.render?.image(
+      {},
+      {
+        photo: {src: '/content/photos/photo-a.jpg', alt: 'Photo A'},
+        width: 205.333,
+        height: 269.265,
+        index: 0
+      }
+    )
+    expect(imageElement.props.src).toBe('/content/photos/photo-a.jpg')
+    expect(imageElement.props.alt).toBe('Photo A')
+    expect(imageElement.props.width).toBe(205)
+    expect(imageElement.props.height).toBe(269)
+  })
+
+  it('omits the slide description when no EXIF metadata is present', async () => {
+    const {PhotoGallery} = await import('./PhotoGallery')
+    render(
+      <PhotoGallery
+        photos={[
+          {filename: 'photo-d.jpg', title: 'Photo D', width: 800, height: 600}
+        ]}
+      />
+    )
+    const slide = mockLightbox.mock.calls.at(-1)?.[0]?.slides[0]
+    expect(slide.description).toBeUndefined()
+  })
 })

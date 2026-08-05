@@ -1,7 +1,8 @@
+import {JsonLd} from '@/components/JsonLd/JsonLd'
 import {PhotoGallery} from '@/components/PhotoGallery/PhotoGallery'
 import {siteConfig} from '@/lib/config'
 import {getPhotos} from '@/lib/photos'
-import {buildWebPageGraph, serializeSchema} from '@/lib/schema'
+import {buildWebPageGraph} from '@/lib/schema'
 import {Container, Skeleton, Text, Title} from '@mantine/core'
 import type {Metadata} from 'next'
 import {Suspense} from 'react'
@@ -36,7 +37,33 @@ export function generateMetadata(): Metadata {
 export async function PhotosContent() {
   const photos = await getPhotos()
   return photos.length > 0 ? (
-    <PhotoGallery photos={photos} />
+    <PhotoGallery
+      photos={photos.map(
+        ({
+          filename,
+          title,
+          width,
+          height,
+          camera,
+          lens,
+          aperture,
+          shutterSpeed,
+          iso,
+          focalLength
+        }) => ({
+          filename,
+          title,
+          width,
+          height,
+          camera,
+          lens,
+          aperture,
+          shutterSpeed,
+          iso,
+          focalLength
+        })
+      )}
+    />
   ) : (
     <Text c="dimmed">No photos yet.</Text>
   )
@@ -58,10 +85,7 @@ export default function PhotosPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{__html: serializeSchema(jsonLd)}}
-      />
+      <JsonLd graph={jsonLd} />
       <Container size="xl" py="xl">
         <Title order={1} mb="xs">
           Photos
