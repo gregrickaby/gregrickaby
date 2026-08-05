@@ -5,6 +5,7 @@ import {getFeaturedImagePath} from './utils'
 const PERSON_ID = `${siteConfig.url}/#person`
 const WEBSITE_ID = `${siteConfig.url}/#website`
 
+/** A single node within a JSON-LD `@graph` array. */
 interface SchemaNode {
   '@type': string | string[]
   '@id': string
@@ -15,6 +16,42 @@ interface SchemaNode {
 export interface SchemaGraph {
   '@context': string
   '@graph': SchemaNode[]
+}
+
+/**
+ * Builds a two-item BreadcrumbList node (Home → the given page) shared by
+ * `buildBlogPostingGraph` and `buildWebPageGraph`.
+ *
+ * @param breadcrumbId - The `@id` for the BreadcrumbList node.
+ * @param pageUrl - The absolute URL of the second breadcrumb item.
+ * @param pageTitle - The display name of the second breadcrumb item.
+ * @returns A `SchemaNode` representing the BreadcrumbList.
+ */
+function buildBreadcrumbList(
+  breadcrumbId: string,
+  pageUrl: string,
+  pageTitle: string
+): SchemaNode {
+  return {
+    '@type': 'BreadcrumbList',
+    '@id': breadcrumbId,
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        '@id': `${siteConfig.url}/#breadcrumb-1`,
+        position: 1,
+        name: 'Home',
+        item: siteConfig.url
+      },
+      {
+        '@type': 'ListItem',
+        '@id': `${pageUrl}/#breadcrumb-2`,
+        position: 2,
+        name: pageTitle,
+        item: pageUrl
+      }
+    ]
+  }
 }
 
 /**
@@ -94,28 +131,23 @@ export function buildBlogPostingGraph(meta: PostMeta): SchemaGraph {
         breadcrumb: {'@id': `${postUrl}/#breadcrumb`},
         inLanguage: 'en-US'
       },
-      {
-        '@type': 'BreadcrumbList',
-        '@id': `${postUrl}/#breadcrumb`,
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            '@id': `${siteConfig.url}/#breadcrumb-1`,
-            position: 1,
-            name: 'Home',
-            item: siteConfig.url
-          },
-          {
-            '@type': 'ListItem',
-            '@id': `${postUrl}/#breadcrumb-2`,
-            position: 2,
-            name: meta.title,
-            item: postUrl
-          }
-        ]
-      }
+      buildBreadcrumbList(`${postUrl}/#breadcrumb`, postUrl, meta.title)
     ]
   }
+}
+
+/**
+ * Input for buildWebPageGraph.
+ *
+ * @interface
+ */
+export interface WebPageGraphInput {
+  /** The page title. */
+  title: string
+  /** The page description. */
+  description: string
+  /** The URL path segment relative to the site root (e.g. `'about'`). */
+  path: string
 }
 
 /**
@@ -129,11 +161,7 @@ export function buildWebPageGraph({
   title,
   description,
   path
-}: {
-  title: string
-  description: string
-  path: string
-}): SchemaGraph {
+}: WebPageGraphInput): SchemaGraph {
   const pageUrl = `${siteConfig.url}/${path}`
 
   return {
@@ -149,26 +177,7 @@ export function buildWebPageGraph({
         breadcrumb: {'@id': `${pageUrl}/#breadcrumb`},
         inLanguage: 'en-US'
       },
-      {
-        '@type': 'BreadcrumbList',
-        '@id': `${pageUrl}/#breadcrumb`,
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            '@id': `${siteConfig.url}/#breadcrumb-1`,
-            position: 1,
-            name: 'Home',
-            item: siteConfig.url
-          },
-          {
-            '@type': 'ListItem',
-            '@id': `${pageUrl}/#breadcrumb-2`,
-            position: 2,
-            name: title,
-            item: pageUrl
-          }
-        ]
-      }
+      buildBreadcrumbList(`${pageUrl}/#breadcrumb`, pageUrl, title)
     ]
   }
 }
