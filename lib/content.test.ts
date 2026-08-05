@@ -217,6 +217,25 @@ describe('getPostBySlug', () => {
     expect(result?.content).toContain('&quot;quoted alt&quot;')
   })
 
+  it('escapes double quotes in the image URL within figures', async () => {
+    mockExistsSync.mockReturnValue(true)
+    mockReadFileSync.mockReturnValue(
+      '' as unknown as ReturnType<typeof fs.readFileSync>
+    )
+    mockMatter.mockReturnValue({
+      data: baseMeta,
+      content: '![alt](<./img.jpg" onerror="x> "Caption")'
+    } as unknown as ReturnType<typeof matter>)
+
+    const result = await getPostBySlug('test-post')
+    expect(result?.content).not.toContain(
+      'src="/content/posts/test-post/img.jpg" onerror="x"'
+    )
+    expect(result?.content).toContain(
+      'src="/content/posts/test-post/img.jpg&quot; onerror=&quot;x"'
+    )
+  })
+
   it('handles a figure image with no alt text (null alt branch)', async () => {
     mockExistsSync.mockReturnValue(true)
     mockReadFileSync.mockReturnValue(

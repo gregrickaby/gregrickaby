@@ -35,6 +35,7 @@ function remarkFigureCaption() {
         index !== undefined
       ) {
         const img = node.children[0]
+        const url = img.url.replaceAll('"', '&quot;')
         /* v8 ignore next -- MDast types alt as string|null but remark always provides a string */
         const alt = (img.alt ?? '').replaceAll('"', '&quot;')
         const title = img
@@ -43,7 +44,7 @@ function remarkFigureCaption() {
           .replaceAll('>', '&gt;')
         parent.children.splice(index, 1, {
           type: 'html',
-          value: `<figure>\n<img src="${img.url}" alt="${alt}" />\n<figcaption>${title}</figcaption>\n</figure>`
+          value: `<figure>\n<img src="${url}" alt="${alt}" />\n<figcaption>${title}</figcaption>\n</figure>`
         })
       }
     })
@@ -200,6 +201,10 @@ export const getAllPosts = cache(async (): Promise<PostMeta[]> => {
  * @returns An array of post metadata matching the tag.
  */
 export const getPostsByTag = cache(async (tag: string): Promise<PostMeta[]> => {
+  'use cache'
+  cacheLife('max')
+  cacheTag('posts')
+
   const lower = tag.toLowerCase()
   return (await getAllPosts()).filter((p) =>
     p.tags?.some((t) => t.toLowerCase() === lower)
@@ -214,6 +219,10 @@ export const getPostsByTag = cache(async (tag: string): Promise<PostMeta[]> => {
  */
 export const getPostsByCategory = cache(
   async (category: string): Promise<PostMeta[]> => {
+    'use cache'
+    cacheLife('max')
+    cacheTag('posts')
+
     const lower = category.toLowerCase()
     return (await getAllPosts()).filter((p) =>
       p.categories?.some((c) => c.toLowerCase() === lower)
@@ -227,6 +236,10 @@ export const getPostsByCategory = cache(
  * @returns An array of unique tag strings.
  */
 export const getAllTags = cache(async (): Promise<string[]> => {
+  'use cache'
+  cacheLife('max')
+  cacheTag('posts')
+
   const tags = new Set<string>()
   for (const post of await getAllPosts()) {
     for (const tag of post.tags ?? []) {
@@ -242,6 +255,10 @@ export const getAllTags = cache(async (): Promise<string[]> => {
  * @returns An array of unique category strings.
  */
 export const getAllCategories = cache(async (): Promise<string[]> => {
+  'use cache'
+  cacheLife('max')
+  cacheTag('posts')
+
   const categories = new Set<string>()
   for (const post of await getAllPosts()) {
     for (const cat of post.categories ?? []) {
