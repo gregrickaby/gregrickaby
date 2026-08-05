@@ -8,11 +8,14 @@
  * `experimental.sri` in next.config.ts covers integrity of the JS bundles
  * this can't lock down further. `unsafe-eval` is added in development only:
  * React uses `eval()` there to reconstruct server error stack traces in the
- * browser; it's never used in production.
+ * browser; it's never used in production. `static.cloudflareinsights.com` is
+ * Cloudflare's Web Analytics beacon, injected at the edge because the site
+ * is proxied through Cloudflare — its telemetry POST goes to same-origin
+ * `/cdn-cgi/rum`, already covered by `connect-src 'self'`.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
+  `script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self'",
