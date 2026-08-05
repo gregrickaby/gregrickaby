@@ -19,7 +19,8 @@ vi.mock('next/link', () => ({
 }))
 
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({push: vi.fn()})
+  useRouter: () => ({push: vi.fn()}),
+  notFound: vi.fn()
 }))
 
 const mockPosts: PostMeta[] = [
@@ -111,5 +112,18 @@ describe('FilteredPostsContent', () => {
     )
     expect(screen.getByText(`Post ${PAGE_SIZE + 1}`)).toBeInTheDocument()
     expect(screen.queryByText('Post 1')).not.toBeInTheDocument()
+  })
+
+  it('calls notFound when the requested page exceeds the total pages', async () => {
+    const {notFound} = await import('next/navigation')
+    render(
+      <FilteredPostsContent
+        title="Tag: foo"
+        posts={mockPosts}
+        page="99"
+        baseUrl="/tag/foo"
+      />
+    )
+    expect(notFound).toHaveBeenCalled()
   })
 })

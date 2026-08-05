@@ -3,6 +3,7 @@ import {PostPagination} from '@/components/PostPagination/PostPagination'
 import {paginate, parsePage} from '@/lib/pagination'
 import type {PostMeta} from '@/lib/types'
 import {Title} from '@mantine/core'
+import {notFound} from 'next/navigation'
 
 /**
  * Props for the FilteredPostsContent component.
@@ -34,6 +35,9 @@ export function FilteredPostsContent({
   baseUrl
 }: Readonly<FilteredPostsContentProps>) {
   const {items, currentPage, totalPages} = paginate(posts, parsePage(page))
+
+  if (currentPage > totalPages) notFound()
+
   return (
     <>
       <Title order={1} mb="xl" ta="center">
