@@ -37,6 +37,13 @@ describe('ArticleContent', () => {
     expect(mockLightbox).toHaveBeenCalled()
   })
 
+  it('does not pass extra plugins to the Lightbox', async () => {
+    const {ArticleContent} = await import('./ArticleContent')
+    render(<ArticleContent content="<p>Content</p>" />)
+    const props = mockLightbox.mock.calls.at(-1)?.[0]
+    expect(props?.plugins).toHaveLength(1)
+  })
+
   it('renders with figcaption markup without errors', async () => {
     const {ArticleContent} = await import('./ArticleContent')
     const html =
