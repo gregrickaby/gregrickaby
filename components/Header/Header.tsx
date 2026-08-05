@@ -1,11 +1,10 @@
 'use client'
 
 import {AppLink} from '@/components/AppLink/AppLink'
-import {ColorSchemeToggle} from '@/components/ColorSchemeToggle/ColorSchemeToggle'
+import {HeaderActions} from '@/components/HeaderActions/HeaderActions'
 import {MobileDrawer} from '@/components/MobileDrawer/MobileDrawer'
 import {NavLinks} from '@/components/NavLinks/NavLinks'
-import {SearchButton} from '@/components/Search/Search'
-import {siteConfig} from '@/lib/config'
+import {HEADER_SCROLL_THRESHOLD, siteConfig} from '@/lib/config'
 import {Burger, Title, VisuallyHidden} from '@mantine/core'
 import {useDisclosure, useWindowScroll} from '@mantine/hooks'
 import Image from 'next/image'
@@ -21,7 +20,7 @@ import styles from './Header.module.css'
 export function Header() {
   const [opened, {toggle, close}] = useDisclosure(false)
   const [{y}] = useWindowScroll()
-  const scrolled = y > 50
+  const scrolled = y > HEADER_SCROLL_THRESHOLD
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
@@ -49,8 +48,7 @@ export function Header() {
           </div>
 
           <div className={styles.actions}>
-            <SearchButton />
-            <ColorSchemeToggle />
+            <HeaderActions />
           </div>
 
           <div className={styles.mobile}>

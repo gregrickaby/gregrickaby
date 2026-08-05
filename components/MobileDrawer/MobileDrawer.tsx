@@ -1,8 +1,8 @@
 'use client'
 
-import {ColorSchemeToggle} from '@/components/ColorSchemeToggle/ColorSchemeToggle'
+import {HeaderActions} from '@/components/HeaderActions/HeaderActions'
 import {NavLinks} from '@/components/NavLinks/NavLinks'
-import {SearchButton} from '@/components/Search/Search'
+import {HEADER_SCROLL_THRESHOLD} from '@/lib/config'
 import {Drawer, Group, Stack} from '@mantine/core'
 
 /**
@@ -31,7 +31,7 @@ export function MobileDrawer({
   onClose,
   scrollY
 }: Readonly<MobileDrawerProps>) {
-  const offset = scrollY > 50 ? '60px' : '73px'
+  const offset = scrollY > HEADER_SCROLL_THRESHOLD ? '60px' : '73px'
 
   return (
     <Drawer.Root opened={opened} onClose={onClose} position="right">
@@ -41,8 +41,7 @@ export function MobileDrawer({
           <Stack gap="md" p="md">
             <NavLinks onClick={onClose} />
             <Group>
-              <SearchButton />
-              <ColorSchemeToggle />
+              <HeaderActions />
             </Group>
           </Stack>
         </Drawer.Body>
