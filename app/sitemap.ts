@@ -1,4 +1,4 @@
-import {siteConfig} from '@/lib/config'
+import {isExternalNavLink, siteConfig} from '@/lib/config'
 import {getAllPosts} from '@/lib/content'
 import {MetadataRoute} from 'next'
 
@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   const navEntries: MetadataRoute.Sitemap = siteConfig.nav
-    .filter((item) => !('external' in item && item.external))
+    .filter((item) => !isExternalNavLink(item))
     .map((item) => ({
       url: `${siteConfig.url}${item.href}`,
       lastModified: new Date(),

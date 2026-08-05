@@ -28,3 +28,23 @@ export const siteConfig = {
  * Type representing the full site configuration object.
  */
 export type SiteConfig = typeof siteConfig
+
+/**
+ * Scroll offset (in pixels) past which the header switches to its compact
+ * "scrolled" padding. Shared between `Header` and `MobileDrawer` so the
+ * drawer's top offset stays in sync with the header's actual height.
+ */
+export const HEADER_SCROLL_THRESHOLD = 50
+
+/** A single entry in `siteConfig.nav`. */
+export type NavLink = SiteConfig['nav'][number]
+
+/**
+ * Checks whether a nav link points to an external destination (e.g. the RSS feed).
+ *
+ * @param link - A nav link from `siteConfig.nav`.
+ * @returns True if the link is external.
+ */
+export function isExternalNavLink(link: NavLink): boolean {
+  return 'external' in link && link.external === true
+}

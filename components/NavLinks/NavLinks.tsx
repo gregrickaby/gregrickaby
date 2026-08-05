@@ -1,5 +1,5 @@
 import {AppLink} from '@/components/AppLink/AppLink'
-import {siteConfig} from '@/lib/config'
+import {isExternalNavLink, siteConfig} from '@/lib/config'
 import classes from './NavLinks.module.css'
 
 /**
@@ -28,7 +28,7 @@ export function NavLinks({onClick}: Readonly<NavLinksProps>) {
           href={link.href}
           key={link.href}
           onClick={onClick}
-          {...('external' in link && link.external
+          {...(isExternalNavLink(link)
             ? {target: '_blank', rel: 'noopener noreferrer'}
             : {})}
         >
