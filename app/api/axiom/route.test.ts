@@ -22,16 +22,20 @@ vi.mock('@axiomhq/nextjs', () => ({
 
 import {POST} from './route'
 
+// Captured immediately after import, before Vitest's `clearMocks: true`
+// default wipes call history ahead of the first test.
+const initCalls = mockCreateProxyRouteHandler.mock.calls
+
 describe('POST /api/axiom', () => {
   it('exports a POST handler returned by createProxyRouteHandler', () => {
     expect(POST).toBe(mockProxyHandler)
   })
 
   it('passes the logger to createProxyRouteHandler', () => {
-    expect(mockCreateProxyRouteHandler).toHaveBeenCalledWith(mockLogger)
+    expect(initCalls[0]).toEqual([mockLogger])
   })
 
   it('calls createProxyRouteHandler exactly once at module initialisation', () => {
-    expect(mockCreateProxyRouteHandler).toHaveBeenCalledOnce()
+    expect(initCalls).toHaveLength(1)
   })
 })
