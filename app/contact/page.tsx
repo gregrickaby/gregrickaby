@@ -1,5 +1,5 @@
 import {ContactForm} from '@/components/ContactForm/ContactForm'
-import {createStaticPage} from '@/lib/staticPage'
+import {createStaticPage} from '@/components/StaticPage/StaticPage'
 
 const {generateMetadata, Page} = createStaticPage('contact', () => (
   <ContactForm />

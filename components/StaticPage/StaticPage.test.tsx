@@ -1,5 +1,5 @@
 import {render, screen} from '@/test-utils'
-import {createStaticPage} from './staticPage'
+import {createStaticPage} from './StaticPage'
 
 vi.mock('next/link', () => ({
   default: ({
@@ -20,8 +20,8 @@ vi.mock('next/navigation', () => ({
   notFound: vi.fn()
 }))
 
-vi.mock('./content', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('./content')>()
+vi.mock('@/lib/content', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/lib/content')>()
   return {
     ...actual,
     getPageBySlug: vi.fn()
@@ -42,7 +42,7 @@ const mockPage = {
 
 describe('createStaticPage()', () => {
   it('renders the page title and content when the page exists', async () => {
-    const {getPageBySlug} = await import('./content')
+    const {getPageBySlug} = await import('@/lib/content')
     vi.mocked(getPageBySlug).mockResolvedValue(mockPage)
     const {Page} = createStaticPage('test-page')
     render(await Page())
@@ -53,7 +53,7 @@ describe('createStaticPage()', () => {
   })
 
   it('emits JSON-LD structured data for the page', async () => {
-    const {getPageBySlug} = await import('./content')
+    const {getPageBySlug} = await import('@/lib/content')
     vi.mocked(getPageBySlug).mockResolvedValue(mockPage)
     const {Page} = createStaticPage('test-page')
     render(await Page())
@@ -62,7 +62,7 @@ describe('createStaticPage()', () => {
   })
 
   it('calls notFound() when the page does not exist', async () => {
-    const {getPageBySlug} = await import('./content')
+    const {getPageBySlug} = await import('@/lib/content')
     vi.mocked(getPageBySlug).mockResolvedValue(null)
     const {notFound} = await import('next/navigation')
     const {Page} = createStaticPage('missing-page')
@@ -75,7 +75,7 @@ describe('createStaticPage()', () => {
   })
 
   it('returns metadata built from the page when it exists', async () => {
-    const {getPageBySlug} = await import('./content')
+    const {getPageBySlug} = await import('@/lib/content')
     vi.mocked(getPageBySlug).mockResolvedValue(mockPage)
     const {generateMetadata} = createStaticPage('test-page')
     const metadata = await generateMetadata(
@@ -87,7 +87,7 @@ describe('createStaticPage()', () => {
   })
 
   it('returns empty metadata when the page does not exist', async () => {
-    const {getPageBySlug} = await import('./content')
+    const {getPageBySlug} = await import('@/lib/content')
     vi.mocked(getPageBySlug).mockResolvedValue(null)
     const {generateMetadata} = createStaticPage('missing-page')
     const metadata = await generateMetadata(

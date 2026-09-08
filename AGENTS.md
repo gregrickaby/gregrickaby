@@ -57,7 +57,6 @@ lib/
   photos.ts       # Server-only: reads EXIF/IPTC from photos
   redirects.ts    # 301 redirects for legacy URLs (imported by next.config.ts)
   schema.ts       # JSON-LD structured data builders
-  staticPage.tsx  # createStaticPage() factory for markdown-backed static pages
   utils.ts        # Shared utility functions
   pagination.ts   # PAGE_SIZE constant + paginate() helpers
   services.ts     # serviceOptions list + isValidService()

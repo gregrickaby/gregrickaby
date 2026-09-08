@@ -1,5 +1,5 @@
 import {ResumeTimeline} from '@/components/ResumeTimeline/ResumeTimeline'
-import {createStaticPage} from '@/lib/staticPage'
+import {createStaticPage} from '@/components/StaticPage/StaticPage'
 
 const {generateMetadata, Page} = createStaticPage('resume', () => (
   <ResumeTimeline />

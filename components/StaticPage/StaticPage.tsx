@@ -1,12 +1,12 @@
 import {Article} from '@/components/Article/Article'
 import {JsonLd} from '@/components/JsonLd/JsonLd'
+import {siteConfig} from '@/lib/config'
+import {getPageBySlug} from '@/lib/content'
+import {buildContentMetadata} from '@/lib/metadata'
+import {buildWebPageGraph} from '@/lib/schema'
+import type {Post} from '@/lib/types'
 import type {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
-import {siteConfig} from './config'
-import {getPageBySlug} from './content'
-import {buildContentMetadata} from './metadata'
-import {buildWebPageGraph} from './schema'
-import type {Post} from './types'
 
 /**
  * Result returned by createStaticPage, ready to export from a Next.js page file.
