@@ -144,6 +144,17 @@ export function getCaption(img: HTMLImageElement): string {
 }
 
 /**
+ * Randomly selects a sample of posts from a list without mutating the input.
+ *
+ * @param posts - The full list of posts to sample from.
+ * @param count - The number of posts to select.
+ * @returns Up to `count` posts, in random order.
+ */
+export function pickRandomPosts(posts: PostMeta[], count: number): PostMeta[] {
+  return [...posts].sort(() => Math.random() - 0.5).slice(0, count)
+}
+
+/**
  * Escapes user-supplied strings before inserting into an HTML context.
  *
  * @param value - The raw string to escape.

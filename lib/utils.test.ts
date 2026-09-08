@@ -8,6 +8,7 @@ import {
   getFirstContentImageSrc,
   isValidIsoDate,
   normalizeMeta,
+  pickRandomPosts,
   resolveFeaturedImage,
   resolveImagePaths
 } from './utils'
@@ -263,5 +264,37 @@ describe('resolveFeaturedImage', () => {
     expect(resolveFeaturedImage(meta, '')).toBe(
       '/content/posts/my-post/hero.jpg'
     )
+  })
+})
+
+describe('pickRandomPosts', () => {
+  const posts: PostMeta[] = Array.from({length: 5}, (_, i) => ({
+    ...basePost,
+    slug: `post-${i + 1}`
+  }))
+
+  it('returns the requested number of posts', () => {
+    expect(pickRandomPosts(posts, 3)).toHaveLength(3)
+  })
+
+  it('returns only posts from the input list', () => {
+    const slugs = posts.map((p) => p.slug)
+    for (const post of pickRandomPosts(posts, 3)) {
+      expect(slugs).toContain(post.slug)
+    }
+  })
+
+  it('returns every post when count exceeds the list length', () => {
+    expect(pickRandomPosts(posts, 10)).toHaveLength(5)
+  })
+
+  it('returns an empty array when given an empty list', () => {
+    expect(pickRandomPosts([], 3)).toEqual([])
+  })
+
+  it('does not mutate the input array', () => {
+    const original = [...posts]
+    pickRandomPosts(posts, 3)
+    expect(posts).toEqual(original)
   })
 })

@@ -23,11 +23,13 @@ import {
   getAllCategories,
   getAllPosts,
   getAllTags,
+  getArchivePosts,
   getPageBySlug,
   getPostBySlug,
   getPostsByCategory,
   getPostsByTag
 } from './content'
+import {PAGE_SIZE} from './pagination'
 
 const mockExistsSync = vi.mocked(fs.existsSync)
 const mockReadFileSync = vi.mocked(fs.readFileSync)
@@ -135,6 +137,67 @@ describe('getAllPosts', () => {
   it('decodes HTML entities in post titles', async () => {
     mockSinglePost({...baseMeta, title: 'Hello &#38; World'})
     expect((await getAllPosts())[0].title).toBe('Hello & World')
+  })
+})
+
+/**
+ * Mocks `count` distinct posts, each with a unique slug and a date that
+ * decreases with index so the resulting order is deterministic.
+ */
+function mockManyPosts(count: number): void {
+  const slugs = Array.from({length: count}, (_, i) => `post-${i + 1}`)
+  mockExistsSync.mockReturnValue(true)
+  mockReaddirSync.mockReturnValue(
+    slugs as unknown as ReturnType<typeof fs.readdirSync>
+  )
+  mockStatSync.mockReturnValue({isDirectory: () => true} as unknown as Stats)
+  mockReadFileSync.mockReturnValue(
+    '' as unknown as ReturnType<typeof fs.readFileSync>
+  )
+  let call = mockMatter
+  for (const [i, slug] of slugs.entries()) {
+    call = call.mockReturnValueOnce({
+      data: {
+        ...baseMeta,
+        slug,
+        date: new Date(2024, 0, count - i).toISOString()
+      },
+      content: ''
+    } as unknown as ReturnType<typeof matter>)
+  }
+}
+
+describe('getArchivePosts', () => {
+  it('returns the requested number of posts', async () => {
+    mockManyPosts(PAGE_SIZE + 5)
+    expect(await getArchivePosts(3)).toHaveLength(3)
+  })
+
+  it('excludes posts from the first page when there are enough older posts', async () => {
+    mockManyPosts(PAGE_SIZE + 5)
+    const firstPageSlugs = Array.from(
+      {length: PAGE_SIZE},
+      (_, i) => `post-${i + 1}`
+    )
+    const archive = await getArchivePosts(5)
+    for (const post of archive) {
+      expect(firstPageSlugs).not.toContain(post.slug)
+    }
+  })
+
+  it('returns an empty array when the catalog fits entirely on page one', async () => {
+    mockManyPosts(PAGE_SIZE)
+    expect(await getArchivePosts(3)).toEqual([])
+  })
+
+  it('returns an empty array when there are fewer posts than the page size', async () => {
+    mockManyPosts(3)
+    expect(await getArchivePosts(3)).toEqual([])
+  })
+
+  it('returns an empty array when there are no posts', async () => {
+    mockExistsSync.mockReturnValue(false)
+    expect(await getArchivePosts(3)).toEqual([])
   })
 })
 

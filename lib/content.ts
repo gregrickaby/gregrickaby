@@ -14,8 +14,9 @@ import remarkRehype from 'remark-rehype'
 import sanitizeHtml from 'sanitize-html'
 import {unified} from 'unified'
 import {visit} from 'unist-util-visit'
+import {PAGE_SIZE} from './pagination'
 import type {Post, PostMeta} from './types'
-import {normalizeMeta, resolveImagePaths} from './utils'
+import {normalizeMeta, pickRandomPosts, resolveImagePaths} from './utils'
 
 /**
  * Remark plugin that converts a lone image with a title attribute into a
@@ -192,6 +193,25 @@ export const getAllPosts = cache(async (): Promise<PostMeta[]> => {
     .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
   return posts
+})
+
+/**
+ * Returns a random sample of posts for the blog landing page's "From The
+ * Archives" section. Samples only from posts beyond the first page of the
+ * listing, so the newest posts never get pulled into "the archives"; returns
+ * an empty array until the catalog actually has posts beyond page one.
+ *
+ * @param count - Optional. Number of archive posts to return. Defaults to 3.
+ * @returns An array of randomly selected older posts, or an empty array when there aren't any yet.
+ */
+export const getArchivePosts = cache(async (count = 3): Promise<PostMeta[]> => {
+  'use cache'
+  cacheLife('max')
+  cacheTag('posts')
+
+  const posts = await getAllPosts()
+  if (posts.length <= PAGE_SIZE) return []
+  return pickRandomPosts(posts.slice(PAGE_SIZE), count)
 })
 
 /**
