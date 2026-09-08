@@ -1,13 +1,13 @@
 /**
- * Canonical list of available services offered via the contact form.
+ * Canonical list of reasons a visitor might use the contact form.
  * This is the single source of truth for both server-side validation
  * and the client-side Mantine Select component.
  */
 export const serviceOptions: {value: string; label: string}[] = [
-  {value: 'monthly retainer', label: 'Monthly Retainer'},
-  {value: 'website hosting', label: 'Website Hosting'},
-  {value: 'domain management', label: 'Domain Management'},
-  {value: 'custom development', label: 'Custom Development'},
+  {value: 'job opportunity', label: 'Job Opportunity'},
+  {value: 'consulting', label: 'Consulting'},
+  {value: 'speaking or writing', label: 'Speaking or Writing'},
+  {value: 'general inquiry', label: 'General Inquiry'},
   {value: 'other', label: 'Other'}
 ]
 

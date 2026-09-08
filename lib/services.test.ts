@@ -16,10 +16,10 @@ describe('serviceOptions', () => {
 
   it('contains the expected values', () => {
     const values = serviceOptions.map((s) => s.value)
-    expect(values).toContain('monthly retainer')
-    expect(values).toContain('website hosting')
-    expect(values).toContain('domain management')
-    expect(values).toContain('custom development')
+    expect(values).toContain('job opportunity')
+    expect(values).toContain('consulting')
+    expect(values).toContain('speaking or writing')
+    expect(values).toContain('general inquiry')
     expect(values).toContain('other')
   })
 })
@@ -40,7 +40,7 @@ describe('isValidService', () => {
   })
 
   it('returns false for a label instead of a value', () => {
-    expect(isValidService('Monthly Retainer')).toBe(false)
+    expect(isValidService('Job Opportunity')).toBe(false)
   })
 
   it('returns false for a value with wrong casing', () => {

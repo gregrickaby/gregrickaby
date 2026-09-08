@@ -16,9 +16,7 @@ describe('buildWebSiteGraph', () => {
 
   it('includes a Person node with author details', () => {
     const graph = buildWebSiteGraph()
-    const node = graph['@graph'].find(
-      (n) => Array.isArray(n['@type']) && n['@type'].includes('Person')
-    )
+    const node = graph['@graph'].find((n) => n['@type'] === 'Person')
     expect(node).toBeDefined()
     expect(node?.name).toBe('Greg Rickaby')
   })

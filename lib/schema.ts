@@ -74,7 +74,7 @@ export function buildWebSiteGraph(): SchemaGraph {
         inLanguage: 'en-US'
       },
       {
-        '@type': ['Person', 'Organization'],
+        '@type': 'Person',
         '@id': PERSON_ID,
         name: siteConfig.author.name,
         url: siteConfig.author.url,
