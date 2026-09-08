@@ -59,9 +59,7 @@ describe('Photos page', () => {
     const {generateMetadata} = await import('./page')
     const metadata = generateMetadata()
     expect(metadata.title).toBe('Photos')
-    expect(metadata.description).toBe(
-      'A collection of photographs by Greg Rickaby.'
-    )
+    expect(metadata.description).toBe('A collection of my photos.')
   })
 
   it('renders empty state when no photos', async () => {

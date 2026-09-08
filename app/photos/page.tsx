@@ -3,9 +3,12 @@ import {PhotoGallery} from '@/components/PhotoGallery/PhotoGallery'
 import {siteConfig} from '@/lib/config'
 import {getPhotos} from '@/lib/photos'
 import {buildWebPageGraph} from '@/lib/schema'
-import {Container, Skeleton, Text, Title} from '@mantine/core'
+import {Box, Container, Skeleton, Text, Title} from '@mantine/core'
 import type {Metadata} from 'next'
 import {Suspense} from 'react'
+
+const PAGE_TITLE = 'Photos'
+const PAGE_DESCRIPTION = 'A collection of my photos.'
 
 /**
  * Generates metadata for the Photos page.
@@ -14,14 +17,14 @@ import {Suspense} from 'react'
  */
 export function generateMetadata(): Metadata {
   return {
-    title: 'Photos',
-    description: 'A collection of photographs by Greg Rickaby.',
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     alternates: {
       canonical: '/photos'
     },
     openGraph: {
-      title: 'Photos',
-      description: 'A collection of photographs by Greg Rickaby.',
+      title: PAGE_TITLE,
+      description: PAGE_DESCRIPTION,
       url: `${siteConfig.url}/photos`
     }
   }
@@ -78,8 +81,8 @@ export async function PhotosContent() {
  */
 export default function PhotosPage() {
   const jsonLd = buildWebPageGraph({
-    title: 'Photos',
-    description: 'A collection of photographs by Greg Rickaby.',
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
     path: 'photos'
   })
 
@@ -87,12 +90,12 @@ export default function PhotosPage() {
     <>
       <JsonLd graph={jsonLd} />
       <Container size="xl" py="xl">
-        <Title order={1} mb="xs">
-          Photos
-        </Title>
-        <Text c="dimmed" mb="xl">
-          A collection of photographs by Greg Rickaby.
-        </Text>
+        <Box ta="center" mb="xl">
+          <Title order={1} mb="xs">
+            {PAGE_TITLE}
+          </Title>
+          <Text c="dimmed">{PAGE_DESCRIPTION}</Text>
+        </Box>
         <Suspense fallback={<Skeleton height={400} />}>
           <PhotosContent />
         </Suspense>
