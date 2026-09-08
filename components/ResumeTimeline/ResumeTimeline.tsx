@@ -4,6 +4,7 @@ import {resumeEntries} from '@/lib/resume'
 import {
   List,
   ListItem,
+  Stack,
   Text,
   Timeline,
   TimelineItem,
@@ -30,19 +31,20 @@ export function ResumeTimeline() {
         </Text>
       </header>
 
-      <Timeline bulletSize={28} lineWidth={2}>
+      <Timeline bulletSize={28} lineWidth={2} className={styles.timeline}>
         {resumeEntries.map((entry) => (
           <TimelineItem
             key={`${entry.company}-${entry.dateRange}`}
             bullet={<IconBriefcase size={14} />}
             title={
-              <Title order={3} className={styles.itemTitle}>
+              <Title order={3} className={styles.subheading}>
                 {entry.role} ·{' '}
                 {entry.companyUrl ? (
                   <AppLink
                     href={entry.companyUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className={styles.proseLink}
                   >
                     {entry.company}
                   </AppLink>
@@ -52,22 +54,22 @@ export function ResumeTimeline() {
               </Title>
             }
           >
-            <Text size="sm" c="dimmed">
-              {entry.location} · {entry.dateRange}
-            </Text>
-            <Text size="sm" mt="xs">
-              {entry.summary}
-            </Text>
-            <List size="sm" mt="xs" spacing={4}>
-              {entry.highlights.map((highlight) => (
-                <ListItem key={highlight}>{highlight}</ListItem>
-              ))}
-            </List>
-            {entry.techStack ? (
-              <Text size="xs" c="dimmed" mt="xs">
-                {entry.techStack.join(' · ')}
+            <Stack gap="xs">
+              <Text className={styles.caption} c="dimmed">
+                {entry.location} · {entry.dateRange}
               </Text>
-            ) : null}
+              <Text className={styles.body}>{entry.summary}</Text>
+              <List className={styles.body} spacing={4}>
+                {entry.highlights.map((highlight) => (
+                  <ListItem key={highlight}>{highlight}</ListItem>
+                ))}
+              </List>
+              {entry.techStack ? (
+                <Text className={styles.caption} c="dimmed">
+                  {entry.techStack.join(' · ')}
+                </Text>
+              ) : null}
+            </Stack>
           </TimelineItem>
         ))}
       </Timeline>
@@ -78,6 +80,7 @@ export function ResumeTimeline() {
           href={siteConfig.author.linkedin}
           target="_blank"
           rel="noopener noreferrer"
+          className={styles.proseLink}
         >
           LinkedIn
         </AppLink>{' '}
@@ -86,6 +89,7 @@ export function ResumeTimeline() {
           href={siteConfig.author.github}
           target="_blank"
           rel="noopener noreferrer"
+          className={styles.proseLink}
         >
           GitHub
         </AppLink>
@@ -96,86 +100,98 @@ export function ResumeTimeline() {
         Other Experience
       </Title>
 
-      <Title order={3}>Author</Title>
-      <Text size="sm">
-        In 2017, I wrote a children&apos;s book,{' '}
-        <AppLink
-          href="https://amzn.to/41eZFfF"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <em>Creating a Website for Dummies Jr</em>
-        </AppLink>
-        , published by Wiley Global under the{' '}
-        <AppLink
-          href="https://www.dummies.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          dummies&trade;
-        </AppLink>{' '}
-        brand.
-      </Text>
-      <Text size="sm" mt="xs">
-        The book guides young readers through planning and building a website.
-        It&apos;s been translated into 2 languages and holds a 4.5-star rating
-        on Amazon.
-      </Text>
-      <Text size="sm" mt="xs">
-        I&apos;ve also been Technical Editor on three other books:
-      </Text>
-      <List size="sm" mt="xs" spacing={4}>
-        <ListItem>
-          <em>
-            <AppLink
-              href="https://amzn.to/44EeXgy"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WordPress for Dummies
-            </AppLink>
-          </em>{' '}
-          (Sabin-Wilson, 2021)
-        </ListItem>
-        <ListItem>
-          <em>
-            <AppLink
-              href="https://amzn.to/3VN8f3Z"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Professional WordPress Plugin Development
-            </AppLink>
-          </em>{' '}
-          (Williams et al., 2020)
-        </ListItem>
-        <ListItem>
-          <em>
-            <AppLink
-              href="https://amzn.to/3B37BG8"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WordPress All-In-One For Dummies
-            </AppLink>
-          </em>{' '}
-          (Sabin-Wilson, 2019)
-        </ListItem>
-      </List>
+      <Stack gap="sm" mt="lg">
+        <Title order={3} className={styles.subheading}>
+          Author
+        </Title>
+        <Text className={styles.body}>
+          In 2017, I wrote a children&apos;s book,{' '}
+          <AppLink
+            href="https://amzn.to/41eZFfF"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.proseLink}
+          >
+            <em>Creating a Website for Dummies Jr</em>
+          </AppLink>
+          , published by Wiley Global under the{' '}
+          <AppLink
+            href="https://www.dummies.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.proseLink}
+          >
+            dummies&trade;
+          </AppLink>{' '}
+          brand.
+        </Text>
+        <Text className={styles.body}>
+          The book guides young readers through planning and building a website.
+          It&apos;s been translated into 2 languages and holds a 4.5-star rating
+          on Amazon.
+        </Text>
+        <Text className={styles.body}>
+          I&apos;ve also been Technical Editor on three other books:
+        </Text>
+        <List className={styles.body} spacing={4}>
+          <ListItem>
+            <em>
+              <AppLink
+                href="https://amzn.to/44EeXgy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.proseLink}
+              >
+                WordPress for Dummies
+              </AppLink>
+            </em>{' '}
+            (Sabin-Wilson, 2021)
+          </ListItem>
+          <ListItem>
+            <em>
+              <AppLink
+                href="https://amzn.to/3VN8f3Z"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.proseLink}
+              >
+                Professional WordPress Plugin Development
+              </AppLink>
+            </em>{' '}
+            (Williams et al., 2020)
+          </ListItem>
+          <ListItem>
+            <em>
+              <AppLink
+                href="https://amzn.to/3B37BG8"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.proseLink}
+              >
+                WordPress All-In-One For Dummies
+              </AppLink>
+            </em>{' '}
+            (Sabin-Wilson, 2019)
+          </ListItem>
+        </List>
+      </Stack>
 
-      <Title order={3} mt="lg">
-        Contributor
-      </Title>
-      <Text size="sm">
-        I was part of the WordPress community from 2008 to 2023, contributing to
-        core, docs, plugins, and themes, and speaking at WordCamps and meetups.
-        I now contribute to Next.js, Storybook, and other open-source projects.
-      </Text>
-      <Text size="sm" mt="xs">
-        Outside of tech, I volunteer with local community organizations,
-        including Boy Scouts, Wiregrass Church, and the local high school band
-        boosters.
-      </Text>
+      <Stack gap="sm" mt="xl">
+        <Title order={3} className={styles.subheading}>
+          Contributor
+        </Title>
+        <Text className={styles.body}>
+          I was part of the WordPress community from 2008 to 2023, contributing
+          to core, docs, plugins, and themes, and speaking at WordCamps and
+          meetups. I now contribute to Next.js, Storybook, and other open-source
+          projects.
+        </Text>
+        <Text className={styles.body}>
+          Outside of tech, I volunteer with local community organizations,
+          including Boy Scouts, Wiregrass Church, and the local high school band
+          boosters.
+        </Text>
+      </Stack>
     </div>
   )
 }

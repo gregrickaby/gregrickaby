@@ -12,16 +12,15 @@ export const resumeEntries: ResumeEntry[] = [
     location: 'Remote',
     dateRange: 'February 2024 – Present',
     summary:
-      'Leading a remote team building scalable, accessible web apps with Next.js and TypeScript.',
+      'Mentor an agile team as a staff-augmented engineer for a multi-billion dollar grocery retailer.',
     highlights: [
-      'Lead and mentor an agile team as a staff-augmented engineer for a multi-billion dollar grocery retailer.',
       'Scope Jira tickets from stakeholder requirements gathered in refinement and sprint planning.',
       'Translate design and product requirements into performant, scalable solutions with Next.js and TypeScript.',
       'Coordinate with designers, product owners, architects, and engineering managers to keep delivery on track.',
       'Oversee the full development lifecycle: design, code review, and deployment.',
       'Establish coding standards, testing practices, and documentation workflows with Vitest, Playwright, and Storybook.',
       'Introduce agentic AI workflows and tooling standards, using two decades of engineering experience to move faster without sacrificing quality.',
-      "Unblock teammates on tough problems as the team's go-to for troubleshooting and code review."
+      "Unblock teammates on tough problems as one of the team's go-to for troubleshooting and code review."
     ],
     techStack: [
       'Agentic AI',

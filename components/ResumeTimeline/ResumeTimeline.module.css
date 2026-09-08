@@ -1,3 +1,11 @@
+.body {
+  font-size: inherit;
+}
+
+.caption {
+  font-size: 0.85em;
+}
+
 .description {
   color: var(--mantine-color-dimmed);
   font-size: var(--mantine-font-size-lg);
@@ -5,18 +13,28 @@
   text-align: center;
 }
 
-.itemTitle {
-  font-size: var(--mantine-font-size-lg);
+.links {
+  font-size: inherit;
+  margin-block: var(--mantine-spacing-xl);
 }
 
-.links {
-  margin-top: var(--mantine-spacing-xl);
+a.proseLink {
+  text-decoration: underline;
 }
 
 .sectionTitle {
   border-top: 1px solid var(--mantine-color-default-border);
+  font-size: 1.5em;
   margin-top: var(--mantine-spacing-xl);
   padding-top: var(--mantine-spacing-xl);
+}
+
+.subheading {
+  font-size: 1.25em;
+}
+
+.timeline {
+  margin-block: var(--mantine-spacing-xl);
 }
 
 .title {

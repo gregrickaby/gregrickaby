@@ -42,9 +42,7 @@ describe('ResumeTimeline', () => {
 
   it('renders role highlights', () => {
     render(<ResumeTimeline />)
-    expect(
-      screen.getByText(/Lead and mentor an agile team/)
-    ).toBeInTheDocument()
+    expect(screen.getByText(/Scope Jira tickets/)).toBeInTheDocument()
   })
 
   it('links out to LinkedIn and GitHub', () => {
