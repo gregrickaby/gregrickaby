@@ -48,11 +48,16 @@ describe('Resume page', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders the page content', async () => {
+  it('renders the resume timeline', async () => {
     const {default: ResumePage} = await import('./page')
     const result = await ResumePage()
     render(result)
-    expect(screen.getByText('Resume content.')).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {level: 3, name: /Mindsize/})
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', {level: 2, name: 'Other Experience'})
+    ).toBeInTheDocument()
   })
 
   it('emits JSON-LD structured data for the page', async () => {

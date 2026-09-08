@@ -1,0 +1,37 @@
+.description {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-lg);
+  margin-bottom: var(--mantine-spacing-xl);
+  text-align: center;
+}
+
+.itemTitle {
+  font-size: var(--mantine-font-size-lg);
+}
+
+.links {
+  margin-top: var(--mantine-spacing-xl);
+}
+
+.sectionTitle {
+  border-top: 1px solid var(--mantine-color-default-border);
+  margin-top: var(--mantine-spacing-xl);
+  padding-top: var(--mantine-spacing-xl);
+}
+
+.title {
+  font-size: clamp(1.6rem, 4vw + 0.5rem, 2.6rem);
+  margin-bottom: var(--mantine-spacing-xl);
+  text-align: center;
+}
+
+.wrapper {
+  font-size: clamp(
+    var(--mantine-font-size-md),
+    1.5vw + 0.5rem,
+    var(--mantine-font-size-xl)
+  );
+  margin: 0 auto;
+  max-width: 700px;
+  word-wrap: break-word;
+}

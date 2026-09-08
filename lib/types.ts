@@ -100,3 +100,27 @@ export interface PhotoMeta {
   /** Optional. GPS coordinates. */
   gps?: GpsCoordinates
 }
+
+/**
+ * A single job in the resume's work history timeline.
+ *
+ * @interface
+ */
+export interface ResumeEntry {
+  /** The job title/role held. */
+  role: string
+  /** The employer name. */
+  company: string
+  /** Optional. The employer's website. */
+  companyUrl?: string
+  /** The work location (e.g. "Remote" or "Montgomery, AL"). */
+  location: string
+  /** The human-readable date range (e.g. "February 2024 – Present"). */
+  dateRange: string
+  /** A one to two sentence summary of the role. */
+  summary: string
+  /** Bullet points describing key responsibilities and achievements. */
+  highlights: string[]
+  /** Optional. Tech stack and skills used in the role. */
+  techStack?: string[]
+}
