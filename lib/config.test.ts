@@ -7,7 +7,7 @@ describe('isExternalNavLink()', () => {
   })
 
   it('returns false for a nav link with no external flag', () => {
-    const about = siteConfig.nav.find((link) => link.label === 'About')!
-    expect(isExternalNavLink(about)).toBe(false)
+    const resume = siteConfig.nav.find((link) => link.label === 'Resume')!
+    expect(isExternalNavLink(resume)).toBe(false)
   })
 })

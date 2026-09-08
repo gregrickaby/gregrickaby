@@ -19,9 +19,9 @@ vi.mock('next/link', () => ({
 describe('NavLinks', () => {
   it('renders all navigation links', () => {
     render(<NavLinks />)
-    expect(screen.getByRole('link', {name: 'About'})).toHaveAttribute(
+    expect(screen.getByRole('link', {name: 'Blog'})).toHaveAttribute(
       'href',
-      '/about'
+      '/blog'
     )
     expect(screen.getByRole('link', {name: 'Resume'})).toHaveAttribute(
       'href',
@@ -44,7 +44,7 @@ describe('NavLinks', () => {
   it('calls onClick when a link is clicked', async () => {
     const handleClick = vi.fn()
     render(<NavLinks onClick={handleClick} />)
-    screen.getByRole('link', {name: 'About'}).click()
+    screen.getByRole('link', {name: 'Blog'}).click()
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
 
@@ -57,7 +57,7 @@ describe('NavLinks', () => {
 
   it('does not open internal links in a new tab', () => {
     render(<NavLinks />)
-    const aboutLink = screen.getByRole('link', {name: 'About'})
-    expect(aboutLink).not.toHaveAttribute('target', '_blank')
+    const blogLink = screen.getByRole('link', {name: 'Blog'})
+    expect(blogLink).not.toHaveAttribute('target', '_blank')
   })
 })

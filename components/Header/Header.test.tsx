@@ -30,9 +30,9 @@ describe('Header', () => {
 
   it('renders navigation links', () => {
     render(<Header />)
-    expect(screen.getByRole('link', {name: 'About'})).toHaveAttribute(
+    expect(screen.getByRole('link', {name: 'Resume'})).toHaveAttribute(
       'href',
-      '/about'
+      '/resume'
     )
     expect(screen.getByRole('link', {name: 'Contact'})).toHaveAttribute(
       'href',
@@ -77,7 +77,7 @@ describe('Header', () => {
     const burger = screen.getByRole('button', {name: 'Open navigation menu'})
     await user.click(burger)
     // Drawer should now contain nav links (duplicated from desktop nav)
-    const aboutLinks = screen.getAllByRole('link', {name: 'About'})
-    expect(aboutLinks.length).toBeGreaterThanOrEqual(2)
+    const resumeLinks = screen.getAllByRole('link', {name: 'Resume'})
+    expect(resumeLinks.length).toBeGreaterThanOrEqual(2)
   })
 })

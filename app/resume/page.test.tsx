@@ -55,6 +55,14 @@ describe('Resume page', () => {
     expect(screen.getByText('Resume content.')).toBeInTheDocument()
   })
 
+  it('emits JSON-LD structured data for the page', async () => {
+    const {default: ResumePage} = await import('./page')
+    const result = await ResumePage()
+    render(result)
+    const script = document.querySelector('script[type="application/ld+json"]')
+    expect(script?.innerHTML).toContain('"@type":"WebPage"')
+  })
+
   it('calls notFound when the page does not exist', async () => {
     const {getPageBySlug} = await import('@/lib/content')
     vi.mocked(getPageBySlug).mockResolvedValueOnce(null)
@@ -66,6 +74,15 @@ describe('Resume page', () => {
       // notFound may throw
     }
     expect(notFound).toHaveBeenCalled()
+  })
+
+  it('sets the canonical path to /resume', async () => {
+    const {generateMetadata} = await import('./page')
+    const metadata = await generateMetadata(
+      {},
+      Promise.resolve({openGraph: null}) as never
+    )
+    expect(metadata.alternates?.canonical).toBe('/resume')
   })
 
   it('returns empty metadata when the page does not exist', async () => {

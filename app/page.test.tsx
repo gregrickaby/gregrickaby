@@ -1,5 +1,3 @@
-import {getAllPosts} from '@/lib/content'
-import type {PostMeta} from '@/lib/types'
 import {render, screen} from '@/test-utils'
 
 vi.mock('next/link', () => ({
@@ -18,93 +16,94 @@ vi.mock('next/link', () => ({
 }))
 
 vi.mock('next/navigation', () => ({
-  useRouter: () => ({push: vi.fn()}),
   notFound: vi.fn()
-}))
-
-const mockPosts: PostMeta[] = [
-  {
-    title: 'First Post',
-    slug: 'first-post',
-    date: '2024-06-01T00:00:00Z',
-    modified: '2024-06-15T00:00:00Z',
-    type: 'post',
-    description: 'The first post',
-    categories: ['Tech']
-  },
-  {
-    title: 'Second Post',
-    slug: 'second-post',
-    date: '2024-05-01T00:00:00Z',
-    modified: '2024-05-10T00:00:00Z',
-    type: 'post',
-    description: 'The second post'
-  }
-]
-
-const manyMockPosts: PostMeta[] = Array.from({length: 15}, (_, i) => ({
-  title: `Post ${i + 1}`,
-  slug: `post-${i + 1}`,
-  date: '2024-01-01T00:00:00Z',
-  modified: '2024-01-01T00:00:00Z',
-  type: 'post' as const
 }))
 
 vi.mock('@/lib/content', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/lib/content')>()
   return {
     ...actual,
-    getAllPosts: vi.fn()
+    getPageBySlug: vi.fn().mockResolvedValue({
+      meta: {
+        title: 'About',
+        slug: 'about',
+        date: '2022-05-17T15:59:20Z',
+        modified: '2026-09-08T00:00:00Z',
+        type: 'page',
+        description: 'Learn more about my work history and camera gear.'
+      },
+      content: '<p>About page content.</p>'
+    })
   }
 })
 
-const searchParams = Promise.resolve({})
-
 describe('Home page', () => {
-  beforeEach(() => {
-    vi.mocked(getAllPosts).mockResolvedValue(mockPosts)
-  })
-  it('renders post cards', async () => {
-    const {HomePageContent} = await import('./page')
-    render(await HomePageContent({searchParams}))
-    expect(screen.getByText('First Post')).toBeInTheDocument()
-    expect(screen.getByText('Second Post')).toBeInTheDocument()
-  })
-
-  it('renders a next link when there are more pages', async () => {
-    vi.mocked(getAllPosts).mockResolvedValueOnce(manyMockPosts)
-    const {HomePageContent} = await import('./page')
-    render(await HomePageContent({searchParams}))
-    const nextLink = document.querySelector('link[rel="next"]')
-    expect(nextLink).not.toBeNull()
-    expect(nextLink?.getAttribute('href')).toContain('page=2')
+  it('renders the about page title', async () => {
+    const {default: HomePage} = await import('./page')
+    const result = await HomePage()
+    render(result)
+    expect(
+      screen.getByRole('heading', {level: 1, name: 'About'})
+    ).toBeInTheDocument()
   })
 
-  it('renders a prev link on page 2', async () => {
-    vi.mocked(getAllPosts).mockResolvedValueOnce(manyMockPosts)
-    const {HomePageContent} = await import('./page')
-    render(await HomePageContent({searchParams: Promise.resolve({page: '2'})}))
-    const prevLink = document.querySelector('link[rel="prev"]')
-    expect(prevLink).not.toBeNull()
+  it('renders the about page content', async () => {
+    const {default: HomePage} = await import('./page')
+    const result = await HomePage()
+    render(result)
+    expect(screen.getByText('About page content.')).toBeInTheDocument()
   })
 
-  it('does not render next/prev links on a single-page site', async () => {
-    const {HomePageContent} = await import('./page')
-    render(await HomePageContent({searchParams}))
-    expect(document.querySelector('link[rel="next"]')).toBeNull()
-    expect(document.querySelector('link[rel="prev"]')).toBeNull()
+  it('does not emit a WebPage JSON-LD graph (WebSite graph already covers home)', async () => {
+    const {default: HomePage} = await import('./page')
+    const result = await HomePage()
+    render(result)
+    expect(
+      document.querySelector('script[type="application/ld+json"]')
+    ).toBeNull()
   })
 
-  it('calls notFound when the requested page exceeds the total pages', async () => {
+  it('calls notFound when the about page does not exist', async () => {
+    const {getPageBySlug} = await import('@/lib/content')
+    vi.mocked(getPageBySlug).mockResolvedValueOnce(null)
     const {notFound} = await import('next/navigation')
-    const {HomePageContent} = await import('./page')
-    await HomePageContent({searchParams: Promise.resolve({page: '99'})})
+    const {default: HomePage} = await import('./page')
+    try {
+      await HomePage()
+    } catch {
+      // notFound may throw
+    }
     expect(notFound).toHaveBeenCalled()
   })
 
-  it('generates metadata for the home page', async () => {
+  it('sets the canonical path to the site root', async () => {
+    const {getPageBySlug} = await import('@/lib/content')
+    vi.mocked(getPageBySlug).mockResolvedValueOnce({
+      meta: {
+        title: 'About',
+        slug: 'about',
+        date: '2022-05-17T15:59:20Z',
+        modified: '2026-09-08T00:00:00Z',
+        type: 'page'
+      },
+      content: '<p>About page content.</p>'
+    })
     const {generateMetadata} = await import('./page')
-    const metadata = generateMetadata()
+    const metadata = await generateMetadata(
+      {},
+      Promise.resolve({openGraph: null}) as never
+    )
     expect(metadata.alternates?.canonical).toBe('/')
+  })
+
+  it('returns empty metadata when the about page does not exist', async () => {
+    const {getPageBySlug} = await import('@/lib/content')
+    vi.mocked(getPageBySlug).mockResolvedValueOnce(null)
+    const {generateMetadata} = await import('./page')
+    const metadata = await generateMetadata(
+      {},
+      Promise.resolve({openGraph: null}) as never
+    )
+    expect(metadata).toEqual({})
   })
 })

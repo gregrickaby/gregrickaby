@@ -38,18 +38,18 @@ describe('sitemap.ts', () => {
     expect(entry).toMatchObject({priority: 1, changeFrequency: 'weekly'})
   })
 
-  it('includes /about at priority 0.8', async () => {
-    const {default: sitemap} = await import('./sitemap')
-    const entry = (await sitemap()).find(
-      (e) => e.url === 'https://gregrickaby.com/about'
-    )
-    expect(entry).toMatchObject({priority: 0.8})
-  })
-
   it('includes /resume at priority 0.8', async () => {
     const {default: sitemap} = await import('./sitemap')
     const entry = (await sitemap()).find(
       (e) => e.url === 'https://gregrickaby.com/resume'
+    )
+    expect(entry).toMatchObject({priority: 0.8})
+  })
+
+  it('includes /blog at priority 0.8', async () => {
+    const {default: sitemap} = await import('./sitemap')
+    const entry = (await sitemap()).find(
+      (e) => e.url === 'https://gregrickaby.com/blog'
     )
     expect(entry).toMatchObject({priority: 0.8})
   })

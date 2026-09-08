@@ -31,16 +31,18 @@ export interface StaticPageResult {
  * @param render - Optional. Overrides how the page content renders. Defaults
  *   to `<Article>`. Use this for pages needing custom content, such as the
  *   contact page rendering `<ContactForm>` instead of markdown content.
+ * @param canonicalPath - Optional. Overrides the derived `/${slug}` canonical
+ *   path. Use this when a page is served from a different route than its
+ *   slug, such as the resume content rendered at `/`.
  * @returns An object with generateMetadata and Page ready to export from a Next.js page file.
  */
 export function createStaticPage(
   slug: string,
   render: (page: Post) => React.ReactElement = (page) => (
     <Article meta={page.meta} content={page.content} />
-  )
+  ),
+  canonicalPath: string = `/${slug}`
 ): StaticPageResult {
-  const canonicalPath = `/${slug}`
-
   /**
    * Generates Next.js metadata for the page.
    *
@@ -68,15 +70,20 @@ export function createStaticPage(
       notFound()
     }
 
-    const jsonLd = buildWebPageGraph({
-      title: page.meta.title,
-      description: page.meta.description ?? siteConfig.description,
-      path: slug
-    })
+    // Home has its own WebSite/Person graph in the root layout, so a
+    // WebPage/BreadcrumbList pointing right back at itself would be redundant.
+    const jsonLd =
+      canonicalPath === '/'
+        ? null
+        : buildWebPageGraph({
+            title: page.meta.title,
+            description: page.meta.description ?? siteConfig.description,
+            path: slug
+          })
 
     return (
       <>
-        <JsonLd graph={jsonLd} />
+        {jsonLd ? <JsonLd graph={jsonLd} /> : null}
         {render(page)}
       </>
     )

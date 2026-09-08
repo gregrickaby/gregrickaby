@@ -19,7 +19,7 @@ vi.mock('next/link', () => ({
 describe('MobileDrawer', () => {
   it('renders nav links when open', () => {
     render(<MobileDrawer opened onClose={vi.fn()} scrollY={0} />)
-    expect(screen.getByRole('link', {name: 'About'})).toBeInTheDocument()
+    expect(screen.getByRole('link', {name: 'Blog'})).toBeInTheDocument()
   })
 
   it('renders search and color scheme controls when open', () => {
@@ -32,14 +32,14 @@ describe('MobileDrawer', () => {
 
   it('does not render nav links when closed', () => {
     render(<MobileDrawer opened={false} onClose={vi.fn()} scrollY={0} />)
-    expect(screen.queryByRole('link', {name: 'About'})).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', {name: 'Blog'})).not.toBeInTheDocument()
   })
 
   it('calls onClose when a nav link is clicked', async () => {
     const onClose = vi.fn()
     const user = userEvent.setup()
     render(<MobileDrawer opened onClose={onClose} scrollY={0} />)
-    await user.click(screen.getByRole('link', {name: 'About'}))
+    await user.click(screen.getByRole('link', {name: 'Blog'}))
     expect(onClose).toHaveBeenCalled()
   })
 

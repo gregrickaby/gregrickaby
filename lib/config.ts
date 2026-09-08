@@ -11,12 +11,12 @@ export const siteConfig = {
   url: 'https://gregrickaby.com',
   author: {
     name: 'Greg Rickaby',
-    url: 'https://gregrickaby.com/about',
+    url: 'https://gregrickaby.com',
     linkedin: 'https://www.linkedin.com/in/gregrickaby/',
     github: 'https://github.com/gregrickaby'
   },
   nav: [
-    {label: 'About', href: '/about', priority: 0.8},
+    {label: 'Blog', href: '/blog', priority: 0.8},
     {label: 'Contact', href: '/contact', priority: 0.6},
     {label: 'Photos', href: '/photos', priority: 0.6},
     {label: 'Resume', href: '/resume', priority: 0.8},

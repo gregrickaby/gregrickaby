@@ -8,6 +8,9 @@ const redirects = [
   {source: '/blog/feed/', destination: '/feed.xml', permanent: true},
   {source: '/feed/atom', destination: '/feed.xml', permanent: true},
 
+  // About is now the homepage.
+  {source: '/about', destination: '/', permanent: true},
+
   // Old WordPress routes
   {source: '/wp-json/:path*', destination: '/', permanent: true},
   {source: '/wp-admin/:path*', destination: '/', permanent: true},
