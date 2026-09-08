@@ -137,4 +137,12 @@ describe('Blog page', () => {
     const metadata = generateMetadata()
     expect(metadata.alternates?.canonical).toBe('/blog')
   })
+
+  it('renders the page heading', async () => {
+    const {default: BlogPage} = await import('./page')
+    render(<BlogPage searchParams={searchParams} />)
+    expect(
+      screen.getByRole('heading', {level: 1, name: 'Blog'})
+    ).toBeInTheDocument()
+  })
 })

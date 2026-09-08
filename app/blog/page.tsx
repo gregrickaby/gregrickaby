@@ -4,10 +4,12 @@ import {PostPagination} from '@/components/PostPagination/PostPagination'
 import {siteConfig} from '@/lib/config'
 import {getAllPosts, getArchivePosts} from '@/lib/content'
 import {buildRelLinks, paginate, parsePage} from '@/lib/pagination'
-import {Skeleton} from '@mantine/core'
+import {Box, Skeleton, Text, Title} from '@mantine/core'
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
+
+const PAGE_TITLE = 'Blog'
 
 /**
  * Generates SEO metadata for the blog listing page.
@@ -16,7 +18,7 @@ import {Suspense} from 'react'
  */
 export function generateMetadata(): Metadata {
   return {
-    title: `${siteConfig.name} - Blog`,
+    title: `${siteConfig.name} - ${PAGE_TITLE}`,
     description: siteConfig.description,
     alternates: {
       canonical: '/blog'
@@ -75,16 +77,25 @@ export async function BlogPageContent({searchParams}: Readonly<BlogPageProps>) {
 }
 
 /**
- * Blog page entry point. Wraps the content in a Suspense boundary required
- * by Cache Components mode.
+ * Blog page entry point. Renders the static heading immediately, then wraps
+ * the dynamic post listing in a Suspense boundary required by Cache
+ * Components mode.
  *
  * @param props - The blog page props.
  * @returns A React element wrapping the archives section and paginated post list.
  */
 export default function BlogPage({searchParams}: Readonly<BlogPageProps>) {
   return (
-    <Suspense fallback={<Skeleton height={800} />}>
-      <BlogPageContent searchParams={searchParams} />
-    </Suspense>
+    <>
+      <Box ta="center" mb="xl">
+        <Title order={1} mb="xs">
+          {PAGE_TITLE}
+        </Title>
+        <Text c="dimmed">{siteConfig.description}</Text>
+      </Box>
+      <Suspense fallback={<Skeleton height={800} />}>
+        <BlogPageContent searchParams={searchParams} />
+      </Suspense>
+    </>
   )
 }
