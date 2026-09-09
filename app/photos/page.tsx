@@ -94,7 +94,6 @@ export default function PhotosPage() {
           <Title order={1} mb="xs">
             {PAGE_TITLE}
           </Title>
-          <Text c="dimmed">{PAGE_DESCRIPTION}</Text>
         </Box>
         <Suspense fallback={<Skeleton height={400} />}>
           <PhotosContent />

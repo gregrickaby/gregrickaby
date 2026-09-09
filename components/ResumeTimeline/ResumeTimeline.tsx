@@ -26,9 +26,6 @@ export function ResumeTimeline() {
         <Title order={1} className={styles.title}>
           Resume
         </Title>
-        <Text className={styles.description}>
-          Learn more about my career history in engineering.
-        </Text>
       </header>
 
       <Timeline bulletSize={28} lineWidth={2} className={styles.timeline}>

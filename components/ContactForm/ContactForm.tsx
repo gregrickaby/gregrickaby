@@ -9,7 +9,6 @@ import {
   Container,
   Select,
   Stack,
-  Text,
   Textarea,
   TextInput,
   Title
@@ -34,9 +33,6 @@ export function ContactForm() {
         <Title order={1} ta="center">
           Contact
         </Title>
-        <Text c="dimmed" ta="center">
-          Use the form below to get in touch.
-        </Text>
 
         {state.success ? (
           <Alert color="green" title="Message sent!">

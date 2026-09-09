@@ -35,14 +35,6 @@
   text-align: center;
 }
 
-.description {
-  color: var(--mantine-color-dimmed);
-  font-size: var(--mantine-font-size-lg);
-  margin-bottom: var(--mantine-spacing-xl);
-  margin-top: var(--mantine-spacing-xl);
-  text-align: center;
-}
-
 .featuredImage {
   display: block;
   margin-bottom: var(--mantine-spacing-xl);

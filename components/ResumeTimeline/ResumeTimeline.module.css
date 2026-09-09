@@ -6,13 +6,6 @@
   font-size: 0.85em;
 }
 
-.description {
-  color: var(--mantine-color-dimmed);
-  font-size: var(--mantine-font-size-lg);
-  margin-bottom: var(--mantine-spacing-xl);
-  text-align: center;
-}
-
 .links {
   font-size: inherit;
   margin-block: var(--mantine-spacing-xl);

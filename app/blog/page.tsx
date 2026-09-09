@@ -4,7 +4,7 @@ import {PostPagination} from '@/components/PostPagination/PostPagination'
 import {siteConfig} from '@/lib/config'
 import {getAllPosts, getArchivePosts} from '@/lib/content'
 import {buildRelLinks, paginate, parsePage} from '@/lib/pagination'
-import {Box, Skeleton, Text, Title} from '@mantine/core'
+import {Box, Skeleton, Title} from '@mantine/core'
 import type {Metadata} from 'next'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
@@ -91,7 +91,6 @@ export default function BlogPage({searchParams}: Readonly<BlogPageProps>) {
         <Title order={1} mb="xs">
           {PAGE_TITLE}
         </Title>
-        <Text c="dimmed">{siteConfig.description}</Text>
       </Box>
       <Suspense fallback={<Skeleton height={800} />}>
         <BlogPageContent searchParams={searchParams} />

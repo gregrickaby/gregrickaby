@@ -52,9 +52,6 @@ export function Article({meta, content}: Readonly<ArticleProps>) {
         <Title order={1} className={styles.title}>
           {meta.title}
         </Title>
-        {meta.description ? (
-          <Text className={styles.description}>{meta.description}</Text>
-        ) : null}
       </header>
 
       {featuredImage ? (
