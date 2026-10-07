@@ -28,14 +28,14 @@
     "@axiomhq/logging": "^0.4.1",
     "@axiomhq/nextjs": "^0.4.1",
     "@axiomhq/react": "^0.4.1",
-    "@mantine/core": "^9.7.0",
-    "@mantine/hooks": "^9.7.0",
-    "@mantine/spotlight": "^9.7.0",
-    "@tabler/icons-react": "^3.48.0",
+    "@mantine/core": "^9.7.1",
+    "@mantine/hooks": "^9.7.1",
+    "@mantine/spotlight": "^9.7.1",
+    "@tabler/icons-react": "^3.49.0",
     "exifr": "^7.1.3",
     "image-size": "^2.0.4",
     "next": "^16.4.0",
-    "nodemailer": "^10.0.15",
+    "nodemailer": "^10.0.16",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-photo-album": "^3.6.1",
@@ -84,7 +84,7 @@
     "remark-html": "^16.0.1",
     "rimraf": "^6.1.3",
     "typescript": "^6.0.3",
-    "vite": "^8.3.2",
+    "vite": "^8.3.3",
     "vitest": "^5.0.3"
   }
 }
