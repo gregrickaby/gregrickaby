@@ -14,7 +14,9 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 2678400
   },
   experimental: {
-    appNewScrollHandler: true,
+    agentUpgrade: 'latest',
+    turbopackGc: true,
+    turbopackLazyDynamicImports: true,
     turbopackRustReactCompiler: true,
     webVitalsAttribution: ['CLS', 'LCP'],
     optimizePackageImports: [

@@ -7,6 +7,13 @@ import {Box, Container, Skeleton, Text, Title} from '@mantine/core'
 import type {Metadata} from 'next'
 import {Suspense} from 'react'
 
+/**
+ * Fail the build if request-time rendering is ever added to this route.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/ensureStatic
+ */
+export const ensureStatic = 'navigation'
+
 const PAGE_TITLE = 'Photos'
 const PAGE_DESCRIPTION = 'A collection of my photos.'
 

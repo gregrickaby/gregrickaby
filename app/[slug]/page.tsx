@@ -9,6 +9,13 @@ import {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
 import {Suspense} from 'react'
 
+/**
+ * Fail the build if request-time rendering is ever added to this route.
+ *
+ * @see https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config/ensureStatic
+ */
+export const ensureStatic = 'navigation'
+
 interface PageProps {
   params: Promise<{slug: string}>
 }
