@@ -9,13 +9,13 @@ import type { PostMeta } from './types'
  */
 type ContentMetaInput = Pick<
   PostMeta,
-  'title' | 'slug' | 'date' | 'modified' | 'type' | 'description' | 'featuredImage'
+  'title' | 'slug' | 'date' | 'modified' | 'type' | 'description'
 >
 
 /**
  * Build a Next.js Metadata object for any post or page.
  *
- * Handles featured image path resolution, parent OG image inheritance,
+ * Handles parent OG image inheritance,
  * URL construction from SITE, canonical alternate, and OG type
  * inference (article fields are emitted automatically for posts).
  *
@@ -29,7 +29,6 @@ export async function buildContentMetadata(
   canonicalPath: string,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const featuredImage = meta.featuredImage?.src
   const previousImages = (await parent).openGraph?.images ?? []
 
   const published = validDate(meta.date)
@@ -43,10 +42,8 @@ export async function buildContentMetadata(
       title: meta.title,
       description: meta.description,
       url: `${SITE.url}${canonicalPath}`,
-      images: [
-        ...(featuredImage ? [{ url: `${SITE.url}${featuredImage}` }] : []),
-        ...previousImages,
-      ],
+      // Share images come from the opengraph-image routes; keep the inherited one.
+      images: previousImages,
       ...(meta.type === 'post' && {
         type: 'article',
         ...(published && { publishedTime: published }),

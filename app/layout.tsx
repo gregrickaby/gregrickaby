@@ -37,7 +37,6 @@ export const metadata: Metadata = {
   openGraph: {
     description: SITE.description,
     locale: 'en_US',
-    images: [{ url: `${SITE.url}/og-image.jpg`, width: 1200, height: 630, alt: SITE.name }],
     siteName: SITE.name,
     title: SITE.name,
     type: 'website',
@@ -46,12 +45,14 @@ export const metadata: Metadata = {
   alternates: {
     types: { 'application/rss+xml': '/feed.xml' },
   },
+  // The image comes from app/opengraph-image.tsx; X falls back to it.
+  twitter: { card: 'summary_large_image' },
 }
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#242424' },
+    { media: '(prefers-color-scheme: light)', color: '#faf8f4' },
+    { media: '(prefers-color-scheme: dark)', color: '#1e1c1a' },
   ],
 }
 
@@ -68,7 +69,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <JsonLd graph={buildWebSiteGraph()} />
       </head>
       <body>
-        <a className={styles.skip} href="#main">
+        <a className={`no-print ${styles.skip}`} href="#main">
           Skip to content
         </a>
         <SiteHeader />

@@ -40,27 +40,7 @@ describe('buildContentMetadata', () => {
     expect(result.openGraph?.url).toBe(`${SITE.url}/test-page`)
   })
 
-  it('prepends featured image before inherited parent images when featuredImage is set', async () => {
-    const meta: PostMeta = {
-      ...baseMeta,
-      featuredImage: { src: '/content/pages/test-page/hero.jpg', width: 800, height: 450 },
-    }
-    const parentImages = [{ url: 'https://example.com/parent.jpg' }]
-    const result = await buildContentMetadata(meta, '/test-page', makeParent(parentImages))
-    const images = result.openGraph?.images as { url: string }[]
-    expect(images[0]!.url).toBe(`${SITE.url}/content/pages/test-page/hero.jpg`)
-    expect(images[1]!.url).toBe('https://example.com/parent.jpg')
-  })
-
-  it('omits featured image from openGraph.images when featuredImage is absent', async () => {
-    const parentImages = [{ url: 'https://example.com/parent.jpg' }]
-    const result = await buildContentMetadata(baseMeta, '/test-page', makeParent(parentImages))
-    const images = result.openGraph?.images as { url: string }[]
-    expect(images).toHaveLength(1)
-    expect(images[0]!.url).toBe('https://example.com/parent.jpg')
-  })
-
-  it('inherits parent images even when no featured image is present', async () => {
+  it('keeps the inherited share image, which the opengraph-image routes generate', async () => {
     const parentImages = [{ url: 'https://example.com/og.jpg' }]
     const result = await buildContentMetadata(baseMeta, '/test-page', makeParent(parentImages))
     const images = result.openGraph?.images as { url: string }[]
@@ -98,11 +78,7 @@ describe('buildContentMetadata', () => {
 
   it('works when the parent has no Open Graph images', async () => {
     const parent = Promise.resolve({}) as unknown as ResolvingMetadata
-    const result = await buildContentMetadata(
-      { ...baseMeta, featuredImage: undefined },
-      '/x',
-      parent,
-    )
+    const result = await buildContentMetadata(baseMeta, '/x', parent)
     expect(result.openGraph?.images).toEqual([])
   })
 })

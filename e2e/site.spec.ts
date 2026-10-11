@@ -16,7 +16,7 @@ test.describe('reading', () => {
     const problems = watchConsole(page)
     const response = await page.goto('/')
     expect(response?.headers()['content-security-policy']).toContain("default-src 'self'")
-    await expect(page.getByRole('heading', { level: 1, name: 'About' })).toBeVisible()
+    await expect(page.getByRole('heading', { level: 1, name: 'Greg Rickaby' })).toBeVisible()
 
     await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Blog' }).click()
     await expect(page.getByRole('heading', { level: 1, name: 'Blog' })).toBeVisible()
@@ -33,6 +33,28 @@ test.describe('reading', () => {
     })
     await expect(page.getByRole('navigation', { name: 'More posts' })).toBeVisible()
     expect(problems).toEqual([])
+  })
+
+  test('the home page leads to the resume, writing, and photos', async ({ page }) => {
+    await page.goto('/')
+    const start = page.getByRole('navigation', { name: 'Start here' })
+    await expect(start.getByRole('link', { name: 'Resume' })).toHaveAttribute('href', '/resume')
+    await expect(page.getByRole('heading', { level: 2, name: "Where I've worked" })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Latest from the blog' }),
+    ).toBeVisible()
+    await expect(page.getByRole('heading', { level: 2, name: 'Behind the camera' })).toBeVisible()
+
+    await page.locator('main a[data-lightbox]').first().click()
+    await expect(page.getByRole('dialog', { name: 'Image viewer' })).toBeVisible()
+  })
+
+  test('the resume prints without the site chrome', async ({ page }) => {
+    await page.goto('/resume')
+    await page.emulateMedia({ media: 'print' })
+    await expect(page.locator('header').first()).toBeHidden()
+    await expect(page.getByRole('button', { name: 'Save as PDF' })).toBeHidden()
+    await expect(page.getByText('gregrickaby.com · linkedin.com/in/gregrickaby')).toBeVisible()
   })
 
   test('tags and categories list their posts', async ({ page }) => {
@@ -119,6 +141,14 @@ test.describe('search, theme, and contact', () => {
 })
 
 test.describe('platform', () => {
+  test('pages share generated images', async ({ page, request }) => {
+    await page.goto('/the-moons-of-2023')
+    const image = await page.locator('meta[property="og:image"]').getAttribute('content')
+    expect(image).toContain('/the-moons-of-2023/opengraph-image')
+    const response = await request.get(new URL(image!).pathname)
+    expect(response.headers()['content-type']).toBe('image/png')
+  })
+
   test('feeds, redirects, and 404s', async ({ page, request }) => {
     const feed = await request.get('/feed.xml')
     expect(feed.headers()['content-type']).toContain('application/rss+xml')
