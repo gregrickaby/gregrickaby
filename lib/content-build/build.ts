@@ -7,6 +7,9 @@ import { type MeasuredImage, renderMarkdown } from './markdown.ts'
 import { comparePhotos, hasGainMap, readPhoto } from './photos.ts'
 
 const NUMERIC_ENTITY = /&#(\d+);/g
+const FENCED_CODE = /```[\s\S]*?```/g
+const HTML_TAG = /<[^>]+>/g
+const WORDS_PER_MINUTE = 230
 const PHOTO_FILE = /\.(jpe?g|png|webp)$/i
 
 /** `&#38;` becomes `&`. WordPress exports left these in titles. */
@@ -14,6 +17,15 @@ export function decodeEntities(value: string): string {
   return value.replaceAll(NUMERIC_ENTITY, (_, code: string) =>
     String.fromCodePoint(Number.parseInt(code, 10)),
   )
+}
+
+/**
+ * Minutes to read a Markdown body, counting prose and skipping code blocks and
+ * HTML tags. Never less than one.
+ */
+export function readingMinutes(markdown: string): number {
+  const words = markdown.replaceAll(FENCED_CODE, ' ').replaceAll(HTML_TAG, ' ').split(/\s+/)
+  return Math.max(1, Math.round(words.filter(Boolean).length / WORDS_PER_MINUTE))
 }
 
 function folders(dir: string): string[] {
@@ -82,6 +94,7 @@ export async function buildContent(publicDir: string, now = new Date()): Promise
         featuredImage: featured,
         categories: strings(data.categories),
         tags: strings(data.tags),
+        readingMinutes: readingMinutes(content),
       }
       const hero = featured && images[0] !== featured.src ? featured : null
       entries.push({ meta, html, hero })

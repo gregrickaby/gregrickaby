@@ -12,27 +12,34 @@ import styles from './photo-gallery.module.css'
 export function PhotoGallery({ photos }: { photos: Photo[] }) {
   return (
     <Lightbox className={styles.gallery}>
-      {photos.map((photo, i) => (
-        <a
-          className={styles.photo}
-          data-caption={photo.caption ? `${photo.title}: ${photo.caption}` : photo.title}
-          data-details={exifSummary(photo) || undefined}
-          data-full={fullImageUrl(photo.src, photo.width, photo.hdr)}
-          data-lightbox=""
-          href={photo.src}
-          key={photo.filename}
-        >
-          <Image
-            alt={photo.title}
-            className={styles.image}
-            height={photo.height}
-            preload={i < 3}
-            sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 360px"
-            src={photo.src}
-            width={photo.width}
-          />
-        </a>
-      ))}
+      {photos.map((photo, i) => {
+        const details = exifSummary(photo)
+        return (
+          <a
+            className={styles.photo}
+            data-caption={photo.caption ? `${photo.title}: ${photo.caption}` : photo.title}
+            data-details={details || undefined}
+            data-full={fullImageUrl(photo.src, photo.width, photo.hdr)}
+            data-lightbox=""
+            href={photo.src}
+            key={photo.filename}
+          >
+            <Image
+              alt={photo.title}
+              className={styles.image}
+              height={photo.height}
+              preload={i < 3}
+              sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 360px"
+              src={photo.src}
+              width={photo.width}
+            />
+            <span aria-hidden="true" className={styles.overlay}>
+              <span className={styles.title}>{photo.title}</span>
+              {details ? <span className={styles.exif}>{details}</span> : null}
+            </span>
+          </a>
+        )
+      })}
     </Lightbox>
   )
 }

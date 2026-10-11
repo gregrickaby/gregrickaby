@@ -15,11 +15,11 @@
     --tomato-8: #bf4906;
     --tomato-9: #a73c00;
 
-    /* Surfaces & text */
-    --surface-page: light-dark(#fff, #242424);
-    --surface-card: light-dark(#f8f9fa, #2e2e2e);
-    --surface-hover: light-dark(#f1f3f5, #3b3b3b);
-    --border: light-dark(#dee2e6, #424242);
+    /* Surfaces & text: warm paper and warm charcoal, like a printed photo book */
+    --surface-page: light-dark(#faf8f4, #1e1c1a);
+    --surface-card: light-dark(#f2eee7, #292624);
+    --surface-hover: light-dark(#ebe6dd, #34302d);
+    --border: light-dark(#e0d9cd, #3e3935);
     --text-1: light-dark(#333, #c6c6c6);
     --text-2: light-dark(#595959, #969696);
     --text-heading: light-dark(#1f1f1f, #e9e9e9);
@@ -44,6 +44,10 @@
     --font-sans: var(--font-roboto), -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
     --font-serif: var(--font-roboto-slab), georgia, serif;
     --font-mono: var(--font-roboto-mono), ui-monospace, sfmono-regular, menlo, monospace;
+
+    /* Small uppercase metadata, styled like a camera's EXIF readout */
+    --label-size: 0.75rem;
+    --label-tracking: 0.08em;
     --step-minus-1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
     --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
     --step-1: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);

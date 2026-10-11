@@ -58,12 +58,20 @@ describe('SearchForm', () => {
 describe('Article', () => {
   it('renders a post with date, categories, hero, body, and tags', async () => {
     const html = await renderServer(<Article post={post()} />)
-    expect(html).toContain('January 11, 2024')
+    expect(html).toContain('Jan 11, 2024')
     expect(html).toContain('href="/category/Blog"')
     expect(html).toContain('<h1')
     expect(html).toContain('Hello moon')
     expect(html).toContain('href="/tag/Astrophotography"')
     expect(html).toContain('hero.jpg')
+  })
+
+  it('leaves out the reading time when it is unknown', async () => {
+    const html = await renderServer(
+      <Article post={post({ readingMinutes: undefined, categories: undefined })} />,
+    )
+    expect(html).not.toContain('min read')
+    expect(html).not.toContain('/category/')
   })
 
   it('skips the date, hero, and tags when a page has none', async () => {
@@ -89,12 +97,17 @@ describe('PostCard and PostGrid', () => {
   it('renders cards without an image or description', async () => {
     const html = await renderServer(
       <PostCard
-        post={postMeta({ featuredImage: undefined, description: undefined })}
+        post={postMeta({
+          featuredImage: undefined,
+          description: undefined,
+          readingMinutes: undefined,
+        })}
         sizes="1px"
       />,
     )
     expect(html).not.toContain('<img')
-    expect(html).not.toContain('<p')
+    expect(html).not.toContain('A post about the moon.')
+    expect(html).not.toContain('min read')
   })
 
   it('puts the first two posts in the featured row', async () => {

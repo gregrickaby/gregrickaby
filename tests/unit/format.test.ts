@@ -1,11 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { escapeHtml, exifSummary, formatDate, validDate } from '@/lib/format'
+import { escapeHtml, exifSummary, formatDate, formatShortDate, validDate } from '@/lib/format'
 import { fullImageUrl, optimizedImageUrl } from '@/lib/images'
 
 describe('formatDate', () => {
   it('prints the date as written, in UTC', () => {
     expect(formatDate('2024-06-01T00:00:00Z')).toBe('June 1, 2024')
     expect(formatDate('2024-01-11T23:59:00')).toBe('January 11, 2024')
+  })
+})
+
+describe('formatShortDate', () => {
+  it('prints a short date, reading zone-less dates as UTC', () => {
+    expect(formatShortDate('2024-01-11T23:59:00')).toBe('Jan 11, 2024')
+    expect(formatShortDate('2024-06-01T00:00:00Z')).toBe('Jun 1, 2024')
   })
 })
 

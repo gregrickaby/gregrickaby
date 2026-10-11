@@ -13,6 +13,7 @@ export function postMeta(overrides: Partial<PostMeta> = {}): PostMeta {
     featuredImage: { src: `/content/posts/${slug}/hero.jpg`, width: 1600, height: 900 },
     categories: ['Blog'],
     tags: ['Moon', 'Astrophotography'],
+    readingMinutes: 5,
     ...overrides,
   }
 }

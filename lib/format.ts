@@ -18,6 +18,22 @@ export function formatDate(iso: string): string {
 }
 
 /**
+ * Formats an ISO date as "Jan 11, 2024", for metadata lines. Reads zone-less
+ * dates as UTC, like {@link formatDate}.
+ *
+ * @param iso - An ISO 8601 date.
+ * @returns The formatted date.
+ */
+export function formatShortDate(iso: string): string {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(NO_ZONE.test(iso) ? `${iso}Z` : iso))
+}
+
+/**
  * Whether a string parses as a date.
  *
  * @param value - A date string.

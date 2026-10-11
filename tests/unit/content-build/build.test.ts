@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { buildContent, decodeEntities } from '@/lib/content-build/build'
+import { buildContent, decodeEntities, readingMinutes } from '@/lib/content-build/build'
 
 // A 2x1 PNG.
 const PNG = Buffer.from(
@@ -46,6 +46,14 @@ afterAll(() => rmSync(root, { recursive: true, force: true }))
 describe('decodeEntities', () => {
   it('decodes numeric entities', () => {
     expect(decodeEntities('A &#38; B &#8217;')).toBe('A & B ’')
+  })
+})
+
+describe('readingMinutes', () => {
+  it('counts prose at 230 words a minute, skipping code and tags, never under one', () => {
+    expect(readingMinutes('word '.repeat(690))).toBe(3)
+    expect(readingMinutes('```\n' + 'code '.repeat(5000) + '\n```\nhi <b>there</b>')).toBe(1)
+    expect(readingMinutes('')).toBe(1)
   })
 })
 

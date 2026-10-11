@@ -9,6 +9,7 @@
 
   .photo {
     border-radius: var(--radius-2);
+    position: relative;
     break-inside: avoid;
     cursor: zoom-in;
     display: block;
@@ -24,5 +25,36 @@
 
   .photo:hover .image {
     scale: 1.02;
+  }
+
+  /* Title and EXIF fade in over the photo on hover or keyboard focus. */
+  .overlay {
+    background: linear-gradient(transparent, color-mix(in srgb, var(--scrim) 75%, transparent));
+    bottom: 0;
+    color: var(--on-scrim);
+    display: grid;
+    gap: var(--space-1);
+    inset-inline: 0;
+    opacity: 0;
+    padding: var(--space-6) var(--space-3) var(--space-3);
+    position: absolute;
+    transition: opacity var(--duration-enter) var(--ease-out);
+  }
+
+  .photo:hover .overlay,
+  .photo:focus-visible .overlay {
+    opacity: 1;
+  }
+
+  .title {
+    font-weight: 600;
+  }
+
+  .exif {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    opacity: 0.85;
+    text-transform: uppercase;
   }
 }

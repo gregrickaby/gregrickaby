@@ -1,6 +1,8 @@
 import type { Route } from 'next'
 import Link from 'next/link'
+import { MetaLine } from '@/components/meta-line'
 import { PostImage } from '@/components/post-image'
+import { formatShortDate } from '@/lib/format'
 import type { PostMeta } from '@/lib/types'
 import styles from './post-card.module.css'
 
@@ -30,6 +32,14 @@ export function PostCard({
           />
         </Link>
       ) : null}
+      <MetaLine
+        items={[
+          <time dateTime={post.date} key="date">
+            {formatShortDate(post.date)}
+          </time>,
+          post.readingMinutes ? `${post.readingMinutes} min read` : null,
+        ]}
+      />
       <h2 className={styles.title}>
         <Link href={href} prefetch>
           {post.title}

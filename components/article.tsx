@@ -1,30 +1,39 @@
 import Link from 'next/link'
 import { PostImage } from '@/components/post-image'
 import { Prose } from '@/components/prose'
-import { formatDate } from '@/lib/format'
+import { MetaLine } from '@/components/meta-line'
+import { formatShortDate } from '@/lib/format'
 import type { Post } from '@/lib/types'
 import styles from './article.module.css'
 
-/** A full post or page: date and categories, title, hero image, body, and tags. */
-export function Article({ post }: { post: Post }) {
+/**
+ * A full post or page: date, reading time, and categories, then the title,
+ * hero image, body, and tags. On the home page the hero banner owns the `h1`,
+ * so the article title drops to `h2` there.
+ */
+export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' | 'h2' }) {
   const { meta, html, hero } = post
+  const Title = heading
   return (
     <article className={styles.article}>
       <header className={styles.header}>
         {meta.type === 'post' ? (
-          <p className={styles.meta}>
-            <time dateTime={meta.date}>{formatDate(meta.date)}</time>
-            {meta.categories?.map((category) => (
-              <span key={category}>
-                {' · '}
-                <Link href={`/category/${encodeURIComponent(category)}`} prefetch>
+          <MetaLine
+            className={styles.meta}
+            items={[
+              <time dateTime={meta.date} key="date">
+                {formatShortDate(meta.date)}
+              </time>,
+              meta.readingMinutes ? `${meta.readingMinutes} min read` : null,
+              ...(meta.categories ?? []).map((category) => (
+                <Link href={`/category/${encodeURIComponent(category)}`} key={category} prefetch>
                   {category}
                 </Link>
-              </span>
-            ))}
-          </p>
+              )),
+            ]}
+          />
         ) : null}
-        <h1 className={styles.title}>{meta.title}</h1>
+        <Title className={styles.title}>{meta.title}</Title>
       </header>
 
       {hero ? (

@@ -19,6 +19,8 @@ export interface PostMeta {
   featuredImage?: ImageAsset
   categories?: string[]
   tags?: string[]
+  /** Estimated minutes to read the body, at 230 words a minute. */
+  readingMinutes?: number
 }
 
 /** A post or page with its HTML, rendered and sanitized at build time. */

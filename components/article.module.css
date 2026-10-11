@@ -10,12 +10,7 @@
   }
 
   .meta {
-    color: var(--text-2);
-    font-size: var(--step-minus-1);
-    font-weight: 600;
-    letter-spacing: 0.04em;
     margin-block-end: var(--space-4);
-    text-transform: uppercase;
   }
 
   .title {
