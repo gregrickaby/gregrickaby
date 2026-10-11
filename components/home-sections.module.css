@@ -1,0 +1,175 @@
+@layer components {
+  .band {
+    display: grid;
+    gap: var(--space-5);
+    margin-block: var(--space-8);
+  }
+
+  .bandHeader {
+    align-items: end;
+    border-block-end: 1px solid var(--border);
+    display: flex;
+    gap: var(--space-4);
+    justify-content: space-between;
+    padding-block-end: var(--space-3);
+  }
+
+  .bandTitle {
+    font-size: var(--step-2);
+    margin-block-start: var(--space-1);
+  }
+
+  .more {
+    align-items: center;
+    display: inline-flex;
+    font-weight: 600;
+    gap: var(--space-1);
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  /* About: photo beside the text on wide screens. */
+  .about {
+    align-items: start;
+    display: grid;
+    gap: var(--space-7);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    margin-block-end: var(--space-8);
+  }
+
+  .aboutPhoto {
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-2);
+    height: auto;
+    position: sticky;
+    top: 6rem;
+    width: 100%;
+  }
+
+  .aboutText {
+    display: grid;
+    gap: var(--space-2);
+    max-width: var(--measure);
+  }
+
+  @media (width <= 860px) {
+    .about {
+      gap: var(--space-5);
+      grid-template-columns: 1fr;
+    }
+
+    .aboutPhoto {
+      position: static;
+    }
+  }
+
+  /* Rows that scroll sideways, snapping to each card. */
+  .strip,
+  .gallery {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-block-end: var(--space-3);
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .role {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-block-start: 3px solid var(--accent-fill);
+    border-radius: var(--radius-2);
+    display: grid;
+    flex: 0 0 15rem;
+    gap: var(--space-1);
+    align-content: start;
+    padding: var(--space-4);
+    scroll-snap-align: start;
+  }
+
+  .roleTitle {
+    font-weight: 600;
+  }
+
+  .company {
+    color: var(--text-2);
+  }
+
+  /* The camera bag: story paragraphs span the band, gear lists flow in columns. */
+  .gear :global(.prose) {
+    column-gap: var(--space-7);
+    columns: 3 14rem;
+
+    & > * + * {
+      margin-block-start: 0;
+    }
+
+    & > p {
+      margin-block-end: var(--space-3);
+    }
+
+    & > p:not(:has(> strong:only-child)) {
+      column-span: all;
+      max-width: var(--measure);
+    }
+
+    & > p:has(> strong:only-child) {
+      break-after: avoid;
+    }
+
+    & ul {
+      margin-block-end: var(--space-5);
+    }
+
+    & li {
+      break-inside: avoid;
+    }
+  }
+
+  .disclaimer {
+    border-block-start: 1px solid var(--border);
+    color: var(--text-2);
+    padding-block-start: var(--space-3);
+
+    & :global(.prose) {
+      font-size: var(--step-minus-1);
+      max-width: none;
+    }
+  }
+
+  .posts {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+
+  .photo {
+    border-radius: var(--radius-2);
+    cursor: zoom-in;
+    flex: 0 0 auto;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+
+  .photoImage {
+    height: 280px;
+    object-fit: cover;
+    transition: scale var(--duration-enter) var(--ease-out);
+    width: auto;
+  }
+
+  .photo:hover .photoImage {
+    scale: 1.03;
+  }
+
+  @media (width <= 640px) {
+    .photoImage {
+      height: 220px;
+    }
+  }
+}

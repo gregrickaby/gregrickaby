@@ -17,6 +17,13 @@ export const SITE = {
   },
 } as const
 
+/** The home page banner: one of the gallery photos, and the line under the name. */
+export const HOME = {
+  photo: 'Morning_Mist_–_Lake_Frank_Jackson_20240413.jpg',
+  roles: ['Software engineer', 'Photographer', 'Author'],
+  summary: 'Building for the web since 1997.',
+} as const
+
 /** A header link. External links open in a new tab and stay out of the sitemap. */
 export interface NavLink {
   label: string

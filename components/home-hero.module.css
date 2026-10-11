@@ -1,0 +1,110 @@
+@layer components {
+  /* Full-bleed: breaks out of the page column and tucks under the header. */
+  .hero {
+    align-items: end;
+    color: var(--on-scrim);
+    display: grid;
+    margin-block: calc(-1 * var(--space-6)) var(--space-7);
+    margin-inline: calc(50% - 50vw);
+    min-height: min(78svh, 760px);
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+
+    /* Darkens the lower left, where the text sits, and leaves the sky alone. */
+    &::after {
+      background:
+        linear-gradient(to top, color-mix(in srgb, var(--scrim) 70%, transparent), transparent 65%),
+        linear-gradient(
+          to right,
+          color-mix(in srgb, var(--scrim) 35%, transparent),
+          transparent 60%
+        );
+      content: '';
+      inset: 0;
+      position: absolute;
+    }
+  }
+
+  .photo {
+    object-fit: cover;
+    object-position: center 40%;
+  }
+
+  .content {
+    display: grid;
+    gap: var(--space-3);
+    margin-inline: auto;
+    max-width: var(--page);
+    padding: var(--space-8) var(--gutter) var(--space-7);
+    position: relative;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .roles,
+  .caption {
+    color: inherit;
+    opacity: 0.85;
+  }
+
+  .name {
+    color: inherit;
+    font-size: clamp(2.5rem, 1.5rem + 5vw, 5rem);
+    line-height: 1;
+  }
+
+  .summary {
+    font-size: var(--step-1);
+    max-width: 32ch;
+    opacity: 0.92;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-3);
+  }
+
+  .action {
+    backdrop-filter: blur(6px);
+    background: color-mix(in srgb, var(--on-scrim) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--on-scrim) 45%, transparent);
+    border-radius: var(--radius-pill);
+    color: inherit;
+    font-weight: 600;
+    padding: var(--space-2) var(--space-5);
+    text-decoration: none;
+    transition: background var(--duration-exit) ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--on-scrim) 22%, transparent);
+    }
+  }
+
+  .primary {
+    background: var(--accent-fill);
+    border-color: var(--accent-fill);
+    color: var(--accent-contrast);
+
+    &:hover {
+      background: var(--accent-fill-hover);
+    }
+  }
+
+  .caption {
+    bottom: var(--space-3);
+    font-size: 0.65rem;
+    position: absolute;
+    right: var(--gutter);
+    text-align: end;
+    z-index: 1;
+  }
+
+  @media (width <= 640px) {
+    .caption {
+      display: none;
+    }
+  }
+}
