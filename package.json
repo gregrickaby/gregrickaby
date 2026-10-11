@@ -5,7 +5,7 @@
   "description": "My personal website",
   "scripts": {
     "dev": "npm run content && next dev --experimental-https",
-    "build": "npm run content && next build",
+    "build": "npm run content && npm run css:types && next build",
     "start": "next start",
     "content": "node --no-warnings=MODULE_TYPELESS_PACKAGE_JSON scripts/build-content.ts",
     "lint": "eslint && stylelint \"**/*.css\"",
