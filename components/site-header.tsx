@@ -10,7 +10,7 @@ import styles from './site-header.module.css'
 /** The sticky site header. Server-rendered; only the theme toggle and mobile menu hydrate. */
 export function SiteHeader() {
   return (
-    <header className={styles.header}>
+    <header className={`no-print ${styles.header}`}>
       <div className={styles.inner}>
         <Link className={styles.brand} href="/">
           <Image

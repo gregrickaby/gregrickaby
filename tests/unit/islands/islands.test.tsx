@@ -248,3 +248,17 @@ describe('ContactForm', () => {
     expect(screen.getByRole('status').textContent).toContain('Message sent!')
   })
 })
+
+describe('PrintButton', () => {
+  it('opens the print dialog', async () => {
+    const { PrintButton } = await import('@/components/islands/print-button')
+    const print = vi.fn()
+    vi.stubGlobal('print', print)
+    render(<PrintButton className="x" />)
+    fireEvent.click(screen.getByRole('button', { name: 'Save as PDF' }))
+    expect(print).toHaveBeenCalled()
+    cleanup()
+    render(<PrintButton />)
+    expect(screen.getByRole('button').className).not.toContain('x')
+  })
+})

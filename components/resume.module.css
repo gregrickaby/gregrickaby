@@ -9,6 +9,77 @@
     }
   }
 
+  .summary {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2);
+    display: grid;
+    gap: var(--space-4);
+    margin-block-end: var(--space-7);
+    padding: var(--space-5);
+  }
+
+  .intro {
+    font-size: var(--step-1);
+  }
+
+  .facts {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+
+    & dt {
+      color: var(--text-2);
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+    }
+
+    & dd {
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+
+  .skills {
+    border-block-start: 1px solid var(--border);
+    padding-block-start: var(--space-4);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .resume .action {
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--text-1);
+    font-size: var(--step-minus-1);
+    font-weight: 600;
+    padding: var(--space-2) var(--space-4);
+    text-decoration: none;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
+
+  .resume .primary {
+    background: var(--accent-fill);
+    border-color: var(--accent-fill);
+    color: var(--accent-contrast);
+
+    &:hover {
+      background: var(--accent-fill-hover);
+      color: var(--accent-contrast);
+    }
+  }
+
   .timeline {
     border-inline-start: 2px solid var(--border);
     display: grid;
@@ -67,5 +138,65 @@
     display: grid;
     gap: var(--space-3);
     margin-block-start: var(--space-5);
+  }
+
+  .printHeader {
+    display: none;
+  }
+
+  /* "Save as PDF": a plain document on white, with the buttons gone. */
+  @media print {
+    .resume {
+      font-size: 10.5pt;
+      line-height: 1.45;
+      max-width: none;
+    }
+
+    .summary {
+      background: none;
+      border: 0;
+      margin-block-end: var(--space-4);
+      padding: 0;
+    }
+
+    .actions,
+    .links {
+      display: none;
+    }
+
+    /* Block layout lets long entries flow across pages without leaving gaps. */
+    .timeline {
+      border: 0;
+      display: block;
+      margin-block: var(--space-4);
+      padding: 0;
+    }
+
+    .entry {
+      display: block;
+      margin-block-end: var(--space-4);
+
+      & > * + * {
+        margin-block-start: var(--space-1);
+      }
+    }
+
+    .entry::before {
+      content: none;
+    }
+
+    .role {
+      break-after: avoid;
+    }
+
+    .highlights li {
+      break-inside: avoid;
+    }
+
+    .printHeader {
+      display: block;
+      margin-block-end: var(--space-4);
+      text-align: center;
+    }
   }
 }

@@ -5,6 +5,12 @@
     padding: var(--space-6) var(--gutter) 0;
   }
 
+  @media print {
+    .main {
+      padding: 0;
+    }
+  }
+
   .skip {
     background: var(--accent-fill);
     color: var(--accent-contrast);

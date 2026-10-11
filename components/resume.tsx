@@ -1,21 +1,75 @@
+import Link from 'next/link'
+import { PrintButton } from '@/components/islands/print-button'
+import { MetaLine } from '@/components/meta-line'
 import { PageTitle } from '@/components/page-title'
-import { resumeEntries } from '@/lib/resume'
+import { getBuildTime } from '@/lib/content'
+import { currentRole, resumeEntries, resumeSummary } from '@/lib/resume'
 import { SITE } from '@/lib/site'
 import styles from './resume.module.css'
 
-function External({ href, children }: { href: string; children: React.ReactNode }) {
+function External({
+  href,
+  children,
+  className,
+}: {
+  href: string
+  children: React.ReactNode
+  className?: string
+}) {
   return (
-    <a href={href} rel="noopener" target="_blank">
+    <a className={className} href={href} rel="noopener" target="_blank">
       {children}
     </a>
   )
 }
 
-/** Work history as a timeline, then books and community work. */
+/** A summary band for quick reading, the work history as a timeline, then books and community work. */
 export function Resume() {
+  const years = new Date(getBuildTime()).getUTCFullYear() - resumeSummary.since
+
   return (
     <div className={styles.resume}>
       <PageTitle>Resume</PageTitle>
+      <MetaLine
+        className={styles.printHeader}
+        items={[
+          SITE.name,
+          SITE.url.replace('https://', ''),
+          SITE.author.linkedin.replace('https://www.', '').replace(/\/$/, ''),
+        ]}
+      />
+
+      <section aria-label="Summary" className={styles.summary}>
+        <p className={styles.intro}>{resumeSummary.intro}</p>
+        <dl className={styles.facts}>
+          <div>
+            <dt>Now</dt>
+            <dd>
+              {currentRole.role}, {currentRole.company}
+            </dd>
+          </div>
+          <div>
+            <dt>On the web</dt>
+            <dd>
+              {years} years, since {resumeSummary.since}
+            </dd>
+          </div>
+          <div>
+            <dt>Based in</dt>
+            <dd>Alabama, working remotely</dd>
+          </div>
+        </dl>
+        <MetaLine className={styles.skills} items={[...resumeSummary.skills]} />
+        <div className={styles.actions}>
+          <Link className={`${styles.action} ${styles.primary}`} href="/contact">
+            Get in touch
+          </Link>
+          <External className={styles.action} href={SITE.author.linkedin}>
+            LinkedIn
+          </External>
+          <PrintButton className={styles.action} />
+        </div>
+      </section>
 
       <ol className={styles.timeline} role="list">
         {resumeEntries.map((entry) => (

@@ -92,4 +92,20 @@
       scroll-behavior: auto !important;
     }
   }
+
+  /* Print: light colors on any theme, and the site chrome gone. */
+  @media print {
+    :root {
+      color-scheme: light;
+    }
+
+    html,
+    body {
+      background: none;
+    }
+
+    @page {
+      margin: 0.6in;
+    }
+  }
 }

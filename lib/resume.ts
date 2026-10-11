@@ -191,3 +191,24 @@ export const resumeEntries: ResumeEntry[] = [
     ],
   },
 ]
+
+/** The newest role, shown in the resume summary and its share image. */
+export const currentRole = resumeEntries[0] as ResumeEntry
+
+/** The band above the timeline: who Greg is, at a glance, for a recruiter. */
+export const resumeSummary = {
+  /** The year Greg started building for the web. */
+  since: 1997,
+  intro:
+    'Technical lead and software engineer. I build fast, accessible sites with Next.js and TypeScript, lead teams, and bring agentic AI into everyday engineering work.',
+  skills: [
+    'Next.js',
+    'React',
+    'TypeScript',
+    'Node.js',
+    'Agentic AI',
+    'Team leadership',
+    'Testing (Vitest, Playwright)',
+    'WordPress',
+  ],
+} as const

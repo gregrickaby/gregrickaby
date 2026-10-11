@@ -11,4 +11,10 @@
     white-space: nowrap;
     border: 0;
   }
+
+  @media print {
+    .no-print {
+      display: none;
+    }
+  }
 }

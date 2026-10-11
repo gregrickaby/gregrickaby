@@ -9,7 +9,7 @@ export function SiteFooter() {
   const year = new Date(getBuildTime()).getUTCFullYear()
 
   return (
-    <footer className={styles.footer}>
+    <footer className={`no-print ${styles.footer}`}>
       <div className={styles.inner}>
         <div className={styles.legal}>
           <p>

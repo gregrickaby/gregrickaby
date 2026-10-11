@@ -1,0 +1,13 @@
+@layer components {
+  .button {
+    align-items: center;
+    display: inline-flex;
+    gap: var(--space-2);
+  }
+
+  @media (scripting: none) {
+    .button {
+      display: none;
+    }
+  }
+}
