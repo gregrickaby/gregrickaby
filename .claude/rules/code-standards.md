@@ -24,7 +24,7 @@ description: 'Code standards and best practices for the Next.js 16 + Mantine 9 p
 - All pages live in `app/<route>/page.tsx`
 - Every page must export `generateMetadata()` for SEO
 - Dynamic post pages use `generateStaticParams()` to pre-render all slugs
-- API routes are limited to infrastructure concerns (`api/axiom` logging proxy, `api/healthcheck`); do not add business logic API routes
+- API routes are limited to infrastructure concerns (`api/health`); do not add business logic API routes
 - Do not configure `output: 'export'`
 - `params`, `searchParams`, `cookies()`, and `headers()` are async — always `await` them — see `next-best-practices` skill (async-patterns)
 - Never wrap `redirect()`, `notFound()`, `forbidden()`, or `unauthorized()` in try-catch — use `unstable_rethrow(error)` in catch blocks — see `next-best-practices` skill (error-handling)
@@ -142,14 +142,6 @@ export default function PostPagination({
 - Always use the custom `render` from `test-utils/`, not `@testing-library/react` directly
 - Mock `lib/content.ts` — never read the filesystem in a test
 - Aim for 100% coverage on new code; note coverage is scoped to `app/**` by default (`lib/` and `components/` require explicit test files but are not included in the coverage report)
-
-## Logging (Axiom)
-
-- Server-side logging: import `logger` from `lib/axiom/server.ts`; wrap route handlers with `withAxiom`
-- Client-side logging: use the `useLogger` hook from `lib/axiom/client.ts`; it proxies through `api/axiom` so `AXIOM_TOKEN` is never exposed to the browser
-- Web Vitals are reported via the `<WebVitals>` component from `lib/axiom/client.ts`
-- Unhandled request errors are captured via `instrumentation.ts` — do not duplicate error logging in route handlers
-- Never import `lib/axiom/server.ts` in client components — it uses `'server-only'` and throws at runtime
 
 ## Cache Components (Next.js 16)
 

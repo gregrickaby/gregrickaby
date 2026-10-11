@@ -5,7 +5,6 @@ import {Header} from '@/components/Header/Header'
 import {JsonLd} from '@/components/JsonLd/JsonLd'
 import {ScrollToTop} from '@/components/ScrollToTop/ScrollToTop'
 import {Search} from '@/components/Search/Search'
-import {WebVitals} from '@/lib/axiom/client'
 import {siteConfig} from '@/lib/config'
 import {getAllPosts} from '@/lib/content'
 import {buildWebSiteGraph} from '@/lib/schema'
@@ -110,7 +109,6 @@ export default async function RootLayout({
       {...mantineHtmlProps}
     >
       <head>
-        <WebVitals />
         <ColorSchemeScript defaultColorScheme="auto" />
         <meta name="color-scheme" content="light dark" />
         <JsonLd graph={webSiteGraph} />
