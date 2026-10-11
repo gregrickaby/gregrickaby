@@ -1,0 +1,71 @@
+@layer components {
+  .resume {
+    line-height: 1.65;
+    margin-inline: auto;
+    max-width: 700px;
+
+    & a {
+      text-decoration: underline;
+    }
+  }
+
+  .timeline {
+    border-inline-start: 2px solid var(--border);
+    display: grid;
+    gap: var(--space-6);
+    margin-block: var(--space-6);
+    padding-inline-start: var(--space-6);
+  }
+
+  .entry {
+    display: grid;
+    gap: var(--space-2);
+    position: relative;
+
+    /* The bullet sits on the timeline. */
+    &::before {
+      background: var(--accent-fill);
+      border: 4px solid var(--surface-page);
+      border-radius: 50%;
+      content: '';
+      height: 1.5rem;
+      left: calc(-1 * var(--space-6) - 0.75rem - 1px);
+      position: absolute;
+      top: 0.1rem;
+      width: 1.5rem;
+    }
+  }
+
+  .role {
+    font-size: var(--step-1);
+  }
+
+  .caption {
+    color: var(--text-2);
+    font-size: var(--step-minus-1);
+  }
+
+  .highlights {
+    display: grid;
+    gap: var(--space-1);
+    padding-inline-start: 1.25em;
+  }
+
+  .links {
+    margin-block: var(--space-6);
+    text-align: center;
+  }
+
+  .section {
+    border-block-start: 1px solid var(--border);
+    font-size: var(--step-2);
+    margin-block-start: var(--space-6);
+    padding-block-start: var(--space-6);
+  }
+
+  .block {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-start: var(--space-5);
+  }
+}

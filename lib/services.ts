@@ -1,14 +1,14 @@
 /**
  * Canonical list of reasons a visitor might use the contact form.
  * This is the single source of truth for both server-side validation
- * and the client-side Mantine Select component.
+ * and the contact form's select.
  */
-export const serviceOptions: {value: string; label: string}[] = [
-  {value: 'job opportunity', label: 'Job Opportunity'},
-  {value: 'consulting', label: 'Consulting'},
-  {value: 'speaking or writing', label: 'Speaking or Writing'},
-  {value: 'general inquiry', label: 'General Inquiry'},
-  {value: 'other', label: 'Other'}
+export const serviceOptions: { value: string; label: string }[] = [
+  { value: 'job opportunity', label: 'Job Opportunity' },
+  { value: 'consulting', label: 'Consulting' },
+  { value: 'speaking or writing', label: 'Speaking or Writing' },
+  { value: 'general inquiry', label: 'General Inquiry' },
+  { value: 'other', label: 'Other' },
 ]
 
 /**

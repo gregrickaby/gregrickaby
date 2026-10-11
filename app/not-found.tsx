@@ -1,20 +1,14 @@
-'use client'
-
-import {AppLink} from '@/components/AppLink/AppLink'
-import {Box, Text, Title} from '@mantine/core'
+import Link from 'next/link'
+import styles from './not-found.module.css'
 
 export default function NotFound() {
   return (
-    <Box ta="center">
-      <Title order={1} mb="md">
-        404
-      </Title>
-      <Text size="lg" c="dimmed" mb="lg">
-        The page you&apos;re looking for doesn&apos;t exist.
-      </Text>
-      <AppLink href="/" style={{color: 'var(--mantine-color-anchor)'}}>
-        Go back home
-      </AppLink>
-    </Box>
+    <div className={styles.notFound}>
+      <h1 className={styles.title}>404</h1>
+      <p>The page you&apos;re looking for doesn&apos;t exist.</p>
+      <p>
+        <Link href="/">Go back home</Link> or <Link href="/search">search the blog</Link>.
+      </p>
+    </div>
   )
 }

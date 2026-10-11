@@ -1,0 +1,102 @@
+@layer components {
+  .header {
+    background: color-mix(in srgb, var(--surface-page) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-block-end: 1px solid var(--border);
+    box-shadow: var(--shadow-1);
+    position: sticky;
+    top: 0;
+    view-transition-name: site-header;
+    z-index: var(--z-sticky);
+  }
+
+  .inner {
+    align-items: center;
+    display: flex;
+    gap: var(--space-5);
+    margin-inline: auto;
+    max-width: var(--page);
+    padding: var(--space-4) var(--gutter);
+  }
+
+  /* Shrink the header as the page scrolls, where scroll-driven animations exist. */
+  @supports (animation-timeline: scroll()) {
+    .inner {
+      animation: compact linear both;
+      animation-range: 0 60px;
+      animation-timeline: scroll();
+    }
+
+    @keyframes compact {
+      to {
+        padding-block: var(--space-2);
+      }
+    }
+  }
+
+  .brand {
+    align-items: center;
+    color: var(--text-heading);
+    display: flex;
+    gap: var(--space-3);
+    text-decoration: none;
+  }
+
+  .avatar {
+    border-radius: 50%;
+  }
+
+  .name {
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .nav {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  .link {
+    color: var(--text-1);
+    text-decoration: none;
+    transition: color var(--duration-exit) ease;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    gap: var(--space-2);
+    margin-inline-start: auto;
+  }
+
+  .search {
+    width: 12rem;
+  }
+
+  .menuNav {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-end: var(--space-4);
+  }
+
+  .menu {
+    display: none;
+  }
+
+  @media (width <= 860px) {
+    .nav,
+    .search {
+      display: none;
+    }
+
+    .menu {
+      display: block;
+    }
+  }
+}

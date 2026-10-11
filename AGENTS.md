@@ -1,16 +1,3 @@
-# Project Guidelines
-
-Personal blog. Next.js 16 App Router, React 19, Mantine 9, TypeScript 6. Markdown content on disk — no database.
-
-## Run
-
-```bash
-npm run dev          # Dev server (clears .next, HTTPS)
-npm run build        # RSS feed + production build
-npm run test         # Vitest + coverage
-npm run validate     # tsc + lint + format + test
-```
-
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
@@ -21,73 +8,67 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-## Additional Docs
+# gregrickaby.com
 
-- **Mantine:** https://mantine.dev/llms.txt
+Greg Rickaby's personal site, live at <https://gregrickaby.com>: a blog, photo gallery, resume, and contact form. Markdown on disk, no database. Server-first and static: every page except `/search` prerenders at build time. Built the same way as [Viewer for Reddit](https://github.com/gregrickaby/viewer-for-reddit) v10.
 
-## Always Active
+## Stack
 
-- **Caveman skill, `full` mode**: active every session (persists per its own instructions). Drop for security warnings, irreversible-action confirmations, or on request for normal mode.
-- **Writing style**: `.claude/rules/writing-style.md` has no `paths:` frontmatter, so it loads every session. Follow it for all prose.
-- **Skill gap**: no skill covers the task, or unsure how: invoke `find-skills` before improvising.
-- **Minimize subagent spawning**: each Agent/Task call is a separate billed request. No SDD tasks allowed! Use Read/Grep/Bash directly for single-file lookups or known symbols. Reserve Explore for broad searches (3+ queries, unfamiliar territory); spawn other agents only when asked or when the task needs parallel, isolated work. If possible, choose a lower cost model to save on costs.
-- **Never commit plans**: Plans are internal facing, not public facing. Use temp directories on the local machine, not /docs directories in this repo.
+Next.js 16.4 (App Router, Cache Components, Partial Prefetching, `ensureStatic`, typed routes, Rust React Compiler) · React 19.3 (View Transitions) · TypeScript (strict) · CSS Modules with cascade layers · unified/remark/rehype, shiki, sanitize-html, and exifr at build time only · Nodemailer (Mailgun) · Vitest 5 + Testing Library + happy-dom · Playwright with `@next/playwright` · ESLint + Stylelint + Prettier.
 
-## Architecture
+## Commands
 
-```
-app/              # App Router pages/layouts (server components by default)
-  api/
-    health/       # Container health check
-  [slug]/         # Dynamic post/page route
-  category/[category]/
-  tag/[tag]/
-  not-found.tsx   # Custom 404 page ('use client')
-components/       # UI components — each has .tsx + .module.css + .test.tsx
-lib/
-  content.ts      # Server-only: reads Markdown via fs — never import in client code
-  types.ts        # Shared types (safe for server and client)
-  config.ts       # siteConfig constants
-  headers.ts      # HTTP security headers (imported by next.config.ts)
-  metadata.ts     # buildContentMetadata() — OG/SEO metadata factory
-  photos.ts       # Server-only: reads EXIF/IPTC from photos
-  redirects.ts    # 301 redirects for legacy URLs (imported by next.config.ts)
-  schema.ts       # JSON-LD structured data builders
-  utils.ts        # Shared utility functions
-  pagination.ts   # PAGE_SIZE constant + paginate() helpers
-  services.ts     # serviceOptions list + isValidService()
-  feed.ts         # buildFeedXml() — used by build-time RSS script
-  hooks/          # Custom React hooks (client-side only)
-public/content/   # Markdown + co-located images
-  posts/<slug>/content.md
-  pages/<slug>/content.md
-  photos/
-scripts/          # Build-time scripts (RSS feed)
-test-utils/       # Custom RTL render wrapper (MantineProvider)
+```bash
+npm run check         # content + CSS module types + typecheck + lint + unit tests with coverage. REQUIRED before done
+npm run format        # Prettier (CI runs format:check)
+npm run test:watch    # Vitest in watch mode
+npm run test:e2e      # Playwright: builds the app and runs critical paths, with and without JavaScript
+npm run build         # Content + production build
+npm run content       # Re-render Markdown and photo metadata into .generated/content.json
 ```
 
-Deployed on Coolify via Railpack. No `output: 'export'`.
+`npm run dev` runs `content` once at start. After editing Markdown or photos, run `npm run content` again.
 
-## Key Rules
+**Secrets**: `.env.local` (see `.env.example`): `MAILGUN_LOGIN`, `MAILGUN_PASSWORD`, `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY`. There is no logging or analytics service: server errors go to the container's stdout (Coolify logs).
 
-- Server components by default; `'use client'` only for Mantine hooks, state, effects, browser APIs
-- Never import `lib/content.ts` in client code — it uses server-only APIs
-- Use Mantine primitives (`Container`, `Stack`, `Group`, `SimpleGrid`); CSS modules for styles
-- Use `<AppLink>` and `next/image` — never plain `<a>` or `<img>`
-- Secrets in `.env.local` only; no `NEXT_PUBLIC_` prefix for server-only secrets
-- `dangerouslySetInnerHTML` is allowed only with sanitized input — never pass raw user content
-- Vitest globals enabled — do not import `describe`, `it`, `expect`; use custom `render` from `test-utils/`; mock `lib/content.ts`
-- Cache async data with `'use cache'` + `cacheLife()` + `cacheTag()`; wrap dynamic content in `<Suspense>`
-- `reactCompiler: true` is enabled — do not add `useMemo`, `useCallback`, or `React.memo` manually
-- Never commit or push changes on the developer's behalf
+## Architecture rules
 
-## Detailed Rules
+- **Content is built, not read at runtime.** `scripts/build-content.ts` renders every post and page (GitHub-flavored Markdown, figure captions, shiki, heading ids), sanitizes the HTML, measures every image, and reads photo EXIF, then writes `.generated/content.json` (gitignored). `lib/content.ts` imports that JSON. Nothing in the running server touches the filesystem, unified, shiki, or exifr; those are dev dependencies.
+- **Static by contract.** `app/(site)/layout.tsx` sets `ensureStatic = 'navigation'`: the build fails if any page in the group reads cookies, headers, or search params, or does uncached work. `/search` lives outside the group and is the only per-request page.
+- **Param routes block on params** (`instant = false` on `[slug]`, `tag/[tag]`, `category/[category]`, and `/search`), so the prerendered HTML holds the full content for readers without JavaScript and for crawlers. Links to them use `prefetch={true}`, which loads the prerendered page before the click, so client navigations still render at once. `e2e/site.spec.ts` checks this with `instant()`.
+- **Images.** Components use `next/image`. Post HTML is built outside React, so the build writes `/_next/image` URLs with a `srcset` itself (`lib/images.ts`). JPEGs with an HDR gain map (`hdrgm` XMP) keep their original file everywhere a full-size view is shown, because the optimizer strips the gain map. Cloudflare caches `/_next/image` for AVIF-capable browsers (cache rule on the zone), and Coolify mounts `.next/cache` as a volume.
+- **Server-first UI.** Server Components by default. Client components are small islands in `components/islands/`: theme toggle, mobile menu (a native popover; the island only closes it after navigation), lightbox (a native `<dialog>`), and the contact form (`useActionState`, works before hydration). No client data fetching.
+- **HTML injection** happens only in `components/prose.tsx` (sanitized at build), `components/json-ld.tsx` (escaped by `serializeSchema`), and the root layout's theme script. ESLint enforces it.
+- **Theme.** Colors are tokens defined once with `light-dark()` in `app/styles/tokens.css`. `data-theme` on `<html>` only switches `color-scheme`. The choice lives in a `theme` cookie that an inline script applies before paint, so pages stay static.
+- **View transitions.** Post card images and article heroes share a `<ViewTransition>` name (`components/post-image.tsx`), so opening a post morphs the card into the hero. The header keeps its own transition name and stays put.
+- **SEO.** Site name, copy, nav, and links live in `lib/site.ts`. Redirects for old WordPress URLs are in `lib/redirects.ts`; security headers and the CSP in `lib/headers.ts`. RSS is a prerendered route at `app/feed.xml/route.ts`.
 
-Full code standards and writing style rules live in `.claude/rules/*.md`
+## Conventions
 
-## Definition of Done
+**Never:**
 
-Before declaring a task complete:
+- Start the dev server; the user manages it.
+- Read the filesystem at request time, or import `lib/content-build/*` from app code.
+- Fetch from the client, or use `any` or the `NEXT_PUBLIC_` env prefix.
+- Use `memo()`, `useCallback()`, or `useMemo()`: the React Compiler handles it.
+- Use barrel files or UI libraries.
+- Add superfluous comments. Match the surrounding comment density and cite the reason, not the change.
+- Commit plans. Plans are internal: keep them in the session scratchpad or the gitignored `.plans/`.
+- Skip `npm run check` before declaring work complete.
+- Wax poetic in commit messages, add commit trailers, or add co-authors.
 
-1. Run `npm run validate`
-2. No SonarQube for IDE tool issues
+**Always:**
+
+- Put styles in CSS Modules inside `@layer components`, using the tokens in `app/styles/tokens.css`. Stylelint enforces the layer and forbids raw colors.
+- Keep links, search, and the contact form working without JavaScript.
+- Write prose (UI copy, docs, commit messages) following [writing-style.md](./.claude/rules/writing-style.md): no emoji, no em dashes, plain verbs.
+- Minimize subagent spawning. Each one is a separate billed request; use Read/Grep/Bash for known files and symbols.
+- Caveman skill, `full` mode, is active every session (persists per its own instructions). Drop it for security warnings, irreversible-action confirmations, or on request.
+
+**Testing:** unit tests live in `tests/unit/` (Node by default; component tests add `// @vitest-environment happy-dom`). Server components render through `tests/helpers/render-server.tsx`; content comes from `tests/helpers/content.ts` with `vi.mock('@/.generated/content.json')`. Coverage is enforced at 90% and currently 100%: keep it there.
+
+**Definition of done**: `npm run format:check`, `npm run check`, and `npm run build` pass. Run `npm run test:e2e` when a change touches a user flow. Check every UX change in Chrome against the user's running dev server.
+
+## Deploy
+
+Coolify (Railpack) builds `main` and runs `npm start` on port 3000, with a health check on `/api/health`. Cloudflare sits in front.

@@ -1,0 +1,82 @@
+@layer components {
+  .footer {
+    border-block-start: 1px solid var(--border);
+    color: var(--text-2);
+    font-size: var(--step-minus-1);
+    margin-block-start: var(--space-8);
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    justify-content: space-between;
+    margin-inline: auto;
+    max-width: var(--page);
+    padding: var(--space-6) var(--gutter);
+  }
+
+  .legal {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .footer a {
+    color: inherit;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  .social {
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  /* Back to top: hidden until the reader scrolls, where scroll-driven animations exist. */
+  .top {
+    display: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .top {
+      align-items: center;
+      animation: appear linear both;
+      animation-range: 200px 300px;
+      animation-timeline: scroll();
+      background: var(--accent-fill);
+      border-radius: 50%;
+      bottom: var(--space-7);
+      box-shadow: var(--shadow-2);
+      display: inline-flex;
+      height: 3rem;
+      justify-content: center;
+      position: fixed;
+      right: var(--space-5);
+      width: 3rem;
+      z-index: var(--z-sticky);
+
+      &,
+      &:hover {
+        color: var(--accent-contrast);
+      }
+
+      &:hover {
+        background: var(--accent-fill-hover);
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      to {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}

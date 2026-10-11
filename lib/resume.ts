@@ -1,4 +1,4 @@
-import type {ResumeEntry} from './types'
+import type { ResumeEntry } from './types'
 
 /**
  * Canonical work history for the resume timeline, most recent role first.
@@ -20,7 +20,7 @@ export const resumeEntries: ResumeEntry[] = [
       'Oversee the full development lifecycle: design, code review, and deployment.',
       'Establish coding standards, testing practices, and documentation workflows with Vitest, Playwright, and Storybook.',
       'Introduce agentic AI workflows and tooling standards, using two decades of engineering experience to move faster without sacrificing quality.',
-      "Unblock teammates on tough problems as one of the team's go-to for troubleshooting and code review."
+      "Unblock teammates on tough problems as one of the team's go-to for troubleshooting and code review.",
     ],
     techStack: [
       'Agentic AI',
@@ -35,8 +35,8 @@ export const resumeEntries: ResumeEntry[] = [
       'REST APIs',
       'Node.js',
       'Jira',
-      'Agile/Scrum'
-    ]
+      'Agile/Scrum',
+    ],
   },
   {
     role: 'Team Lead',
@@ -49,7 +49,7 @@ export const resumeEntries: ResumeEntry[] = [
       'Collaborated with the engineering manager, product owner, and cross-functional teams to guide the wpforms.com marketing platform.',
       'Led front-end and back-end development, optimizing site performance and conversion rates.',
       'Provided technical leadership and mentorship, including feedback and performance reviews, to support team growth.',
-      'Ensured clean, maintainable code across the stack using PHP, JavaScript, and WordPress best practices.'
+      'Ensured clean, maintainable code across the stack using PHP, JavaScript, and WordPress best practices.',
     ],
     techStack: [
       'Team Leadership',
@@ -61,8 +61,8 @@ export const resumeEntries: ResumeEntry[] = [
       'REST APIs',
       'Node.js',
       'Employee Coaching',
-      'Performance Management'
-    ]
+      'Performance Management',
+    ],
   },
   {
     role: 'Technical Lead',
@@ -76,7 +76,7 @@ export const resumeEntries: ResumeEntry[] = [
       'Collaborated with clients and internal teams to deliver custom websites using WordPress, React, and Next.js.',
       'Partnered with the business development team on technical scoping and sales proposals.',
       'Led internal knowledge-sharing initiatives, including Lunch & Learns and R&D on modern frameworks and frontend tooling.',
-      'Championed emerging technologies and kept the team current with evolving web standards.'
+      'Championed emerging technologies and kept the team current with evolving web standards.',
     ],
     techStack: [
       'Project Leadership',
@@ -86,8 +86,8 @@ export const resumeEntries: ResumeEntry[] = [
       'TypeScript',
       'Tailwind CSS',
       'Technical Scoping',
-      'Client Collaboration'
-    ]
+      'Client Collaboration',
+    ],
   },
   {
     role: 'Director of Engineering',
@@ -101,7 +101,7 @@ export const resumeEntries: ResumeEntry[] = [
       'Developed technical roadmaps and strategic goals aligned with company objectives.',
       'Supported Project Management with resource planning across concurrent client engagements.',
       'Partnered with Business Development as a sales engineer, scoping estimates and proposals for prospective clients.',
-      'Advised the CEO and COO on execution strategy, and led projects for clients including Microsoft, the NBA, Monster.com, and Realtor.com.'
+      'Advised the CEO and COO on execution strategy, and led projects for clients including Microsoft, the NBA, Monster.com, and Realtor.com.',
     ],
     techStack: [
       'Leadership',
@@ -114,8 +114,8 @@ export const resumeEntries: ResumeEntry[] = [
       'Next.js',
       'TypeScript',
       'Tailwind CSS',
-      'Cross-Functional Collaboration'
-    ]
+      'Cross-Functional Collaboration',
+    ],
   },
   {
     role: 'Chief Engineer',
@@ -129,7 +129,7 @@ export const resumeEntries: ResumeEntry[] = [
       'Ensured 24/7 broadcast reliability and maintained full FCC compliance, including EAS, public files, and technical documentation.',
       'Managed station websites and social media for audience engagement and growth.',
       "Handled regulatory, infrastructure, and emergency-operations communications as the group's primary technical contact.",
-      'Held Certified Broadcast Technologist (CBT) certification from the Society of Broadcast Engineers.'
+      'Held Certified Broadcast Technologist (CBT) certification from the Society of Broadcast Engineers.',
     ],
     techStack: [
       'FCC Compliance',
@@ -139,8 +139,8 @@ export const resumeEntries: ResumeEntry[] = [
       'Automation Systems',
       'WordPress',
       'Project Management',
-      'CBT Certification'
-    ]
+      'CBT Certification',
+    ],
   },
   {
     role: 'Chief Engineer',
@@ -153,7 +153,7 @@ export const resumeEntries: ResumeEntry[] = [
       "As the group's only engineer, ran technical operations: studio equipment, IT infrastructure, networking, and automation.",
       'Maintained on-air reliability and managed preventative maintenance for studio and transmitter sites.',
       'Maintained station websites and digital infrastructure to support online presence.',
-      'Drove technology strategy, system upgrades, and operational continuity across all stations.'
+      'Drove technology strategy, system upgrades, and operational continuity across all stations.',
     ],
     techStack: [
       'Broadcast Engineering',
@@ -162,8 +162,8 @@ export const resumeEntries: ResumeEntry[] = [
       'Automation Systems',
       'WordPress',
       'Project Management',
-      'Strategic Planning'
-    ]
+      'Strategic Planning',
+    ],
   },
   {
     role: 'Webmaster',
@@ -176,7 +176,7 @@ export const resumeEntries: ResumeEntry[] = [
       'Managed websites for all country-formatted stations on a custom CMS, handling daily updates, promotional content, and design assets.',
       'Created graphics, wrote content, and shot event photography for station branding and audience engagement.',
       'Fielded day-to-day requests from Program Directors, covering content needs, promotions, and special asks.',
-      'Maintained and enhanced site functionality with HTML, CSS, and ASP in an early-era web environment.'
+      'Maintained and enhanced site functionality with HTML, CSS, and ASP in an early-era web environment.',
     ],
     techStack: [
       'Content Creation',
@@ -187,7 +187,7 @@ export const resumeEntries: ResumeEntry[] = [
       'CSS',
       'ASP',
       'Cross-Department Collaboration',
-      'Organizational Support'
-    ]
-  }
+      'Organizational Support',
+    ],
+  },
 ]

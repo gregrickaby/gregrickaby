@@ -1,0 +1,70 @@
+@layer components {
+  .article {
+    margin-inline: auto;
+    max-width: var(--measure);
+  }
+
+  .header {
+    margin-block-end: var(--space-6);
+    text-align: center;
+  }
+
+  .meta {
+    color: var(--text-2);
+    font-size: var(--step-minus-1);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-block-end: var(--space-4);
+    text-transform: uppercase;
+  }
+
+  .title {
+    font-size: var(--step-3);
+  }
+
+  /* The hero breaks out of the text column. */
+  .hero {
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-2);
+    height: auto;
+    margin-block: var(--space-6);
+    margin-inline-start: calc(50% - min(var(--wide) / 2, 50vw));
+    max-width: none;
+    width: min(var(--wide), 100vw);
+  }
+
+  @media (width <= 1100px) {
+    .hero {
+      border-radius: 0;
+    }
+  }
+
+  .footer {
+    border-block-start: 1px solid var(--border);
+    margin-block-start: var(--space-7);
+    padding-block-start: var(--space-4);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .tag {
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    color: var(--accent);
+    display: inline-block;
+    font-size: var(--step-minus-1);
+    font-weight: 600;
+    padding: var(--space-1) var(--space-3);
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      border-color: var(--accent);
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@layer components {
+  .stack {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .featured,
+  .rest {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .featured {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+  }
+
+  .rest {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+}

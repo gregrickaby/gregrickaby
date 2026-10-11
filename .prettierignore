@@ -56,3 +56,13 @@ next-env.d.ts
 *.jpeg
 *.webp
 *.avif
+
+# generated
+/.generated/
+*.module.css.d.ts
+package-lock.json
+
+# content and assets
+/public/
+/playwright-report/
+/test-results/

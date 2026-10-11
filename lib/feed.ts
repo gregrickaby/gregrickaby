@@ -1,4 +1,4 @@
-import type {PostMeta} from '@/lib/types'
+import type { PostMeta } from './types'
 
 /**
  * Subset of site configuration required to build the RSS feed.
@@ -46,7 +46,7 @@ function buildItemXml(post: PostMeta, siteUrl: string): string {
 export function buildFeedXml(
   posts: PostMeta[],
   config: FeedConfig,
-  builtAt: Date = new Date()
+  builtAt: Date = new Date(),
 ): string {
   const items = posts.map((post) => buildItemXml(post, config.url)).join('\n')
 

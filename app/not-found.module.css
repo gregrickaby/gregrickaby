@@ -1,0 +1,12 @@
+@layer components {
+  .notFound {
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-8);
+    text-align: center;
+  }
+
+  .title {
+    font-size: var(--step-3);
+  }
+}

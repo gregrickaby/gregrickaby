@@ -1,126 +1,77 @@
-/**
- * Frontmatter fields parsed from a post or page content.md file.
- *
- * @interface
- */
+/** A local image with its intrinsic size, measured at build time. */
+export interface ImageAsset {
+  /** Path under `public/`, such as `/content/posts/slug/photo.jpg`. */
+  src: string
+  width: number
+  height: number
+}
+
+/** Frontmatter for a post or page. */
 export interface PostMeta {
-  /** The post or page title. */
   title: string
-  /** The URL-safe slug for the post or page. */
   slug: string
-  /** The ISO 8601 date when the post was published. */
+  /** ISO 8601 publish date. */
   date: string
-  /** The ISO 8601 date when the post was last modified. */
+  /** ISO 8601 last-modified date. */
   modified: string
-  /** The type of content - either 'post' or 'page'. */
   type: 'post' | 'page'
-  /** Optional. A short description for SEO and previews. */
   description?: string
-  /** Optional. The filename of the featured image. */
-  featuredImage?: string
-  /** Optional. Categories assigned to the post. */
+  featuredImage?: ImageAsset
   categories?: string[]
-  /** Optional. Tags assigned to the post. */
   tags?: string[]
 }
 
-/**
- * A fully-loaded post or page, including rendered HTML content.
- *
- * @interface
- */
+/** A post or page with its HTML, rendered and sanitized at build time. */
 export interface Post {
-  /** The post metadata. */
   meta: PostMeta
-  /** The rendered HTML content. */
-  content: string
+  html: string
+  /** The featured image to show above the body, or null when the body already opens with it. */
+  hero: ImageAsset | null
 }
 
-/**
- * State shape for the contact form server action.
- *
- * @interface
- */
+/** A photo in the /photos gallery, with EXIF and IPTC fields read at build time. */
+export interface Photo extends ImageAsset {
+  filename: string
+  title: string
+  caption?: string
+  camera?: string
+  lens?: string
+  aperture?: string
+  shutterSpeed?: string
+  iso?: string
+  focalLength?: string
+  /** ISO 8601 capture time. */
+  dateTaken?: string
+  /** True when the JPEG carries an HDR gain map, which the image optimizer would strip. */
+  hdr: boolean
+}
+
+/** Everything `scripts/build-content.ts` writes to `.generated/content.json`. */
+export interface ContentIndex {
+  /** ISO 8601 build time. */
+  generatedAt: string
+  /** Newest first. */
+  posts: Post[]
+  pages: Post[]
+  /** Newest first. */
+  photos: Photo[]
+}
+
+/** State returned by the contact form's Server Action. */
 export interface ContactFormState {
-  /** Whether the form submission was successful. */
   success: boolean
-  /** The error message if submission failed, otherwise null. */
   error: string | null
 }
 
-/**
- * The initial state for the contact form.
- *
- * @constant
- */
-export const INITIAL_STATE: ContactFormState = {success: false, error: null}
-
-/**
- * GPS coordinates for a photo.
- *
- * @interface
- */
-export interface GpsCoordinates {
-  /** Latitude in decimal degrees. */
-  latitude: number
-  /** Longitude in decimal degrees. */
-  longitude: number
-}
-
-/**
- * Metadata for a photo in the /photos gallery, derived from EXIF/IPTC data.
- *
- * @interface
- */
-export interface PhotoMeta {
-  /** The image filename (e.g. "sunset.jpg"). */
-  filename: string
-  /** The photo title from IPTC ObjectName, or a formatted version of the filename. */
-  title: string
-  /** Optional. The caption/description from IPTC Caption-Abstract. */
-  caption?: string
-  /** Image width in pixels. */
-  width: number
-  /** Image height in pixels. */
-  height: number
-  /** Optional. Camera make and model (e.g. "Canon EOS R5"). */
-  camera?: string
-  /** Optional. Lens model (e.g. "RF 70-200mm F2.8L IS USM"). */
-  lens?: string
-  /** Optional. Aperture f-stop value (e.g. "f/2.8"). */
-  aperture?: string
-  /** Optional. Shutter speed (e.g. "1/250s"). */
-  shutterSpeed?: string
-  /** Optional. ISO sensitivity (e.g. "400"). */
-  iso?: string
-  /** Optional. Focal length (e.g. "200mm"). */
-  focalLength?: string
-  /** Optional. Date the photo was taken (ISO 8601). */
-  dateTaken?: string
-  /** Optional. GPS coordinates. */
-  gps?: GpsCoordinates
-}
-
-/**
- * A single job in the resume's work history timeline.
- *
- * @interface
- */
+/** One job in the resume timeline. */
 export interface ResumeEntry {
-  /** The job title/role held. */
   role: string
-  /** The employer name. */
   company: string
-  /** Optional. The employer's website. */
   companyUrl?: string
-  /** The work location (e.g. "Remote" or "Montgomery, AL"). */
   location: string
-  /** The human-readable date range (e.g. "February 2024 – Present"). */
+  /** Human-readable range, such as "February 2024 – Present". */
   dateRange: string
-  /** A one to two sentence summary of the role. */
   summary: string
-  /** Bullet points describing key responsibilities and achievements. */
   highlights: string[]
-  /** Optional. Tech stack and skills used in the role. */
-  techStack?: string[]
+  techStack: string[]
 }

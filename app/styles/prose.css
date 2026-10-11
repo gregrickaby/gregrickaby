@@ -1,0 +1,142 @@
+/* Post and page HTML from scripts/build-content.ts. It is plain HTML, not
+   React, so it is styled from one global `.prose` class. */
+@layer base {
+  .prose {
+    font-size: var(--step-0);
+    line-height: 1.7;
+    overflow-wrap: break-word;
+
+    & > * + * {
+      margin-block-start: 1.25em;
+    }
+
+    & h2 {
+      font-size: var(--step-2);
+      margin-block-start: 2em;
+    }
+
+    & h3 {
+      font-size: var(--step-1);
+      margin-block-start: 1.75em;
+    }
+
+    & ul,
+    & ol {
+      padding-inline-start: 1.5em;
+    }
+
+    & li + li {
+      margin-block-start: 0.4em;
+    }
+
+    & blockquote {
+      border-inline-start: 4px solid var(--accent);
+      color: var(--text-2);
+      font-style: italic;
+      padding-inline-start: var(--space-4);
+    }
+
+    & hr {
+      border: 0;
+      border-block-start: 1px solid var(--border);
+      margin-block: 2.5em;
+    }
+
+    & :not(pre) > code {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-1);
+      font-size: 0.875em;
+      padding: 0.1em 0.35em;
+    }
+
+    & img {
+      border-radius: var(--radius-2);
+      box-shadow: var(--shadow-2);
+      cursor: zoom-in;
+      height: auto;
+      margin-inline: auto;
+    }
+
+    /* Several images in one paragraph form a grid. */
+    & p:has(> img ~ img) {
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    & p:has(> img ~ img) img {
+      aspect-ratio: 1;
+      box-shadow: none;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    & figure {
+      margin-inline: 0;
+    }
+
+    & figcaption {
+      color: var(--text-2);
+      font-family: var(--font-sans);
+      font-size: var(--step-minus-1);
+      margin-block-start: var(--space-2);
+      padding-inline: var(--space-2);
+      text-align: center;
+    }
+
+    /* Code blocks: shiki sets colors inline. */
+    & figure[data-rehype-pretty-code-figure] pre {
+      border-radius: var(--radius-2);
+      font-size: var(--step-minus-1);
+      line-height: 1.6;
+      overflow-x: auto;
+      padding: var(--space-4);
+    }
+
+    & figure[data-rehype-pretty-code-figure] code {
+      display: grid;
+    }
+
+    & table {
+      border-collapse: collapse;
+      display: block;
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    & th,
+    & td {
+      border: 1px solid var(--border);
+      padding: var(--space-2) var(--space-3);
+      text-align: left;
+    }
+
+    & th {
+      background: var(--surface-card);
+    }
+
+    & audio {
+      width: 100%;
+    }
+
+    /* Wide images break out of the text column. */
+    & .alignwide {
+      margin-inline-start: calc(50% - min(var(--wide) / 2, 50vw));
+      max-width: none;
+      width: min(var(--wide), 100vw);
+    }
+
+    & .alignfull {
+      margin-inline-start: calc(50% - 50vw);
+      max-width: none;
+      width: 100vw;
+    }
+
+    & .alignwide img,
+    & .alignfull img {
+      border-radius: 0;
+      width: 100%;
+    }
+  }
+}

@@ -1,34 +1,27 @@
-import {isExternalNavLink, siteConfig} from '@/lib/config'
-import {getAllPosts} from '@/lib/content'
-import {MetadataRoute} from 'next'
+import type { MetadataRoute } from 'next'
+import { getAllPosts, getBuildTime } from '@/lib/content'
+import { NAV, SITE } from '@/lib/site'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await getAllPosts()
+export default function sitemap(): MetadataRoute.Sitemap {
+  const built = new Date(getBuildTime())
 
-  const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${siteConfig.url}/${post.slug}`,
-    lastModified: new Date(post.modified),
+  const pages: MetadataRoute.Sitemap = NAV.filter((link) => !link.external).map((link) => ({
+    url: `${SITE.url}${link.href}`,
+    lastModified: built,
     changeFrequency: 'monthly',
-    priority: 0.7
+    priority: link.priority,
   }))
 
-  const navEntries: MetadataRoute.Sitemap = siteConfig.nav
-    .filter((item) => !isExternalNavLink(item))
-    .map((item) => ({
-      url: `${siteConfig.url}${item.href}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 'priority' in item ? item.priority : 0.7
-    }))
+  const posts: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
+    url: `${SITE.url}/${post.slug}`,
+    lastModified: new Date(post.modified),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  }))
 
   return [
-    {
-      url: siteConfig.url,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 1
-    },
-    ...navEntries,
-    ...postEntries
+    { url: SITE.url, lastModified: built, changeFrequency: 'weekly', priority: 1 },
+    ...pages,
+    ...posts,
   ]
 }

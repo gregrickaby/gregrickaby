@@ -1,0 +1,28 @@
+@layer components {
+  .gallery {
+    columns: 3 280px;
+    column-gap: var(--space-3);
+    margin-inline-start: calc(50% - min(var(--wide) / 2, 50vw));
+    padding-inline: var(--gutter);
+    width: min(var(--wide), 100vw);
+  }
+
+  .photo {
+    border-radius: var(--radius-2);
+    break-inside: avoid;
+    cursor: zoom-in;
+    display: block;
+    margin-block-end: var(--space-3);
+    overflow: hidden;
+  }
+
+  .image {
+    height: auto;
+    transition: scale var(--duration-enter) var(--ease-out);
+    width: 100%;
+  }
+
+  .photo:hover .image {
+    scale: 1.02;
+  }
+}

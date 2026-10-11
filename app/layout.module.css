@@ -1,0 +1,21 @@
+@layer components {
+  .main {
+    margin-inline: auto;
+    max-width: var(--page);
+    padding: var(--space-6) var(--gutter) 0;
+  }
+
+  .skip {
+    background: var(--accent-fill);
+    color: var(--accent-contrast);
+    left: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    position: absolute;
+    top: -10rem;
+    z-index: var(--z-overlay);
+
+    &:focus {
+      top: var(--space-2);
+    }
+  }
+}

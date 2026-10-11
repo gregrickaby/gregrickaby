@@ -1,0 +1,7 @@
+@layer components {
+  .title {
+    font-size: var(--step-3);
+    margin-block-end: var(--space-6);
+    text-align: center;
+  }
+}

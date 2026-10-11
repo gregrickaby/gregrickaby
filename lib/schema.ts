@@ -1,9 +1,8 @@
-import {siteConfig} from './config'
-import type {PostMeta} from './types'
-import {getFeaturedImagePath} from './utils'
+import { SITE } from './site'
+import type { PostMeta } from './types'
 
-const PERSON_ID = `${siteConfig.url}/#person`
-const WEBSITE_ID = `${siteConfig.url}/#website`
+const PERSON_ID = `${SITE.url}/#person`
+const WEBSITE_ID = `${SITE.url}/#website`
 
 /** A single node within a JSON-LD `@graph` array. */
 interface SchemaNode {
@@ -27,36 +26,32 @@ export interface SchemaGraph {
  * @param pageTitle - The display name of the second breadcrumb item.
  * @returns A `SchemaNode` representing the BreadcrumbList.
  */
-function buildBreadcrumbList(
-  breadcrumbId: string,
-  pageUrl: string,
-  pageTitle: string
-): SchemaNode {
+function buildBreadcrumbList(breadcrumbId: string, pageUrl: string, pageTitle: string): SchemaNode {
   return {
     '@type': 'BreadcrumbList',
     '@id': breadcrumbId,
     itemListElement: [
       {
         '@type': 'ListItem',
-        '@id': `${siteConfig.url}/#breadcrumb-1`,
+        '@id': `${SITE.url}/#breadcrumb-1`,
         position: 1,
         name: 'Home',
-        item: siteConfig.url
+        item: SITE.url,
       },
       {
         '@type': 'ListItem',
         '@id': `${pageUrl}/#breadcrumb-2`,
         position: 2,
         name: pageTitle,
-        item: pageUrl
-      }
-    ]
+        item: pageUrl,
+      },
+    ],
   }
 }
 
 /**
  * Builds the site-wide JSON-LD graph containing WebSite and Person/Organization nodes.
- * Render once in `app/layout.tsx`.
+ * Rendered once in `app/layout.tsx`.
  *
  * @returns A `SchemaGraph` with WebSite and Person nodes.
  */
@@ -67,34 +62,34 @@ export function buildWebSiteGraph(): SchemaGraph {
       {
         '@type': 'WebSite',
         '@id': WEBSITE_ID,
-        url: siteConfig.url,
-        name: siteConfig.name,
-        description: siteConfig.description,
-        publisher: {'@id': PERSON_ID},
-        inLanguage: 'en-US'
+        url: SITE.url,
+        name: SITE.name,
+        description: SITE.description,
+        publisher: { '@id': PERSON_ID },
+        inLanguage: 'en-US',
       },
       {
         '@type': 'Person',
         '@id': PERSON_ID,
-        name: siteConfig.author.name,
-        url: siteConfig.author.url,
-        description: siteConfig.description,
-        sameAs: [siteConfig.author.linkedin, siteConfig.author.github]
-      }
-    ]
+        name: SITE.author.name,
+        url: SITE.author.url,
+        description: SITE.description,
+        sameAs: [SITE.author.linkedin, SITE.author.github],
+      },
+    ],
   }
 }
 
 /**
  * Builds the JSON-LD graph for a blog post, including BlogPosting, WebPage, and BreadcrumbList nodes.
- * Render in `app/[slug]/page.tsx`.
+ * Rendered by the post page.
  *
  * @param meta - The post metadata from frontmatter.
  * @returns A `SchemaGraph` with BlogPosting, WebPage, and BreadcrumbList nodes.
  */
 export function buildBlogPostingGraph(meta: PostMeta): SchemaGraph {
-  const featuredImage = getFeaturedImagePath(meta)
-  const postUrl = `${siteConfig.url}/${meta.slug}`
+  const featuredImage = meta.featuredImage?.src
+  const postUrl = `${SITE.url}/${meta.slug}`
 
   return {
     '@context': 'https://schema.org',
@@ -105,34 +100,34 @@ export function buildBlogPostingGraph(meta: PostMeta): SchemaGraph {
         url: postUrl,
         headline: meta.title,
         name: meta.title,
-        ...(meta.description && {description: meta.description}),
+        ...(meta.description && { description: meta.description }),
         datePublished: meta.date,
         dateModified: meta.modified,
-        author: {'@id': PERSON_ID},
-        publisher: {'@id': PERSON_ID},
-        isPartOf: {'@id': `${postUrl}/#webpage`},
+        author: { '@id': PERSON_ID },
+        publisher: { '@id': PERSON_ID },
+        isPartOf: { '@id': `${postUrl}/#webpage` },
         ...(featuredImage && {
           image: {
             '@type': 'ImageObject',
-            url: `${siteConfig.url}${featuredImage}`,
-            contentUrl: `${siteConfig.url}${featuredImage}`
-          }
+            url: `${SITE.url}${featuredImage}`,
+            contentUrl: `${SITE.url}${featuredImage}`,
+          },
         }),
-        inLanguage: 'en-US'
+        inLanguage: 'en-US',
       },
       {
         '@type': 'WebPage',
         '@id': `${postUrl}/#webpage`,
         url: postUrl,
         name: meta.title,
-        isPartOf: {'@id': WEBSITE_ID},
+        isPartOf: { '@id': WEBSITE_ID },
         datePublished: meta.date,
         dateModified: meta.modified,
-        breadcrumb: {'@id': `${postUrl}/#breadcrumb`},
-        inLanguage: 'en-US'
+        breadcrumb: { '@id': `${postUrl}/#breadcrumb` },
+        inLanguage: 'en-US',
       },
-      buildBreadcrumbList(`${postUrl}/#breadcrumb`, postUrl, meta.title)
-    ]
+      buildBreadcrumbList(`${postUrl}/#breadcrumb`, postUrl, meta.title),
+    ],
   }
 }
 
@@ -152,17 +147,13 @@ export interface WebPageGraphInput {
 
 /**
  * Builds the JSON-LD graph for a static page, including WebPage and BreadcrumbList nodes.
- * Render in static page components such as `app/about/page.tsx`.
+ * Rendered by static pages.
  *
  * @param params - Page title, description, and the URL path segment (e.g. `'about'`).
  * @returns A `SchemaGraph` with WebPage and BreadcrumbList nodes.
  */
-export function buildWebPageGraph({
-  title,
-  description,
-  path
-}: WebPageGraphInput): SchemaGraph {
-  const pageUrl = `${siteConfig.url}/${path}`
+export function buildWebPageGraph({ title, description, path }: WebPageGraphInput): SchemaGraph {
+  const pageUrl = `${SITE.url}/${path}`
 
   return {
     '@context': 'https://schema.org',
@@ -173,12 +164,12 @@ export function buildWebPageGraph({
         url: pageUrl,
         name: title,
         description,
-        isPartOf: {'@id': WEBSITE_ID},
-        breadcrumb: {'@id': `${pageUrl}/#breadcrumb`},
-        inLanguage: 'en-US'
+        isPartOf: { '@id': WEBSITE_ID },
+        breadcrumb: { '@id': `${pageUrl}/#breadcrumb` },
+        inLanguage: 'en-US',
       },
-      buildBreadcrumbList(`${pageUrl}/#breadcrumb`, pageUrl, title)
-    ]
+      buildBreadcrumbList(`${pageUrl}/#breadcrumb`, pageUrl, title),
+    ],
   }
 }
 

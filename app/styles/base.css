@@ -1,0 +1,95 @@
+@layer base {
+  html {
+    background: var(--surface-page);
+    color: var(--text-1);
+    font-family: var(--font-sans);
+    accent-color: var(--accent);
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    font-size: var(--step-0);
+    background: var(--surface-page);
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text-heading);
+    font-family: var(--font-serif);
+    line-height: 1.25;
+  }
+
+  a {
+    color: var(--accent);
+    text-underline-offset: 0.15em;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--text-1);
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+  }
+
+  /* View transitions: the header stays put; everything else crossfades. */
+  @view-transition {
+    navigation: auto;
+  }
+
+  ::view-transition-group(site-header) {
+    animation: none;
+    z-index: var(--z-overlay);
+  }
+
+  ::view-transition-old(root) {
+    animation: var(--duration-exit) ease-in both fade reverse;
+  }
+
+  ::view-transition-new(root) {
+    animation: var(--duration-enter) var(--ease-out) var(--duration-exit) both fade;
+  }
+
+  ::view-transition-group(.morph) {
+    animation-duration: 350ms;
+  }
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(*),
+    ::view-transition-new(*),
+    ::view-transition-group(*) {
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

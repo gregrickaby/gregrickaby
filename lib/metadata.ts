@@ -1,7 +1,7 @@
-import type {Metadata, ResolvingMetadata} from 'next'
-import {siteConfig} from './config'
-import type {PostMeta} from './types'
-import {getFeaturedImagePath, isValidIsoDate} from './utils'
+import type { Metadata, ResolvingMetadata } from 'next'
+import { validDate } from './format'
+import { SITE } from './site'
+import type { PostMeta } from './types'
 
 /**
  * The subset of PostMeta fields consumed by buildContentMetadata.
@@ -9,20 +9,14 @@ import {getFeaturedImagePath, isValidIsoDate} from './utils'
  */
 type ContentMetaInput = Pick<
   PostMeta,
-  | 'title'
-  | 'slug'
-  | 'date'
-  | 'modified'
-  | 'type'
-  | 'description'
-  | 'featuredImage'
+  'title' | 'slug' | 'date' | 'modified' | 'type' | 'description' | 'featuredImage'
 >
 
 /**
  * Build a Next.js Metadata object for any post or page.
  *
  * Handles featured image path resolution, parent OG image inheritance,
- * URL construction from siteConfig, canonical alternate, and OG type
+ * URL construction from SITE, canonical alternate, and OG type
  * inference (article fields are emitted automatically for posts).
  *
  * @param meta - The post or page frontmatter fields consumed by this function.
@@ -33,31 +27,31 @@ type ContentMetaInput = Pick<
 export async function buildContentMetadata(
   meta: ContentMetaInput,
   canonicalPath: string,
-  parent: ResolvingMetadata
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const featuredImage = getFeaturedImagePath(meta)
+  const featuredImage = meta.featuredImage?.src
   const previousImages = (await parent).openGraph?.images ?? []
 
-  const validDate = isValidIsoDate(meta.date)
-  const validModified = isValidIsoDate(meta.modified)
+  const published = validDate(meta.date)
+  const modified = validDate(meta.modified)
 
   return {
     title: meta.title,
     description: meta.description,
-    alternates: {canonical: canonicalPath},
+    alternates: { canonical: canonicalPath },
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: `${siteConfig.url}${canonicalPath}`,
+      url: `${SITE.url}${canonicalPath}`,
       images: [
-        ...(featuredImage ? [{url: `${siteConfig.url}${featuredImage}`}] : []),
-        ...previousImages
+        ...(featuredImage ? [{ url: `${SITE.url}${featuredImage}` }] : []),
+        ...previousImages,
       ],
       ...(meta.type === 'post' && {
         type: 'article',
-        ...(validDate && {publishedTime: validDate}),
-        ...(validModified && {modifiedTime: validModified})
-      })
-    }
+        ...(published && { publishedTime: published }),
+        ...(modified && { modifiedTime: modified }),
+      }),
+    },
   }
 }

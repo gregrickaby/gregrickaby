@@ -1,0 +1,44 @@
+@layer components {
+  .nav {
+    border-block-start: 1px solid var(--border);
+    display: flex;
+    gap: var(--space-5);
+    justify-content: space-between;
+    margin-block-start: var(--space-7);
+    margin-inline: auto;
+    max-width: var(--measure);
+    padding-block-start: var(--space-5);
+  }
+
+  .link {
+    color: var(--text-1);
+    display: grid;
+    gap: var(--space-1);
+    max-width: 45%;
+    text-decoration: none;
+  }
+
+  .next {
+    text-align: end;
+  }
+
+  .label {
+    align-items: center;
+    color: var(--text-2);
+    display: inline-flex;
+    font-size: var(--step-minus-1);
+    gap: var(--space-1);
+  }
+
+  .next .label {
+    justify-content: end;
+  }
+
+  .title {
+    font-weight: 500;
+  }
+
+  .link:hover .title {
+    color: var(--accent);
+  }
+}

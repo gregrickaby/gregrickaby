@@ -1,0 +1,98 @@
+@layer components {
+  .dialog {
+    background: color-mix(in srgb, var(--scrim) 92%, transparent);
+    border: 0;
+    color: var(--on-scrim);
+    height: 100dvh;
+    margin: 0;
+    max-height: none;
+    max-width: none;
+    padding: var(--space-7) var(--space-4);
+    width: 100vw;
+
+    &::backdrop {
+      background: transparent;
+    }
+
+    &[open] {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  :global(html):has(.dialog[open]) {
+    overflow: hidden;
+  }
+
+  .figure {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin: 0;
+    max-height: 100%;
+    pointer-events: none;
+  }
+
+  .image {
+    max-height: calc(100dvh - 9rem);
+    max-width: min(100%, 92vw);
+    object-fit: contain;
+    pointer-events: auto;
+  }
+
+  .caption {
+    display: grid;
+    font-size: var(--step-minus-1);
+    gap: var(--space-1);
+    max-width: 60ch;
+    opacity: 0.85;
+    pointer-events: auto;
+    text-align: center;
+  }
+
+  .title {
+    font-size: var(--step-0);
+    font-weight: 600;
+  }
+
+  .controls {
+    display: flex;
+    gap: var(--space-2);
+    position: absolute;
+    right: var(--space-3);
+    top: var(--space-3);
+  }
+
+  .control {
+    align-items: center;
+    background: color-mix(in srgb, var(--scrim) 40%, transparent);
+    border: 0;
+    border-radius: 50%;
+    color: inherit;
+    display: inline-flex;
+    height: 2.75rem;
+    justify-content: center;
+    width: 2.75rem;
+
+    &:hover {
+      background: color-mix(in srgb, var(--on-scrim) 15%, transparent);
+    }
+  }
+
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+  }
+
+  .prev {
+    left: var(--space-3);
+  }
+
+  .next {
+    right: var(--space-3);
+  }
+}

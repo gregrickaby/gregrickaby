@@ -1,0 +1,47 @@
+@layer components {
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .imageLink {
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-2);
+    display: block;
+    overflow: hidden;
+  }
+
+  .image {
+    height: 100%;
+    object-fit: cover;
+    transition: scale var(--duration-enter) var(--ease-out);
+    width: 100%;
+  }
+
+  .card:hover .image {
+    scale: 1.03;
+  }
+
+  .title {
+    font-size: var(--step-1);
+
+    & a {
+      color: var(--text-heading);
+      text-decoration: none;
+    }
+
+    & a:hover {
+      color: var(--accent);
+    }
+  }
+
+  .description {
+    color: var(--text-2);
+    display: -webkit-box;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

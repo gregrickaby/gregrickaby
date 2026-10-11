@@ -1,0 +1,74 @@
+@layer components {
+  .form {
+    display: grid;
+    gap: var(--space-4);
+    margin-inline: auto;
+    max-width: 36rem;
+  }
+
+  .field {
+    display: grid;
+    font-size: var(--step-minus-1);
+    font-weight: 500;
+    gap: var(--space-1);
+
+    & input,
+    & select,
+    & textarea {
+      background: var(--surface-page);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-1);
+      font-size: var(--step-0);
+      font-weight: 400;
+      padding: var(--space-2) var(--space-3);
+    }
+
+    & textarea {
+      field-sizing: content;
+      min-height: 8lh;
+      resize: vertical;
+    }
+
+    & :focus-visible {
+      border-color: var(--accent);
+      outline-offset: 0;
+    }
+  }
+
+  .submit {
+    background: var(--accent-fill);
+    border: 0;
+    border-radius: var(--radius-1);
+    color: var(--accent-contrast);
+    font-weight: 600;
+    padding: var(--space-3) var(--space-5);
+
+    &:hover {
+      background: var(--accent-fill-hover);
+    }
+
+    &:disabled {
+      cursor: progress;
+      opacity: 0.7;
+    }
+  }
+
+  .success,
+  .error {
+    border: 1px solid currentcolor;
+    border-radius: var(--radius-2);
+    padding: var(--space-4);
+  }
+
+  .success {
+    background: var(--success-soft);
+    color: var(--success);
+    margin-inline: auto;
+    max-width: 36rem;
+  }
+
+  .error {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+}

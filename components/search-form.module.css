@@ -1,0 +1,40 @@
+@layer components {
+  .form {
+    align-items: center;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    display: flex;
+    padding-inline: var(--space-3) var(--space-1);
+
+    &:focus-within {
+      border-color: var(--accent);
+    }
+  }
+
+  .input {
+    background: none;
+    border: 0;
+    font-size: var(--step-minus-1);
+    min-width: 0;
+    outline: none;
+    padding-block: var(--space-2);
+    width: 100%;
+  }
+
+  .button {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-pill);
+    color: var(--text-2);
+    display: inline-flex;
+    height: 2rem;
+    justify-content: center;
+    width: 2rem;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}

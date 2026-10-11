@@ -1,0 +1,91 @@
+/* Design tokens. Colors are defined once with light-dark(); `data-theme`
+   only switches `color-scheme`. Tomato is the site's accent. */
+@layer tokens {
+  :root {
+    color-scheme: light dark; /* data-theme="system" */
+
+    --tomato-0: #fff0e4;
+    --tomato-1: #ffe0cf;
+    --tomato-2: #fac0a1;
+    --tomato-3: #f69e6e;
+    --tomato-4: #f28043;
+    --tomato-5: #f06e27;
+    --tomato-6: #f06418;
+    --tomato-7: #d6530c;
+    --tomato-8: #bf4906;
+    --tomato-9: #a73c00;
+
+    /* Surfaces & text */
+    --surface-page: light-dark(#fff, #242424);
+    --surface-card: light-dark(#f8f9fa, #2e2e2e);
+    --surface-hover: light-dark(#f1f3f5, #3b3b3b);
+    --border: light-dark(#dee2e6, #424242);
+    --text-1: light-dark(#333, #c6c6c6);
+    --text-2: light-dark(#595959, #969696);
+    --text-heading: light-dark(#1f1f1f, #e9e9e9);
+
+    /* Tomato step 5 on white is about 3:1 (fails AA text), so light mode uses step 8. */
+    --accent: light-dark(var(--tomato-8), var(--tomato-5));
+    --accent-soft: light-dark(var(--tomato-0), #3d2518);
+    --accent-fill: var(--tomato-8);
+    --accent-fill-hover: var(--tomato-9);
+    --accent-contrast: #fff;
+
+    /* The image viewer is dark in both themes. */
+    --scrim: #000;
+    --on-scrim: #fff;
+    --focus-ring: light-dark(#1c7ed6, #4dabf7);
+    --danger: light-dark(#c92a2a, #ff6b6b);
+    --danger-soft: light-dark(#fff5f5, #3b1f1f);
+    --success: light-dark(#2b8a3e, #69db7c);
+    --success-soft: light-dark(#ebfbee, #1e3323);
+
+    /* Type */
+    --font-sans: var(--font-roboto), -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
+    --font-serif: var(--font-roboto-slab), georgia, serif;
+    --font-mono: var(--font-roboto-mono), ui-monospace, sfmono-regular, menlo, monospace;
+    --step-minus-1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+    --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+    --step-1: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
+    --step-2: clamp(1.3rem, 1.1rem + 1vw, 1.8rem);
+    --step-3: clamp(1.6rem, 1.2rem + 2vw, 2.6rem);
+    --measure: 680px;
+    --wide: 1100px;
+    --page: 1200px;
+
+    /* Space (4px base) */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+    --gutter: var(--space-4);
+
+    /* Shape */
+    --radius-1: 4px;
+    --radius-2: 8px;
+    --radius-pill: 999px;
+    --shadow-1: 0 1px 3px color-mix(in srgb, #000 10%, transparent);
+    --shadow-2: 0 12px 32px color-mix(in srgb, #000 25%, transparent);
+
+    /* Layers */
+    --z-sticky: 10;
+    --z-overlay: 100;
+
+    /* Motion */
+    --duration-exit: 150ms;
+    --duration-enter: 210ms;
+    --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  :root[data-theme='light'] {
+    color-scheme: light;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+  }
+}
