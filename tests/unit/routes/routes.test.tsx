@@ -19,6 +19,7 @@ vi.mock('next/form', () => ({
   ),
 }))
 vi.mock('@/app/actions/contact', () => ({ sendContactEmail: vi.fn() }))
+vi.mock('next/server', () => ({ connection: vi.fn(async () => {}) }))
 
 const parent = Promise.resolve({ openGraph: { images: [] } }) as unknown as ResolvingMetadata
 const params = <T,>(value: T) => Promise.resolve(value)
@@ -237,7 +238,7 @@ describe('sitemap, robots, feed, health', () => {
   })
 
   it('answers the health check without caching', async () => {
-    const res = health.GET()
+    const res = await health.GET()
     expect(await res.json()).toEqual({ status: 'ok' })
     expect(res.headers.get('Cache-Control')).toBe('no-store')
   })
