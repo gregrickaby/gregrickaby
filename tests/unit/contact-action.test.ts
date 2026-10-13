@@ -43,6 +43,14 @@ describe('sendContactEmail action', () => {
     expect(mockSendMail).not.toHaveBeenCalled()
   })
 
+  it('reports success without sending mail when the honeypot is filled', async () => {
+    const { sendContactEmail } = await import('@/app/actions/contact')
+    const fd = makeFormData({ ...VALID, website: 'https://spam.example' })
+    const result = await sendContactEmail(INITIAL, fd)
+    expect(result).toEqual({ success: true, error: null })
+    expect(mockSendMail).not.toHaveBeenCalled()
+  })
+
   it('returns an error for an invalid email address', async () => {
     const { sendContactEmail } = await import('@/app/actions/contact')
     const fd = makeFormData({ ...VALID, email: 'not-an-email' })

@@ -35,6 +35,15 @@
     }
   }
 
+  /* Off-screen rather than display: none, which some bots detect and skip. */
+  .honeypot {
+    height: 1px;
+    left: -10000px;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+  }
+
   .submit {
     background: var(--accent-fill);
     border: 0;

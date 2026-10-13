@@ -35,6 +35,12 @@ export async function sendContactEmail(
   _prevState: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
+  // Honeypot: people never see this field, but form-filling bots do. Report
+  // success so the bot has no signal to adapt to.
+  if (formData.get('website')) {
+    return { success: true, error: null }
+  }
+
   const name = (formData.get('name') as string | null)?.trim()
   const email = (formData.get('email') as string | null)?.trim()
   const howCanIHelp = (formData.get('howCanIHelp') as string | null)?.trim()

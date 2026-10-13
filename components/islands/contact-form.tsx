@@ -58,6 +58,10 @@ export function ContactForm() {
           ))}
         </select>
       </label>
+      <label aria-hidden="true" className={styles.honeypot}>
+        <span>Website</span>
+        <input autoComplete="off" name="website" tabIndex={-1} />
+      </label>
       <label className={styles.field}>
         <span>Message</span>
         <textarea name="message" placeholder="Your message" required rows={6} />
