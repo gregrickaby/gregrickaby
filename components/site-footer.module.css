@@ -57,13 +57,13 @@
       width: 3rem;
       z-index: var(--z-sticky);
 
-      &,
-      &:hover {
-        color: var(--accent-contrast);
-      }
-
       &:hover {
         background: var(--accent-fill-hover);
+      }
+
+      /* Matches the specificity of `.footer a:hover` so the arrow stays white. */
+      &:is(a, a:hover) {
+        color: var(--accent-contrast);
       }
     }
 
