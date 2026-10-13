@@ -36,7 +36,7 @@
     "server-only": "0.0.1"
   },
   "devDependencies": {
-    "@evilmartians/lefthook": "2.2.1",
+    "@evilmartians/lefthook": "2.2.2",
     "@next/playwright": "16.4.0",
     "@playwright/test": "1.64.0",
     "@testing-library/dom": "10.4.2",
@@ -48,13 +48,13 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@types/sanitize-html": "2.16.2",
-    "@vitest/coverage-v8": "5.0.3",
+    "@vitest/coverage-v8": "5.0.4",
     "eslint": "^10",
     "eslint-config-next": "16.4.0",
     "exifr": "7.1.3",
     "gray-matter": "4.0.3",
     "happy-css-modules": "5.0.2",
-    "happy-dom": "20.14.6",
+    "happy-dom": "21.0.1",
     "image-size": "2.0.4",
     "prettier": "3.9.10",
     "rehype-pretty-code": "0.14.5",
@@ -73,6 +73,6 @@
     "unified": "11.0.5",
     "unist-util-visit": "5.1.0",
     "vite": "8.3.4",
-    "vitest": "5.0.3"
+    "vitest": "5.0.4"
   }
 }
