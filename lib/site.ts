@@ -21,7 +21,7 @@ export const SITE = {
 export const HOME = {
   photo: 'Morning_Mist_–_Lake_Frank_Jackson_20240413.jpg',
   roles: ['Software engineer', 'Photographer', 'Author'],
-  summary: 'Building for the web since 1997.',
+  summary: 'Building for the web since 1997',
 } as const
 
 /** A header link. External links open in a new tab and stay out of the sitemap. */
