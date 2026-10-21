@@ -38,6 +38,7 @@ const notFoundPage = await import('@/app/not-found')
 const sitemap = await import('@/app/sitemap')
 const robots = await import('@/app/robots')
 const feed = await import('@/app/feed.xml/route')
+const photosJson = await import('@/app/photos.json/route')
 const health = await import('@/app/api/health/route')
 
 // Typed-route PageProps want both params and searchParams; tests pass only what a page reads.
@@ -241,5 +242,30 @@ describe('sitemap, robots, feed, health', () => {
     const res = await health.GET()
     expect(await res.json()).toEqual({ status: 'ok' })
     expect(res.headers.get('Cache-Control')).toBe('no-store')
+  })
+
+  it('serves the photo list as JSON with absolute image urls', async () => {
+    const res = photosJson.GET()
+    expect(res.headers.get('Content-Type')).toContain('application/json')
+    expect(res.headers.get('Cache-Control')).toBe('public, max-age=3600')
+    const body = await res.json()
+    expect(typeof body.generatedAt).toBe('string')
+    expect(body.count).toBe(2)
+    expect(body.photos[1]).toMatchObject({
+      filename: 'Castle.jpg',
+      title: 'Castle',
+      url: 'https://gregrickaby.com/content/photos/Castle.jpg',
+      hdr: true,
+    })
+  })
+
+  it('percent-encodes image paths that contain spaces', async () => {
+    const saved = index.photos
+    index.photos = [
+      { ...saved[0]!, filename: 'Modern Cleaners.jpg', src: '/content/photos/Modern Cleaners.jpg' },
+    ]
+    const body = await photosJson.GET().json()
+    expect(body.photos[0].url).toBe('https://gregrickaby.com/content/photos/Modern%20Cleaners.jpg')
+    index.photos = saved
   })
 })
