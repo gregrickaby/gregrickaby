@@ -24,6 +24,7 @@ describe('HomeHero', () => {
     expect(html).toContain('Greg Rickaby')
     expect(html).toContain('Morning Mist')
     expect(html).toContain('f/6.3')
+    expect(html).toContain('fetchPriority="high"')
     for (const href of ['/resume', '/photos', '/blog']) expect(html).toContain(`href="${href}"`)
   })
 
@@ -79,6 +80,7 @@ describe('strips', () => {
     )
     expect(html).toContain('data-lightbox')
     expect(html).toContain('data-details="SONY ILCE-7RM5')
+    expect(html).toContain('sizes="(max-width: 640px) 330px, 420px"')
   })
 })
 

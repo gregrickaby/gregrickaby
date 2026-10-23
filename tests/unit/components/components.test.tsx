@@ -64,6 +64,7 @@ describe('Article', () => {
     expect(html).toContain('Hello moon')
     expect(html).toContain('href="/tag/Astrophotography"')
     expect(html).toContain('hero.jpg')
+    expect(html).toContain('fetchPriority="high"')
   })
 
   it('leaves out the reading time when it is unknown', async () => {

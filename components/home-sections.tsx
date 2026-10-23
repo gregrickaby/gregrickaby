@@ -148,6 +148,15 @@ export function LatestWriting({ posts }: { posts: PostMeta[] }) {
   )
 }
 
+/**
+ * Strip photos have a fixed height (home-sections.module.css), so each one's
+ * width follows its aspect ratio. A viewport-based `sizes` overshoots on portraits.
+ */
+function stripSizes({ width, height }: Photo) {
+  const ratio = width / height
+  return `(max-width: 640px) ${Math.round(220 * ratio)}px, ${Math.round(280 * ratio)}px`
+}
+
 /** Recent photos in a row that scrolls sideways; each opens in the lightbox. */
 export function GalleryStrip({ photos }: { photos: Photo[] }) {
   return (
@@ -172,7 +181,7 @@ export function GalleryStrip({ photos }: { photos: Photo[] }) {
               alt={photo.title}
               className={styles.photoImage}
               height={photo.height}
-              sizes="(max-width: 640px) 80vw, 420px"
+              sizes={stripSizes(photo)}
               src={photo.src}
               width={photo.width}
             />

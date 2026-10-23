@@ -17,7 +17,15 @@ export function HomeHero() {
   return (
     <section aria-labelledby="home-title" className={styles.hero}>
       {photo ? (
-        <Image alt="" className={styles.photo} fill preload sizes="100vw" src={photo.src} />
+        <Image
+          alt=""
+          className={styles.photo}
+          fetchPriority="high"
+          fill
+          loading="eager"
+          sizes="100vw"
+          src={photo.src}
+        />
       ) : null}
       <div className={styles.content}>
         <MetaLine className={styles.roles} items={[...HOME.roles]} />

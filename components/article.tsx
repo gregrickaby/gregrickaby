@@ -41,7 +41,7 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
           alt={meta.title}
           className={styles.hero}
           image={hero}
-          preload
+          priority
           sizes="(max-width: 1100px) 100vw, 1100px"
           slug={meta.slug}
         />

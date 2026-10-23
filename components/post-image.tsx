@@ -13,6 +13,7 @@ export function PostImage({
   sizes,
   className,
   preload = false,
+  priority = false,
 }: {
   image: ImageAsset
   slug: string
@@ -20,13 +21,17 @@ export function PostImage({
   sizes: string
   className?: string
   preload?: boolean
+  /** The page's LCP image: load it eagerly at high priority. */
+  priority?: boolean
 }) {
   return (
     <ViewTransition default="none" name={`post-image-${slug}`} share="morph">
       <Image
         alt={alt}
         className={className}
+        fetchPriority={priority ? 'high' : undefined}
         height={image.height}
+        loading={priority ? 'eager' : undefined}
         preload={preload}
         sizes={sizes}
         src={image.src}
