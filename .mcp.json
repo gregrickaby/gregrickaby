@@ -3,14 +3,6 @@
     "next-devtools": {
       "command": "npx",
       "args": ["-y", "next-devtools-mcp@latest"]
-    },
-    "mantine": {
-      "command": "npx",
-      "args": ["-y", "@mantine/mcp-server"]
-    },
-    "cloudflare-api": {
-      "type": "http",
-      "url": "https://mcp.cloudflare.com/mcp"
     }
   }
 }
