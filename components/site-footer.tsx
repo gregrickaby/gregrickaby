@@ -36,7 +36,7 @@ export function SiteFooter() {
           </li>
         </ul>
       </div>
-      <a aria-label="Back to top" className={styles.top} href="#top">
+      <a aria-label="Back to top" className={styles.top} data-boop="hop" href="#top">
         <ArrowUpIcon />
       </a>
     </footer>

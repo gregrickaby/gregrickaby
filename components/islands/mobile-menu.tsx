@@ -23,6 +23,7 @@ export function MobileMenu({ children }: { children: ReactNode }) {
       <button
         aria-label="Open navigation menu"
         className={styles.button}
+        data-boop="spread"
         popoverTarget="site-menu"
         type="button"
       >

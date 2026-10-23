@@ -20,7 +20,7 @@ export function SearchForm({ defaultValue, id }: { defaultValue?: string; id: st
         placeholder="Search posts"
         type="search"
       />
-      <button aria-label="Search" className={styles.button} type="submit">
+      <button aria-label="Search" className={styles.button} data-boop="tilt" type="submit">
         <SearchIcon size={16} />
       </button>
     </Form>

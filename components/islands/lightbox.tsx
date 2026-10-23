@@ -132,6 +132,7 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
             <a
               aria-label="Download original"
               className={styles.control}
+              data-boop="drop"
               download
               href={slide.download}
             >
@@ -141,6 +142,7 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
           <button
             aria-label="Close"
             className={styles.control}
+            data-boop="spin"
             onClick={() => dialog.current?.close()}
             type="button"
           >
@@ -152,6 +154,7 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
             <button
               aria-label="Previous image"
               className={`${styles.control} ${styles.prev}`}
+              data-boop="nudge-left"
               onClick={() => step(-1)}
               type="button"
             >
@@ -160,6 +163,7 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
             <button
               aria-label="Next image"
               className={`${styles.control} ${styles.next}`}
+              data-boop="nudge-right"
               onClick={() => step(1)}
               type="button"
             >

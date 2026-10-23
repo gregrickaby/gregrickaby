@@ -1,0 +1,138 @@
+/* Hover "boops": part of an icon springs out, overshoots, and settles. A
+   control opts in with `data-boop`, so components and the built post HTML
+   share one set of keyframes. The reduced-motion rule in base.css stops them. */
+
+/* Each selector targets a different data-boop value, so source order never decides a tie. */
+/* stylelint-disable no-descending-specificity */
+@layer base {
+  [data-boop] svg,
+  [data-boop] svg path {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  [data-boop='hop'] {
+    --boop-y: -4px;
+  }
+
+  [data-boop='drop'] {
+    --boop-y: 3px;
+  }
+
+  [data-boop='nudge-left'] {
+    --boop-x: -4px;
+  }
+
+  [data-boop='nudge-right'] {
+    --boop-x: 4px;
+  }
+
+  [data-boop='spin'] {
+    --boop-turn: 90deg;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-boop='tilt']:hover svg,
+    [data-copy]:hover::before {
+      animation: boop-tilt 600ms var(--ease-out);
+    }
+
+    [data-boop='hop']:hover svg,
+    [data-boop='nudge-left']:hover svg,
+    [data-boop='nudge-right']:hover svg,
+    [data-boop='drop']:hover svg path:not(:first-child) {
+      animation: boop-shift 600ms var(--ease-out);
+    }
+
+    /* An X looks the same after a quarter turn. */
+    [data-boop='spin']:hover svg {
+      animation: boop-spin 500ms var(--ease-out);
+    }
+
+    /* Hamburger lines spread apart. */
+    [data-boop='spread']:hover svg path:first-child {
+      --boop-y: -2px;
+
+      animation: boop-shift 500ms var(--ease-out);
+    }
+
+    [data-boop='spread']:hover svg path:last-child {
+      --boop-y: 2px;
+
+      animation: boop-shift 500ms var(--ease-out);
+    }
+
+    /* Sound waves pulse outward, the outer one a beat later. */
+    [data-boop='waves']:hover svg path:nth-child(2) {
+      --boop-x: 2px;
+
+      animation: boop-shift 500ms var(--ease-out);
+    }
+
+    [data-boop='waves']:hover svg path:nth-child(3) {
+      --boop-x: 3px;
+
+      animation: boop-shift 500ms 60ms var(--ease-out);
+    }
+
+    [data-copied]::before {
+      animation: boop-pop 400ms var(--ease-out);
+    }
+  }
+
+  @keyframes boop-tilt {
+    30% {
+      transform: rotate(12deg) scale(1.12);
+    }
+
+    60% {
+      transform: rotate(-4deg) scale(0.96);
+    }
+
+    80% {
+      transform: rotate(1deg) scale(1.01);
+    }
+  }
+
+  @keyframes boop-shift {
+    30% {
+      transform: translate(var(--boop-x, 0), var(--boop-y, 0));
+    }
+
+    60% {
+      transform: translate(calc(var(--boop-x, 0px) * -0.3), calc(var(--boop-y, 0px) * -0.3));
+    }
+
+    80% {
+      transform: translate(calc(var(--boop-x, 0px) * 0.1), calc(var(--boop-y, 0px) * 0.1));
+    }
+  }
+
+  @keyframes boop-spin {
+    60% {
+      transform: rotate(calc(var(--boop-turn) * 1.15));
+    }
+
+    80% {
+      transform: rotate(calc(var(--boop-turn) * 0.95));
+    }
+
+    100% {
+      transform: rotate(var(--boop-turn));
+    }
+  }
+
+  @keyframes boop-pop {
+    0% {
+      transform: scale(0.3);
+    }
+
+    50% {
+      transform: scale(1.25);
+    }
+
+    75% {
+      transform: scale(0.95);
+    }
+  }
+}

@@ -3,6 +3,7 @@ import './styles/reset.css'
 import './styles/tokens.css'
 import './styles/base.css'
 import './styles/prose.css'
+import './styles/motion.css'
 import './styles/utilities.css'
 
 import type { Metadata, Viewport } from 'next'
