@@ -85,17 +85,38 @@
       text-align: center;
     }
 
-    /* Code blocks: shiki sets colors inline. */
+    /* Code blocks: shiki sets a light and a dark color on each token. */
     & figure[data-rehype-pretty-code-figure] pre {
+      background: var(--surface-code);
+      border: 1px solid var(--border);
       border-radius: var(--radius-2);
-      font-size: var(--step-minus-1);
-      line-height: 1.6;
+      font-size: 0.875em;
+      line-height: 1.7;
       overflow-x: auto;
-      padding: var(--space-4);
+      padding: var(--space-5) 0;
+      scrollbar-color: var(--border) transparent;
+      scrollbar-width: thin;
+      tab-size: 2;
     }
 
     & figure[data-rehype-pretty-code-figure] code {
       display: grid;
+    }
+
+    & [data-line] {
+      padding-inline: var(--space-5);
+    }
+
+    & [data-line] span {
+      color: light-dark(var(--shiki-light), var(--shiki-dark));
+
+      /* Both themes italicize the same tokens, and light-dark() only takes colors. */
+      font-style: var(--shiki-light-font-style);
+    }
+
+    & [data-highlighted-line] {
+      background: var(--accent-soft);
+      box-shadow: inset 3px 0 var(--accent-fill);
     }
 
     & table {

@@ -11,6 +11,7 @@ import sanitizeHtml from 'sanitize-html'
 import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
 import { fullImageUrl, IMAGE_WIDTHS, optimizedImageUrl } from '../images.ts'
+import { readableColor } from './contrast.ts'
 
 /** What the build knows about a local image file. */
 export interface MeasuredImage {
@@ -121,6 +122,32 @@ function rehypeLocalMedia({ basePath, measure, images }: RenderOptions & { image
   }
 }
 
+/** Shiki themes for each color scheme. CSS picks one with `light-dark()`. */
+const CODE_THEMES = { light: 'rose-pine-dawn', dark: 'rose-pine-moon' } as const
+
+/** The `--surface-code` token in `app/styles/tokens.css`, which code blocks sit on. */
+export const CODE_BACKGROUND = { light: '#f2eee7', dark: '#161412' } as const
+
+const SHIKI_COLOR = /--shiki-(light|dark):(#[0-9a-f]{3,8})/gi
+
+/**
+ * Finishes shiki's code blocks: nudges each token color until it meets WCAG AA
+ * on the site's code background.
+ */
+function rehypeCodeBlocks() {
+  return (tree: HastRoot) => {
+    visit(tree, 'element', (node: Element) => {
+      if (node.tagName === 'span' && typeof node.properties.style === 'string') {
+        node.properties.style = node.properties.style.replace(
+          SHIKI_COLOR,
+          (_, scheme: 'light' | 'dark', color: string) =>
+            `--shiki-${scheme}:${readableColor(color, CODE_BACKGROUND[scheme])}`,
+        )
+      }
+    })
+  }
+}
+
 /** Tags and attributes the pipeline emits, on top of sanitize-html's defaults. */
 const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   allowedTags: [
@@ -188,7 +215,12 @@ export async function renderMarkdown(
     .use(rehypeRaw)
     .use(rehypeSlug)
     .use(rehypeLocalMedia, { ...options, images })
-    .use(rehypePrettyCode, { theme: 'github-dark-default', keepBackground: true })
+    .use(rehypePrettyCode, {
+      theme: CODE_THEMES,
+      keepBackground: false,
+      defaultLang: { block: 'plaintext' },
+    })
+    .use(rehypeCodeBlocks)
     .use(rehypeStringify)
     .process(markdown)
   return { html: sanitizeHtml(String(file), SANITIZE_OPTIONS), images }

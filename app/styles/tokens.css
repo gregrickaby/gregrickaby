@@ -19,6 +19,7 @@
     --surface-page: light-dark(#faf8f4, #1e1c1a);
     --surface-card: light-dark(#f2eee7, #292624);
     --surface-hover: light-dark(#ebe6dd, #34302d);
+    --surface-code: light-dark(#f2eee7, #161412);
     --border: light-dark(#e0d9cd, #3e3935);
     --text-1: light-dark(#333, #c6c6c6);
     --text-2: light-dark(#595959, #969696);

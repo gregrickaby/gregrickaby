@@ -1,5 +1,7 @@
+import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { type MeasureImage, renderMarkdown } from '@/lib/content-build/markdown'
+import { contrastRatio } from '@/lib/content-build/contrast'
+import { CODE_BACKGROUND, type MeasureImage, renderMarkdown } from '@/lib/content-build/markdown'
 
 const sizes: Record<string, { width: number; height: number; hdr: boolean }> = {
   '/content/posts/p/big.jpg': { width: 4000, height: 3000, hdr: false },
@@ -87,6 +89,29 @@ describe('renderMarkdown', () => {
     const { html } = await render('```php\n<?php echo 1;\n```')
     expect(html).toContain('data-rehype-pretty-code-figure')
     expect(html).toContain('data-language="php"')
+    expect(html).toMatch(/--shiki-light:#[0-9a-f]+;.*--shiki-dark:#[0-9a-f]+/i)
+  })
+
+  it('highlights fences without a language as plain text', async () => {
+    const { html } = await render('```\nplain\n```')
+    expect(html).toContain('data-language="plaintext"')
+  })
+
+  it('gives every token AA contrast on the code background', async () => {
+    const { html } = await render('```css\n/* note */\n.a { color: red; }\n```')
+    const colors = [...html.matchAll(/--shiki-(light|dark):(#[0-9a-f]+)/gi)]
+    expect(colors.length).toBeGreaterThan(0)
+    for (const [, scheme, color] of colors) {
+      expect(
+        contrastRatio(color!, CODE_BACKGROUND[scheme as 'light' | 'dark']),
+      ).toBeGreaterThanOrEqual(4.5)
+    }
+  })
+
+  it('matches the code background to the --surface-code token', () => {
+    const tokens = readFileSync('app/styles/tokens.css', 'utf8')
+    const { light, dark } = CODE_BACKGROUND
+    expect(tokens).toContain(`--surface-code: light-dark(${light}, ${dark});`)
   })
 
   it('strips scripts and event handlers', async () => {
