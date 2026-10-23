@@ -4,7 +4,9 @@ description: >
   Commit the working tree as small conventional commits, one per logical chunk of work. Use when the user says "commit", "micro commit", "commit this", or "/commit". Does not push unless asked.
 ---
 
-# Commit Instructions
+# Commit
+
+**Triggers:** "commit", "micro commit", "commit this", `/commit`
 
 Split the uncommitted work into small commits, one per logical change, with Conventional Commit subjects. Push only when the user asks in the same request.
 
@@ -36,7 +38,7 @@ Commit, then `git add` the real file for the next commit. Check any commit built
 - Format: `type: subject`. Types used here: `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `chore`, `content`.
 - Subject: lowercase, imperative, no period, under 72 characters. Say what changed for the site or reader, not which files moved.
 - Add a body only when the reason is not obvious from the subject. Wrap at 72 columns.
-- Follow `.claude/rules/writing-style.md`: no emoji, no em dashes, plain verbs.
+- Follow `~/.claude/rules/writing-style.md`: no emoji, no em dashes, plain verbs.
 - No trailers, no co-authors, no "Generated with" lines.
 
 ## 4. Commit
@@ -44,7 +46,6 @@ Commit, then `git add` the real file for the next commit. Check any commit built
 - Let the lefthook pre-commit hooks run. Never set `LEFTHOOK=0`, pass `--no-verify`, or skip hooks some other way. If a hook fails, fix the cause and commit again.
 - Commit on the current branch. This repo commits to `main` directly.
 - Do not push, tag, or open a PR unless the user asked.
-- Do not add commit trailers, or wax poetic, or add co-authored by
 
 ## 5. Report
 

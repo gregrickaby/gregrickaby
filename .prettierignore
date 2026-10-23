@@ -43,8 +43,7 @@ yarn-error.log*
 # vercel
 .vercel
 
-# vendored agent skills (external content, hash-verified via skills-lock.json)
-/.agents
+# agent config and skills
 /.claude
 
 # typescript
