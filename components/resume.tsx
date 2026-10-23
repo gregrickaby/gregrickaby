@@ -1,10 +1,12 @@
 import Link from 'next/link'
+
 import { PrintButton } from '@/components/islands/print-button'
 import { MetaLine } from '@/components/meta-line'
 import { PageTitle } from '@/components/page-title'
 import { getBuildTime } from '@/lib/content'
 import { currentRole, resumeEntries, resumeSummary } from '@/lib/resume'
 import { SITE } from '@/lib/site'
+
 import styles from './resume.module.css'
 
 function External({

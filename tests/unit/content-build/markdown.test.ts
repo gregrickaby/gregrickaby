@@ -1,7 +1,8 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
+
 import { contrastRatio } from '@/lib/content-build/contrast'
-import { CODE_BACKGROUND, type MeasureImage, renderMarkdown } from '@/lib/content-build/markdown'
+import { CODE_BACKGROUND, renderMarkdown, type MeasureImage } from '@/lib/content-build/markdown'
 
 const sizes: Record<string, { width: number; height: number; hdr: boolean }> = {
   '/content/posts/p/big.jpg': { width: 4000, height: 3000, hdr: false },

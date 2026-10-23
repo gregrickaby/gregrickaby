@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
+
 import type HeadersModule from '@/lib/headers'
+
 describe('headers', () => {
   const originalEnv = process.env.NODE_ENV
 

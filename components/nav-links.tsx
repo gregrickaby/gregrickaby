@@ -1,4 +1,5 @@
 import Link from 'next/link'
+
 import { NAV } from '@/lib/site'
 
 /** The header links, shared by the desktop bar and the mobile menu. */

@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { contentIndex } from '@/tests/helpers/content'
 import { renderServer } from '@/tests/helpers/render-server'
 

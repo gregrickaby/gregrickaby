@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+
 import { PageTitle } from '@/components/page-title'
 import { PostGrid } from '@/components/post-grid'
 import { getAllCategories, getPostsByCategory } from '@/lib/content'

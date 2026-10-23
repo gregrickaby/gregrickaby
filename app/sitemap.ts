@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+
 import { getAllPosts, getBuildTime } from '@/lib/content'
 import { NAV, SITE } from '@/lib/site'
 

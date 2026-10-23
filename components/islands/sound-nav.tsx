@@ -1,6 +1,7 @@
 'use client'
 
 import type { ComponentProps, PointerEvent } from 'react'
+
 import { playSound } from './sounds'
 
 /**

@@ -1,8 +1,9 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
+
 import { Contact } from '@/components/contact'
-import { PageTitle } from '@/components/page-title'
 import { JsonLd } from '@/components/json-ld'
+import { PageTitle } from '@/components/page-title'
 import { getPage } from '@/lib/content'
 import { buildContentMetadata } from '@/lib/metadata'
 import { buildWebPageGraph } from '@/lib/schema'

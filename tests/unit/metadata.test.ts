@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vitest'
 import type { ResolvingMetadata } from 'next'
-import { SITE } from '@/lib/site'
+import { describe, expect, it } from 'vitest'
+
 import { buildContentMetadata } from '@/lib/metadata'
+import { SITE } from '@/lib/site'
 import type { PostMeta } from '@/lib/types'
 
 const baseMeta: PostMeta = {

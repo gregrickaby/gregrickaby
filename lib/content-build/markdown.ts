@@ -1,5 +1,5 @@
 import type { Element, ElementContent, Root as HastRoot } from 'hast'
-import type { Paragraph, Root as MdastRoot } from 'mdast'
+import type { Root as MdastRoot, Paragraph } from 'mdast'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
@@ -10,6 +10,7 @@ import remarkRehype from 'remark-rehype'
 import sanitizeHtml from 'sanitize-html'
 import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
+
 import { fullImageUrl, IMAGE_WIDTHS, optimizedImageUrl } from '../images.ts'
 import { readableColor } from './contrast.ts'
 

@@ -1,5 +1,6 @@
 import { PostCard } from '@/components/post-card'
 import type { PostMeta } from '@/lib/types'
+
 import styles from './post-grid.module.css'
 
 // Matches the column widths in post-grid.module.css at a 1200px page.

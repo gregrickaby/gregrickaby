@@ -1,5 +1,5 @@
-import { currentRole, resumeSummary } from '@/lib/resume'
 import { OG_CONTENT_TYPE, OG_SIZE, renderOgImage } from '@/lib/og'
+import { currentRole, resumeSummary } from '@/lib/resume'
 
 export const alt = 'Resume'
 export const size = OG_SIZE

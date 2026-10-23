@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import { JsonLd } from '@/components/json-ld'
 import { PageTitle } from '@/components/page-title'
 import { PhotoGallery } from '@/components/photo-gallery'

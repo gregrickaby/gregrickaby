@@ -1,4 +1,4 @@
-import { type SchemaGraph, serializeSchema } from '@/lib/schema'
+import { serializeSchema, type SchemaGraph } from '@/lib/schema'
 
 /** A JSON-LD `<script>`, escaped by `serializeSchema` so it can't close the tag. */
 export function JsonLd({ graph }: { graph: SchemaGraph }) {

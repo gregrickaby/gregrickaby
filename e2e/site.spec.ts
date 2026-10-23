@@ -1,5 +1,5 @@
 import { instant } from '@next/playwright'
-import { expect, type Page, test } from '@playwright/test'
+import { expect, test, type Page } from '@playwright/test'
 
 /** Fails the test on any Content-Security-Policy violation or uncaught error. */
 function watchConsole(page: Page) {

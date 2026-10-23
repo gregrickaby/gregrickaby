@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next'
+
 import headers from './lib/headers'
 import redirects from './lib/redirects'
 

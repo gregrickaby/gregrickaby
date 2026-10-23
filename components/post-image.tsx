@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { ViewTransition } from 'react'
+
 import type { ImageAsset } from '@/lib/types'
 
 /**

@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
+
 import { HomeHero } from '@/components/home-hero'
 import {
   CameraBag,

@@ -1,9 +1,11 @@
 import Link from 'next/link'
+
+import { MetaLine } from '@/components/meta-line'
 import { PostImage } from '@/components/post-image'
 import { Prose } from '@/components/prose'
-import { MetaLine } from '@/components/meta-line'
 import { formatShortDate } from '@/lib/format'
 import type { Post } from '@/lib/types'
+
 import styles from './article.module.css'
 
 /**

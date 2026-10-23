@@ -1,4 +1,5 @@
 import type { Metadata, ResolvingMetadata } from 'next'
+
 import { validDate } from './format'
 import { SITE } from './site'
 import type { PostMeta } from './types'

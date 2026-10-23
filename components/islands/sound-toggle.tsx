@@ -1,7 +1,9 @@
 'use client'
 
 import { useSyncExternalStore } from 'react'
+
 import { VolumeIcon, VolumeOffIcon } from '@/components/icons'
+
 import styles from './sound-toggle.module.css'
 import { playSound, setSoundEnabled, soundEnabled, subscribeSound } from './sounds'
 

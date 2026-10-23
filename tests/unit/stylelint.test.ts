@@ -1,5 +1,6 @@
 import stylelint from 'stylelint'
 import { describe, expect, it } from 'vitest'
+
 import plugin from '@/stylelint/require-components-layer.ts'
 
 const RULE = 'gregrickaby/require-components-layer'

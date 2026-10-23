@@ -1,16 +1,18 @@
 'use client'
 
 import {
+  useRef,
+  useState,
   type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
   type TouchEvent,
-  useRef,
-  useState,
 } from 'react'
+
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon, DownloadIcon } from '@/components/icons'
-import { playSound } from './sounds'
+
 import styles from './lightbox.module.css'
+import { playSound } from './sounds'
 
 /** One image in the viewer, read from the page's `[data-lightbox]` elements. */
 export interface Slide {

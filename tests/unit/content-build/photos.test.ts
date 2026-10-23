@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { photo } from '@/tests/helpers/content'
 
 const parse = vi.fn()

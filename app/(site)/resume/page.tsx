@@ -1,7 +1,8 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Resume } from '@/components/resume'
+
 import { JsonLd } from '@/components/json-ld'
+import { Resume } from '@/components/resume'
 import { getPage } from '@/lib/content'
 import { buildContentMetadata } from '@/lib/metadata'
 import { buildWebPageGraph } from '@/lib/schema'

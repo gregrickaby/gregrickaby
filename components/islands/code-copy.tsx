@@ -1,6 +1,7 @@
 'use client'
 
-import { type MouseEvent, type ReactNode, useState } from 'react'
+import { useState, type MouseEvent, type ReactNode } from 'react'
+
 import { playSound } from './sounds'
 
 const COPIED_FOR = 2000

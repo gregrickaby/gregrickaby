@@ -1,9 +1,11 @@
 import type { Route } from 'next'
 import Link from 'next/link'
+
 import { MetaLine } from '@/components/meta-line'
 import { PostImage } from '@/components/post-image'
 import { formatShortDate } from '@/lib/format'
 import type { PostMeta } from '@/lib/types'
+
 import styles from './post-card.module.css'
 
 /** A post's image, title, and description, linking to the post. */

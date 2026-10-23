@@ -1,5 +1,6 @@
 import exifr from 'exifr'
 import { imageSize } from 'image-size'
+
 import type { Photo } from '../types.ts'
 
 type Exif = Record<string, unknown>

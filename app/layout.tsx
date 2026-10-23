@@ -8,11 +8,13 @@ import './styles/utilities.css'
 
 import type { Metadata, Viewport } from 'next'
 import { Roboto, Roboto_Mono, Roboto_Slab } from 'next/font/google'
+
 import { JsonLd } from '@/components/json-ld'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
 import { buildWebSiteGraph } from '@/lib/schema'
 import { SITE } from '@/lib/site'
+
 import styles from './layout.module.css'
 
 const sans = Roboto({ subsets: ['latin'], variable: '--font-roboto', display: 'swap' })

@@ -1,9 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { MetaLine } from '@/components/meta-line'
 import { getPhotos } from '@/lib/content'
 import { exifSummary } from '@/lib/format'
 import { HOME, SITE } from '@/lib/site'
+
 import styles from './home-hero.module.css'
 
 /**

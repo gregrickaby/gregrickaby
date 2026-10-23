@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import { PageTitle } from '@/components/page-title'
 import { PostGrid } from '@/components/post-grid'
 import { getAllPosts } from '@/lib/content'

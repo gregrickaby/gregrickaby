@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+
 import { contentIndex, photo, post, postMeta } from '@/tests/helpers/content'
 import { renderServer } from '@/tests/helpers/render-server'
 

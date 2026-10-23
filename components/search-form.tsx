@@ -1,5 +1,7 @@
 import Form from 'next/form'
+
 import { SearchIcon } from '@/components/icons'
+
 import styles from './search-form.module.css'
 
 /**

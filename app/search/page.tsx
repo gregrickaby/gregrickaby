@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
+
 import { PageTitle } from '@/components/page-title'
 import { PostGrid } from '@/components/post-grid'
 import { SearchForm } from '@/components/search-form'
 import { searchPosts } from '@/lib/content'
+
 import styles from './page.module.css'
 
 export const metadata: Metadata = {

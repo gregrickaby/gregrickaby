@@ -1,6 +1,7 @@
 'use client'
 
 import { DownloadIcon } from '@/components/icons'
+
 import styles from './print-button.module.css'
 
 /**

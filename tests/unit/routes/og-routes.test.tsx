@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+
 import { contentIndex, photo } from '@/tests/helpers/content'
 
 const index = contentIndex()

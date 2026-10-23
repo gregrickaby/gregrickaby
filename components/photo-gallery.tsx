@@ -1,8 +1,10 @@
 import Image from 'next/image'
+
 import { Lightbox } from '@/components/islands/lightbox'
 import { exifSummary } from '@/lib/format'
 import { fullImageUrl } from '@/lib/images'
 import type { Photo } from '@/lib/types'
+
 import styles from './photo-gallery.module.css'
 
 /**

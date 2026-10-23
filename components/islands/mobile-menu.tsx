@@ -1,10 +1,12 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { type ReactNode, useEffect, useRef } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
+
 import { MenuIcon } from '@/components/icons'
-import { playSound } from './sounds'
+
 import styles from './mobile-menu.module.css'
+import { playSound } from './sounds'
 
 /**
  * The small-screen menu. It is a native popover, so it opens, closes on Escape

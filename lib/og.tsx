@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { cacheLife } from 'next/cache'
 import { ImageResponse } from 'next/og'
+
 import { SITE } from '@/lib/site'
 
 /** Every share image is 1200x630, the size LinkedIn, Slack, and iMessage expect. */

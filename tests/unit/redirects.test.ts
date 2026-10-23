@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import redirects from '@/lib/redirects'
 
 describe('redirects', () => {

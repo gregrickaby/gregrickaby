@@ -2,6 +2,7 @@ import type { Route } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
+
 import { ArrowRightIcon } from '@/components/icons'
 import { Lightbox } from '@/components/islands/lightbox'
 import { MetaLine } from '@/components/meta-line'
@@ -12,6 +13,7 @@ import { splitSections } from '@/lib/html'
 import { fullImageUrl } from '@/lib/images'
 import { resumeEntries } from '@/lib/resume'
 import type { Photo, Post, PostMeta } from '@/lib/types'
+
 import styles from './home-sections.module.css'
 
 /** A home page band: a label and title on the left, a "see all" link on the right. */

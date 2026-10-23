@@ -1,6 +1,8 @@
 import Link from 'next/link'
+
 import { ArrowLeftIcon, ArrowRightIcon } from '@/components/icons'
 import type { PostMeta } from '@/lib/types'
+
 import styles from './post-nav.module.css'
 
 /** Links to the previous (older) and next (newer) posts. */

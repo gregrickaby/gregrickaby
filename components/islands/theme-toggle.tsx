@@ -1,7 +1,9 @@
 'use client'
 
 import type { MouseEvent } from 'react'
+
 import { MoonIcon, SunIcon } from '@/components/icons'
+
 import { playSound } from './sounds'
 import styles from './theme-toggle.module.css'
 

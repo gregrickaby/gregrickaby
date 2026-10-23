@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import { contrastRatio, readableColor } from '@/lib/content-build/contrast'
 
 describe('contrastRatio', () => {

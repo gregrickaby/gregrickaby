@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+
 import { contentIndex } from '@/tests/helpers/content'
 
 vi.mock('@/.generated/content.json', () => ({ default: contentIndex() }))

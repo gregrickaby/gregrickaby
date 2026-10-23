@@ -2,6 +2,7 @@ import { ArrowUpIcon } from '@/components/icons'
 import { SoundLink } from '@/components/islands/sound-link'
 import { getBuildTime } from '@/lib/content'
 import { SITE } from '@/lib/site'
+
 import styles from './site-footer.module.css'
 
 /** Copyright, license, and profile links, plus a back-to-top link. */

@@ -1,5 +1,6 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
+
 import { Article } from '@/components/article'
 import { JsonLd } from '@/components/json-ld'
 import { PostNav } from '@/components/post-nav'

@@ -5,6 +5,7 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+
 import { buildContent } from '../lib/content-build/build.ts'
 
 const root = process.cwd()

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import { buildFeedXml } from '@/lib/feed'
 import type { PostMeta } from '@/lib/types'
 
