@@ -41,26 +41,33 @@ Secrets go in `.env.local` (see `.env.example`). Server errors go to stdout (Coo
 
 ## Rules
 
+Read `docs/code-standards.md` before writing or reviewing code. It covers TypeScript, modules, naming, comments, styles, errors, and tests.
+
 Never:
 
 - Start the dev server; the user runs it.
 - Read the filesystem at request time, or import `lib/content-build/*` from app code.
-- Use `any`, `NEXT_PUBLIC_`, `memo()`, `useCallback()`, `useMemo()`, barrel files, or UI libraries.
-- Add comments that restate the code. Match the surrounding density and explain why, not what changed.
+- Use `NEXT_PUBLIC_` or UI libraries.
 - Commit plans. Keep them in the session scratchpad or `.plans/` (gitignored).
+- Add commit trailers or co-authors.
 
 Always:
 
-- Put styles in CSS Modules inside `@layer components`, using tokens. Stylelint enforces both.
 - Keep links and search working without JavaScript. Nothing posts to the server; `/contact` is a page of links.
-- Follow `~/.claude/rules/writing-style.md` for UI copy, docs, and commit messages. No commit trailers or co-authors.
+- Follow the writing rules in `docs/code-standards.md` for UI copy, docs, and commit messages.
 - Keep subagents to a minimum; each one is a separate billed request.
+
+Ask before adding dependencies, committing, or pushing.
 
 ## Testing
 
-Unit tests live in `tests/unit/`. They run in Node; component tests add `// @vitest-environment happy-dom`. Render server components with `tests/helpers/render-server.tsx` and build content with `tests/helpers/content.ts` plus `vi.mock('@/.generated/content.json')`. Coverage is 100% (95% enforced): keep it at 100%.
+Unit tests live in `tests/unit/`. They run in Node; component tests add `// @vitest-environment happy-dom`. Render server components with `tests/helpers/render-server.tsx` and build content with `tests/helpers/content.ts` plus `vi.mock('@/.generated/content.json')`. E2E builds the site and runs it with and without JavaScript. Coverage is 100% (95% enforced): keep it at 100%.
 
-Done means `npm run format:check`, `npm run check`, and `npm run build` pass. Run `npm run test:e2e` when a change touches a user flow, and check UX changes in Chrome against the user's dev server.
+## Definition of done
+
+1. `npm run format:check`, `npm run check`, and `npm run build` pass, with coverage at 100%.
+2. `npm run test:e2e` passes when a change touches a user flow.
+3. UX changes are checked in Chrome with Claude in Chrome against the user's running dev server: the rendered page, the main interaction, and console errors.
 
 ## Deploy
 

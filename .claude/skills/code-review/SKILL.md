@@ -22,7 +22,7 @@ Deduplicate. Keep `.ts`, `.tsx`, `.css`, and `.md` under `public/content/`. Skip
 
 ### 2. Load standards
 
-The standards are `AGENTS.md` (already in context) and `~/.claude/rules/writing-style.md`. Read the matching config only when a finding depends on it:
+The standards are `AGENTS.md` (already in context), and `docs/code-standards.md`. Read `docs/code-standards.md` every time. Read the matching config only when a finding depends on it:
 
 | Concern                         | File                                          |
 | ------------------------------- | --------------------------------------------- |
@@ -57,8 +57,8 @@ For each file, evaluate:
 - **Correctness and edge cases:** trace what the code does under boundary inputs (dates and timezones, empty tags or categories, posts without images, missing EXIF, first and last post for prev/next links), not just whether it compiles and the happy-path test passes. Before trusting a date, slug, or formatting choice, grep for how `lib/format.ts` and sibling code handle the same value and flag any divergence. A green suite doesn't prove the test values hit the risky boundary: check what the test pins.
 - **Without JavaScript:** pages, links, and search must still work with JavaScript off. If a user flow changed, check that `e2e/site.spec.ts` covers it in the no-JavaScript project.
 - **Security:** Markdown or EXIF reaching HTML without the build-time sanitizer, JSON-LD not escaped through `serializeSchema`, CSP or header regressions, redirect loops.
-- **Project conventions:** does this follow the established patterns in the codebase? Comment density, naming, file placement. If not, fix it.
-- **Prose:** UI copy, docs, and post content follow `~/.claude/rules/writing-style.md`.
+- **Code standards:** does the change follow `docs/code-standards.md`? Check what lint can't: naming, comments, props typing, error handling, and test structure. If not, fix it.
+- **Prose:** UI copy, docs, and post content follow the writing rules in `docs/code-standards.md`.
 - **Praise:** call out anything done well. Specific, brief, no padding.
 
 Tag every finding **Blocker**, **Suggestion**, or **Nit**.
