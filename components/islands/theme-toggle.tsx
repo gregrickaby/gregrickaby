@@ -1,5 +1,6 @@
 'use client'
 
+import type { MouseEvent } from 'react'
 import { MoonIcon, SunIcon } from '@/components/icons'
 import styles from './theme-toggle.module.css'
 
@@ -12,7 +13,7 @@ export const THEME_COOKIE = 'theme'
  * Without JavaScript the site follows the system setting.
  */
 export function ThemeToggle() {
-  function toggle() {
+  function toggle(event: MouseEvent<HTMLButtonElement>) {
     const root = document.documentElement
     const current =
       root.dataset.theme === 'light' || root.dataset.theme === 'dark'
@@ -23,10 +24,18 @@ export function ThemeToggle() {
     const next = current === 'dark' ? 'light' : 'dark'
     root.dataset.theme = next
     document.cookie = `${THEME_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`
+    // Spins in the icon that appears. Cleared when the animation ends, so hover boops resume.
+    event.currentTarget.dataset.switched = ''
   }
 
   return (
-    <button className={styles.toggle} onClick={toggle} type="button">
+    <button
+      className={styles.toggle}
+      data-boop="theme"
+      onAnimationEnd={(event) => delete event.currentTarget.dataset.switched}
+      onClick={toggle}
+      type="button"
+    >
       <SunIcon className={styles.sun} />
       <MoonIcon className={styles.moon} />
       <span className={`visually-hidden ${styles.sun}`}>Switch to dark theme</span>

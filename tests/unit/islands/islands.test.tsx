@@ -30,6 +30,17 @@ describe('ThemeToggle', () => {
     expect(document.cookie).toContain('theme=light')
   })
 
+  it('marks the switch for its animation, then clears it', () => {
+    stubSystem(false)
+    render(<ThemeToggle />)
+    const button = screen.getByRole('button')
+    expect(button.hasAttribute('data-switched')).toBe(false)
+    fireEvent.click(button)
+    expect(button.hasAttribute('data-switched')).toBe(true)
+    fireEvent.animationEnd(button)
+    expect(button.hasAttribute('data-switched')).toBe(false)
+  })
+
   it('reads a light system scheme', () => {
     stubSystem(false)
     render(<ThemeToggle />)

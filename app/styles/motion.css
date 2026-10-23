@@ -31,6 +31,11 @@
     --boop-turn: 90deg;
   }
 
+  /* The button's bottom edge is the horizon. */
+  [data-boop='theme'] {
+    overflow: hidden;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     [data-boop='tilt']:hover svg,
     [data-copy]:hover::before {
@@ -47,6 +52,11 @@
     /* An X looks the same after a quarter turn. */
     [data-boop='spin']:hover svg {
       animation: boop-spin 500ms var(--ease-out);
+    }
+
+    /* The sun or moon sets below the button's edge, then rises back over it. */
+    [data-boop='theme']:not([data-switched]):hover svg {
+      animation: boop-rise 900ms var(--ease-out);
     }
 
     /* Hamburger lines spread apart. */
@@ -73,6 +83,11 @@
       --boop-x: 3px;
 
       animation: boop-shift 500ms 60ms var(--ease-out);
+    }
+
+    /* The icon that appears after a click spins and grows in. */
+    [data-switched] svg {
+      animation: boop-swap 500ms var(--ease-out);
     }
 
     [data-copied]::before {
@@ -119,6 +134,34 @@
 
     100% {
       transform: rotate(var(--boop-turn));
+    }
+  }
+
+  @keyframes boop-rise {
+    30% {
+      opacity: 0.6;
+      transform: translateY(130%);
+    }
+
+    70% {
+      opacity: 1;
+      transform: translateY(-10%);
+    }
+
+    85% {
+      transform: translateY(3%);
+    }
+  }
+
+  @keyframes boop-swap {
+    0% {
+      opacity: 0;
+      transform: rotate(-90deg) scale(0.4);
+    }
+
+    60% {
+      opacity: 1;
+      transform: rotate(10deg) scale(1.1);
     }
   }
 
