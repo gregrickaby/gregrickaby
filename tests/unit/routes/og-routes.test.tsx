@@ -1,9 +1,14 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { contentIndex, photo } from '@/tests/helpers/content'
 
 const index = contentIndex()
 vi.mock('@/.generated/content.json', () => ({ default: index }))
+
+// Tests swap parts of the content; each one starts from a fresh copy.
+afterEach(() => {
+  Object.assign(index, contentIndex())
+})
 
 const renderOgImage = vi.fn(async (card: unknown) => card)
 vi.mock('@/lib/og', () => ({
@@ -51,7 +56,6 @@ describe('share image routes', () => {
   })
 
   it('photos use the newest landscape photo, or any photo', async () => {
-    const saved = index.photos
     index.photos = [
       photo({ filename: 'tall.jpg', width: 1000, height: 1500 }),
       photo({ filename: 'wide.jpg' }),
@@ -64,6 +68,5 @@ describe('share image routes', () => {
     expect(await photos.default()).toMatchObject({ photo: '/content/photos/tall.jpg' })
     index.photos = []
     expect(await photos.default()).toMatchObject({ photo: undefined, eyebrow: '0 photographs' })
-    index.photos = saved
   })
 })

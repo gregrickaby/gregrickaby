@@ -1,11 +1,16 @@
 import type { ResolvingMetadata } from 'next'
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { contentIndex } from '@/tests/helpers/content'
 import { renderServer } from '@/tests/helpers/render-server'
 
 const index = contentIndex()
 vi.mock('@/.generated/content.json', () => ({ default: index }))
+
+// Tests swap parts of the content; each one starts from a fresh copy.
+afterEach(() => {
+  Object.assign(index, contentIndex())
+})
 
 class NotFound extends Error {}
 vi.mock('next/navigation', () => ({
@@ -150,10 +155,8 @@ describe('photos, resume, and contact', () => {
   })
 
   it('says so when there are no photos', async () => {
-    const saved = index.photos
     index.photos = []
     expect(await renderServer(<photos.default />)).toContain('No photos yet.')
-    index.photos = saved
   })
 
   it('renders the resume and contact pages with metadata', async () => {
@@ -166,15 +169,11 @@ describe('photos, resume, and contact', () => {
   })
 
   it('falls back to the site description for a page without one', async () => {
-    const resumePage = index.pages[1]!
-    const saved = resumePage.meta.description
-    resumePage.meta.description = undefined
+    index.pages[1]!.meta.description = undefined
     expect(await renderServer(<resume.default />)).toContain('Alabama-based software engineer')
-    resumePage.meta.description = saved
   })
 
   it('is a 404 when a page file is missing', async () => {
-    const saved = index.pages
     index.pages = []
     for (const Page of [home.default, resume.default, contact.default]) {
       await expect(renderServer(<Page />)).rejects.toBeInstanceOf(NotFound)
@@ -182,7 +181,6 @@ describe('photos, resume, and contact', () => {
     expect(await home.generateMetadata({}, parent)).toEqual({})
     expect(await resume.generateMetadata({}, parent)).toEqual({})
     expect(await contact.generateMetadata({}, parent)).toEqual({})
-    index.pages = saved
   })
 })
 
@@ -260,12 +258,14 @@ describe('sitemap, robots, feed, health', () => {
   })
 
   it('percent-encodes image paths that contain spaces', async () => {
-    const saved = index.photos
     index.photos = [
-      { ...saved[0]!, filename: 'Modern Cleaners.jpg', src: '/content/photos/Modern Cleaners.jpg' },
+      {
+        ...index.photos[0]!,
+        filename: 'Modern Cleaners.jpg',
+        src: '/content/photos/Modern Cleaners.jpg',
+      },
     ]
     const body = await photosJson.GET().json()
     expect(body.photos[0].url).toBe('https://gregrickaby.com/content/photos/Modern%20Cleaners.jpg')
-    index.photos = saved
   })
 })

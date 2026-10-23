@@ -1,10 +1,15 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { contentIndex, photo, post, postMeta } from '@/tests/helpers/content'
 import { renderServer } from '@/tests/helpers/render-server'
 
 const index = contentIndex()
 vi.mock('@/.generated/content.json', () => ({ default: index }))
+
+// Tests swap parts of the content; each one starts from a fresh copy.
+afterEach(() => {
+  Object.assign(index, contentIndex())
+})
 
 const { HomeHero } = await import('@/components/home-hero')
 const { CameraBag, CareerStrip, GalleryStrip, HomeAbout, LatestWriting } =
@@ -17,10 +22,8 @@ const ABOUT_HTML =
 
 describe('HomeHero', () => {
   it('shows the configured photo with its EXIF, the name, and the three ways in', async () => {
-    const saved = index.photos
     index.photos = [photo({ filename: HOME.photo, title: 'Morning Mist' })]
     const html = await renderServer(<HomeHero />)
-    index.photos = saved
     expect(html).toContain('<h1')
     expect(html).toContain('Greg Rickaby')
     expect(html).toContain('Morning Mist')
