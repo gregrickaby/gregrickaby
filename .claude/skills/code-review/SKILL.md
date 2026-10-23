@@ -1,5 +1,6 @@
 ---
 name: code-review
+model: claude-opus-5-5
 description: Review changed code against this repo's architecture rules and conventions, and fix issues before committing.
 ---
 
