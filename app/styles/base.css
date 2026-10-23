@@ -27,6 +27,39 @@
     text-underline-offset: 0.15em;
   }
 
+  /* Links off the site end in a box with an arrow leaving it (Tabler external-link).
+     The box and arrow are separate mask layers, so hover can slide the arrow alone. */
+  a[href^='http']:not(
+      [href*='//gregrickaby.com'],
+      [href*='//www.gregrickaby.com'],
+      :has(img, svg)
+    )::after {
+    background: currentcolor;
+    content: '';
+    display: inline-block;
+    height: 0.75em;
+    margin-inline-start: 0.2em;
+    mask:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 13l9 -9'/%3E%3Cpath d='M15 4h5v5'/%3E%3C/svg%3E")
+        0 0 / 100% no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6'/%3E%3C/svg%3E")
+        0 0 / 100% no-repeat;
+    vertical-align: -0.02em;
+    width: 0.75em;
+  }
+
+  a[href^='http']:hover::after {
+    mask-position:
+      0.08em -0.08em,
+      0 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    a[href^='http']::after {
+      transition: mask-position 0.2s;
+    }
+  }
+
   :focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
