@@ -1,4 +1,5 @@
 import { ArrowUpIcon } from '@/components/icons'
+import { SoundLink } from '@/components/islands/sound-link'
 import { getBuildTime } from '@/lib/content'
 import { SITE } from '@/lib/site'
 import styles from './site-footer.module.css'
@@ -36,9 +37,15 @@ export function SiteFooter() {
           </li>
         </ul>
       </div>
-      <a aria-label="Back to top" className={styles.top} data-boop="hop" href="#top">
+      <SoundLink
+        aria-label="Back to top"
+        className={styles.top}
+        data-boop="hop"
+        href="#top"
+        sound="rise"
+      >
         <ArrowUpIcon />
-      </a>
+      </SoundLink>
     </footer>
   )
 }

@@ -107,3 +107,40 @@ describe('SoundToggle', () => {
     expect(oscillators.length).toBe(4)
   })
 })
+
+describe('SoundLink', () => {
+  it('plays its sound when clicked', async () => {
+    const { SoundLink } = await import('@/components/islands/sound-link')
+    setSoundEnabled(true)
+    render(
+      <SoundLink href="#top" sound="rise">
+        Top
+      </SoundLink>,
+    )
+    fireEvent.click(screen.getByRole('link', { name: 'Top' }))
+    expect(oscillators.length).toBe(5)
+  })
+})
+
+describe('SoundNav', () => {
+  it('ticks when a mouse enters a link, not when moving within it or on touch', async () => {
+    const { SoundNav } = await import('@/components/islands/sound-nav')
+    setSoundEnabled(true)
+    render(
+      <SoundNav aria-label="Main">
+        <a href="https://example.com">
+          <span>Blog</span>
+        </a>
+        <span>gap</span>
+      </SoundNav>,
+    )
+    const link = screen.getByRole('link')
+    const label = screen.getByText('Blog')
+    fireEvent.pointerOver(link, { pointerType: 'mouse', relatedTarget: screen.getByText('gap') })
+    expect(oscillators.length).toBe(1)
+    fireEvent.pointerOver(label, { pointerType: 'mouse', relatedTarget: link })
+    fireEvent.pointerOver(link, { pointerType: 'touch' })
+    fireEvent.pointerOver(screen.getByText('gap'), { pointerType: 'mouse' })
+    expect(oscillators.length).toBe(1)
+  })
+})

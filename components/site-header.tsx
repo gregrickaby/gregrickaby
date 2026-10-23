@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MobileMenu } from '@/components/islands/mobile-menu'
+import { SoundNav } from '@/components/islands/sound-nav'
 import { SoundToggle } from '@/components/islands/sound-toggle'
 import { ThemeToggle } from '@/components/islands/theme-toggle'
 import { NavLinks } from '@/components/nav-links'
@@ -8,7 +9,7 @@ import { SearchForm } from '@/components/search-form'
 import { SITE } from '@/lib/site'
 import styles from './site-header.module.css'
 
-/** The sticky site header. Server-rendered; only the sound and theme toggles and the mobile menu hydrate. */
+/** The sticky site header. Server-rendered; the toggles, the mobile menu, and the nav's hover sounds hydrate. */
 export function SiteHeader() {
   return (
     <header className={`no-print ${styles.header}`}>
@@ -26,9 +27,9 @@ export function SiteHeader() {
           <span className="visually-hidden">: {SITE.description}</span>
         </Link>
 
-        <nav aria-label="Main" className={styles.nav}>
+        <SoundNav aria-label="Main" className={styles.nav}>
           <NavLinks className={styles.link} />
-        </nav>
+        </SoundNav>
 
         <div className={styles.actions}>
           <div className={styles.search}>
@@ -38,9 +39,9 @@ export function SiteHeader() {
           <ThemeToggle />
           <div className={styles.menu}>
             <MobileMenu>
-              <nav aria-label="Main" className={styles.menuNav}>
+              <SoundNav aria-label="Main" className={styles.menuNav}>
                 <NavLinks className={styles.link} />
-              </nav>
+              </SoundNav>
               <SearchForm id="menu-search" />
             </MobileMenu>
           </div>
