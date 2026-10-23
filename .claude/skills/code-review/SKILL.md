@@ -18,7 +18,7 @@ Goal: catch everything a careful human reviewer would flag before the change is 
 git diff --name-only HEAD
 ```
 
-Deduplicate. Keep `.ts`, `.tsx`, `.mjs`, `.css`, and `.md` under `public/content/`. Skip `.generated/`, `*.module.css.d.ts`, and `node_modules`.
+Deduplicate. Keep `.ts`, `.tsx`, `.css`, and `.md` under `public/content/`. Skip `.generated/`, `*.module.css.d.ts`, and `node_modules`.
 
 ### 2. Load standards
 
@@ -26,9 +26,9 @@ The standards are `AGENTS.md` (already in context) and `~/.claude/rules/writing-
 
 | Concern                         | File                                          |
 | ------------------------------- | --------------------------------------------- |
-| Lint rules, allowed HTML        | `eslint.config.mjs`                           |
-| CSS layers, tokens              | `stylelint.config.mjs`, `app/styles/tokens.css` |
-| Coverage thresholds             | `vitest.config.mts`                           |
+| Lint rules, allowed HTML        | `eslint.config.ts`                           |
+| CSS layers, tokens              | `stylelint.config.ts`, `app/styles/tokens.css` |
+| Coverage thresholds             | `vitest.config.ts`                           |
 | CSP, security headers           | `lib/headers.ts`                              |
 | Old WordPress URLs              | `lib/redirects.ts`                            |
 | Markdown, images, EXIF at build | `scripts/build-content.ts`, `lib/content-build/` |

@@ -23,7 +23,7 @@ export default defineConfig({
         'lib/**/*.{ts,tsx}',
         'app/**/*.{ts,tsx}',
         'components/**/*.{ts,tsx}',
-        'stylelint/**/*.mjs',
+        'stylelint/**/*.ts',
       ],
       exclude: ['**/*.d.ts'],
       reporter: ['text-summary', 'text', 'html'],
