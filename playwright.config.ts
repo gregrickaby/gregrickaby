@@ -1,9 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 
-/*
- * End-to-end tests against a production build. Mailgun credentials are blank,
- * so the contact form exercises its Server Action without sending mail.
- */
+/* End-to-end tests against a production build. */
 const PORT = 3200
 export const APP_URL = `http://localhost:${PORT}`
 
@@ -29,7 +26,6 @@ export default defineConfig({
   webServer: {
     command: `npm run build && npx next start -p ${PORT}`,
     url: `${APP_URL}/api/health`,
-    env: { MAILGUN_LOGIN: '', MAILGUN_PASSWORD: '' },
     timeout: 300_000,
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',

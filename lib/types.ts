@@ -59,12 +59,6 @@ export interface ContentIndex {
   photos: Photo[]
 }
 
-/** State returned by the contact form's Server Action. */
-export interface ContactFormState {
-  success: boolean
-  error: string | null
-}
-
 /** One job in the resume timeline. */
 export interface ResumeEntry {
   role: string

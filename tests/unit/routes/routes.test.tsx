@@ -18,7 +18,6 @@ vi.mock('next/form', () => ({
     <form {...props}>{children}</form>
   ),
 }))
-vi.mock('@/app/actions/contact', () => ({ sendContactEmail: vi.fn() }))
 vi.mock('next/server', () => ({ connection: vi.fn(async () => {}) }))
 
 const parent = Promise.resolve({ openGraph: { images: [] } }) as unknown as ResolvingMetadata
@@ -160,7 +159,7 @@ describe('photos, resume, and contact', () => {
     expect(await renderServer(<resume.default />)).toContain('Mindsize')
     expect(await resume.generateMetadata({}, parent)).toMatchObject({ title: 'Resume' })
     const html = await renderServer(<contact.default />)
-    expect(html).toContain('Send Message')
+    expect(html).toContain('href="mailto:greg@gregrickaby.com"')
     expect(html).toContain('WebPage')
     expect(await contact.generateMetadata({}, parent)).toMatchObject({ title: 'Contact' })
   })

@@ -1,17 +1,13 @@
 // @vitest-environment happy-dom
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 let pathname = '/'
 vi.mock('next/navigation', () => ({ usePathname: () => pathname }))
 
-const action = vi.fn()
-vi.mock('@/app/actions/contact', () => ({ sendContactEmail: action }))
-
 const { ThemeToggle } = await import('@/components/islands/theme-toggle')
 const { MobileMenu } = await import('@/components/islands/mobile-menu')
 const { Lightbox, toSlide } = await import('@/components/islands/lightbox')
-const { ContactForm } = await import('@/components/islands/contact-form')
 
 afterEach(() => {
   cleanup()
@@ -221,31 +217,6 @@ describe('Lightbox', () => {
     const img = document.createElement('img')
     img.src = 'http://localhost/x.jpg'
     expect(toSlide(img)).toMatchObject({ src: 'http://localhost/x.jpg', caption: undefined })
-  })
-})
-
-describe('ContactForm', () => {
-  it('shows every field and posts to the action', async () => {
-    action.mockResolvedValue({ success: false, error: 'All fields are required.' })
-    render(<ContactForm />)
-    for (const label of ['Name', 'Email', 'How can I help?', 'Message']) {
-      expect(screen.getByLabelText(label)).toBeTruthy()
-    }
-    expect(screen.getAllByRole('option')).toHaveLength(6)
-    await act(async () => {
-      fireEvent.submit(screen.getByRole('button', { name: 'Send Message' }).closest('form')!)
-    })
-    expect(action).toHaveBeenCalled()
-    expect(screen.getByRole('alert').textContent).toBe('All fields are required.')
-  })
-
-  it('thanks the sender on success', async () => {
-    action.mockResolvedValue({ success: true, error: null })
-    render(<ContactForm />)
-    await act(async () => {
-      fireEvent.submit(screen.getByRole('button', { name: 'Send Message' }).closest('form')!)
-    })
-    expect(screen.getByRole('status').textContent).toContain('Message sent!')
   })
 })
 

@@ -1,6 +1,6 @@
 import type { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
-import { ContactForm } from '@/components/islands/contact-form'
+import { Contact } from '@/components/contact'
 import { PageTitle } from '@/components/page-title'
 import { JsonLd } from '@/components/json-ld'
 import { getPage } from '@/lib/content'
@@ -25,10 +25,8 @@ export default function ContactPage() {
   return (
     <>
       <JsonLd graph={graph} />
-      <>
-        <PageTitle>{page.meta.title}</PageTitle>
-        <ContactForm />
-      </>
+      <PageTitle>{page.meta.title}</PageTitle>
+      <Contact />
     </>
   )
 }

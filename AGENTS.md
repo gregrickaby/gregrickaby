@@ -10,11 +10,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # gregrickaby.com
 
-Greg Rickaby's personal site, live at <https://gregrickaby.com>: a blog, photo gallery, resume, and contact form. Markdown on disk, no database. Server-first and static: every page except `/search` prerenders at build time. Built the same way as [Viewer for Reddit](https://github.com/gregrickaby/viewer-for-reddit) v10.
+Greg Rickaby's personal site, live at <https://gregrickaby.com>: a blog, photo gallery, resume, and contact page. Markdown on disk, no database. Server-first and static: every page except `/search` prerenders at build time. Built the same way as [Viewer for Reddit](https://github.com/gregrickaby/viewer-for-reddit) v10.
 
 ## Stack
 
-Next.js 16.4 (App Router, Cache Components, Partial Prefetching, `ensureStatic`, typed routes, Rust React Compiler) · React 19.3 (View Transitions) · TypeScript (strict) · CSS Modules with cascade layers · unified/remark/rehype, shiki, sanitize-html, and exifr at build time only · Nodemailer (Mailgun) · Vitest 5 + Testing Library + happy-dom · Playwright with `@next/playwright` · ESLint + Stylelint + Prettier.
+Next.js 16.4 (App Router, Cache Components, Partial Prefetching, `ensureStatic`, typed routes, Rust React Compiler) · React 19.3 (View Transitions) · TypeScript (strict) · CSS Modules with cascade layers · unified/remark/rehype, shiki, sanitize-html, and exifr at build time only · Vitest 5 + Testing Library + happy-dom · Playwright with `@next/playwright` · ESLint + Stylelint + Prettier.
 
 ## Commands
 
@@ -29,7 +29,7 @@ npm run content       # Re-render Markdown and photo metadata into .generated/co
 
 `npm run dev` runs `content` once at start. After editing Markdown or photos, run `npm run content` again.
 
-**Secrets**: `.env.local` (see `.env.example`): `MAILGUN_LOGIN`, `MAILGUN_PASSWORD`, `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY`. There is no logging or analytics service: server errors go to the container's stdout (Coolify logs).
+**Secrets**: `.env.local` (see `.env.example`): `CLOUDFLARE_ZONE_ID`, `CLOUDFLARE_PURGE_TOKEN`. There is no logging or analytics service: server errors go to the container's stdout (Coolify logs).
 
 ## Architecture rules
 
@@ -37,7 +37,7 @@ npm run content       # Re-render Markdown and photo metadata into .generated/co
 - **Static by contract.** `app/(site)/layout.tsx` sets `ensureStatic = 'navigation'`: the build fails if any page in the group reads cookies, headers, or search params, or does uncached work. `/search` lives outside the group and is the only per-request page.
 - **Param routes block on params** (`instant = false` on `[slug]`, `tag/[tag]`, `category/[category]`, and `/search`), so the prerendered HTML holds the full content for readers without JavaScript and for crawlers. Links to them use `prefetch={true}`, which loads the prerendered page before the click, so client navigations still render at once. `e2e/site.spec.ts` checks this with `instant()`.
 - **Images.** Components use `next/image`. Post HTML is built outside React, so the build writes `/_next/image` URLs with a `srcset` itself (`lib/images.ts`). JPEGs with an HDR gain map (`hdrgm` XMP) keep their original file everywhere a full-size view is shown, because the optimizer strips the gain map. Cloudflare caches `/_next/image` for AVIF-capable browsers (cache rule on the zone), and Coolify mounts `.next/cache` as a volume.
-- **Server-first UI.** Server Components by default. Client components are small islands in `components/islands/`: theme toggle, mobile menu (a native popover; the island only closes it after navigation), lightbox (a native `<dialog>`), and the contact form (`useActionState`, works before hydration). No client data fetching.
+- **Server-first UI.** Server Components by default. Client components are small islands in `components/islands/`: theme toggle, mobile menu (a native popover; the island only closes it after navigation), lightbox (a native `<dialog>`), and the resume's print button. No client data fetching.
 - **HTML injection** happens only in `components/prose.tsx` (sanitized at build), `components/json-ld.tsx` (escaped by `serializeSchema`), and the root layout's theme script. ESLint enforces it.
 - **Theme.** Colors are tokens defined once with `light-dark()` in `app/styles/tokens.css`. `data-theme` on `<html>` only switches `color-scheme`. The choice lives in a `theme` cookie that an inline script applies before paint, so pages stay static.
 - **View transitions.** Post card images and article heroes share a `<ViewTransition>` name (`components/post-image.tsx`), so opening a post morphs the card into the hero. The header keeps its own transition name and stays put.
@@ -60,7 +60,7 @@ npm run content       # Re-render Markdown and photo metadata into .generated/co
 **Always:**
 
 - Put styles in CSS Modules inside `@layer components`, using the tokens in `app/styles/tokens.css`. Stylelint enforces the layer and forbids raw colors.
-- Keep links, search, and the contact form working without JavaScript.
+- Keep links and search working without JavaScript. The site has no forms that post to the server; `/contact` is a static page of links.
 - Write prose (UI copy, docs, commit messages) following [writing-style.md](./.claude/rules/writing-style.md): no emoji, no em dashes, plain verbs.
 - Minimize subagent spawning. Each one is a separate billed request; use Read/Grep/Bash for known files and symbols.
 - Caveman skill, `full` mode, is active every session (persists per its own instructions). Drop it for security warnings, irreversible-action confirmations, or on request.

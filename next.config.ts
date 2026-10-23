@@ -21,10 +21,6 @@ const nextConfig: NextConfig = {
     turbopackRustReactCompiler: true,
     turbopackGc: true,
     turbopackLazyDynamicImports: true,
-    serverActions: {
-      // The contact form is the only Server Action.
-      bodySizeLimit: '100kb',
-    },
     sri: {
       algorithm: 'sha256',
     },

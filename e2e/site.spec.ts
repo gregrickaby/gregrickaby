@@ -107,7 +107,7 @@ test.describe('photos', () => {
   })
 })
 
-test.describe('search, theme, and contact', () => {
+test.describe('search and theme', () => {
   test('header search finds posts', async ({ page }) => {
     await page.goto('/')
     await page.getByRole('searchbox', { name: 'Search posts' }).first().fill('moon')
@@ -124,19 +124,6 @@ test.describe('search, theme, and contact', () => {
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
     await page.reload()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
-  })
-
-  test('the contact form reaches its Server Action and reports the result', async ({ page }) => {
-    await page.goto('/contact')
-    await page.getByLabel('Name').fill('Jane Doe')
-    await page.getByLabel('Email').fill('jane@example.com')
-    await page.getByLabel('How can I help?').selectOption('consulting')
-    await page.getByLabel('Message').fill('Hello')
-    await page.getByRole('button', { name: 'Send Message' }).click()
-    // No Mailgun credentials in e2e, so the action answers with its failure message.
-    await expect(page.locator('main').getByRole('alert')).toHaveText(
-      'Failed to send message. Please try again.',
-    )
   })
 })
 
@@ -164,7 +151,7 @@ test.describe('platform', () => {
 })
 
 test.describe('without JavaScript @nojs', () => {
-  test('pages, search, and the contact form work without scripts @nojs', async ({ page }) => {
+  test('pages, search, and contact links work without scripts @nojs', async ({ page }) => {
     await page.goto('/the-moons-of-2023')
     await expect(page.getByRole('heading', { level: 1, name: 'The Moons of 2023' })).toBeVisible()
     await expect(page.locator('.prose img').first()).toBeVisible()
@@ -176,13 +163,9 @@ test.describe('without JavaScript @nojs', () => {
     await expect(page.getByRole('link', { name: /Gain Maps/ })).toBeVisible()
 
     await page.goto('/contact')
-    await page.getByLabel('Name').fill('Jane Doe')
-    await page.getByLabel('Email').fill('jane@example.com')
-    await page.getByLabel('How can I help?').selectOption('other')
-    await page.getByLabel('Message').fill('Hello')
-    await page.getByRole('button', { name: 'Send Message' }).click()
-    await expect(page.locator('main').getByRole('alert')).toHaveText(
-      'Failed to send message. Please try again.',
+    await expect(page.getByRole('link', { name: 'greg@gregrickaby.com' })).toHaveAttribute(
+      'href',
+      'mailto:greg@gregrickaby.com',
     )
   })
 })

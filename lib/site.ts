@@ -8,6 +8,7 @@ export const SITE = {
   author: {
     name: 'Greg Rickaby',
     url: 'https://gregrickaby.com',
+    email: 'greg@gregrickaby.com',
     linkedin: 'https://www.linkedin.com/in/gregrickaby/',
     github: 'https://github.com/gregrickaby',
   },
