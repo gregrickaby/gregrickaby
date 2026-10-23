@@ -1,6 +1,7 @@
 'use client'
 
 import { type MouseEvent, type ReactNode, useState } from 'react'
+import { playSound } from './sounds'
 
 const COPIED_FOR = 2000
 
@@ -19,6 +20,7 @@ export function CodeCopy({ children }: { children: ReactNode }) {
     try {
       await navigator.clipboard.writeText(code.textContent)
       button.dataset.copied = ''
+      playSound('copy')
       setStatus('Copied to clipboard')
     } catch {
       setStatus('Could not copy')

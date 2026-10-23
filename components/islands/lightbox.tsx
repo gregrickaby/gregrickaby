@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react'
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon, DownloadIcon } from '@/components/icons'
+import { playSound } from './sounds'
 import styles from './lightbox.module.css'
 
 /** One image in the viewer, read from the page's `[data-lightbox]` elements. */
@@ -69,9 +70,11 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
     setSlides(triggers.map(toSlide))
     setIndex(Math.max(0, triggers.indexOf(trigger)))
     dialog.current?.showModal()
+    playSound('open')
   }
 
   function step(delta: number) {
+    playSound('step')
     setIndex((i) => (i + delta + slides.length) % slides.length)
   }
 
@@ -106,6 +109,7 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
         aria-label="Image viewer"
         className={styles.dialog}
         onClick={onBackdrop}
+        onClose={() => playSound('close')}
         onKeyDown={onKeyDown}
         onTouchEnd={onTouchEnd}
         onTouchStart={onTouchStart}

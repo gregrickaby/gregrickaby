@@ -5,6 +5,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 let pathname = '/'
 vi.mock('next/navigation', () => ({ usePathname: () => pathname }))
 
+const playSound = vi.fn()
+vi.mock('@/components/islands/sounds', () => ({ playSound }))
+
 const { ThemeToggle } = await import('@/components/islands/theme-toggle')
 const { MobileMenu } = await import('@/components/islands/mobile-menu')
 const { Lightbox, toSlide } = await import('@/components/islands/lightbox')
@@ -12,6 +15,7 @@ const { CodeCopy } = await import('@/components/islands/code-copy')
 
 afterEach(() => {
   cleanup()
+  playSound.mockClear()
   document.documentElement.removeAttribute('data-theme')
   document.cookie = 'theme=; max-age=0; path=/'
 })
@@ -28,6 +32,7 @@ describe('ThemeToggle', () => {
     fireEvent.click(screen.getByRole('button', { name: /Switch to/ }))
     expect(document.documentElement.dataset.theme).toBe('light')
     expect(document.cookie).toContain('theme=light')
+    expect(playSound).toHaveBeenCalledWith('switch-on')
   })
 
   it('marks the switch for its animation, then clears it', () => {
@@ -80,6 +85,15 @@ describe('MobileMenu', () => {
     pathname = '/photos'
     rerender(<MobileMenu>links</MobileMenu>)
     expect(hide).toHaveBeenCalledTimes(1)
+  })
+
+  it('plays a sound as the popover opens and closes', () => {
+    render(<MobileMenu>links</MobileMenu>)
+    const panel = document.getElementById('site-menu') as HTMLElement
+    for (const newState of ['open', 'closed']) {
+      panel.dispatchEvent(Object.assign(new Event('toggle'), { newState }))
+    }
+    expect(playSound.mock.calls).toEqual([['open'], ['close']])
   })
 })
 
@@ -170,6 +184,14 @@ describe('Lightbox', () => {
     fireEvent.click(trigger())
     fireEvent.click(screen.getByLabelText('Close'))
     expect(dialog().hasAttribute('open')).toBe(false)
+  })
+
+  it('plays sounds to open, step, and close', () => {
+    gallery()
+    fireEvent.click(screen.getByAltText('one'))
+    fireEvent.click(screen.getByLabelText('Next image'))
+    dialog().dispatchEvent(new Event('close'))
+    expect(playSound.mock.calls).toEqual([['open'], ['step'], ['close']])
   })
 
   it('ignores modified clicks and clicks outside triggers', () => {
@@ -273,6 +295,7 @@ describe('CodeCopy', () => {
     const button = screen.getByRole('button', { name: 'Copy code' })
     await act(async () => fireEvent.click(button))
     expect(writeText).toHaveBeenCalledWith('const a = 1')
+    expect(playSound).toHaveBeenCalledWith('copy')
     expect(button.hasAttribute('data-copied')).toBe(true)
     expect(screen.getByRole('status').textContent).toBe('Copied to clipboard')
     act(() => vi.advanceTimersByTime(2000))

@@ -2,6 +2,7 @@
 
 import type { MouseEvent } from 'react'
 import { MoonIcon, SunIcon } from '@/components/icons'
+import { playSound } from './sounds'
 import styles from './theme-toggle.module.css'
 
 /** Cookie the root layout's theme script reads before first paint. */
@@ -23,6 +24,7 @@ export function ThemeToggle() {
           : 'light'
     const next = current === 'dark' ? 'light' : 'dark'
     root.dataset.theme = next
+    playSound(next === 'dark' ? 'switch-off' : 'switch-on')
     document.cookie = `${THEME_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`
     // Spins in the icon that appears. Cleared when the animation ends, so hover boops resume.
     event.currentTarget.dataset.switched = ''

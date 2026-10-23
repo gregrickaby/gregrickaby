@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { type ReactNode, useEffect, useRef } from 'react'
 import { MenuIcon } from '@/components/icons'
+import { playSound } from './sounds'
 import styles from './mobile-menu.module.css'
 
 /**
@@ -29,7 +30,13 @@ export function MobileMenu({ children }: { children: ReactNode }) {
       >
         <MenuIcon />
       </button>
-      <div className={styles.panel} id="site-menu" popover="auto" ref={ref}>
+      <div
+        className={styles.panel}
+        id="site-menu"
+        onToggle={(event) => playSound(event.newState === 'open' ? 'open' : 'close')}
+        popover="auto"
+        ref={ref}
+      >
         {children}
       </div>
     </>
