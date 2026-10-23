@@ -1,5 +1,5 @@
 // @vitest-environment happy-dom
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 let pathname = '/'
@@ -8,6 +8,7 @@ vi.mock('next/navigation', () => ({ usePathname: () => pathname }))
 const { ThemeToggle } = await import('@/components/islands/theme-toggle')
 const { MobileMenu } = await import('@/components/islands/mobile-menu')
 const { Lightbox, toSlide } = await import('@/components/islands/lightbox')
+const { CodeCopy } = await import('@/components/islands/code-copy')
 
 afterEach(() => {
   cleanup()
@@ -231,5 +232,57 @@ describe('PrintButton', () => {
     cleanup()
     render(<PrintButton />)
     expect(screen.getByRole('button').className).not.toContain('x')
+  })
+})
+
+describe('CodeCopy', () => {
+  function renderBlock() {
+    return render(
+      <CodeCopy>
+        <figure>
+          <pre>
+            <code>const a = 1</code>
+          </pre>
+          <button aria-label="Copy code" data-copy="" type="button" />
+        </figure>
+        <p>Text</p>
+      </CodeCopy>,
+    )
+  }
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('copies the block, shows a check, then resets', async () => {
+    vi.useFakeTimers()
+    const writeText = vi.fn().mockResolvedValue(undefined)
+    vi.stubGlobal('navigator', { clipboard: { writeText } })
+    renderBlock()
+    const button = screen.getByRole('button', { name: 'Copy code' })
+    await act(async () => fireEvent.click(button))
+    expect(writeText).toHaveBeenCalledWith('const a = 1')
+    expect(button.hasAttribute('data-copied')).toBe(true)
+    expect(screen.getByRole('status').textContent).toBe('Copied to clipboard')
+    act(() => vi.advanceTimersByTime(2000))
+    expect(button.hasAttribute('data-copied')).toBe(false)
+    expect(screen.getByRole('status').textContent).toBe('')
+  })
+
+  it('says so when the clipboard refuses', async () => {
+    vi.stubGlobal('navigator', { clipboard: { writeText: vi.fn().mockRejectedValue(new Error()) } })
+    renderBlock()
+    const button = screen.getByRole('button', { name: 'Copy code' })
+    await act(async () => fireEvent.click(button))
+    expect(button.hasAttribute('data-copied')).toBe(false)
+    expect(screen.getByRole('status').textContent).toBe('Could not copy')
+  })
+
+  it('ignores clicks outside a copy button', async () => {
+    const writeText = vi.fn()
+    vi.stubGlobal('navigator', { clipboard: { writeText } })
+    renderBlock()
+    await act(async () => fireEvent.click(screen.getByText('Text')))
+    expect(writeText).not.toHaveBeenCalled()
   })
 })

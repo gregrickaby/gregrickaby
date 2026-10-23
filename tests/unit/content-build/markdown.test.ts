@@ -90,11 +90,13 @@ describe('renderMarkdown', () => {
     expect(html).toContain('data-rehype-pretty-code-figure')
     expect(html).toContain('data-language="php"')
     expect(html).toMatch(/--shiki-light:#[0-9a-f]+;.*--shiki-dark:#[0-9a-f]+/i)
+    expect(html).toContain('<button type="button" aria-label="Copy code" data-copy></button>')
   })
 
   it('highlights fences without a language as plain text', async () => {
     const { html } = await render('```\nplain\n```')
     expect(html).toContain('data-language="plaintext"')
+    expect(html).toContain('data-copy')
   })
 
   it('gives every token AA contrast on the code background', async () => {

@@ -132,7 +132,8 @@ const SHIKI_COLOR = /--shiki-(light|dark):(#[0-9a-f]{3,8})/gi
 
 /**
  * Finishes shiki's code blocks: nudges each token color until it meets WCAG AA
- * on the site's code background.
+ * on the site's code background, and adds a copy button. The button does
+ * nothing until the `CodeCopy` island loads, and CSS hides it without scripts.
  */
 function rehypeCodeBlocks() {
   return (tree: HastRoot) => {
@@ -143,6 +144,14 @@ function rehypeCodeBlocks() {
           (_, scheme: 'light' | 'dark', color: string) =>
             `--shiki-${scheme}:${readableColor(color, CODE_BACKGROUND[scheme])}`,
         )
+      }
+      if (node.tagName === 'figure' && 'data-rehype-pretty-code-figure' in node.properties) {
+        node.children.push({
+          type: 'element',
+          tagName: 'button',
+          properties: { type: 'button', ariaLabel: 'Copy code', dataCopy: '' },
+          children: [],
+        })
       }
     })
   }
@@ -159,6 +168,7 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
     'summary',
     'audio',
     'source',
+    'button',
   ],
   allowedAttributes: {
     ...sanitizeHtml.defaults.allowedAttributes,
@@ -177,6 +187,7 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
     ],
     audio: ['controls', 'src', 'preload'],
     source: ['src', 'type'],
+    button: ['type', 'aria-label', 'data-copy'],
     pre: ['tabindex', 'data-language', 'data-theme', 'style'],
     code: ['data-language', 'data-theme'],
     span: ['data-line', 'data-highlighted-line', 'style'],
@@ -195,8 +206,8 @@ export interface RenderedMarkdown {
 
 /**
  * Renders a post or page body: GitHub-flavored Markdown with raw HTML, heading
- * ids, figure captions, shiki code highlighting, and optimized images. The
- * HTML is sanitized, so the page can inject it as-is.
+ * ids, figure captions, shiki code highlighting with copy buttons, and
+ * optimized images. The HTML is sanitized, so the page can inject it as-is.
  *
  * @param markdown - The body, without frontmatter.
  * @param options - Where the content's files live and how to measure them.

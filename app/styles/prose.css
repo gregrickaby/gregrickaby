@@ -86,6 +86,10 @@
     }
 
     /* Code blocks: shiki sets a light and a dark color on each token. */
+    & figure[data-rehype-pretty-code-figure] {
+      position: relative;
+    }
+
     & figure[data-rehype-pretty-code-figure] pre {
       background: var(--surface-code);
       border: 1px solid var(--border);
@@ -117,6 +121,68 @@
     & [data-highlighted-line] {
       background: var(--accent-soft);
       box-shadow: inset 3px 0 var(--accent-fill);
+    }
+
+    & [data-copy] {
+      background: var(--surface-code);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-1);
+      color: var(--text-2);
+      cursor: pointer;
+      display: grid;
+      height: 2.25rem;
+      inset-block-start: var(--space-2);
+      inset-inline-end: var(--space-2);
+      opacity: 0;
+      place-items: center;
+      position: absolute;
+      transition: opacity 0.15s;
+      width: 2.25rem;
+
+      /* Tabler copy and check icons, drawn in the text color. */
+      &::before {
+        background: currentcolor;
+        content: '';
+        height: 1.125rem;
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z'/%3E%3Cpath d='M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1'/%3E%3C/svg%3E")
+          center / contain no-repeat;
+        width: 1.125rem;
+      }
+
+      &:hover {
+        color: var(--accent);
+      }
+
+      &:focus-visible {
+        opacity: 1;
+      }
+
+      &[data-copied] {
+        color: var(--accent);
+        opacity: 1;
+
+        &::before {
+          mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l10 -10'/%3E%3C/svg%3E");
+        }
+      }
+    }
+
+    & figure:hover > [data-copy] {
+      opacity: 1;
+    }
+
+    /* Touch screens have no hover, so the button always shows. */
+    @media (hover: none) {
+      & [data-copy] {
+        opacity: 1;
+      }
+    }
+
+    /* Copying needs JavaScript. */
+    @media (scripting: none) {
+      & [data-copy] {
+        display: none;
+      }
     }
 
     & table {
