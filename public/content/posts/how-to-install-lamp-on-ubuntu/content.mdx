@@ -99,7 +99,7 @@ sudo nano /etc/apt/sources.list
 
 Scroll to the bottom and paste the following lines then save:
 
-```
+```text
 deb http://download.webmin.com/download/repository sarge contrib
 deb http://webmin.mirror.somersettechsolutions.co.uk/repository sarge contrib
 ```
@@ -313,7 +313,7 @@ sudo nano /etc/munin/munin.conf
 
 The first thing you should see is the operating directories. We need to change one of them:
 
-```
+```ini
 # dbdir /var/lib/munin
 # htmldir /var/cache/munin/www
 # logdir /var/log/munin
@@ -322,7 +322,7 @@ The first thing you should see is the operating directories. We need to change o
 
 to:
 
-```
+```ini
 # dbdir /var/lib/munin
 htmldir /var/www/munin
 # logdir /var/log/munin
@@ -337,7 +337,7 @@ sudo nano /etc/munin/apache.conf
 
 Delete everything inside apache.conf and just add:
 
-```
+```apache
 Alias /munin /var/www/munin
 ```
 
