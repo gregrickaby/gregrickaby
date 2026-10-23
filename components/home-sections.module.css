@@ -77,6 +77,48 @@
     padding-block-end: var(--space-3);
     scroll-snap-type: x mandatory;
     scrollbar-width: thin;
+
+    /* Fade the edges that have more to scroll. Browsers without scroll-state queries show no fade. */
+    container-type: scroll-state;
+
+    &::before,
+    &::after {
+      content: '';
+      flex: 0 0 var(--space-7);
+      opacity: 0;
+      pointer-events: none;
+      position: sticky;
+      transition: opacity 0.2s;
+      z-index: 1;
+    }
+
+    /* The negative margins cancel each fade's width and the gap after it, so it takes no room. */
+    &::before {
+      background: linear-gradient(to right, var(--surface-page), transparent);
+      inset-inline-start: 0;
+      margin-inline-end: calc(-1 * (var(--space-7) + var(--space-4)));
+      order: -1;
+    }
+
+    &::after {
+      background: linear-gradient(to left, var(--surface-page), transparent);
+      inset-inline-end: 0;
+      margin-inline-start: calc(-1 * (var(--space-7) + var(--space-4)));
+    }
+  }
+
+  @container scroll-state(scrollable: inline-start) {
+    .strip::before,
+    .gallery::before {
+      opacity: 1;
+    }
+  }
+
+  @container scroll-state(scrollable: inline-end) {
+    .strip::after,
+    .gallery::after {
+      opacity: 1;
+    }
   }
 
   .role {
