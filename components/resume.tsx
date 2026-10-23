@@ -105,7 +105,7 @@ export function Resume() {
         code on <External href={SITE.author.github}>GitHub</External>.
       </p>
 
-      <h2 className={styles.section}>Other Experience</h2>
+      <h2 className={styles.section}>Other experience</h2>
 
       <section className={styles.block}>
         <h3 className={styles.role}>Author</h3>

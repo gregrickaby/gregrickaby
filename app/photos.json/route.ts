@@ -4,10 +4,9 @@ import { SITE } from '@/lib/site'
 /**
  * JSON list of every photo, with absolute image URLs. Prerendered at build time.
  *
- * Consumed by external clients that need the gallery as data rather than HTML —
- * for example a TV that pulls these as rotating wallpapers. Each `url` is the
- * full-size original under `public/content/`, so a client can download and
- * resize it however it likes.
+ * For clients that want the gallery as data, such as a TV that pulls these as
+ * rotating wallpapers. Each `url` is the full-size original under
+ * `public/content/`, so a client can download and resize it however it likes.
  */
 export function GET() {
   const photos = getPhotos().map((photo) => ({

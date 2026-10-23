@@ -174,7 +174,7 @@ describe('Resume', () => {
     const html = await renderServer(<Resume />)
     expect(html).toContain('Mindsize')
     expect(html).toContain('href="https://mindsize.com"')
-    expect(html).toContain('Other Experience')
+    expect(html).toContain('Other experience')
   })
 })
 

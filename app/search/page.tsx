@@ -28,13 +28,13 @@ async function Results({ searchParams }: { searchParams: PageProps<'/search'>['s
       </div>
       {!query ? null : posts.length === 0 ? (
         <p className={styles.status} role="status">
-          No posts match &ldquo;{query}&rdquo;.
+          No posts match &quot;{query}&quot;.
         </p>
       ) : (
         <>
           <p className={styles.status} role="status">
-            {posts.length} {posts.length === 1 ? 'post matches' : 'posts match'} &ldquo;{query}
-            &rdquo;.
+            {posts.length} {posts.length === 1 ? 'post matches' : 'posts match'} &quot;{query}
+            &quot;.
           </p>
           <PostGrid posts={posts} />
         </>
