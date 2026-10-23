@@ -56,7 +56,7 @@ describe('HomeAbout and CameraBag', () => {
     expect(await renderServer(<CameraBag page={plain} />)).toBe('')
 
     const noNote = post({ slug: 'about' }, '<h2 id="photographer">Photographer</h2><p>Story</p>')
-    expect(await renderServer(<CameraBag page={noNote} />)).not.toContain('<aside')
+    expect(await renderServer(<CameraBag page={noNote} />)).not.toContain('role="note"')
   })
 })
 

@@ -26,14 +26,11 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
-      aria-label="Toggle color scheme"
-      className={styles.toggle}
-      onClick={toggle}
-      type="button"
-    >
+    <button className={styles.toggle} onClick={toggle} type="button">
       <SunIcon className={styles.sun} />
       <MoonIcon className={styles.moon} />
+      <span className={`visually-hidden ${styles.sun}`}>Switch to dark theme</span>
+      <span className={`visually-hidden ${styles.moon}`}>Switch to light theme</span>
     </button>
   )
 }

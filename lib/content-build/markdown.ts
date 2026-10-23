@@ -188,7 +188,7 @@ export async function renderMarkdown(
     .use(rehypeRaw)
     .use(rehypeSlug)
     .use(rehypeLocalMedia, { ...options, images })
-    .use(rehypePrettyCode, { theme: 'github-dark', keepBackground: true })
+    .use(rehypePrettyCode, { theme: 'github-dark-default', keepBackground: true })
     .use(rehypeStringify)
     .process(markdown)
   return { html: sanitizeHtml(String(file), SANITIZE_OPTIONS), images }

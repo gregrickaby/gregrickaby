@@ -73,7 +73,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
           Skip to content
         </a>
         <SiteHeader />
-        <main className={styles.main} id="main">
+        <main className={styles.main} id="main" tabIndex={-1}>
           {children}
         </main>
         <SiteFooter />

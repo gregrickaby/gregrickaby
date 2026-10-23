@@ -32,7 +32,7 @@ describe('SiteHeader', () => {
     expect(html).toContain('target="_blank"')
     expect(html).toContain('action="/search"')
     expect(html).toContain('popoverTarget="site-menu"')
-    expect(html).toContain('aria-label="Toggle color scheme"')
+    expect(html).toContain('Switch to dark theme')
   })
 })
 

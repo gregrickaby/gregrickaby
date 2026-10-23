@@ -96,9 +96,9 @@ export function CameraBag({ page }: { page: Post }) {
         <Prose html={photography.html} />
       </div>
       {disclaimer ? (
-        <aside aria-label="Affiliate disclaimer" className={styles.disclaimer}>
+        <div aria-label="Affiliate disclaimer" className={styles.disclaimer} role="note">
           <Prose html={disclaimer.html} />
-        </aside>
+        </div>
       ) : null}
     </Band>
   )
@@ -113,7 +113,7 @@ export function CareerStrip() {
       more={{ href: '/resume', text: 'Full resume' }}
       title="Where I've worked"
     >
-      <ol className={styles.strip} role="list">
+      <ol aria-labelledby="career-title" className={styles.strip} role="list" tabIndex={0}>
         {resumeEntries.map((entry) => (
           <li className={styles.role} key={`${entry.company}-${entry.dateRange}`}>
             <MetaLine items={[entry.dateRange]} />

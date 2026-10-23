@@ -71,6 +71,7 @@ export function Resume() {
         </div>
       </section>
 
+      <h2 className="visually-hidden">Experience</h2>
       <ol className={styles.timeline} role="list">
         {resumeEntries.map((entry) => (
           <li className={styles.entry} key={`${entry.company}-${entry.dateRange}`}>

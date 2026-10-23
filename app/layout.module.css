@@ -3,6 +3,11 @@
     margin-inline: auto;
     max-width: var(--page);
     padding: var(--space-6) var(--gutter) 0;
+
+    /* Focused only as the skip link's target. */
+    &:focus {
+      outline: none;
+    }
   }
 
   @media print {

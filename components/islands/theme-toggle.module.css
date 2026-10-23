@@ -16,7 +16,7 @@
     }
   }
 
-  /* The icon shows the current scheme. */
+  /* The icon shows the current scheme; the hidden label names the other one. */
   .moon {
     display: none;
   }

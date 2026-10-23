@@ -24,7 +24,7 @@ describe('ThemeToggle', () => {
     stubSystem(true)
     document.documentElement.dataset.theme = 'system'
     render(<ThemeToggle />)
-    fireEvent.click(screen.getByRole('button', { name: 'Toggle color scheme' }))
+    fireEvent.click(screen.getByRole('button', { name: /Switch to/ }))
     expect(document.documentElement.dataset.theme).toBe('light')
     expect(document.cookie).toContain('theme=light')
   })
