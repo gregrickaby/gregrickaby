@@ -1,13 +1,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MobileMenu } from '@/components/islands/mobile-menu'
+import { SoundToggle } from '@/components/islands/sound-toggle'
 import { ThemeToggle } from '@/components/islands/theme-toggle'
 import { NavLinks } from '@/components/nav-links'
 import { SearchForm } from '@/components/search-form'
 import { SITE } from '@/lib/site'
 import styles from './site-header.module.css'
 
-/** The sticky site header. Server-rendered; only the theme toggle and mobile menu hydrate. */
+/** The sticky site header. Server-rendered; only the sound and theme toggles and the mobile menu hydrate. */
 export function SiteHeader() {
   return (
     <header className={`no-print ${styles.header}`}>
@@ -33,6 +34,7 @@ export function SiteHeader() {
           <div className={styles.search}>
             <SearchForm id="header-search" />
           </div>
+          <SoundToggle />
           <ThemeToggle />
           <div className={styles.menu}>
             <MobileMenu>

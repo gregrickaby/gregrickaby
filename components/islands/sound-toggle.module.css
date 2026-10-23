@@ -1,0 +1,25 @@
+@layer components {
+  .toggle {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-1);
+    color: var(--text-1);
+    display: inline-flex;
+    height: 2.25rem;
+    justify-content: center;
+    width: 2.25rem;
+
+    &:hover {
+      background: var(--surface-hover);
+      color: var(--accent);
+    }
+  }
+
+  /* Sounds need JavaScript. */
+  @media (scripting: none) {
+    .toggle {
+      display: none;
+    }
+  }
+}
