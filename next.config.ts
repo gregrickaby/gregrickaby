@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next'
 
-import headers from './lib/headers'
-import redirects from './lib/redirects'
+import { headers } from './lib/headers'
+import { redirects } from './lib/redirects'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 
 import { PrintButton } from '@/components/islands/print-button'
 import { MetaLine } from '@/components/meta-line'
@@ -15,7 +16,7 @@ function External({
   className,
 }: {
   href: string
-  children: React.ReactNode
+  children: ReactNode
   className?: string
 }) {
   return (

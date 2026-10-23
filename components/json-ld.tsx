@@ -4,8 +4,8 @@ import { serializeSchema, type SchemaGraph } from '@/lib/schema'
 export function JsonLd({ graph }: { graph: SchemaGraph }) {
   return (
     <script
-      type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: serializeSchema(graph) }}
+      type="application/ld+json"
     />
   )
 }

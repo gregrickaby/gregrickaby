@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import redirects from '@/lib/redirects'
+import { redirects } from '@/lib/redirects'
 
 describe('redirects', () => {
   it('places the date-based catch-all last', () => {

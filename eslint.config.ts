@@ -2,6 +2,12 @@ import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
+// Source modules declare their top-level functions. A typed const (`const rule: Rule = ...`) is fine.
+const FUNCTION_DECLARATIONS = [
+  'Program > VariableDeclaration > VariableDeclarator:not([id.typeAnnotation]) > :matches(ArrowFunctionExpression, FunctionExpression).init',
+  'Program > ExportNamedDeclaration > VariableDeclaration > VariableDeclarator:not([id.typeAnnotation]) > :matches(ArrowFunctionExpression, FunctionExpression).init',
+].map((selector) => ({ selector, message: 'Use a function declaration for top-level functions.' }))
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -14,9 +20,54 @@ const eslintConfig = defineConfig([
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],
+      '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
       'react/no-danger': 'error',
+      'react/jsx-sort-props': 'error',
       'no-console': ['error', { allow: ['warn', 'error'] }],
+      'no-restricted-exports': [
+        'error',
+        {
+          restrictDefaultExports: {
+            direct: true,
+            named: true,
+            defaultFrom: true,
+            namedFrom: true,
+            namespaceFrom: true,
+          },
+        },
+      ],
+      'no-restricted-imports': [
+        'error',
+        { patterns: [{ group: ['../*'], message: 'Import from another folder with `@/`.' }] },
+      ],
     },
+  },
+  {
+    files: ['{app,components,lib,scripts,stylelint}/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        ...FUNCTION_DECLARATIONS,
+        {
+          selector: "TSQualifiedName[left.name='React']",
+          message: "Import the type from 'react' instead of using the `React` namespace.",
+        },
+      ],
+    },
+  },
+  {
+    // Next.js route files and tool configs are loaded by their default export.
+    files: [
+      'app/**/{page,layout,template,default,error,global-error,not-found,opengraph-image,icon,sitemap,robots,manifest}.{ts,tsx}',
+      '*.config.ts',
+      'stylelint/**/*.ts',
+    ],
+    rules: { 'no-restricted-exports': 'off' },
+  },
+  {
+    // Node runs these directly, without the `@/` alias, so they import by relative path.
+    files: ['lib/content-build/**/*.ts', 'scripts/**/*.ts'],
+    rules: { 'no-restricted-imports': 'off' },
   },
   {
     // The only places allowed to inject HTML: the no-flash theme script, JSON-LD,

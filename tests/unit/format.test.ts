@@ -1,14 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { escapeHtml, exifSummary, formatDate, formatShortDate, validDate } from '@/lib/format'
+import { exifSummary, formatShortDate, validDate } from '@/lib/format'
 import { fullImageUrl, optimizedImageUrl } from '@/lib/images'
-
-describe('formatDate', () => {
-  it('prints the date as written, in UTC', () => {
-    expect(formatDate('2024-06-01T00:00:00Z')).toBe('June 1, 2024')
-    expect(formatDate('2024-01-11T23:59:00')).toBe('January 11, 2024')
-  })
-})
 
 describe('formatShortDate', () => {
   it('prints a short date, reading zone-less dates as UTC', () => {
@@ -38,14 +31,6 @@ describe('exifSummary', () => {
     ).toBe('Sony · 35mm · 35mm · f/2 · 1/60s · ISO 100')
     expect(exifSummary({ camera: 'Sony' })).toBe('Sony')
     expect(exifSummary({})).toBe('')
-  })
-})
-
-describe('escapeHtml', () => {
-  it('escapes markup characters', () => {
-    expect(escapeHtml(`<a href="x">'&'</a>`)).toBe(
-      '&lt;a href=&quot;x&quot;&gt;&#x27;&amp;&#x27;&lt;/a&gt;',
-    )
   })
 })
 

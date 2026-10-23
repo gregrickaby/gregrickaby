@@ -131,11 +131,7 @@ export function buildBlogPostingGraph(meta: PostMeta): SchemaGraph {
   }
 }
 
-/**
- * Input for buildWebPageGraph.
- *
- * @interface
- */
+/** Input for {@link buildWebPageGraph}. */
 export interface WebPageGraphInput {
   /** The page title. */
   title: string

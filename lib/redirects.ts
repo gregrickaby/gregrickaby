@@ -3,7 +3,7 @@
  *
  * Order matters: more specific rules must precede broader catch-alls.
  */
-const redirects = [
+export const redirects = [
   // Legacy feed URL.
   { source: '/blog/feed/', destination: '/feed.xml', permanent: true },
   { source: '/feed/atom', destination: '/feed.xml', permanent: true },
@@ -117,5 +117,3 @@ const redirects = [
     permanent: true,
   },
 ]
-
-export default redirects

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import type HeadersModule from '@/lib/headers'
+import type { headers as Headers } from '@/lib/headers'
 
 describe('headers', () => {
   const originalEnv = process.env.NODE_ENV
@@ -10,27 +10,27 @@ describe('headers', () => {
     vi.resetModules()
   })
 
-  function getCspValue(headers: typeof HeadersModule) {
+  function getCspValue(headers: typeof Headers) {
     return headers[0]!.headers.find((h) => h.key === 'Content-Security-Policy')?.value
   }
 
   it("includes 'unsafe-eval' in development", async () => {
     vi.stubEnv('NODE_ENV', 'development')
     vi.resetModules()
-    const { default: headers } = await import('@/lib/headers')
+    const { headers } = await import('@/lib/headers')
     expect(getCspValue(headers)).toContain("'unsafe-eval'")
   })
 
   it("excludes 'unsafe-eval' in production", async () => {
     vi.stubEnv('NODE_ENV', 'production')
     vi.resetModules()
-    const { default: headers } = await import('@/lib/headers')
+    const { headers } = await import('@/lib/headers')
     expect(getCspValue(headers)).not.toContain("'unsafe-eval'")
   })
 
   it('sets long-lived caching on static asset paths', async () => {
     vi.resetModules()
-    const { default: headers } = await import('@/lib/headers')
+    const { headers } = await import('@/lib/headers')
     const assetRule = headers[1]
     expect(assetRule!.headers[0]).toEqual({
       key: 'Cache-Control',

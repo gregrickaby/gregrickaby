@@ -24,7 +24,7 @@ const contentSecurityPolicy = [
 ].join('; ')
 
 /** HTTP security and caching headers, applied via `next.config.ts`. */
-const headers = [
+export const headers = [
   {
     source: '/:path*',
     headers: [
@@ -49,5 +49,3 @@ const headers = [
     headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
   },
 ]
-
-export default headers
