@@ -43,6 +43,11 @@ describe('buildContentMetadata', () => {
     expect(page.alternates).not.toHaveProperty('types')
   })
 
+  it('links a page to the Markdown copy it passes', async () => {
+    const page = await buildContentMetadata(baseMeta, '/test-page', makeParent(), '/test-page.md')
+    expect(page.alternates?.types).toEqual({ 'text/markdown': '/test-page.md' })
+  })
+
   it('constructs openGraph.url from SITE.url and canonicalPath', async () => {
     const result = await buildContentMetadata(baseMeta, '/test-page', makeParent())
     expect(result.openGraph?.url).toBe(`${SITE.url}/test-page`)

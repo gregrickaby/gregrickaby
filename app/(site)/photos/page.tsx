@@ -14,7 +14,7 @@ const DESCRIPTION = 'A collection of my photos.'
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: '/photos' },
+  alternates: { canonical: '/photos', types: { 'text/markdown': '/photos.md' } },
   openGraph: {
     ...OPEN_GRAPH_BASE,
     title: TITLE,
