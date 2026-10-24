@@ -13,6 +13,7 @@ Write like Greg talking to one curious friend at his desk: first person, plain w
 - Learns in public. Says when he didn't know something ("I had NO idea what REM was", "I honestly didn't know") and when it went wrong ("Well, it rained. All day.").
 - Opinionated but fair. Tests claims instead of repeating them (the microphone shootout put both mics on the same processor, unedited).
 - Warm, a bit dry, never snarky at the reader. Jokes at his own expense or at the situation ("We did this to ourselves.").
+- Greg loves whimsy.
 
 ## Sentence-level habits
 
@@ -85,7 +86,7 @@ Rules for each demo:
 - Let readers break things on purpose. Editable values, presets, a way to reset, and output they can copy (the notes demo prints code you can paste into `SOUNDS`).
 - The surrounding prose must still make sense without JavaScript, because the post prerenders and the demo is a client island.
 
-Mechanics follow `AGENTS.md` ("Demos"): `<div data-demo="name"></div>` on its own line in the post, components in `components/islands/demos/<slug>/demos.tsx`, names and titles in `registry.ts`, built from `components/islands/demo-kit/` (`Plot`, `Controls`, `DemoButton`, `Slider`, `Caption`). Sound goes through `playNotes`. Run `npm run content` after adding a demo. Put pure helpers (wave math, formatters) in exported functions so unit tests can cover them.
+Mechanics follow `AGENTS.md` ("Demos"): `<div data-demo="name"></div>` on its own line in the post, components in `components/islands/demos/<slug>/demos.tsx`, names and titles in `registry.ts`, built from `components/islands/demo-kit/` (`Plot`, `Controls`, `DemoButton`, `Slider`, `Caption`). Sound goes through `playNotes`. Run `npm run content -- --drafts` after adding a demo. Put pure helpers (wave math, formatters) in exported functions so unit tests can cover them.
 
 When drafting a post, list proposed demos (name, title, control, what the reader learns) and get approval before building them.
 
@@ -140,7 +141,7 @@ Follow `docs/code-standards.md` ("Writing"): straight quotes, no em dashes, sent
 1. Read the code or notes the post is about. For a post about this site, read the real files so every snippet and number is true.
 2. Propose an outline: the hook, sections with one idea each, demo spots, the payoff, the ending callback. Wait for a go-ahead on anything that needs new demo code.
 3. Write to `public/content/posts/<slug>/content.mdx` with `draft: true`.
-4. Self-check below, then `npm run format` and `npm run content`.
+4. Self-check below, then `npm run format` and `npm run content -- --drafts`.
 
 **Editing Greg's draft:** keep his jokes, asides, and phrasing. Tighten, fix facts, and apply the writing rules. Flag anything that drifts from the voice instead of rewriting it wholesale. Don't sand the personality off.
 
