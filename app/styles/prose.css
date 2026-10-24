@@ -6,7 +6,10 @@
     line-height: 1.7;
     overflow-wrap: break-word;
 
-    & > * + * {
+    /* A body with demos is split into runs of HTML, so each run spaces its
+       own children the same way. */
+    & > * + *,
+    & > .prose-run > * + * {
       margin-block-start: 1.25em;
     }
 

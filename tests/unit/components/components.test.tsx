@@ -5,6 +5,9 @@ import { renderServer } from '@/tests/helpers/render-server'
 
 vi.mock('@/.generated/content.json', () => ({ default: contentIndex() }))
 vi.mock('next/navigation', () => ({ usePathname: () => '/' }))
+vi.mock('@/.generated/demos', () => ({
+  POST_DEMOS: { post: { box: { title: 'A box', Body: () => <div>Box body</div> } } },
+}))
 vi.mock('next/form', () => ({
   default: ({ children, ...props }: React.ComponentProps<'form'>) => (
     <form {...props}>{children}</form>
@@ -109,6 +112,40 @@ describe('Article', () => {
     expect(html).not.toContain('aria-label="Tags"')
     expect(html).not.toContain('Table of contents')
     expect(html).toContain('Like this post')
+  })
+})
+
+describe('Prose', () => {
+  it("renders a post's demos between runs of HTML and skips names it does not list", async () => {
+    const { Prose } = await import('@/components/prose')
+    const html = await renderServer(
+      <Prose
+        html={'<p>Before</p><div data-demo="box"></div><div data-demo="nope"></div><p>After</p>'}
+        slug="post"
+      />,
+    )
+    expect(html).toContain('<div class="prose-run"><p>Before</p></div>')
+    expect(html).toContain('aria-label="A box"')
+    expect(html).toContain('Box body')
+    expect(html).toContain('Turn on JavaScript to play with this demo.')
+    expect(html).not.toContain('nope')
+    expect(html.indexOf('Box body')).toBeLessThan(html.indexOf('After'))
+  })
+
+  it('renders nothing for a post without demos', async () => {
+    const { Prose } = await import('@/components/prose')
+    const html = await renderServer(<Prose html={'<div data-demo="box"></div>'} slug="other" />)
+    expect(html).not.toContain('A box')
+  })
+
+  it('injects HTML as it is without markers or outside a post', async () => {
+    const { Prose } = await import('@/components/prose')
+    expect(await renderServer(<Prose html="<p>Plain</p>" slug="post" />)).toContain(
+      '<div class="prose"><p>Plain</p></div>',
+    )
+    const page = await renderServer(<Prose html={'<p>Page</p><div data-demo="box"></div>'} />)
+    expect(page).not.toContain('prose-run')
+    expect(page).not.toContain('Box body')
   })
 })
 

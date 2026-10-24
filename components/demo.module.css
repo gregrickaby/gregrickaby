@@ -1,0 +1,33 @@
+@layer components {
+  .demo {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2);
+    display: grid;
+    font-family: var(--font-sans);
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .title {
+    color: var(--accent);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .noscript {
+    display: none;
+  }
+
+  @media (scripting: none) {
+    .noscript {
+      color: var(--text-2);
+      display: block;
+      font-size: var(--step-minus-1);
+      margin: 0;
+    }
+  }
+}

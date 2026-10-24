@@ -1,0 +1,23 @@
+@layer components {
+  .plot {
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    height: 8rem;
+    width: 100%;
+  }
+
+  .axis {
+    stroke: var(--border);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .line {
+    fill: none;
+    stroke: var(--accent);
+    stroke-linejoin: round;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+  }
+}

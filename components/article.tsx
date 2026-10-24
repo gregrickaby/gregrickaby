@@ -65,7 +65,7 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
               </div>
             </div>
           </aside>
-          <Prose html={html} />
+          <Prose html={html} slug={meta.slug} />
           {/* The narrow-screen copy, after the body so focus order matches what readers see. */}
           <div className={styles.endLike}>
             <LikeButton slug={meta.slug} />

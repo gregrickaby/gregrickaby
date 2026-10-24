@@ -179,6 +179,22 @@ function rehypeCodeBlocks() {
   }
 }
 
+/**
+ * Keeps interactive demo markers (`<div data-demo="name"></div>`) only at the
+ * top level of the body, emptied, so `Prose` can split the HTML around them.
+ * A marker nested inside other markup loses its `data-demo` and stays an
+ * empty div.
+ */
+function rehypeDemos() {
+  return (tree: HastRoot) => {
+    visit(tree, 'element', (node: Element, _, parent) => {
+      if (node.properties.dataDemo === undefined) return
+      if (parent?.type === 'root' && node.tagName === 'div') node.children = []
+      else delete node.properties.dataDemo
+    })
+  }
+}
+
 /** Tags and attributes the pipeline emits, on top of sanitize-html's defaults. */
 const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   allowedTags: [
@@ -214,6 +230,7 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
     code: ['data-language', 'data-theme'],
     span: ['data-line', 'data-highlighted-line', 'style'],
     figure: ['data-rehype-pretty-code-figure', 'style'],
+    div: ['data-demo'],
     '*': ['class', 'id'],
   },
 }
@@ -231,7 +248,8 @@ export interface RenderedMarkdown {
 /**
  * Renders a post or page body: GitHub-flavored Markdown with raw HTML, heading
  * ids and a list of headings, figure captions, shiki code highlighting with
- * copy buttons, and optimized images. The HTML is sanitized, so the page can inject it as-is.
+ * copy buttons, optimized images, and demo markers. The HTML is sanitized,
+ * so the page can inject it as-is.
  *
  * @param markdown - The body, without frontmatter.
  * @param options - Where the content's files live and how to measure them.
@@ -258,6 +276,7 @@ export async function renderMarkdown(
       defaultLang: { block: 'plaintext' },
     })
     .use(rehypeCodeBlocks)
+    .use(rehypeDemos)
     .use(rehypeStringify)
     .process(markdown)
   return { html: sanitizeHtml(String(file), SANITIZE_OPTIONS), images, headings }

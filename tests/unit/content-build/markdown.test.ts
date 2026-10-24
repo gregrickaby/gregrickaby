@@ -128,6 +128,16 @@ describe('renderMarkdown', () => {
     expect(tokens).toContain(`--surface-code: light-dark(${light}, ${dark});`)
   })
 
+  it('keeps top-level demo markers, emptied, and drops nested ones', async () => {
+    const { html } = await render(
+      '<div data-demo="notes"><p>fallback</p></div>\n\n- <span data-demo="fade">x</span>\n\n<section><div data-demo="noise"></div></section>',
+    )
+    expect(html).toContain('<div data-demo="notes"></div>')
+    expect(html).not.toContain('fallback')
+    expect(html).not.toContain('data-demo="fade"')
+    expect(html).not.toContain('data-demo="noise"')
+  })
+
   it('strips scripts and event handlers', async () => {
     const { html } = await render('<script>alert(1)</script>\n\n<img src="x" onerror="alert(1)">')
     expect(html).not.toContain('<script')

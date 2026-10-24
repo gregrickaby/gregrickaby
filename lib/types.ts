@@ -1,3 +1,5 @@
+import type { ComponentType } from 'react'
+
 /** A local image with its intrinsic size, measured at build time. */
 export interface ImageAsset {
   /** Path under `public/`, such as `/content/posts/slug/photo.jpg`. */
@@ -29,6 +31,15 @@ export interface Heading {
   id: string
   text: string
   depth: 2 | 3
+}
+
+/**
+ * An interactive demo a post places with `<div data-demo="name"></div>`. Each
+ * post lists its own in `components/islands/demos/<slug>/registry.ts`.
+ */
+export interface DemoEntry {
+  title: string
+  Body: ComponentType
 }
 
 /** A post or page with its HTML, rendered and sanitized at build time. */
