@@ -28,7 +28,7 @@
     width: min(var(--wide), 100vw);
   }
 
-  @media (width <= 1100px) {
+  @media (width <= 68.75rem) {
     .hero {
       border-radius: 0;
     }

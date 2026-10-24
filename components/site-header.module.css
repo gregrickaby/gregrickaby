@@ -89,7 +89,7 @@
     display: none;
   }
 
-  @media (width <= 860px) {
+  @media (width <= 53.75rem) {
     .nav,
     .search {
       display: none;
