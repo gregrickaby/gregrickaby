@@ -152,6 +152,13 @@ describe('renderMarkdown', () => {
     )
   })
 
+  it('accepts a lowercase marker, as GitHub does', async () => {
+    const { html } = await render('> [!note] Hi\n> There.')
+    expect(html).toBe(
+      '<aside class="callout callout-note">\n<p class="callout-title">Hi</p>\n<p>There.</p>\n</aside>',
+    )
+  })
+
   it('keeps the rest of the paragraph when the marker line has more after it', async () => {
     const { html } = await render('> [!TIP]\n> Use `satisfies`.')
     expect(html).toBe(
