@@ -1,4 +1,4 @@
-import type { ResumeEntry } from './types'
+import type { ResumeEntry, ResumeSection } from './types'
 
 /**
  * Canonical work history for the resume timeline, most recent role first.
@@ -201,6 +201,7 @@ export const resumeSummary = {
   since: 1997,
   intro:
     'Technical lead and software engineer. I build fast, accessible sites with Next.js and TypeScript, lead teams, and bring agentic AI into everyday engineering work.',
+  basedIn: 'Alabama, working remotely',
   skills: [
     'Next.js',
     'React',
@@ -212,3 +213,52 @@ export const resumeSummary = {
     'WordPress',
   ],
 } as const
+
+/** The "Other experience" section: books, then community work. */
+export const otherExperience: ResumeSection[] = [
+  {
+    heading: 'Author',
+    paragraphs: [
+      [
+        "In 2017, I wrote a children's book, ",
+        { text: 'Creating a Website for Dummies Jr', href: 'https://amzn.to/41eZFfF', em: true },
+        ', published by Wiley Global under the ',
+        { text: 'dummies™', href: 'https://www.dummies.com/' },
+        ' brand.',
+      ],
+      [
+        "The book guides young readers through planning and building a website. It's been translated into 2 languages and holds a 4.5-star rating on Amazon.",
+      ],
+      ["I've also been Technical Editor on three other books:"],
+    ],
+    list: [
+      [
+        { text: 'WordPress for Dummies', href: 'https://amzn.to/44EeXgy', em: true },
+        ' (Sabin-Wilson, 2021)',
+      ],
+      [
+        {
+          text: 'Professional WordPress Plugin Development',
+          href: 'https://amzn.to/3VN8f3Z',
+          em: true,
+        },
+        ' (Williams et al., 2020)',
+      ],
+      [
+        { text: 'WordPress All-In-One For Dummies', href: 'https://amzn.to/3B37BG8', em: true },
+        ' (Sabin-Wilson, 2019)',
+      ],
+    ],
+  },
+  {
+    heading: 'Contributor',
+    paragraphs: [
+      [
+        'I was part of the WordPress community from 2008 to 2023, contributing to core, docs, plugins, and themes, and speaking at WordCamps and meetups. I now contribute to Next.js, Storybook, and other open-source projects.',
+      ],
+      [
+        'Outside of tech, I volunteer with local community organizations, including Boy Scouts, Wiregrass Church, and the local high school band boosters.',
+      ],
+    ],
+  },
+]
