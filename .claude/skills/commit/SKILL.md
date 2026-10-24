@@ -1,6 +1,7 @@
 ---
 name: commit
 model: claude-haiku-5-5
+context: fork
 description: >
   Commit the working tree as small conventional commits, one per logical chunk of work. Use when the user says "commit", "micro commit", "commit this", or "/commit". Does not push unless asked.
 ---
@@ -11,10 +12,12 @@ description: >
 
 Split the uncommitted work into small commits, one per logical change, with Conventional Commit subjects. Push only when the user asks in the same request.
 
+Run start to finish without asking questions. When a choice comes up, take the default this skill names, commit, and explain the choice in the report. Stop only when `npm run check` or a hook fails and you can't fix it.
+
 ## 1. Survey
 
 1. Run `git status --short` and `git diff -- . ':!package-lock.json'` (plus `--cached` if anything is staged). Read new files in full.
-2. Note changes you did not make in this session (for example `AGENTS.md` edits or config tweaks). Leave them unstaged and list them in the report, unless the user said to include them.
+2. This skill runs in a fresh context and can't see the conversation, so commit the whole working tree. Leave out only files that look unrelated to the rest of the work (a stray config tweak, a local env file) and list them in the report.
 3. If `npm run check` has not passed since the last edit, run it with `2>&1 | tail -40`. Stop and report if it fails.
 
 ## 2. Group
@@ -34,6 +37,8 @@ git update-index --add --cacheinfo 100644,$(git hash-object -w /path/to/partial)
 
 Commit, then `git add` the real file for the next commit. Lefthook lints and formats each commit's staged files, and the final commit matches the tree that `npm run check` passed.
 
+When the work is large and many files mix features, so a clean split would take hand-built partial versions of more than a few files, don't ask. Group by feature, put each mixed file in the commit of its main change, and list those files in the report with a note that only the final commit was verified.
+
 ## 3. Write messages
 
 - Format: `type: subject`. Types used here: `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `chore`, `content`.
@@ -50,4 +55,4 @@ Commit, then `git add` the real file for the next commit. Lefthook lints and for
 
 ## 5. Report
 
-List the commits as `sha subject`, say whether anything was pushed, and name any files left uncommitted and why.
+List the commits as `sha subject`, say whether anything was pushed, and name any files left uncommitted and why. Name any mixed files and which commit holds them, and any other choice you made instead of asking.
