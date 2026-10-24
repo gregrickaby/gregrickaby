@@ -23,7 +23,7 @@ vi.mock('next/form', () => ({
 const layout = await import('@/app/layout')
 
 describe('root layout', () => {
-  it('renders the shell with fonts, theme script, JSON-LD, and a skip link', async () => {
+  it('renders the document with fonts, theme script, and JSON-LD, leaving the frame to each page', async () => {
     const RootLayout = layout.default as (props: {
       children: React.ReactNode
     }) => React.ReactElement
@@ -32,8 +32,8 @@ describe('root layout', () => {
     expect(html).toContain('data-theme="system"')
     expect(html).toContain('theme=(light|dark)')
     expect(html).toContain('"@type":"WebSite"')
-    expect(html).toContain('href="#main"')
-    expect(html).toContain('Page body')
+    expect(html).not.toContain('href="#main"')
+    expect(html).toContain('<body>Page body</body>')
   })
 
   it('sets site metadata', () => {

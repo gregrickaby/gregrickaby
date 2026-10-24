@@ -10,13 +10,9 @@ import type { Metadata, Viewport } from 'next'
 import { Roboto, Roboto_Mono, Roboto_Slab, Silkscreen } from 'next/font/google'
 
 import { JsonLd } from '@/components/json-ld'
-import { SiteFooter } from '@/components/site-footer'
-import { SiteHeader } from '@/components/site-header'
 import { OPEN_GRAPH_BASE } from '@/lib/metadata'
 import { buildWebSiteGraph } from '@/lib/schema'
 import { SITE } from '@/lib/site'
-
-import styles from './layout.module.css'
 
 const sans = Roboto({ subsets: ['latin'], variable: '--font-roboto', display: 'swap' })
 const serif = Roboto_Slab({ subsets: ['latin'], variable: '--font-roboto-slab', display: 'swap' })
@@ -77,16 +73,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <JsonLd graph={buildWebSiteGraph()} />
       </head>
-      <body>
-        <a className={`no-print ${styles.skip}`} href="#main">
-          Skip to content
-        </a>
-        <SiteHeader />
-        <main className={styles.main} id="main" tabIndex={-1}>
-          {children}
-        </main>
-        <SiteFooter />
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

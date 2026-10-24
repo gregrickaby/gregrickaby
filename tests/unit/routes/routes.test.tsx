@@ -47,7 +47,9 @@ const resume = await import('@/app/(site)/resume/page')
 const contact = await import('@/app/(site)/contact/page')
 const search = await import('@/app/search/page')
 const staticLayout = await import('@/app/(site)/layout')
+const searchLayout = await import('@/app/search/layout')
 const notFoundPage = await import('@/app/not-found')
+const siteNotFound = await import('@/app/(site)/not-found')
 const sitemap = await import('@/app/sitemap')
 const robots = await import('@/app/robots')
 const feed = await import('@/app/feed.xml/route')
@@ -73,9 +75,18 @@ describe('param routes', () => {
 })
 
 describe('static route group', () => {
-  it('requires every page to prerender and passes children through', () => {
+  it('requires every page to prerender and wraps it in the site header and footer', async () => {
     expect(staticLayout.ensureStatic).toBe('navigation')
-    expect(staticLayout.default({ children: 'x' })).toBe('x')
+    const html = await renderServer(<staticLayout.default>Page body</staticLayout.default>)
+    expect(html).toContain('href="#main"')
+    expect(html).toContain('<main')
+    expect(html).toContain('Page body')
+  })
+
+  it('gives search the same header and footer', async () => {
+    const html = await renderServer(<searchLayout.default>Results</searchLayout.default>)
+    expect(html).toContain('href="#main"')
+    expect(html).toContain('Results')
   })
 })
 
@@ -232,6 +243,13 @@ describe('not found', () => {
     const html = await renderServer(<notFoundPage.default />)
     expect(html).toContain('404')
     expect(html).toContain('href="/search"')
+    expect(html).toContain('href="#main"')
+  })
+
+  it('leaves the shell to the (site) layout for a missing post', async () => {
+    const html = await renderServer(<siteNotFound.default />)
+    expect(html).toContain('404')
+    expect(html).not.toContain('href="#main"')
   })
 })
 

@@ -228,6 +228,8 @@ test.describe('platform', () => {
     const missing = await page.goto('/no-such-post')
     expect(missing?.status()).toBe(404)
     await expect(page.getByRole('heading', { level: 1, name: '404' })).toBeVisible()
+    await expect(page.getByRole('main')).toHaveCount(1)
+    await expect(page.getByRole('banner')).toHaveCount(1)
   })
 })
 
