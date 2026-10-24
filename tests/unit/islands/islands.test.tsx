@@ -23,6 +23,7 @@ const getLikes = vi.fn(async (slug: string) =>
 vi.mock('@/lib/like-post', () => ({ getLikes, likePost }))
 const { LikeButton } = await import('@/components/islands/like-button')
 const { TableOfContents } = await import('@/components/islands/table-of-contents')
+const { Sidebar } = await import('@/components/islands/sidebar')
 
 afterEach(() => {
   cleanup()
@@ -487,5 +488,70 @@ describe('TableOfContents', () => {
     expect(screen.getAllByRole('link').some((link) => link.hasAttribute('aria-current'))).toBe(
       false,
     )
+  })
+})
+
+describe('Sidebar', () => {
+  afterEach(() => {
+    document.body.innerHTML = ''
+  })
+
+  function article(imageTop: number) {
+    const container = document.createElement('article')
+    const image = document.createElement('figure')
+    image.className = 'alignwide'
+    image.getBoundingClientRect = () => ({ top: imageTop, bottom: imageTop + 400 }) as DOMRect
+    container.append(image)
+    document.body.append(container)
+    return { container, image }
+  }
+
+  function renderIn(article: HTMLElement) {
+    const container = article.appendChild(document.createElement('aside'))
+    const result = render(
+      <Sidebar className="sidebar">
+        <p>Contents</p>
+      </Sidebar>,
+      { container },
+    )
+    const sidebar = container.querySelector('.sidebar') as HTMLElement
+    sidebar.getBoundingClientRect = () => ({ top: 100, bottom: 500 }) as DOMRect
+    return { ...result, sidebar }
+  }
+
+  it('marks itself covered while a wide image overlaps it, and stops listening on unmount', () => {
+    const { container, image } = article(1000)
+    const { sidebar, unmount } = renderIn(container)
+    fireEvent.scroll(window)
+    expect(sidebar.hasAttribute('data-covered')).toBe(false)
+    image.getBoundingClientRect = () => ({ top: 300, bottom: 700 }) as DOMRect
+    fireEvent.scroll(window)
+    expect(sidebar.hasAttribute('data-covered')).toBe(true)
+    image.getBoundingClientRect = () => ({ top: -500, bottom: 50 }) as DOMRect
+    fireEvent(window, new Event('resize'))
+    expect(sidebar.hasAttribute('data-covered')).toBe(false)
+    const remove = vi.spyOn(window, 'removeEventListener')
+    unmount()
+    expect(remove).toHaveBeenCalledWith('scroll', expect.any(Function))
+    expect(remove).toHaveBeenCalledWith('resize', expect.any(Function))
+    remove.mockRestore()
+  })
+
+  it('does nothing in an article without wide images', () => {
+    const container = document.createElement('article')
+    document.body.append(container)
+    const add = vi.spyOn(window, 'addEventListener')
+    renderIn(container)
+    expect(add).not.toHaveBeenCalledWith('scroll', expect.any(Function), expect.anything())
+    add.mockRestore()
+  })
+
+  it('does nothing outside an article', () => {
+    render(
+      <Sidebar className="sidebar">
+        <p>Contents</p>
+      </Sidebar>,
+    )
+    expect(screen.getByText('Contents').parentElement!.hasAttribute('data-covered')).toBe(false)
   })
 })
