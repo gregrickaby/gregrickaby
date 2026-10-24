@@ -94,3 +94,20 @@ export interface ResumeEntry {
   highlights: string[]
   techStack: string[]
 }
+
+/** A link inside resume prose. Book titles set `em`. */
+export interface ResumeLink {
+  text: string
+  href: string
+  em?: boolean
+}
+
+/** A run of resume prose: plain text or a link. */
+export type ResumeInline = string | ResumeLink
+
+/** A block under "Other experience": its paragraphs, then an optional list. */
+export interface ResumeSection {
+  heading: string
+  paragraphs: ResumeInline[][]
+  list?: ResumeInline[][]
+}

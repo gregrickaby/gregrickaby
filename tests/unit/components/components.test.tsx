@@ -267,6 +267,10 @@ describe('Resume', () => {
     expect(html).toContain('Mindsize')
     expect(html).toContain('href="https://mindsize.com"')
     expect(html).toContain('Other experience')
+    expect(html).toContain(
+      '<a href="https://amzn.to/41eZFfF" rel="noopener" target="_blank"><em>Creating a Website for Dummies Jr</em></a>',
+    )
+    expect(html).toContain('<h3 class="role">Contributor</h3>')
   })
 })
 
