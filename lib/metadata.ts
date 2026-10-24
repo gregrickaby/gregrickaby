@@ -51,7 +51,8 @@ export async function buildPageMetadata(
  *
  * Handles parent OG image inheritance,
  * URL construction from SITE, canonical alternate, and OG type
- * inference (article fields are emitted automatically for posts).
+ * inference (article fields are emitted automatically for posts). Posts also
+ * link their Markdown copy at `/<slug>.md`.
  *
  * @param meta - The post or page frontmatter fields consumed by this function.
  * @param canonicalPath - Absolute path from root, e.g. '/about' or '/my-post'.
@@ -71,7 +72,10 @@ export async function buildContentMetadata(
   return {
     title: meta.title,
     description: meta.description,
-    alternates: { canonical: canonicalPath },
+    alternates: {
+      canonical: canonicalPath,
+      ...(meta.type === 'post' && { types: { 'text/markdown': `/${meta.slug}.md` } }),
+    },
     openGraph: {
       ...OPEN_GRAPH_BASE,
       title: meta.title,

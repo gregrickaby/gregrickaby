@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { buildDemoRegistry } from '@/lib/content-build/demos'
+import { buildDemoRegistry, readDemoTitles } from '@/lib/content-build/demos'
 
 const dirs: string[] = []
 
@@ -36,5 +36,30 @@ describe('buildDemoRegistry', () => {
     expect(source).toContain(
       'export const POST_DEMOS: Record<string, Record<string, DemoEntry>> = {\n}',
     )
+  })
+})
+
+describe('readDemoTitles', () => {
+  it("reads each registry's demo names and titles, keyed by slug", () => {
+    const dir = fixture({ 'a-post': true, 'b-post': false })
+    writeFileSync(
+      join(dir, 'a-post', 'registry.ts'),
+      [
+        'export const DEMOS: Record<string, DemoEntry> = {',
+        "  wave: { title: 'Make a wave', Body: WaveDemo },",
+        '  "two-tone": {',
+        '    title: "Greg\'s mixer",',
+        '    Body: MixerDemo,',
+        '  },',
+        '}',
+      ].join('\n'),
+    )
+    expect(readDemoTitles(dir)).toEqual({
+      'a-post': { wave: 'Make a wave', 'two-tone': "Greg's mixer" },
+    })
+  })
+
+  it('reads nothing when there are no demos', () => {
+    expect(readDemoTitles(join(tmpdir(), 'no-such-folder'))).toEqual({})
   })
 })

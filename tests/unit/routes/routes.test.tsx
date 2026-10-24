@@ -6,6 +6,9 @@ import { renderServer } from '@/tests/helpers/render-server'
 
 const index = contentIndex()
 vi.mock('@/.generated/content.json', () => ({ default: index }))
+vi.mock('@/.generated/markdown.json', () => ({
+  default: { newest: '# Newest Post\n', middle: '# Middle Post\n' },
+}))
 
 // Tests swap parts of the content; each one starts from a fresh copy.
 afterEach(() => {
@@ -48,6 +51,7 @@ const notFoundPage = await import('@/app/not-found')
 const sitemap = await import('@/app/sitemap')
 const robots = await import('@/app/robots')
 const feed = await import('@/app/feed.xml/route')
+const markdownRoute = await import('@/app/md/[slug]/route')
 const photosJson = await import('@/app/photos.json/route')
 const health = await import('@/app/api/health/route')
 
@@ -246,6 +250,23 @@ describe('sitemap, robots, feed, health', () => {
     const xml = await res.text()
     expect(xml).toContain('<link>https://gregrickaby.com/newest</link>')
     expect(xml).toContain('Sun, 11 Oct 2026')
+  })
+
+  it('prerenders a Markdown copy of each post', () => {
+    expect(markdownRoute.generateStaticParams()).toEqual([{ slug: 'newest' }, { slug: 'middle' }])
+  })
+
+  it("serves a post's Markdown, and a 404 for an unknown slug", async () => {
+    const context = (slug: string) => ({ params: params({ slug }) }) as never
+    const res = await markdownRoute.GET(new Request('https://gregrickaby.com'), context('middle'))
+    expect(res.headers.get('Content-Type')).toBe('text/markdown; charset=utf-8')
+    expect(await res.text()).toBe('# Middle Post\n')
+
+    const missing = await markdownRoute.GET(
+      new Request('https://gregrickaby.com'),
+      context('constructor'),
+    )
+    expect(missing.status).toBe(404)
   })
 
   it('answers the health check without caching', async () => {

@@ -6,6 +6,7 @@ import { imageSize } from 'image-size'
 import type { ContentIndex, ImageAsset, Post, PostMeta } from '../types.ts'
 import { renderMarkdown, type MeasuredImage } from './markdown.ts'
 import { comparePhotos, hasGainMap, readPhoto } from './photos.ts'
+import { buildPostMarkdown } from './post-markdown.ts'
 
 const NUMERIC_ENTITY = /&#(\d+);/g
 const FENCED_CODE = /```[\s\S]*?```/g
@@ -40,6 +41,14 @@ function strings(value: unknown): string[] | undefined {
   return Array.isArray(value) ? value.map(String) : undefined
 }
 
+/** Output of {@link buildContent}. */
+export interface BuiltContent {
+  /** The content index the app reads at runtime. */
+  index: ContentIndex
+  /** Each post's Markdown copy, keyed by slug. */
+  markdown: Record<string, string>
+}
+
 /**
  * Reads and renders every post, page, and photo under `publicDir/content`.
  * Pure apart from reading files, so tests can point it at a fixture folder.
@@ -48,13 +57,18 @@ function strings(value: unknown): string[] | undefined {
  * @param now - The build time to record.
  * @param options - `drafts` keeps entries marked `draft: true`, for previews
  *   in development. Builds leave them out, so they never publish.
- * @returns The content index the app reads at runtime.
+ *   `demoTitles` names each post's demos in its Markdown copy, keyed by slug.
+ * @returns The content index and each post's Markdown copy.
  */
 export async function buildContent(
   publicDir: string,
   now = new Date(),
-  { drafts = false }: { drafts?: boolean } = {},
-): Promise<ContentIndex> {
+  {
+    drafts = false,
+    demoTitles = {},
+  }: { drafts?: boolean; demoTitles?: Record<string, Record<string, string>> } = {},
+): Promise<BuiltContent> {
+  const markdown: Record<string, string> = {}
   const sizes = new Map<string, MeasuredImage | null>()
 
   function measure(publicPath: string): MeasuredImage | null {
@@ -107,6 +121,13 @@ export async function buildContent(
         ...(draft ? { draft } : {}),
       }
       const hero = featured && images[0] !== featured.src ? featured : null
+      if (type === 'post') {
+        markdown[meta.slug] = buildPostMarkdown(content, {
+          meta,
+          basePath,
+          demoTitles: demoTitles[meta.slug],
+        })
+      }
       entries.push({ meta, html, headings, hero })
     }
     return entries
@@ -123,5 +144,5 @@ export async function buildContent(
     await Promise.all(photoFiles.map((f) => readPhoto(readFileSync(join(photosDir, f)), f)))
   ).sort(comparePhotos)
 
-  return { generatedAt: now.toISOString(), posts, pages, photos }
+  return { index: { generatedAt: now.toISOString(), posts, pages, photos }, markdown }
 }
