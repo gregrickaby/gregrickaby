@@ -353,6 +353,7 @@ describe('LikeButton', () => {
       fireEvent.click(button)
     })
     expect(playSound).toHaveBeenCalledWith('coin')
+    expect(button.querySelectorAll('[aria-hidden="true"] > [style]')).toHaveLength(10)
     expect(button.textContent).toContain('5 likes. You liked this post')
     expect((button as HTMLButtonElement).disabled).toBe(true)
     expect(localStorage.getItem('liked:post')).toBe('yes')
@@ -375,14 +376,21 @@ describe('LikeButton', () => {
     await act(async () => {})
   })
 
-  it('forgets a like the server did not save', async () => {
+  it('forgets a like the server did not save, and bursts again on a retry', async () => {
     likePost.mockImplementationOnce(async (previous) => previous as never)
     render(<LikeButton slug="post" />)
+    const button = screen.getByRole('button')
     await act(async () => {
-      fireEvent.click(screen.getByRole('button'))
+      fireEvent.click(button)
     })
-    expect(screen.getByRole('button').textContent).toContain('Like this post')
+    expect(button.textContent).toContain('Like this post')
     expect(localStorage.getItem('liked:post')).toBeNull()
+    const first = button.querySelector('[style]')
+    await act(async () => {
+      fireEvent.click(button)
+    })
+    expect(button.querySelector('[style]')).not.toBe(first)
+    expect(button.textContent).toContain('You liked this post')
   })
 
   it('still likes when storage throws', async () => {
