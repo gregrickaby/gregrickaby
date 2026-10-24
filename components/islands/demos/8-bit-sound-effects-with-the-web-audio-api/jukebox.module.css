@@ -1,0 +1,114 @@
+@layer components {
+  .channels {
+    display: grid;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* A switch on the left, the channel's scope on the right. */
+  .channel {
+    align-items: center;
+    color: var(--channel);
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: minmax(9.5rem, auto) 1fr;
+    margin: 0;
+  }
+
+  .pulse1 {
+    --channel: var(--accent);
+  }
+
+  .pulse2 {
+    --channel: var(--info);
+  }
+
+  .triangle {
+    --channel: var(--success);
+  }
+
+  .noise {
+    --channel: var(--warning);
+  }
+
+  .switch {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-1);
+    color: var(--text-1);
+    display: grid;
+    gap: 0 var(--space-2);
+    grid-template-columns: auto 1fr;
+    padding: var(--space-1);
+    text-align: start;
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+
+  /* A familiar on/off switch: the knob slides right and the track fills in. */
+  .track {
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    grid-row: span 2;
+    height: 1.25rem;
+    padding: 2px;
+    transition: background-color 0.15s;
+    width: 2.25rem;
+
+    .switch[aria-checked='true'] & {
+      background: var(--channel);
+    }
+  }
+
+  .knob {
+    background: var(--surface-page);
+    border-radius: 50%;
+    display: block;
+    height: 1rem;
+    transition: translate 0.15s var(--ease-out);
+    width: 1rem;
+
+    .switch[aria-checked='true'] & {
+      translate: 1rem 0;
+    }
+  }
+
+  .role {
+    font-size: var(--step-minus-1);
+    font-weight: 600;
+  }
+
+  .chip {
+    color: var(--text-2);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    text-transform: uppercase;
+  }
+
+  .scope {
+    background:
+      linear-gradient(var(--border), var(--border)) center / 100% 1px no-repeat,
+      var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    height: 3rem;
+    transition: opacity 0.2s;
+    width: 100%;
+
+    .switch[aria-checked='false'] + & {
+      opacity: 0.35;
+    }
+  }
+
+  @media (scripting: none) {
+    .channels {
+      display: none;
+    }
+  }
+}
