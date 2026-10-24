@@ -2,10 +2,14 @@
  * Renders posts, pages, and photo metadata once at build time, so the server
  * never runs the Markdown pipeline, shiki, or EXIF parsing, and lists each
  * post's demos. Runs before `next dev`, `next build`, and `npm run check`.
- * `--drafts` keeps posts and pages marked `draft: true`; only `npm run dev`
- * passes it.
+ * `--drafts` keeps posts and pages marked `draft: true`. `npm run dev` and
+ * `npm run check` pass it, so a check builds what the dev server shows;
+ * `npm run build` leaves drafts out.
+ *
+ * Files are only written when their content changes (ignoring the build
+ * time), so running a check next to `next dev` doesn't reload the page.
  */
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 import { buildContent } from '../lib/content-build/build.ts'
@@ -15,9 +19,33 @@ const root = process.cwd()
 const index = await buildContent(join(root, 'public'), new Date(), {
   drafts: process.argv.includes('--drafts'),
 })
+
+function read(path: string): string | undefined {
+  return existsSync(path) ? readFileSync(path, 'utf8') : undefined
+}
+
+/** The existing content index with this build's time, to compare everything else. */
+function restamped(existing: string): string | undefined {
+  try {
+    return JSON.stringify({ ...JSON.parse(existing), generatedAt: index.generatedAt })
+  } catch {
+    return undefined
+  }
+}
+
+function writeIfChanged(
+  path: string,
+  contents: string,
+  same: (existing: string) => string | undefined = (existing) => existing,
+) {
+  const existing = read(path)
+  if (existing !== undefined && same(existing) === contents) return
+  writeFileSync(path, contents)
+}
+
 mkdirSync(join(root, '.generated'), { recursive: true })
-writeFileSync(join(root, '.generated', 'content.json'), JSON.stringify(index))
-writeFileSync(
+writeIfChanged(join(root, '.generated', 'content.json'), JSON.stringify(index), restamped)
+writeIfChanged(
   join(root, '.generated', 'demos.ts'),
   buildDemoRegistry(join(root, 'components', 'islands', 'demos')),
 )
