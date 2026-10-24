@@ -9,7 +9,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # gregrickaby.com
 
-Greg Rickaby's personal site (<https://gregrickaby.com>): blog, photo gallery, resume, and contact page. Markdown in `public/content/`, no database. Every page except `/search` prerenders at build time.
+Greg Rickaby's personal site (<https://gregrickaby.com>): blog, photo gallery, resume, and contact page. Markdown in `public/content/`; the only database is a SQLite file of post likes. Every page except `/search` prerenders at build time.
 
 ## Stack
 
@@ -33,7 +33,10 @@ Secrets go in `.env.local` (see `.env.example`). Server errors go to stdout (Coo
 - **Static by contract.** `app/(site)/layout.tsx` sets `ensureStatic = 'navigation'`, so the build fails if a page reads cookies, headers, or search params, or does uncached work. `/search` sits outside the group and is the only per-request page.
 - **Param routes** (`[slug]`, `tag/[tag]`, `category/[category]`, `/search`) set `instant = false` so the prerendered HTML has the full content for crawlers and readers without JavaScript. Links to them use `prefetch={true}` so client navigation still renders at once. `e2e/site.spec.ts` checks this with `instant()`.
 - **Images.** Components use `next/image`. The build writes `/_next/image` URLs and `srcset` into post HTML (`lib/images.ts`). HDR gain map JPEGs (`hdrgm` XMP) use the original file for full-size views, because the optimizer strips the gain map.
-- **Client islands.** Server Components by default. Client code lives only in `components/islands/` and never fetches.
+- **Client islands.** Server Components by default. Client code lives only in `components/islands/` and never fetches. The like button is the one island that calls server actions (`lib/like-post.ts`).
+- **Likes.** `lib/likes.ts` keeps one row per post per hashed visitor IP in SQLite (`node:sqlite`, no dependency) at `LIKES_DB_PATH`, a file on a Coolify volume. Post pages never read it: the like button loads the count after hydration, so the HTML stays static. Never call a `'use cache'` function from a post page; it makes every post's per-link prefetch render at runtime.
+- **Goodreads.** `lib/goodreads.ts` reads the "currently-reading" shelf's public RSS in a `'use cache'` function with a four-hour revalidate; the home page shows it.
+- **Easter egg.** `/geocities` rewrites to the standalone page in `public/geocities/`.
 - **HTML injection** only in `components/prose.tsx`, `components/json-ld.tsx` (`serializeSchema`), and the theme script in `app/layout.tsx`. ESLint enforces it.
 - **Theme.** Color tokens use `light-dark()` in `app/styles/tokens.css`. A `theme` cookie, applied by an inline script before paint, sets `data-theme` on `<html>`, which only switches `color-scheme`.
 - **View transitions.** Post cards and article heroes share a `<ViewTransition>` name (`components/post-image.tsx`).
@@ -46,14 +49,14 @@ Read `docs/code-standards.md` before writing or reviewing code. It covers TypeSc
 Never:
 
 - Start the dev server; the user runs it.
-- Read the filesystem at request time, or import `lib/content-build/*` from app code.
+- Read the filesystem at request time (except the likes database), or import `lib/content-build/*` from app code.
 - Use `NEXT_PUBLIC_` or UI libraries.
 - Commit plans. Keep them in the session scratchpad or `.plans/` (gitignored).
 - Add commit trailers or co-authors.
 
 Always:
 
-- Keep links and search working without JavaScript. Nothing posts to the server; `/contact` is a page of links.
+- Keep links, search, and likes working without JavaScript. The like form is the only thing that posts to the server; `/contact` is a page of links.
 - Follow the writing rules in `docs/code-standards.md` for UI copy, docs, and commit messages.
 - Keep subagents to a minimum; each one is a separate billed request.
 

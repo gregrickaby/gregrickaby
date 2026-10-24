@@ -12,6 +12,7 @@ import { Roboto, Roboto_Mono, Roboto_Slab } from 'next/font/google'
 import { JsonLd } from '@/components/json-ld'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
+import { OPEN_GRAPH_BASE } from '@/lib/metadata'
 import { buildWebSiteGraph } from '@/lib/schema'
 import { SITE } from '@/lib/site'
 
@@ -38,11 +39,9 @@ export const metadata: Metadata = {
   authors: [{ name: SITE.author.name, url: SITE.author.url }],
   robots: { index: true, follow: true },
   openGraph: {
+    ...OPEN_GRAPH_BASE,
     description: SITE.description,
-    locale: 'en_US',
-    siteName: SITE.name,
     title: SITE.name,
-    type: 'website',
     url: SITE.url,
   },
   alternates: {
@@ -63,6 +62,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
       className={`${sans.variable} ${serif.variable} ${mono.variable}`}
+      data-scroll-behavior="smooth"
       data-theme="system"
       lang="en"
       suppressHydrationWarning

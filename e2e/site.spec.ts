@@ -117,6 +117,15 @@ test.describe('search and theme', () => {
     await expect(page.getByRole('link', { name: 'The Moons of 2023' })).toBeVisible()
   })
 
+  test('typing in the header search leaves the page where it is', async ({ page }) => {
+    await page.goto('/')
+    await page.mouse.wheel(0, 1500)
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(1000)
+    const before = await page.evaluate(() => scrollY)
+    await page.getByRole('searchbox', { name: 'Search posts' }).first().pressSequentially('moon')
+    expect(await page.evaluate(() => scrollY)).toBe(before)
+  })
+
   test('the theme choice survives a reload', async ({ page }) => {
     await page.emulateMedia({ colorScheme: 'light' })
     await page.goto('/')
@@ -124,6 +133,19 @@ test.describe('search and theme', () => {
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
     await page.reload()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
+  })
+})
+
+test.describe('likes', () => {
+  test('a like counts once and the heart stays filled after a reload', async ({ page }) => {
+    await page.goto('/stable-diffusion-xl-1-0-impresses')
+    const like = page.getByRole('button', { name: /Like this post/ })
+    await like.click()
+    const liked = page.getByRole('button', { name: /You liked this post/ })
+    await expect(liked).toBeDisabled()
+    await expect(liked).toContainText(/[1-9]/)
+    await page.reload()
+    await expect(page.getByRole('button', { name: /You liked this post/ })).toBeDisabled()
   })
 })
 
@@ -142,6 +164,9 @@ test.describe('platform', () => {
     expect(await feed.text()).toContain('<rss version="2.0"')
     expect((await request.get('/sitemap.xml')).ok()).toBe(true)
 
+    const geocities = await request.get('/geocities')
+    expect(await geocities.text()).toContain('Mr. Data, report...')
+
     await page.goto('/about')
     await expect(page).toHaveURL(/\/$/)
     const missing = await page.goto('/no-such-post')
@@ -151,7 +176,7 @@ test.describe('platform', () => {
 })
 
 test.describe('without JavaScript @nojs', () => {
-  test('pages, search, and contact links work without scripts @nojs', async ({ page }) => {
+  test('pages, search, likes, and contact links work without scripts @nojs', async ({ page }) => {
     await page.goto('/the-moons-of-2023')
     await expect(page.getByRole('heading', { level: 1, name: 'The Moons of 2023' })).toBeVisible()
     await expect(page.locator('.prose img').first()).toBeVisible()
@@ -161,6 +186,10 @@ test.describe('without JavaScript @nojs', () => {
     await page.keyboard.press('Enter')
     await expect(page).toHaveURL(/\/search\?q=hdr/)
     await expect(page.getByRole('link', { name: /Gain Maps/ })).toBeVisible()
+
+    await page.goto('/how-gain-maps-elevate-hdr-photography')
+    await page.getByRole('button', { name: /Like this post/ }).click()
+    await expect(page.getByRole('button', { name: /You liked this post/ })).toContainText(/[1-9]/)
 
     await page.goto('/contact')
     await expect(page.getByRole('link', { name: 'greg@gregrickaby.com' })).toHaveAttribute(

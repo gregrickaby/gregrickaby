@@ -4,6 +4,7 @@ import { JsonLd } from '@/components/json-ld'
 import { PageTitle } from '@/components/page-title'
 import { PhotoGallery } from '@/components/photo-gallery'
 import { getPhotos } from '@/lib/content'
+import { OPEN_GRAPH_BASE } from '@/lib/metadata'
 import { buildWebPageGraph } from '@/lib/schema'
 import { SITE } from '@/lib/site'
 
@@ -14,7 +15,12 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: { canonical: '/photos' },
-  openGraph: { title: TITLE, description: DESCRIPTION, url: `${SITE.url}/photos` },
+  openGraph: {
+    ...OPEN_GRAPH_BASE,
+    title: TITLE,
+    description: DESCRIPTION,
+    url: `${SITE.url}/photos`,
+  },
 }
 
 export default function PhotosPage() {

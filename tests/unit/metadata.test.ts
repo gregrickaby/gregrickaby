@@ -1,7 +1,7 @@
 import type { ResolvingMetadata } from 'next'
 import { describe, expect, it } from 'vitest'
 
-import { buildContentMetadata } from '@/lib/metadata'
+import { buildContentMetadata, buildPageMetadata, OPEN_GRAPH_BASE } from '@/lib/metadata'
 import { SITE } from '@/lib/site'
 import type { PostMeta } from '@/lib/types'
 
@@ -58,9 +58,14 @@ describe('buildContentMetadata', () => {
     })
   })
 
+  it('keeps the shared Open Graph fields, which a page override would otherwise drop', async () => {
+    const result = await buildContentMetadata(baseMeta, '/test-page', makeParent())
+    expect(result.openGraph).toMatchObject(OPEN_GRAPH_BASE)
+  })
+
   it('does not emit article fields for meta.type page', async () => {
     const result = await buildContentMetadata(baseMeta, '/test-page', makeParent())
-    expect(result.openGraph).not.toHaveProperty('type')
+    expect(result.openGraph).toMatchObject({ type: 'website' })
     expect(result.openGraph).not.toHaveProperty('publishedTime')
     expect(result.openGraph).not.toHaveProperty('modifiedTime')
   })
@@ -81,5 +86,34 @@ describe('buildContentMetadata', () => {
     const parent = Promise.resolve({}) as unknown as ResolvingMetadata
     const result = await buildContentMetadata(baseMeta, '/x', parent)
     expect(result.openGraph?.images).toEqual([])
+  })
+})
+
+describe('buildPageMetadata', () => {
+  it('builds the title, canonical, and full Open Graph set for a page path', async () => {
+    const parentImages = [{ url: 'https://example.com/og.jpg' }]
+    const result = await buildPageMetadata(
+      { title: 'Blog', description: 'Posts.', path: '/blog' },
+      makeParent(parentImages),
+    )
+    expect(result).toMatchObject({
+      title: 'Blog',
+      description: 'Posts.',
+      alternates: { canonical: '/blog' },
+      openGraph: {
+        ...OPEN_GRAPH_BASE,
+        title: 'Blog',
+        url: `${SITE.url}/blog`,
+        images: parentImages,
+      },
+    })
+  })
+
+  it('uses the bare site URL for the home page', async () => {
+    const result = await buildPageMetadata(
+      { title: 'Home', description: 'Hi.', path: '/' },
+      Promise.resolve({}) as unknown as ResolvingMetadata,
+    )
+    expect(result.openGraph).toMatchObject({ url: SITE.url, images: [] })
   })
 })

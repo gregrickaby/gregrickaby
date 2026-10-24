@@ -1,21 +1,28 @@
-import type { Metadata } from 'next'
+import type { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { PageTitle } from '@/components/page-title'
 import { PostGrid } from '@/components/post-grid'
 import { getAllTags, getPostsByTag } from '@/lib/content'
+import { buildPageMetadata } from '@/lib/metadata'
 
 export function generateStaticParams() {
   return getAllTags().map((tag) => ({ tag: encodeURIComponent(tag) }))
 }
 
-export async function generateMetadata({ params }: PageProps<'/tag/[tag]'>): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: PageProps<'/tag/[tag]'>,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
   const name = decodeURIComponent((await params).tag)
-  return {
-    title: `Posts tagged "${name}"`,
-    description: `All posts tagged with "${name}".`,
-    alternates: { canonical: `/tag/${encodeURIComponent(name)}` },
-  }
+  return buildPageMetadata(
+    {
+      title: `Posts tagged "${name}"`,
+      description: `All posts tagged with "${name}".`,
+      path: `/tag/${encodeURIComponent(name)}`,
+    },
+    parent,
+  )
 }
 
 /* Blocks on params so the list is in the prerendered HTML; see app/(site)/[slug]/page.tsx. */

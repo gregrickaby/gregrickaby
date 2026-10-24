@@ -14,6 +14,39 @@ type ContentMetaInput = Pick<
 >
 
 /**
+ * Open Graph fields every page shares. A page's `openGraph` replaces the root
+ * layout's whole object instead of merging into it, so each builder repeats them.
+ */
+export const OPEN_GRAPH_BASE = {
+  locale: 'en_US',
+  siteName: SITE.name,
+  type: 'website',
+} as const
+
+/**
+ * Metadata for a page with no Markdown behind it, such as the blog index or a
+ * tag archive. The share image comes from the nearest opengraph-image route.
+ */
+export async function buildPageMetadata(
+  { title, description, path }: { title: string; description: string; path: string },
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const previousImages = (await parent).openGraph?.images ?? []
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      ...OPEN_GRAPH_BASE,
+      title,
+      description,
+      url: path === '/' ? SITE.url : `${SITE.url}${path}`,
+      images: previousImages,
+    },
+  }
+}
+
+/**
  * Build a Next.js Metadata object for any post or page.
  *
  * Handles parent OG image inheritance,
@@ -40,6 +73,7 @@ export async function buildContentMetadata(
     description: meta.description,
     alternates: { canonical: canonicalPath },
     openGraph: {
+      ...OPEN_GRAPH_BASE,
       title: meta.title,
       description: meta.description,
       url: `${SITE.url}${canonicalPath}`,

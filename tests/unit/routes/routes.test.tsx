@@ -25,6 +25,11 @@ vi.mock('next/form', () => ({
   ),
 }))
 vi.mock('next/server', () => ({ connection: vi.fn(async () => {}) }))
+vi.mock('@/lib/goodreads', () => ({
+  getCurrentlyReading: async () => [
+    { title: 'All These Worlds', author: 'Dennis E. Taylor', url: 'https://example.com/book' },
+  ],
+}))
 
 const parent = Promise.resolve({ openGraph: { images: [] } }) as unknown as ResolvingMetadata
 const params = <T,>(value: T) => Promise.resolve(value)
@@ -68,11 +73,14 @@ describe('static route group', () => {
 })
 
 describe('home', () => {
-  it('shows the About page with its metadata', async () => {
-    expect(await renderServer(<home.default />)).toContain('Hello there')
+  it('shows the About page and the shelf, titled as the home page, not About', async () => {
+    const html = await renderServer(<home.default />)
+    expect(html).toContain('Hello there')
+    expect(html).toContain('All These Worlds')
     expect(await home.generateMetadata({}, parent)).toMatchObject({
-      title: 'About',
+      title: { absolute: 'Greg Rickaby - Software engineer, photographer, and author' },
       alternates: { canonical: '/' },
+      openGraph: { title: 'Greg Rickaby', url: 'https://gregrickaby.com', type: 'website' },
     })
   })
 })
@@ -92,6 +100,7 @@ describe('post page', () => {
     expect(html).toContain('href="/newest"')
     expect(html).toContain('href="/oldest"')
     expect(html).toContain('BlogPosting')
+    expect(html).toContain('Like this post')
   })
 
   it('builds metadata, and none for an unknown post', async () => {
@@ -115,7 +124,10 @@ describe('blog', () => {
     const html = await renderServer(<blog.default />)
     expect(html).toContain('Newest Post')
     expect(html).toContain('Oldest Post')
-    expect(blog.metadata.alternates?.canonical).toBe('/blog')
+    expect(await blog.generateMetadata({}, parent)).toMatchObject({
+      alternates: { canonical: '/blog' },
+      openGraph: { title: 'Blog', url: 'https://gregrickaby.com/blog', siteName: 'Greg Rickaby' },
+    })
   })
 })
 
@@ -133,9 +145,10 @@ describe.each([
     const Page = mod.default as unknown as (p: object) => React.ReactElement
     const html = await renderServer(<Page {...(props(encodeURIComponent(name)) as object)} />)
     expect(html).toContain(title)
-    expect(await mod.generateMetadata(props(name))).toMatchObject({
+    expect(await mod.generateMetadata(props(name), parent)).toMatchObject({
       title: metaTitle,
       alternates: { canonical: `/${kind}/${name}` },
+      openGraph: { title: metaTitle, url: `https://gregrickaby.com/${kind}/${name}` },
     })
   })
 
@@ -178,7 +191,6 @@ describe('photos, resume, and contact', () => {
     for (const Page of [home.default, resume.default, contact.default]) {
       await expect(renderServer(<Page />)).rejects.toBeInstanceOf(NotFound)
     }
-    expect(await home.generateMetadata({}, parent)).toEqual({})
     expect(await resume.generateMetadata({}, parent)).toEqual({})
     expect(await contact.generateMetadata({}, parent)).toEqual({})
   })
