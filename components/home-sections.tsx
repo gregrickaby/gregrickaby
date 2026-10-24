@@ -1,17 +1,19 @@
 import type { Route } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import type { ReactNode } from 'react'
 
 import { ArrowRightIcon } from '@/components/icons'
 import { Lightbox } from '@/components/islands/lightbox'
+import { SoundRouteLink } from '@/components/islands/sound-route-link'
 import { MetaLine } from '@/components/meta-line'
 import { PostCard } from '@/components/post-card'
 import { Prose } from '@/components/prose'
 import { exifSummary } from '@/lib/format'
+import type { Book } from '@/lib/goodreads'
 import { splitSections } from '@/lib/html'
 import { fullImageUrl } from '@/lib/images'
 import { resumeEntries } from '@/lib/resume'
+import { HOME, SITE } from '@/lib/site'
 import type { Photo, Post, PostMeta } from '@/lib/types'
 
 import styles from './home-sections.module.css'
@@ -32,16 +34,16 @@ function Band({
 }) {
   return (
     <section aria-labelledby={id} className={styles.band}>
-      <header className={styles.bandHeader}>
+      <header className={styles.bandHeader} data-reveal>
         <div>
           <MetaLine items={[label]} />
           <h2 className={styles.bandTitle} id={id}>
             {title}
           </h2>
         </div>
-        <Link className={styles.more} href={more.href}>
+        <SoundRouteLink className={styles.more} href={more.href}>
           {more.text} <ArrowRightIcon size={16} />
-        </Link>
+        </SoundRouteLink>
       </header>
       {children}
     </section>
@@ -55,7 +57,7 @@ function Band({
 export function HomeAbout({ page }: { page: Post }) {
   const [lead] = splitSections(page.html)
   return (
-    <section aria-labelledby="about-title" className={styles.about}>
+    <section aria-labelledby="about-title" className={styles.about} data-reveal>
       {page.meta.featuredImage ? (
         <Image
           alt="The Rickaby family"
@@ -78,8 +80,8 @@ export function HomeAbout({ page }: { page: Post }) {
 }
 
 /**
- * The About page's photography section as a band: the story across the top,
- * the gear lists in columns beneath, and the affiliate note in small print.
+ * The About page's photography section as a band: the story and gear lists
+ * beside a photo of the moon rig, and the affiliate note in small print.
  */
 export function CameraBag({ page }: { page: Post }) {
   const sections = splitSections(page.html).slice(1)
@@ -94,8 +96,18 @@ export function CameraBag({ page }: { page: Post }) {
       more={{ href: '/photos', text: 'All photos' }}
       title="Behind the camera"
     >
-      <div className={styles.gear}>
-        <Prose html={photography.html} />
+      <div className={styles.camera}>
+        <div className={styles.gear}>
+          <Prose html={photography.html} />
+        </div>
+        <Image
+          alt={HOME.cameraPhoto.alt}
+          className={styles.cameraPhoto}
+          height={HOME.cameraPhoto.height}
+          sizes="(max-width: 860px) 384px, 360px"
+          src={HOME.cameraPhoto.src}
+          width={HOME.cameraPhoto.width}
+        />
       </div>
       {disclaimer ? (
         <div aria-label="Affiliate disclaimer" className={styles.disclaimer} role="note">
@@ -146,6 +158,43 @@ export function LatestWriting({ posts }: { posts: PostMeta[] }) {
           />
         ))}
       </div>
+    </Band>
+  )
+}
+
+/** Greg's Goodreads "currently-reading" shelf. Renders nothing when the shelf is empty or didn't load. */
+export function CurrentlyReading({ books }: { books: Book[] }) {
+  if (books.length === 0) return null
+  return (
+    <Band
+      id="reading-title"
+      label="Reading"
+      more={{ href: SITE.author.goodreads, text: 'Goodreads' }}
+      title="On my nightstand"
+    >
+      <ul className={styles.books} role="list">
+        {books.map((book) => (
+          <li className={styles.book} data-reveal key={book.url}>
+            {book.cover ? (
+              <Image
+                alt=""
+                className={styles.cover}
+                height={475}
+                sizes="96px"
+                src={book.cover}
+                width={316}
+              />
+            ) : null}
+            <div>
+              {book.series ? <MetaLine items={[book.series]} /> : null}
+              <p className={styles.bookTitle}>
+                <a href={book.url}>{book.title}</a>
+              </p>
+              <p className={styles.company}>{book.author}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
     </Band>
   )
 }

@@ -74,7 +74,7 @@ export function buildWebSiteGraph(): SchemaGraph {
         name: SITE.author.name,
         url: SITE.author.url,
         description: SITE.description,
-        sameAs: [SITE.author.linkedin, SITE.author.github],
+        sameAs: [SITE.author.linkedin, SITE.author.github, SITE.author.goodreads],
       },
     ],
   }

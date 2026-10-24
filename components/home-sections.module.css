@@ -142,7 +142,37 @@
     color: var(--text-2);
   }
 
-  /* The camera bag: story paragraphs span the band, gear lists flow in columns. */
+  /* The camera bag beside a photo of the rig, mirroring the About band's photo on the left. */
+  .camera {
+    align-items: start;
+    display: grid;
+    gap: var(--space-7);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+
+  .cameraPhoto {
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-2);
+    height: auto;
+    position: sticky;
+    top: 6rem;
+    width: 100%;
+  }
+
+  @media (width <= 860px) {
+    .camera {
+      gap: var(--space-5);
+      grid-template-columns: 1fr;
+    }
+
+    .cameraPhoto {
+      justify-self: center;
+      max-width: 24rem;
+      position: static;
+    }
+  }
+
+  /* The camera bag: story paragraphs span the column, gear lists flow in columns. */
   .gear :global(.prose) {
     column-gap: var(--space-7);
     columns: 3 14rem;
@@ -212,6 +242,70 @@
   @media (width <= 640px) {
     .photoImage {
       height: 220px;
+    }
+  }
+
+  .books {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+
+  .book {
+    align-items: center;
+    display: flex;
+    gap: var(--space-4);
+  }
+
+  .cover {
+    border-radius: var(--radius-1);
+    box-shadow: var(--shadow-1);
+    flex: none;
+    height: auto;
+    width: 96px;
+  }
+
+  .bookTitle {
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    font-weight: 700;
+    line-height: 1.25;
+
+    a {
+      color: var(--text-heading);
+      text-decoration: none;
+
+      &:hover {
+        color: var(--accent);
+      }
+    }
+  }
+
+  /* Cards in the sideways strips fade in at the right edge and out at the left. */
+  @media screen and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view(inline)) {
+      .role,
+      .photo {
+        animation:
+          edge-in linear both,
+          edge-out linear both;
+        animation-range: entry, exit;
+        animation-timeline: view(inline), view(inline);
+      }
+    }
+  }
+
+  @keyframes edge-in {
+    from {
+      opacity: 0.35;
+      scale: 0.94;
+    }
+  }
+
+  @keyframes edge-out {
+    to {
+      opacity: 0.35;
+      scale: 0.94;
     }
   }
 }

@@ -11,6 +11,9 @@ export const SITE = {
     email: 'greg@gregrickaby.com',
     linkedin: 'https://www.linkedin.com/in/gregrickaby/',
     github: 'https://github.com/gregrickaby',
+    goodreads: 'https://www.goodreads.com/author/show/16999736.Greg_Rickaby',
+    /** The reader profile behind the author page; its shelves have RSS feeds. */
+    goodreadsUserId: '91475042',
   },
   license: {
     name: 'CC BY-NC-ND 4.0',
@@ -21,6 +24,13 @@ export const SITE = {
 /** The home page banner: one of the gallery photos, and the line under the name. */
 export const HOME = {
   photo: 'Morning_Mist_–_Lake_Frank_Jackson_20240413.jpg',
+  /** Beside "Behind the camera". A post image, so its size is set here. */
+  cameraPhoto: {
+    src: '/content/posts/the-moons-of-2023/DSC0312_Camera-Setup-For-The-Moon_20240110.jpg',
+    alt: 'A camera and telephoto lens on a gimbal head atop a tripod, with trees in the background',
+    width: 1707,
+    height: 2560,
+  },
   roles: ['Software engineer', 'Photographer', 'Author'],
   summary: 'Building for the web since 1997',
 } as const

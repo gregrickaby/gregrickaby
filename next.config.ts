@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     // 31 days. Cloudflare caches the result too (cache rule on /_next/image).
     minimumCacheTTL: 2678400,
+    // Book covers for the home page's "Currently reading" band (lib/goodreads.ts).
+    remotePatterns: [new URL('https://i.gr-assets.com/images/**')],
   },
   experimental: {
     agentUpgrade: 'latest',
@@ -31,6 +33,10 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return headers
+  },
+  // The Geocities easter egg is a standalone HTML page in public/geocities.
+  async rewrites() {
+    return [{ source: '/geocities', destination: '/geocities/index.html' }]
   },
 }
 

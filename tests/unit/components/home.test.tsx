@@ -12,7 +12,7 @@ afterEach(() => {
 })
 
 const { HomeHero } = await import('@/components/home-hero')
-const { CameraBag, CareerStrip, GalleryStrip, HomeAbout, LatestWriting } =
+const { CameraBag, CareerStrip, CurrentlyReading, GalleryStrip, HomeAbout, LatestWriting } =
   await import('@/components/home-sections')
 const { MetaLine } = await import('@/components/meta-line')
 const { HOME } = await import('@/lib/site')
@@ -49,6 +49,7 @@ describe('HomeAbout and CameraBag', () => {
 
     const bag = await renderServer(<CameraBag page={page} />)
     expect(bag).toContain('Behind the camera')
+    expect(bag).toContain('alt="A camera and telephoto lens')
     expect(bag).toContain('Camera')
     expect(bag).toContain('aria-label="Affiliate disclaimer"')
     expect(bag).not.toContain('Lead text')
@@ -94,5 +95,34 @@ describe('MetaLine', () => {
       await renderServer(<MetaLine items={['a', null, undefined, '', 'b']} />)
     ).replaceAll('<!-- -->', '')
     expect(html).toContain('a<span aria-hidden="true"> · </span>b')
+  })
+})
+
+describe('CurrentlyReading', () => {
+  it('lists each book with its cover, series, and author, linking to Goodreads', async () => {
+    const html = await renderServer(
+      <CurrentlyReading
+        books={[
+          {
+            title: 'All These Worlds',
+            series: 'Bobiverse, #3',
+            author: 'Dennis E. Taylor',
+            url: 'https://www.goodreads.com/book/show/1',
+            cover: 'https://i.gr-assets.com/images/S/1._SY475_.jpg',
+          },
+          { title: 'No Cover', author: 'Someone', url: 'https://www.goodreads.com/book/show/2' },
+        ]}
+      />,
+    )
+    expect(html).toContain('On my nightstand')
+    expect(html).toContain('href="https://www.goodreads.com/book/show/1"')
+    expect(html).toContain('Bobiverse, #3')
+    expect(html).toContain('Dennis E. Taylor')
+    expect(html.match(/<img/g)).toHaveLength(1)
+    expect(html).toContain('href="https://www.goodreads.com/author/show/16999736.Greg_Rickaby"')
+  })
+
+  it('renders nothing when the shelf is empty', async () => {
+    expect(await renderServer(<CurrentlyReading books={[]} />)).toBe('')
   })
 })
