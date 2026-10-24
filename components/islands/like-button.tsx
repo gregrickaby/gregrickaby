@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useEffect, useState, type CSSProperties } from 'react'
+import { useActionState, useEffect, useRef, useState, type CSSProperties } from 'react'
 
 import { HeartIcon } from '@/components/icons'
 import { getLikes, likePost } from '@/lib/like-post'
@@ -48,11 +48,17 @@ function getLabel(mine: number): string {
  * hydration, which keeps the post's HTML static. A visitor can like a post up
  * to `MAX_LIKES` times, and the heart fills from the bottom as they do. The
  * last like plays a fanfare.
+ *
+ * A post can ask for a like with `<span data-like-cue></span>` in its body.
+ * Once the reader reaches it and the button is on screen, the button hops and
+ * waves until it's liked. Readers who already liked the post aren't asked.
  */
 export function LikeButton({ slug }: { slug: string }) {
   const [state, action, pending] = useActionState(likePost, { count: null, mine: 0 })
   const [loaded, setLoaded] = useState<{ count: number; mine: number } | null>(null)
   const [burst, setBurst] = useState<{ id: number; sparkles: CSSProperties[] } | null>(null)
+  const [cue, setCue] = useState(false)
+  const ref = useRef<HTMLButtonElement>(null)
   // Once a like lands, the action's answer is newer than the loaded one.
   const current = state.count === null ? loaded : state
   const count = current?.count ?? null
@@ -74,7 +80,26 @@ export function LikeButton({ slug }: { slug: string }) {
     }
   }, [slug])
 
+  useEffect(() => {
+    const button = ref.current
+    const marker = button?.closest('article')?.querySelector('[data-like-cue]')
+    if (!button || !marker) return
+    // On narrow screens the button sits after the body, so it waits to be seen too.
+    const observer = new IntersectionObserver(() => {
+      const reached = marker.getBoundingClientRect().top < window.innerHeight
+      const { bottom, height, top } = button.getBoundingClientRect()
+      if (reached && height > 0 && top < window.innerHeight && bottom > 0) {
+        setCue(true)
+        observer.disconnect()
+      }
+    })
+    observer.observe(marker)
+    observer.observe(button)
+    return () => observer.disconnect()
+  }, [])
+
   function onSubmit() {
+    setCue(false)
     playSound(mine === MAX_LIKES - 1 ? 'fanfare' : 'coin')
     setBurst((previous) => ({ id: (previous?.id ?? 0) + 1, sparkles: buildSparkles() }))
   }
@@ -85,9 +110,16 @@ export function LikeButton({ slug }: { slug: string }) {
       <button
         className={mine > 0 ? `${styles.button} ${styles.liked}` : styles.button}
         data-boop="beat"
+        data-cue={(cue && mine === 0) || undefined}
         disabled={full || pending}
+        ref={ref}
         type="submit"
       >
+        {cue && mine === 0 ? (
+          <span aria-hidden="true" className={styles.psst}>
+            Psst!
+          </span>
+        ) : null}
         <span className={styles.heart} style={{ '--fill': mine / MAX_LIKES } as CSSProperties}>
           <HeartIcon />
           <HeartIcon className={styles.fill} />

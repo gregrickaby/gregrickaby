@@ -138,6 +138,11 @@ describe('renderMarkdown', () => {
     expect(html).not.toContain('data-demo="noise"')
   })
 
+  it('keeps a like cue marker', async () => {
+    const { html } = await render('Like it. <span data-like-cue></span>')
+    expect(html).toContain('<span data-like-cue')
+  })
+
   it('turns an alert blockquote into a callout with a title', async () => {
     const { html } = await render('> [!NOTE] Where does 523 come from?\n> Music has a formula.')
     expect(html).toBe(

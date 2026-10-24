@@ -418,6 +418,93 @@ describe('LikeButton', () => {
     await act(async () => {})
   })
 
+  describe('like cue', () => {
+    let fire: () => void
+    const disconnect = vi.fn()
+
+    beforeEach(() => {
+      vi.stubGlobal('innerHeight', 900)
+      vi.stubGlobal(
+        'IntersectionObserver',
+        class {
+          constructor(callback: () => void) {
+            fire = callback
+          }
+          observe() {}
+          disconnect = disconnect
+        },
+      )
+    })
+
+    afterEach(() => {
+      vi.unstubAllGlobals()
+    })
+
+    function renderCued(slug = 'post') {
+      const view = render(
+        <article>
+          <span data-like-cue="" />
+          <LikeButton slug={slug} />
+        </article>,
+      )
+      const marker = view.container.querySelector('[data-like-cue]') as HTMLElement
+      const button = screen.getByRole('button')
+      const place = (element: HTMLElement, top: number, height = 40) => {
+        element.getBoundingClientRect = () => ({ bottom: top + height, height, top }) as DOMRect
+      }
+      return { button, marker, place, unmount: view.unmount }
+    }
+
+    it('waves once the reader reaches the cue and the button is on screen, until liked', async () => {
+      const { button, marker, place, unmount } = renderCued()
+      expect(await screen.findByText('4')).toBeTruthy()
+      place(marker, 1200)
+      place(button, 100)
+      act(() => fire())
+      expect(button.hasAttribute('data-cue')).toBe(false)
+      place(marker, 400)
+      place(button, 2000)
+      act(() => fire())
+      expect(button.hasAttribute('data-cue')).toBe(false)
+      place(button, 100, 0)
+      act(() => fire())
+      expect(button.hasAttribute('data-cue')).toBe(false)
+      place(button, -100)
+      act(() => fire())
+      expect(button.hasAttribute('data-cue')).toBe(false)
+      place(button, 100)
+      act(() => fire())
+      expect(button.hasAttribute('data-cue')).toBe(true)
+      expect(button.querySelector('[aria-hidden="true"]')!.textContent).toBe('Psst!')
+      expect(disconnect).toHaveBeenCalled()
+      await act(async () => {
+        fireEvent.click(button)
+      })
+      expect(button.hasAttribute('data-cue')).toBe(false)
+      expect(button.textContent).not.toContain('Psst!')
+      unmount()
+    })
+
+    it('only asks readers who have not liked the post yet', async () => {
+      getLikes.mockResolvedValueOnce({ count: 5, mine: 3 })
+      const { button, marker, place } = renderCued()
+      expect(await screen.findByText('5')).toBeTruthy()
+      place(marker, 400)
+      place(button, 100)
+      act(() => fire())
+      expect(button.hasAttribute('data-cue')).toBe(false)
+    })
+
+    it('stays still once the post has all ten likes', async () => {
+      const { button, marker, place } = renderCued('other')
+      expect(await screen.findByText('12')).toBeTruthy()
+      place(marker, 400)
+      place(button, 100)
+      act(() => fire())
+      expect(button.hasAttribute('data-cue')).toBe(false)
+    })
+  })
+
   it('keeps the loaded count when the server does not save a like', async () => {
     likePost.mockImplementationOnce(async (previous) => previous as never)
     render(<LikeButton slug="post" />)
