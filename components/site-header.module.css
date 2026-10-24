@@ -39,11 +39,69 @@
     color: var(--text-heading);
     display: flex;
     gap: var(--space-3);
+    position: relative;
     text-decoration: none;
+
+    --mosaic-step: 120ms;
   }
 
   .avatar {
     border-radius: 50%;
+  }
+
+  /* On hover the photo breaks into NES-colored pixels: a 20px frame, then a
+     10px one, like a SNES mosaic. Leaving plays it backward. Both frames
+     load with the page, so the first hover doesn't wait on them. */
+  .brand::before,
+  .brand::after {
+    background: center / cover no-repeat;
+    block-size: 40px;
+    content: '';
+    image-rendering: pixelated;
+    inline-size: 40px;
+    inset-inline-start: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+  }
+
+  .brand::before {
+    background-image: url('/avatar-pixel-20.png');
+  }
+
+  .brand::after {
+    background-image: url('/avatar-pixel-10.png');
+  }
+
+  .brand:is(:hover, :focus-visible) {
+    .avatar {
+      opacity: 0;
+    }
+
+    &::before,
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .avatar,
+    .brand::before {
+      transition: opacity 0s var(--mosaic-step);
+    }
+
+    .brand:is(:hover, :focus-visible) {
+      .avatar,
+      &::before {
+        transition-delay: 0s;
+      }
+
+      &::after {
+        transition: opacity 0s var(--mosaic-step);
+      }
+    }
   }
 
   .name {
