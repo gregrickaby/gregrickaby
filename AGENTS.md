@@ -22,7 +22,7 @@ npm run check      # content, CSS module types, typecheck, lint, unit tests with
 npm run format     # Prettier (CI runs format:check)
 npm run build      # content + production build
 npm run test:e2e   # Playwright: builds and runs critical paths, with and without JavaScript
-npm run content    # rebuild .generated/content.json after editing Markdown or photos
+npm run content -- --drafts  # rebuild .generated/ after editing Markdown, photos, or demos
 ```
 
 Secrets go in `.env.local` (see `.env.example`). Server errors go to stdout (Coolify logs); there is no logging or analytics service.
@@ -35,8 +35,8 @@ Secrets go in `.env.local` (see `.env.example`). Server errors go to stdout (Coo
 - **Param routes** (`[slug]`, `tag/[tag]`, `category/[category]`, `/search`) set `instant = false` so the prerendered HTML has the full content for crawlers and readers without JavaScript. Links to them use `prefetch={true}` so client navigation still renders at once. `e2e/site.spec.ts` checks this with `instant()`.
 - **Images.** Components use `next/image`. The build writes `/_next/image` URLs and `srcset` into post HTML (`lib/images.ts`). HDR gain map JPEGs (`hdrgm` XMP) use the original file for full-size views, because the optimizer strips the gain map.
 - **Client islands.** Server Components by default. Client code lives only in `components/islands/` and never fetches. The like button is the one island that calls server actions (`lib/like-post.ts`).
-- **Demos.** A post places an interactive demo with `<div data-demo="name"></div>` on its own line. The build keeps only top-level markers, and `Prose` splits the HTML around them. Each post's demos live in `components/islands/demos/<slug>/`: `demos.tsx` (client components) and `registry.ts` (names and titles, a plain module so the server can read it). `npm run content` writes `.generated/demos.ts` from those folders. Build them from the shared kit in `components/islands/demo-kit/` (`Plot`, `Controls`, `DemoButton`, `Slider`, `Caption`) so every demo looks and behaves the same; a post's own CSS Module is for what only that post needs. The `Demo` frame (`components/demo.tsx`) spaces a demo's top-level children, so a demo can return a fragment. Sound demos play through `playNotes` in `components/islands/sounds.ts`.
-- **Likes.** `lib/likes.ts` keeps one row per post per hashed visitor IP in SQLite (`node:sqlite`, no dependency) at `LIKES_DB_PATH`, a file on a Coolify volume. Post pages never read it: the like button loads the count after hydration, so the HTML stays static. Never call a `'use cache'` function from a post page; it makes every post's per-link prefetch render at runtime.
+- **Demos.** A post places an interactive demo with `<div data-demo="name"></div>` on its own line. The build keeps only top-level markers, and `Prose` splits the HTML around them. Each post's demos live in `components/islands/demos/<slug>/`: `demos.tsx` (client components) and `registry.ts` (names and titles, a plain module so the server can read it). `npm run content -- --drafts` writes `.generated/demos.ts` from those folders. Build them from the shared kit in `components/islands/demo-kit/` (`Plot`, `Controls`, `DemoButton`, `Slider`, `Caption`) so every demo looks and behaves the same; a post's own CSS Module is for what only that post needs. The `Demo` frame (`components/demo.tsx`) spaces a demo's top-level children, so a demo can return a fragment. Sound demos play through `playNotes` in `components/islands/sounds.ts`.
+- **Likes.** `lib/likes.ts` keeps one row per post per hashed visitor IP in SQLite (`node:sqlite`, no dependency) at `LIKES_DB_PATH`, a file on a Coolify volume. Post pages never read it: the like button loads the count after hydration, so the HTML stays static. A post can ask for a like with `<span data-like-cue></span>` in a paragraph: once the reader reaches it, the button hops and waves until it's liked. Never call a `'use cache'` function from a post page; it makes every post's per-link prefetch render at runtime.
 - **Goodreads.** `lib/goodreads.ts` reads the "currently-reading" shelf's public RSS in a `'use cache'` function with a four-hour revalidate; the home page shows it.
 - **Easter egg.** `/geocities` rewrites to the standalone page in `public/geocities/`.
 - **HTML injection** only in `components/prose.tsx`, `components/json-ld.tsx` (`serializeSchema`), and the theme script in `app/layout.tsx`. ESLint enforces it.
@@ -51,6 +51,7 @@ Read `docs/code-standards.md` before writing or reviewing code. It covers TypeSc
 Never:
 
 - Start the dev server; the user runs it.
+- Run `npm run content` without `--drafts` or `npm run build` while the dev server runs. Both rewrite `.generated/content.json` without drafts, and the dev server loses every draft post.
 - Read the filesystem at request time (except the likes database), or import `lib/content-build/*` from app code.
 - Use `NEXT_PUBLIC_` or UI libraries.
 - Commit plans. Keep them in the session scratchpad or `.plans/` (gitignored).
