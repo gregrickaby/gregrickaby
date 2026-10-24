@@ -8,6 +8,7 @@
     display: inline-flex;
     height: 2.25rem;
     justify-content: center;
+    position: relative;
     width: 2.25rem;
 
     &:hover {
@@ -20,6 +21,49 @@
   @media (scripting: none) {
     .toggle {
       display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Turning sound on floats two notes out of the speaker, drifting from
+       tomato toward gold. */
+    .toggle[data-played]::before,
+    .toggle[data-played]::after {
+      animation: sound-note 700ms var(--ease-out) both;
+      color: var(--tomato-5);
+      content: '\266A';
+      font-size: 0.875rem;
+      font-weight: 700;
+      inset: 15% auto auto 55%;
+      line-height: 1;
+      pointer-events: none;
+      position: absolute;
+    }
+
+    .toggle[data-played]::after {
+      --note-y: 2px;
+
+      animation-delay: 120ms;
+      animation-duration: 580ms;
+      color: var(--tomato-3);
+      content: '\266B';
+    }
+  }
+
+  @keyframes sound-note {
+    0% {
+      opacity: 0;
+      transform: translate(0, 4px) scale(0.6);
+    }
+
+    30% {
+      opacity: 1;
+    }
+
+    100% {
+      filter: hue-rotate(40deg);
+      opacity: 0;
+      transform: translate(12px, var(--note-y, -8px)) rotate(15deg);
     }
   }
 }

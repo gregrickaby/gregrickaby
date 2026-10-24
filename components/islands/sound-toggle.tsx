@@ -1,6 +1,6 @@
 'use client'
 
-import { useSyncExternalStore } from 'react'
+import { useSyncExternalStore, type MouseEvent } from 'react'
 
 import { VolumeIcon, VolumeOffIcon } from '@/components/icons'
 
@@ -15,9 +15,11 @@ import { playSound, setSoundEnabled, soundEnabled, subscribeSound } from './soun
 export function SoundToggle() {
   const on = useSyncExternalStore(subscribeSound, soundEnabled, () => false)
 
-  function toggle() {
+  function toggle(event: MouseEvent<HTMLButtonElement>) {
     setSoundEnabled(!on)
     playSound('sound-on')
+    // Floats notes up when sound turns on. Cleared when they finish.
+    if (!on) event.currentTarget.dataset.played = ''
   }
 
   return (
@@ -25,6 +27,10 @@ export function SoundToggle() {
       aria-pressed={on}
       className={styles.toggle}
       data-boop="waves"
+      onAnimationEnd={(event) => {
+        // The icon's hover boop ends on its paths; only the notes end on the button.
+        if (event.target === event.currentTarget) delete event.currentTarget.dataset.played
+      }}
       onClick={toggle}
       type="button"
     >
