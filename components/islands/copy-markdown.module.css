@@ -1,0 +1,21 @@
+@layer components {
+  /* The caller styles the link and button; the wrapper only lifts these rules above its styles. */
+  .copy {
+    display: contents;
+  }
+
+  /* The link stands in for the button until scripts can run it. */
+  .copy > .link {
+    display: none;
+  }
+
+  @media (scripting: none) {
+    .copy > .link {
+      display: inline-flex;
+    }
+
+    .copy > .button {
+      display: none;
+    }
+  }
+}

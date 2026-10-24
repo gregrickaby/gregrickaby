@@ -118,6 +118,58 @@ export function DownloadIcon(props: IconProps) {
   )
 }
 
+export function MarkdownIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+      <path d="M7 15v-6l2 2l2 -2v6" />
+      <path d="M14 13l2 2l2 -2m-2 2v-6" />
+    </Icon>
+  )
+}
+
+export function RedditIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 8c2.648 0 5.028 .826 6.675 2.14a2.5 2.5 0 0 1 2.326 4.36c0 3.59 -4.03 6.5 -9 6.5c-4.875 0 -8.845 -2.8 -9 -6.294l-.001 -.206a2.5 2.5 0 0 1 2.326 -4.36c1.646 -1.313 4.026 -2.14 6.674 -2.14z" />
+      <path d="M12 8l1 -5l6 1" />
+      <path d="M18 4a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+      <path d="M9 13v.01" />
+      <path d="M15 13v.01" />
+      <path d="M10 17c.667 .333 1.333 .5 2 .5s1.333 -.167 2 -.5" />
+    </Icon>
+  )
+}
+
+export function LinkedInIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M8 11v5" />
+      <path d="M8 8v.01" />
+      <path d="M12 16v-5" />
+      <path d="M16 16v-3a2 2 0 1 0 -4 0" />
+      <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" />
+    </Icon>
+  )
+}
+
+export function FacebookIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+    </Icon>
+  )
+}
+
+export function XIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+      <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+    </Icon>
+  )
+}
+
 const SPEAKER =
   'M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5'
 

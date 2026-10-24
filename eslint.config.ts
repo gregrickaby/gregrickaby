@@ -95,6 +95,13 @@ const eslintConfig = defineConfig([
     },
   },
   {
+    // Copying a post's Markdown loads its static `/<slug>.md` file on click.
+    files: ['components/islands/copy-markdown.tsx'],
+    rules: {
+      'no-restricted-globals': ['error', 'XMLHttpRequest', 'EventSource', 'WebSocket'],
+    },
+  },
+  {
     // Test fixtures use plain <img> to stand in for post HTML.
     files: ['tests/**/*.{ts,tsx}'],
     rules: { '@next/next/no-img-element': 'off' },

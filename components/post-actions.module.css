@@ -1,0 +1,62 @@
+@layer components {
+  .actions {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+
+  .icon {
+    align-items: center;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--text-2);
+    display: inline-flex;
+    justify-content: center;
+    min-block-size: 2.5rem;
+    min-inline-size: 2.5rem;
+    position: relative;
+    transition:
+      border-color var(--duration-exit) ease,
+      color var(--duration-exit) ease;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* The tooltip, a pixel speech bubble like the like button's cue. It also
+       shows while the copy button says "Copied". */
+    &::after {
+      background: var(--accent-fill);
+      border-radius: var(--radius-1);
+      color: var(--accent-contrast);
+      content: attr(data-tip);
+      font-family: var(--font-pixel);
+      font-size: 0.75rem;
+      inset: auto auto calc(100% + var(--space-2)) 50%;
+      opacity: 0;
+      padding: var(--space-1) var(--space-2);
+      pointer-events: none;
+      position: absolute;
+      transition: opacity var(--duration-exit) ease;
+      translate: -50% 0;
+      white-space: nowrap;
+      z-index: 1;
+    }
+
+    &:hover::after,
+    &:focus-visible::after,
+    &[data-copied]::after {
+      opacity: 1;
+    }
+  }
+}

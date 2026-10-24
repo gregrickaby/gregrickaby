@@ -81,6 +81,28 @@ test.describe('reading', () => {
     await expect(viewer).toBeHidden()
   })
 
+  test('a post copies its Markdown, which lives at its .md URL', async ({
+    context,
+    page,
+    request,
+  }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+    await page.goto('/the-moons-of-2023')
+    await expect(page.locator('link[rel="alternate"][type="text/markdown"]')).toHaveAttribute(
+      'href',
+      /\/the-moons-of-2023\.md$/,
+    )
+    await page.getByRole('button', { name: 'Copy as Markdown' }).click()
+    await expect(page.getByRole('status').filter({ hasText: 'Copied' })).toHaveCount(1)
+    const copied = await page.evaluate(() => navigator.clipboard.readText())
+    expect(copied).toMatch(/^# The Moons of 2023\n/)
+
+    const file = await request.get('/the-moons-of-2023.md')
+    expect(file.headers()['content-type']).toBe('text/markdown; charset=utf-8')
+    expect(await file.text()).toBe(copied)
+    expect((await request.get('/no-such-post.md')).status()).toBe(404)
+  })
+
   test('the HDR post keeps its gain-map originals', async ({ page }) => {
     await page.goto('/how-gain-maps-elevate-hdr-photography')
     const hdr = page.locator('.prose img[src$="_HDR_20221205.jpg"]').first()
@@ -196,10 +218,15 @@ test.describe('platform', () => {
 })
 
 test.describe('without JavaScript @nojs', () => {
-  test('pages, search, likes, and contact links work without scripts @nojs', async ({ page }) => {
+  test('pages, search, likes, Markdown, and contact links work without scripts @nojs', async ({
+    page,
+  }) => {
     await page.goto('/the-moons-of-2023')
     await expect(page.getByRole('heading', { level: 1, name: 'The Moons of 2023' })).toBeVisible()
     await expect(page.locator('.prose img').first()).toBeVisible()
+    const markdown = page.getByRole('link', { name: 'View as Markdown' })
+    await expect(markdown).toHaveAttribute('href', '/the-moons-of-2023.md')
+    await expect(page.getByRole('button', { name: 'Copy as Markdown' })).toBeHidden()
 
     await page.goto('/')
     await page.getByRole('searchbox', { name: 'Search posts' }).first().fill('hdr')
