@@ -34,8 +34,8 @@
     }
   }
 
-  /* Narrow screens: the contents above the body and the like button below
-     it, so the sidebar's boxes join the body's column. */
+  /* Narrow screens: the sidebar's contents join the body's column above it,
+     and the like button shows its copy after the body. */
   .body {
     display: flex;
     flex-direction: column;
@@ -47,13 +47,16 @@
     display: contents;
   }
 
-  .like {
-    display: flex;
-    justify-content: center;
-    order: 1;
+  .sideLike {
+    display: none;
   }
 
-  /* Wide screens: both sit in a sidebar in the right margin, which sticks
+  .endLike {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Wide screens: the contents and like button sit in a sidebar in the right margin, which sticks
      below the header while the body scrolls. */
   @media (width >= 80rem) {
     .body {
@@ -79,14 +82,18 @@
     }
 
     /* A long list scrolls on its own, so the like button stays in view. */
-    .sidebar > :not(.like) {
+    .sidebar > :not(.sideLike) {
       min-block-size: 0;
       overflow-y: auto;
     }
 
-    .like {
+    .sideLike {
+      display: flex;
       flex: none;
-      justify-content: flex-start;
+    }
+
+    .endLike {
+      display: none;
     }
   }
 

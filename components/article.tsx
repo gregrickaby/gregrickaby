@@ -60,12 +60,16 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
           <aside className={styles.aside}>
             <div className={styles.sidebar}>
               {headings.length > 0 ? <TableOfContents headings={headings} /> : null}
-              <div className={styles.like}>
+              <div className={styles.sideLike}>
                 <LikeButton slug={meta.slug} />
               </div>
             </div>
           </aside>
           <Prose html={html} />
+          {/* The narrow-screen copy, after the body so focus order matches what readers see. */}
+          <div className={styles.endLike}>
+            <LikeButton slug={meta.slug} />
+          </div>
         </div>
       ) : (
         <Prose html={html} />

@@ -98,7 +98,9 @@ describe('Article', () => {
     expect(html).toContain('aria-label="Tags"')
     expect(html).toContain('aria-label="Table of contents"')
     expect(html).toContain('href="#intro"')
-    expect(html).toContain('Like this post')
+    // One like button in the sidebar, one after the body for narrow screens.
+    expect(html.split('Like this post').length - 1).toBe(2)
+    expect(html.indexOf('Hello moon')).toBeLessThan(html.lastIndexOf('Like this post'))
     expect(html).toContain('class="progress"')
   })
 
