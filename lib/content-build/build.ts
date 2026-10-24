@@ -78,7 +78,7 @@ export async function buildContent(publicDir: string, now = new Date()): Promise
       if (!existsSync(file)) continue
       const { data, content } = matter(readFileSync(file, 'utf-8'))
       const basePath = `/content/${type === 'post' ? 'posts' : 'pages'}/${slug}`
-      const { html, images } = await renderMarkdown(content, { basePath, measure })
+      const { html, images, headings } = await renderMarkdown(content, { basePath, measure })
 
       const featured =
         typeof data.featuredImage === 'string'
@@ -98,7 +98,7 @@ export async function buildContent(publicDir: string, now = new Date()): Promise
         readingMinutes: readingMinutes(content),
       }
       const hero = featured && images[0] !== featured.src ? featured : null
-      entries.push({ meta, html, hero })
+      entries.push({ meta, html, headings, hero })
     }
     return entries
   }

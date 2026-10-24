@@ -12,6 +12,7 @@ import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
 
 import { fullImageUrl, IMAGE_WIDTHS, optimizedImageUrl } from '../images.ts'
+import type { Heading } from '../types.ts'
 import { readableColor } from './contrast.ts'
 
 /** What the build knows about a local image file. */
@@ -123,6 +124,26 @@ function rehypeLocalMedia({ basePath, measure, images }: RenderOptions & { image
   }
 }
 
+function textOf(node: ElementContent): string {
+  if (node.type === 'text') return node.value
+  return node.type === 'element' ? node.children.map(textOf).join('') : ''
+}
+
+/**
+ * Collects the h2 and h3 headings, with the ids rehype-slug gave them, for
+ * the table of contents. Headings with no text are skipped.
+ */
+function rehypeHeadings({ headings }: { headings: Heading[] }) {
+  return (tree: HastRoot) => {
+    visit(tree, 'element', (node: Element) => {
+      if (node.tagName !== 'h2' && node.tagName !== 'h3') return
+      const text = textOf(node).replace(/\s+/g, ' ').trim()
+      if (!text) return
+      headings.push({ id: String(node.properties.id), text, depth: node.tagName === 'h2' ? 2 : 3 })
+    })
+  }
+}
+
 /** Shiki themes for each color scheme. CSS picks one with `light-dark()`. */
 const CODE_THEMES = { light: 'rose-pine-dawn', dark: 'rose-pine-moon' } as const
 
@@ -203,22 +224,25 @@ export interface RenderedMarkdown {
   html: string
   /** Paths under `public/` of the local images in the body, in order. */
   images: string[]
+  /** The h2 and h3 headings, in order. */
+  headings: Heading[]
 }
 
 /**
  * Renders a post or page body: GitHub-flavored Markdown with raw HTML, heading
- * ids, figure captions, shiki code highlighting with copy buttons, and
- * optimized images. The HTML is sanitized, so the page can inject it as-is.
+ * ids and a list of headings, figure captions, shiki code highlighting with
+ * copy buttons, and optimized images. The HTML is sanitized, so the page can inject it as-is.
  *
  * @param markdown - The body, without frontmatter.
  * @param options - Where the content's files live and how to measure them.
- * @returns The HTML and the local images it shows.
+ * @returns The HTML, the local images it shows, and its headings.
  */
 export async function renderMarkdown(
   markdown: string,
   options: RenderOptions,
 ): Promise<RenderedMarkdown> {
   const images: string[] = []
+  const headings: Heading[] = []
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -226,6 +250,7 @@ export async function renderMarkdown(
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeSlug)
+    .use(rehypeHeadings, { headings })
     .use(rehypeLocalMedia, { ...options, images })
     .use(rehypePrettyCode, {
       theme: CODE_THEMES,
@@ -235,5 +260,5 @@ export async function renderMarkdown(
     .use(rehypeCodeBlocks)
     .use(rehypeStringify)
     .process(markdown)
-  return { html: sanitizeHtml(String(file), SANITIZE_OPTIONS), images }
+  return { html: sanitizeHtml(String(file), SANITIZE_OPTIONS), images, headings }
 }

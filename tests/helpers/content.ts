@@ -21,7 +21,7 @@ export function postMeta(overrides: Partial<PostMeta> = {}): PostMeta {
 /** A post with HTML and a hero. */
 export function post(overrides: Partial<PostMeta> = {}, html = '<p>Hello moon</p>'): Post {
   const meta = postMeta(overrides)
-  return { meta, html, hero: meta.featuredImage ?? null }
+  return { meta, html, headings: [], hero: meta.featuredImage ?? null }
 }
 
 /** A gallery photo with test defaults. */

@@ -20,6 +20,7 @@ const likePost = vi.fn(async (_: unknown, data: FormData) => ({
 const getLikeCount = vi.fn(async (slug: string) => (slug === 'post' ? 4 : 1))
 vi.mock('@/lib/like-post', () => ({ getLikeCount, likePost }))
 const { LikeButton } = await import('@/components/islands/like-button')
+const { TableOfContents } = await import('@/components/islands/table-of-contents')
 
 afterEach(() => {
   cleanup()
@@ -405,5 +406,67 @@ describe('LikeButton', () => {
       fireEvent.click(screen.getByRole('button'))
     })
     expect(screen.getByRole('button').textContent).toContain('You liked this post')
+  })
+})
+
+describe('TableOfContents', () => {
+  const headings = [
+    { id: 'one', text: 'One', depth: 2 as const },
+    { id: 'two', text: 'Two', depth: 3 as const },
+    { id: 'gone', text: 'Gone', depth: 2 as const },
+  ]
+  let fire: () => void
+  const disconnect = vi.fn()
+
+  beforeEach(() => {
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class {
+        constructor(callback: () => void) {
+          fire = callback
+        }
+        observe() {}
+        disconnect = disconnect
+      },
+    )
+  })
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    document.body.innerHTML = ''
+  })
+
+  function place(id: string, top: number) {
+    const heading = document.createElement('h2')
+    heading.id = id
+    heading.getBoundingClientRect = () => ({ top }) as DOMRect
+    document.body.append(heading)
+  }
+
+  it('links each heading, nesting h3s, and marks the section being read', () => {
+    vi.stubGlobal('innerHeight', 900)
+    place('one', -400)
+    place('two', 200)
+    const { unmount } = render(<TableOfContents headings={headings} />)
+    expect(screen.getByRole('navigation', { name: 'Table of contents' })).toBeTruthy()
+    const links = screen.getAllByRole('link')
+    expect(links.map((link) => link.getAttribute('href'))).toEqual(['#one', '#two', '#gone'])
+    expect(links[1]!.parentElement!.className).toBe('sub')
+    expect(links.some((link) => link.hasAttribute('aria-current'))).toBe(false)
+    act(() => fire())
+    expect(links[1]!.getAttribute('aria-current')).toBe('location')
+    expect(links[0]!.hasAttribute('aria-current')).toBe(false)
+    unmount()
+    expect(disconnect).toHaveBeenCalled()
+  })
+
+  it('marks nothing above the first heading', () => {
+    vi.stubGlobal('innerHeight', 900)
+    place('one', 600)
+    render(<TableOfContents headings={headings} />)
+    act(() => fire())
+    expect(screen.getAllByRole('link').some((link) => link.hasAttribute('aria-current'))).toBe(
+      false,
+    )
   })
 })

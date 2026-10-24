@@ -1,0 +1,95 @@
+@layer components {
+  .details {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .summary {
+    color: var(--text-2);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    text-transform: uppercase;
+  }
+
+  .list {
+    display: grid;
+    font-size: var(--step-minus-1);
+    gap: var(--space-1);
+    list-style: none;
+    margin-block-start: var(--space-3);
+    padding: 0;
+  }
+
+  .sub {
+    padding-inline-start: var(--space-4);
+  }
+
+  /* The bar beside the section being read. */
+  .link {
+    border-inline-start: 2px solid transparent;
+    color: var(--text-2);
+    display: block;
+    line-height: 1.4;
+    padding-block: var(--space-1);
+    padding-inline-start: var(--space-3);
+    text-decoration: none;
+    transition:
+      border-color var(--duration-exit) ease,
+      color var(--duration-exit) ease;
+
+    &:hover {
+      color: var(--accent);
+    }
+
+    &[aria-current] {
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+  }
+
+  /* On narrow screens the drawer slides open and shut where browsers can
+     animate to a keyword height. Elsewhere it opens at once. */
+  @media (width < 80rem) and (prefers-reduced-motion: no-preference) {
+    @supports (interpolate-size: allow-keywords) {
+      .details {
+        interpolate-size: allow-keywords;
+
+        &::details-content {
+          block-size: 0;
+          overflow: hidden;
+          transition:
+            block-size var(--duration-enter) var(--ease-out),
+            content-visibility var(--duration-enter) allow-discrete;
+        }
+
+        &[open]::details-content {
+          block-size: auto;
+        }
+      }
+    }
+  }
+
+  /* In the sidebar the list is always open, and the summary is its label. */
+  @media (width >= 80rem) {
+    .details {
+      background: none;
+      border: 0;
+      padding: 0;
+
+      &::details-content {
+        content-visibility: visible;
+      }
+    }
+
+    .summary {
+      cursor: default;
+      list-style: none;
+      pointer-events: none;
+    }
+  }
+}

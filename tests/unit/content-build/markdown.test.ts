@@ -19,6 +19,17 @@ describe('renderMarkdown', () => {
     expect(html).toContain('<table>')
   })
 
+  it('lists the h2 and h3 headings with their ids and plain text', async () => {
+    const { headings } = await render(
+      '## Set up `nginx`\n\n### The <!-- note --> moon\n\n#### Too deep\n\n##\n\n## Last',
+    )
+    expect(headings).toEqual([
+      { id: 'set-up-nginx', text: 'Set up nginx', depth: 2 },
+      { id: 'the--moon', text: 'The moon', depth: 3 },
+      { id: 'last', text: 'Last', depth: 2 },
+    ])
+  })
+
   it('turns a lone titled image into a figure with a caption', async () => {
     const { html, images } = await render('![A moon](./big.jpg "The <Wolf> Moon")')
     expect(html).toContain('<figure>')

@@ -23,10 +23,20 @@ export interface PostMeta {
   readingMinutes?: number
 }
 
+/** An h2 or h3 in a post body, for the table of contents. */
+export interface Heading {
+  /** The heading's `id`, set at build time. */
+  id: string
+  text: string
+  depth: 2 | 3
+}
+
 /** A post or page with its HTML, rendered and sanitized at build time. */
 export interface Post {
   meta: PostMeta
   html: string
+  /** The body's h2 and h3 headings, in order. */
+  headings: Heading[]
   /** The featured image to show above the body, or null when the body already opens with it. */
   hero: ImageAsset | null
 }

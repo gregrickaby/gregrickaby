@@ -149,6 +149,20 @@ test.describe('likes', () => {
   })
 })
 
+test.describe('table of contents', () => {
+  test('links to each section', async ({ page }) => {
+    await page.goto('/how-to-install-lamp-on-ubuntu')
+    const contents = page.getByRole('navigation', { name: 'Table of contents' })
+    await expect(contents).toBeVisible()
+    const link = contents.getByRole('link').nth(2)
+    const target = (await link.getAttribute('href'))!
+    await link.click()
+    await expect(page).toHaveURL(new RegExp(`${target}$`))
+    await expect(page.locator(target)).toBeInViewport()
+    await expect(link).toHaveAttribute('aria-current', 'location')
+  })
+})
+
 test.describe('platform', () => {
   test('pages share generated images', async ({ page, request }) => {
     await page.goto('/the-moons-of-2023')

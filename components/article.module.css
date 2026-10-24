@@ -34,13 +34,64 @@
     }
   }
 
-  .footer {
-    align-items: center;
-    border-block-start: 1px solid var(--border);
+  /* Narrow screens: the contents above the body and the like button below
+     it, so the sidebar's boxes join the body's column. */
+  .body {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    justify-content: space-between;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .aside,
+  .sidebar {
+    display: contents;
+  }
+
+  .like {
+    display: flex;
+    justify-content: center;
+    order: 1;
+  }
+
+  /* Wide screens: both sit in a sidebar in the right margin, which sticks
+     below the header while the body scrolls. */
+  @media (width >= 80rem) {
+    .body {
+      display: block;
+      position: relative;
+    }
+
+    .aside {
+      display: block;
+      inline-size: 15rem;
+      inset-block: 0;
+      inset-inline-start: calc(100% + var(--space-7));
+      position: absolute;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      inset-block-start: 6rem;
+      max-block-size: calc(100dvh - 8rem);
+      position: sticky;
+    }
+
+    /* A long list scrolls on its own, so the like button stays in view. */
+    .sidebar > :not(.like) {
+      min-block-size: 0;
+      overflow-y: auto;
+    }
+
+    .like {
+      flex: none;
+      justify-content: flex-start;
+    }
+  }
+
+  .footer {
+    border-block-start: 1px solid var(--border);
     margin-block-start: var(--space-7);
     padding-block-start: var(--space-4);
   }

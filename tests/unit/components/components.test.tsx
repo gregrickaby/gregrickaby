@@ -86,18 +86,26 @@ describe('Article', () => {
     expect(html).not.toContain('<img')
     expect(html).not.toContain('/tag/')
     expect(html).not.toContain('<footer')
+    expect(html).not.toContain('Like this post')
   })
 
-  it('gives a post a like button and a reading progress bar', async () => {
-    const html = await renderServer(<Article post={post()} />)
+  it('gives a post a table of contents, a like button, and a reading progress bar', async () => {
+    const withHeadings = {
+      ...post(),
+      headings: [{ id: 'intro', text: 'Intro', depth: 2 as const }],
+    }
+    const html = await renderServer(<Article post={withHeadings} />)
     expect(html).toContain('aria-label="Tags"')
+    expect(html).toContain('aria-label="Table of contents"')
+    expect(html).toContain('href="#intro"')
     expect(html).toContain('Like this post')
     expect(html).toContain('class="progress"')
   })
 
-  it('shows the like button without tags', async () => {
+  it('shows the like button without tags or headings', async () => {
     const html = await renderServer(<Article post={post({ tags: undefined })} />)
     expect(html).not.toContain('aria-label="Tags"')
+    expect(html).not.toContain('Table of contents')
     expect(html).toContain('Like this post')
   })
 })
