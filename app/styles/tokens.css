@@ -85,6 +85,9 @@
     --duration-exit: 150ms;
     --duration-enter: 210ms;
     --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    /* Two frames per keyframe, so playful motion moves like an 8-bit sprite. */
+    --ease-pixel: steps(2);
   }
 
   :root[data-theme='light'] {

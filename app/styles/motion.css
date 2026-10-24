@@ -1,6 +1,6 @@
-/* Hover "boops": part of an icon springs out, overshoots, and settles. A
-   control opts in with `data-boop`, so components and the built post HTML
-   share one set of keyframes. The reduced-motion rule in base.css stops them. */
+/* Hover "boops": part of an icon springs out, overshoots, and settles, in
+   stepped frames like an 8-bit sprite. A control opts in with `data-boop`,
+   so components and the built post HTML share one set of keyframes. The reduced-motion rule in base.css stops them. */
 
 /* Each selector targets a different data-boop value, so source order never decides a tie. */
 /* stylelint-disable no-descending-specificity */
@@ -39,69 +39,69 @@
   @media (prefers-reduced-motion: no-preference) {
     [data-boop='tilt']:hover svg,
     [data-copy]:hover::before {
-      animation: boop-tilt 600ms var(--ease-out);
+      animation: boop-tilt 600ms var(--ease-pixel);
     }
 
     [data-boop='hop']:hover svg,
     [data-boop='nudge-left']:hover svg,
     [data-boop='nudge-right']:hover svg,
     [data-boop='drop']:hover svg path:not(:first-child) {
-      animation: boop-shift 600ms var(--ease-out);
+      animation: boop-shift 600ms var(--ease-pixel);
     }
 
     /* A heart beats twice. */
     [data-boop='beat']:not(:disabled):hover svg {
-      animation: boop-beat 700ms var(--ease-out);
+      animation: boop-beat 700ms var(--ease-pixel);
     }
 
     /* An X looks the same after a quarter turn. */
     [data-boop='spin']:hover svg {
-      animation: boop-spin 500ms var(--ease-out);
+      animation: boop-spin 500ms var(--ease-pixel);
     }
 
     /* The sun or moon sets below the button's edge, then rises back over it. */
     [data-boop='theme']:not([data-switched]):hover svg {
-      animation: boop-rise 900ms var(--ease-out);
+      animation: boop-rise 900ms var(--ease-pixel);
     }
 
     /* Hamburger lines spread apart. */
     [data-boop='spread']:hover svg path:first-child {
       --boop-y: -2px;
 
-      animation: boop-shift 500ms var(--ease-out);
+      animation: boop-shift 500ms var(--ease-pixel);
     }
 
     [data-boop='spread']:hover svg path:last-child {
       --boop-y: 2px;
 
-      animation: boop-shift 500ms var(--ease-out);
+      animation: boop-shift 500ms var(--ease-pixel);
     }
 
     /* Sound waves pulse outward, the outer one a beat later. */
     [data-boop='waves']:hover svg path:nth-child(2) {
       --boop-x: 2px;
 
-      animation: boop-shift 500ms var(--ease-out);
+      animation: boop-shift 500ms var(--ease-pixel);
     }
 
     [data-boop='waves']:hover svg path:nth-child(3) {
       --boop-x: 3px;
 
-      animation: boop-shift 500ms 60ms var(--ease-out);
+      animation: boop-shift 500ms 60ms var(--ease-pixel);
     }
 
     /* The icon that appears after a click spins and grows in. */
     [data-switched] svg {
-      animation: boop-swap 500ms var(--ease-out);
+      animation: boop-swap 500ms var(--ease-pixel);
     }
 
     [data-copied]::before {
-      animation: boop-pop 400ms var(--ease-out);
+      animation: boop-pop 400ms var(--ease-pixel);
     }
 
     /* A tomato ring spreads from the button as the check pops in. */
     [data-copied]::after {
-      animation: copy-ring 600ms var(--ease-out) both;
+      animation: copy-ring 600ms var(--ease-pixel) both;
       border: 2px solid var(--tomato-6);
       border-radius: inherit;
       content: '';

@@ -45,11 +45,11 @@
     fill: currentcolor;
     inset: 0;
     position: absolute;
-    transition: clip-path var(--duration-enter) var(--ease-out);
+    transition: clip-path var(--duration-enter) var(--ease-pixel);
   }
 
-  /* A like sends out sparkles that drift from tomato toward gold, flicker,
-     and fade. Reduced motion skips them; the heart just fills. */
+  /* A like sends out square sparkles that drift from tomato toward gold,
+     blink, and fade in stepped frames. Reduced motion skips them; the heart just fills. */
   .burst {
     display: none;
   }
@@ -63,24 +63,23 @@
     }
 
     .heart:has(.burst) svg {
-      animation: heart-pop 400ms var(--ease-out);
+      animation: heart-pop 400ms var(--ease-pixel);
     }
   }
 
   .sparkle {
     animation:
-      sparkle-fly 800ms var(--ease-out) both,
-      sparkle-fade 400ms 450ms ease-in both,
-      sparkle-shift 850ms linear both;
+      sparkle-fly 800ms steps(6) both,
+      sparkle-fade 400ms 450ms steps(2) both,
+      sparkle-shift 850ms steps(4) both;
     block-size: var(--size);
     inline-size: var(--size);
     inset: calc(var(--size) / -2) auto auto calc(var(--size) / -2);
     position: absolute;
 
     &::before {
-      animation: sparkle-twinkle var(--twinkle) ease-in-out 6 alternate;
+      animation: sparkle-twinkle var(--twinkle) steps(1) 6 alternate;
       background: var(--color);
-      border-radius: 50%;
       content: '';
       inset: 0;
       position: absolute;
