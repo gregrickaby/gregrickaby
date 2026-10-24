@@ -277,7 +277,7 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
     button: ['type', 'aria-label', 'data-copy'],
     pre: ['tabindex', 'data-language', 'data-theme', 'style'],
     code: ['data-language', 'data-theme'],
-    span: ['data-line', 'data-highlighted-line', 'style'],
+    span: ['data-line', 'data-highlighted-line', 'data-like-cue', 'style'],
     figure: ['data-rehype-pretty-code-figure', 'style'],
     div: ['data-demo'],
     '*': ['class', 'id'],

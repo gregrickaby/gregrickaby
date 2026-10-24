@@ -14,6 +14,7 @@
     gap: var(--space-2);
     min-height: 2.5rem;
     padding: var(--space-2) var(--space-4);
+    position: relative;
     transition:
       border-color var(--duration-exit) ease,
       color var(--duration-exit) ease;
@@ -113,6 +114,110 @@
   @keyframes sparkle-twinkle {
     to {
       opacity: 0.4;
+    }
+  }
+
+  /* A post's like cue: a pixel speech bubble pops up over the button. With
+     motion, the button hops and sends out a ring of pixels, three times. */
+  .button[data-cue] {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .psst {
+    background: var(--accent-fill);
+    border-radius: var(--radius-1);
+    color: var(--accent-contrast);
+    font-family: var(--font-pixel);
+    font-size: 0.75rem;
+    font-weight: 400;
+    inset: auto auto calc(100% + var(--space-2)) 50%;
+    padding: var(--space-1) var(--space-2);
+    pointer-events: none;
+    position: absolute;
+    translate: -50% 0;
+    white-space: nowrap;
+
+    /* The bubble's tail, a pixel square turned into a notch. */
+    &::after {
+      background: inherit;
+      block-size: 6px;
+      content: '';
+      inline-size: 6px;
+      inset: calc(100% - 3px) auto auto calc(50% - 3px);
+      position: absolute;
+      rotate: 45deg;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .button[data-cue] {
+      animation: cue-hop 1.2s steps(1) 3;
+
+      &::after {
+        animation: cue-ring 1.2s steps(4) 3 both;
+        border: 2px dashed var(--accent);
+        border-radius: inherit;
+        content: '';
+        inset: -2px;
+        pointer-events: none;
+        position: absolute;
+      }
+
+      & .heart svg {
+        animation: heart-pop 400ms var(--ease-pixel) 3 alternate;
+      }
+    }
+
+    .psst {
+      animation:
+        psst-pop 300ms steps(3) both,
+        psst-bob 600ms steps(1) 300ms 6;
+    }
+  }
+
+  @keyframes cue-hop {
+    0%,
+    40%,
+    100% {
+      rotate: 0deg;
+      translate: 0;
+    }
+
+    10%,
+    30% {
+      rotate: -4deg;
+      translate: 0 -4px;
+    }
+
+    20% {
+      rotate: 4deg;
+      translate: 0 -8px;
+    }
+  }
+
+  @keyframes cue-ring {
+    from {
+      opacity: 1;
+      scale: 1;
+    }
+
+    to {
+      opacity: 0;
+      scale: 1.35 1.8;
+    }
+  }
+
+  @keyframes psst-pop {
+    from {
+      opacity: 0;
+      scale: 0.4;
+    }
+  }
+
+  @keyframes psst-bob {
+    50% {
+      translate: -50% -3px;
     }
   }
 
