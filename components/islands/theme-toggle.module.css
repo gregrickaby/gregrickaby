@@ -8,6 +8,7 @@
     display: inline-flex;
     height: 2.25rem;
     justify-content: center;
+    position: relative;
     width: 2.25rem;
 
     &:hover {
@@ -36,6 +37,67 @@
 
     :root:not([data-theme='light']) .sun {
       display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Switching to light flares the sun's rays out in tomato. */
+    .toggle[data-switched] .sun path:last-child {
+      animation: theme-rays 500ms var(--ease-out);
+    }
+
+    /* Switching to dark twinkles stars around the moon. */
+    :root[data-theme='dark'] .toggle[data-switched]::before {
+      animation: theme-stars 500ms ease-in-out both;
+      block-size: 3px;
+      border-radius: 50%;
+      box-shadow:
+        -11px -8px 0 0.5px var(--tomato-3),
+        10px -11px 0 0.5px var(--tomato-2),
+        12px 7px 0 0.5px var(--tomato-4),
+        -10px 10px 0 0.5px var(--tomato-2),
+        1px -14px 0 0.5px var(--tomato-5);
+      content: '';
+      inline-size: 3px;
+      inset: 50% auto auto 50%;
+      margin: -1.5px;
+      pointer-events: none;
+      position: absolute;
+    }
+  }
+
+  @keyframes theme-rays {
+    0% {
+      stroke: var(--tomato-6);
+      transform: rotate(-45deg) scale(0.5);
+    }
+
+    60% {
+      stroke: var(--tomato-3);
+      transform: scale(1.2);
+    }
+  }
+
+  /* hue-rotate() turns the tomato stars toward gold as they flicker out. */
+  @keyframes theme-stars {
+    0% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    25%,
+    75% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.3;
+    }
+
+    100% {
+      filter: hue-rotate(40deg);
+      opacity: 0;
+      transform: scale(1.1);
     }
   }
 }
