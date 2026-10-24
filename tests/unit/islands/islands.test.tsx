@@ -13,11 +13,20 @@ const { MobileMenu } = await import('@/components/islands/mobile-menu')
 const { Lightbox, toSlide } = await import('@/components/islands/lightbox')
 const { CodeCopy } = await import('@/components/islands/code-copy')
 
+const likePost = vi.fn(async (_: unknown, data: FormData) => ({
+  count: data.get('slug') === 'post' ? 5 : 0,
+  liked: true,
+}))
+const getLikeCount = vi.fn(async (slug: string) => (slug === 'post' ? 4 : 1))
+vi.mock('@/lib/like-post', () => ({ getLikeCount, likePost }))
+const { LikeButton } = await import('@/components/islands/like-button')
+
 afterEach(() => {
   cleanup()
   playSound.mockClear()
   document.documentElement.removeAttribute('data-theme')
   document.cookie = 'theme=; max-age=0; path=/'
+  localStorage.clear()
 })
 
 describe('ThemeToggle', () => {
@@ -191,7 +200,7 @@ describe('Lightbox', () => {
     fireEvent.click(screen.getByAltText('one'))
     fireEvent.click(screen.getByLabelText('Next image'))
     dialog().dispatchEvent(new Event('close'))
-    expect(playSound.mock.calls).toEqual([['open'], ['step'], ['close']])
+    expect(playSound.mock.calls).toEqual([['shutter'], ['step'], ['close']])
   })
 
   it('ignores modified clicks and clicks outside triggers', () => {
@@ -255,12 +264,13 @@ describe('Lightbox', () => {
 })
 
 describe('PrintButton', () => {
-  it('opens the print dialog', async () => {
+  it('blips, then opens the print dialog', async () => {
     const { PrintButton } = await import('@/components/islands/print-button')
     const print = vi.fn()
     vi.stubGlobal('print', print)
     render(<PrintButton className="x" />)
     fireEvent.click(screen.getByRole('button', { name: 'Save as PDF' }))
+    expect(playSound.mock.calls).toEqual([['select']])
     expect(print).toHaveBeenCalled()
     cleanup()
     render(<PrintButton />)
@@ -318,5 +328,63 @@ describe('CodeCopy', () => {
     renderBlock()
     await act(async () => fireEvent.click(screen.getByText('Text')))
     expect(writeText).not.toHaveBeenCalled()
+  })
+})
+
+describe('LikeButton', () => {
+  it('loads the count, then likes the post, plays a sound, and remembers it', async () => {
+    render(<LikeButton slug="post" />)
+    const button = screen.getByRole('button')
+    expect(button.textContent).toBe('Like this post')
+    expect(await screen.findByText('4')).toBeTruthy()
+    expect(button.textContent).toContain('4 likes. Like this post')
+    await act(async () => {
+      fireEvent.click(button)
+    })
+    expect(playSound).toHaveBeenCalledWith('coin')
+    expect(button.textContent).toContain('5 likes. You liked this post')
+    expect((button as HTMLButtonElement).disabled).toBe(true)
+    expect(localStorage.getItem('liked:post')).toBe('yes')
+  })
+
+  it('starts filled when this browser liked the post before', async () => {
+    localStorage.setItem('liked:other', 'yes')
+    render(<LikeButton slug="other" />)
+    expect(await screen.findByText('1')).toBeTruthy()
+    expect(screen.getByRole('button').textContent).toContain('1 like. You liked this post')
+  })
+
+  it('shows no count when it fails to load, and ignores a count that lands after unmount', async () => {
+    getLikeCount.mockRejectedValueOnce(new Error('offline'))
+    const { unmount } = render(<LikeButton slug="post" />)
+    await act(async () => {})
+    expect(screen.getByRole('button').textContent).toBe('Like this post')
+    unmount()
+    render(<LikeButton slug="post" />).unmount()
+    await act(async () => {})
+  })
+
+  it('forgets a like the server did not save', async () => {
+    likePost.mockImplementationOnce(async (previous) => previous as never)
+    render(<LikeButton slug="post" />)
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button'))
+    })
+    expect(screen.getByRole('button').textContent).toContain('Like this post')
+    expect(localStorage.getItem('liked:post')).toBeNull()
+  })
+
+  it('still likes when storage throws', async () => {
+    vi.spyOn(localStorage, 'getItem').mockImplementation(() => {
+      throw new Error('blocked')
+    })
+    vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
+      throw new Error('blocked')
+    })
+    render(<LikeButton slug="other" />)
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button'))
+    })
+    expect(screen.getByRole('button').textContent).toContain('You liked this post')
   })
 })

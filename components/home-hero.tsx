@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { SoundNav } from '@/components/islands/sound-nav'
 import { MetaLine } from '@/components/meta-line'
 import { getPhotos } from '@/lib/content'
 import { exifSummary } from '@/lib/format'
@@ -35,7 +36,7 @@ export function HomeHero() {
           {SITE.name}
         </h1>
         <p className={styles.summary}>{HOME.summary}</p>
-        <nav aria-label="Start here" className={styles.actions}>
+        <SoundNav aria-label="Start here" className={styles.actions} clickSound="select">
           <Link className={`${styles.action} ${styles.primary}`} href="/resume">
             Resume
           </Link>
@@ -45,7 +46,7 @@ export function HomeHero() {
           <Link className={styles.action} href="/blog">
             Writing
           </Link>
-        </nav>
+        </SoundNav>
       </div>
       {photo ? (
         <MetaLine

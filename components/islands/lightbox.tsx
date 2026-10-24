@@ -72,7 +72,7 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
     setSlides(triggers.map(toSlide))
     setIndex(Math.max(0, triggers.indexOf(trigger)))
     dialog.current?.showModal()
-    playSound('open')
+    playSound('shutter')
   }
 
   function step(delta: number) {

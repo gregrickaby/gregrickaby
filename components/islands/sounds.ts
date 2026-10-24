@@ -7,8 +7,12 @@
 const STORAGE_KEY = 'sound-effects'
 const VOLUME = 0.05
 
-/** Each note is a frequency in hertz and a length in seconds, played in order. */
-type Note = readonly [hertz: number, seconds: number]
+/**
+ * Each note is a frequency in hertz (a square wave), `noise` (a burst of
+ * hiss, like the NES noise channel), or `rest`, and a length in seconds.
+ * Notes play in order.
+ */
+type Note = readonly [pitch: number | 'noise' | 'rest', seconds: number]
 
 const SOUNDS = {
   'sound-on': [
@@ -39,8 +43,23 @@ const SOUNDS = {
     [523, 0.04],
     [392, 0.06],
   ],
+  /** A camera shutter: the mirror flips up, then the shutter closes. */
+  shutter: [
+    ['noise', 0.03],
+    ['rest', 0.06],
+    ['noise', 0.05],
+  ],
   step: [[880, 0.03]],
+  select: [
+    [659, 0.03],
+    [1319, 0.07],
+  ],
   hover: [[1175, 0.02]],
+  /** Super Mario Bros.' coin: B5, then a ringing E6. */
+  coin: [
+    [988, 0.08],
+    [1319, 0.5],
+  ],
   rise: [
     [523, 0.04],
     [659, 0.04],
@@ -54,6 +73,7 @@ export type SoundName = keyof typeof SOUNDS
 
 const listeners = new Set<() => void>()
 let context: AudioContext | undefined
+let noise: AudioBuffer | undefined
 
 /** True when the visitor turned sounds on. Storage can throw in private windows. */
 export function soundEnabled(): boolean {
@@ -84,6 +104,27 @@ export function subscribeSound(listener: () => void) {
   }
 }
 
+/** A second of white noise, each value held for four samples to make it gritty. */
+function noiseBuffer(audio: AudioContext): AudioBuffer {
+  if (noise) return noise
+  noise = audio.createBuffer(1, audio.sampleRate, audio.sampleRate)
+  const data = noise.getChannelData(0)
+  for (let i = 0; i < data.length; i += 4) data.fill(Math.random() * 2 - 1, i, i + 4)
+  return noise
+}
+
+function createSource(audio: AudioContext, pitch: number | 'noise'): AudioScheduledSourceNode {
+  if (pitch === 'noise') {
+    const source = audio.createBufferSource()
+    source.buffer = noiseBuffer(audio)
+    return source
+  }
+  const oscillator = audio.createOscillator()
+  oscillator.type = 'square'
+  oscillator.frequency.value = pitch
+  return oscillator
+}
+
 /**
  * Plays a sound when sounds are on. Call it from a click or key handler:
  * browsers only start audio after a user gesture.
@@ -92,16 +133,16 @@ export function playSound(name: SoundName) {
   if (!soundEnabled()) return
   context ??= new AudioContext()
   let start = context.currentTime
-  for (const [hertz, seconds] of SOUNDS[name]) {
-    const oscillator = context.createOscillator()
-    const gain = context.createGain()
-    oscillator.type = 'square'
-    oscillator.frequency.value = hertz
-    gain.gain.setValueAtTime(VOLUME, start)
-    gain.gain.exponentialRampToValueAtTime(0.001, start + seconds)
-    oscillator.connect(gain).connect(context.destination)
-    oscillator.start(start)
-    oscillator.stop(start + seconds)
+  for (const [pitch, seconds] of SOUNDS[name]) {
+    if (pitch !== 'rest') {
+      const source = createSource(context, pitch)
+      const gain = context.createGain()
+      gain.gain.setValueAtTime(VOLUME, start)
+      gain.gain.exponentialRampToValueAtTime(0.001, start + seconds)
+      source.connect(gain).connect(context.destination)
+      source.start(start)
+      source.stop(start + seconds)
+    }
     start += seconds
   }
 }

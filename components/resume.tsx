@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { ReactNode } from 'react'
 
 import { PrintButton } from '@/components/islands/print-button'
+import { SoundNav } from '@/components/islands/sound-nav'
 import { MetaLine } from '@/components/meta-line'
 import { PageTitle } from '@/components/page-title'
 import { getBuildTime } from '@/lib/content'
@@ -63,7 +64,7 @@ export function Resume() {
           </div>
         </dl>
         <MetaLine className={styles.skills} items={[...resumeSummary.skills]} />
-        <div className={styles.actions}>
+        <SoundNav as="div" className={styles.actions} clickSound="select">
           <Link className={`${styles.action} ${styles.primary}`} href="/contact">
             Get in touch
           </Link>
@@ -71,13 +72,13 @@ export function Resume() {
             LinkedIn
           </External>
           <PrintButton className={styles.action} />
-        </div>
+        </SoundNav>
       </section>
 
       <h2 className="visually-hidden">Experience</h2>
       <ol className={styles.timeline} role="list">
         {resumeEntries.map((entry) => (
-          <li className={styles.entry} key={`${entry.company}-${entry.dateRange}`}>
+          <li className={styles.entry} data-reveal key={`${entry.company}-${entry.dateRange}`}>
             <h3 className={styles.role}>
               {entry.role} ·{' '}
               {entry.companyUrl ? (

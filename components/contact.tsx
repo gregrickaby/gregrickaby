@@ -1,3 +1,4 @@
+import { SoundNav } from '@/components/islands/sound-nav'
 import { SITE } from '@/lib/site'
 
 import styles from './contact.module.css'
@@ -7,7 +8,7 @@ export function Contact() {
   return (
     <section className={styles.contact}>
       <p>Email is the best way to reach me.</p>
-      <ul className={styles.links} role="list">
+      <SoundNav as="ul" className={styles.links} clickSound="select" role="list">
         <li>
           <a className={`${styles.link} ${styles.primary}`} href={`mailto:${SITE.author.email}`}>
             {SITE.author.email}
@@ -23,7 +24,7 @@ export function Contact() {
             GitHub
           </a>
         </li>
-      </ul>
+      </SoundNav>
     </section>
   )
 }

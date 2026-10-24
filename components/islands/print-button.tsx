@@ -3,6 +3,7 @@
 import { DownloadIcon } from '@/components/icons'
 
 import styles from './print-button.module.css'
+import { playSound } from './sounds'
 
 /**
  * Opens the browser's print dialog, where "Save as PDF" uses the resume's
@@ -12,7 +13,10 @@ export function PrintButton({ className }: { className?: string }) {
   return (
     <button
       className={className ? `${styles.button} ${className}` : styles.button}
-      onClick={() => window.print()}
+      onClick={() => {
+        playSound('select')
+        window.print()
+      }}
       type="button"
     >
       <DownloadIcon size={16} /> Save as PDF
