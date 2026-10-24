@@ -133,7 +133,7 @@ export function subscribeSound(listener: () => void) {
  * A second of white noise, each value held for `grit` samples. Holding values
  * lowers the effective sample rate, which trades fizz for crunch.
  */
-function noiseBuffer(audio: AudioContext, grit: number): AudioBuffer {
+export function noiseBuffer(audio: AudioContext, grit: number): AudioBuffer {
   const cached = noise.get(grit)
   if (cached) return cached
   const buffer = audio.createBuffer(1, audio.sampleRate, audio.sampleRate)
@@ -161,6 +161,8 @@ export interface PlayOptions {
   grit?: number
   /** Build tones from this many odd harmonics instead of a true square wave. */
   harmonics?: number
+  /** Where the notes go instead of the speakers, so a demo can cut them off. */
+  destination?: AudioNode
 }
 
 function createSource(
@@ -186,7 +188,7 @@ function createSource(
  * starts suspended, so each call asks it to resume; browsers allow that
  * once a click, tap, or key press has happened.
  */
-function getContext(): AudioContext | undefined {
+export function getContext(): AudioContext | undefined {
   try {
     context ??= new AudioContext()
   } catch {
@@ -200,22 +202,49 @@ function getContext(): AudioContext | undefined {
  * Plays notes in order, whether or not sounds are on: demos call it from
  * their own play buttons. Call it from a click or key handler, since
  * browsers only start audio after a user gesture.
+ *
+ * @returns How many seconds the notes last, or 0 where Web Audio is missing.
  */
-export function playNotes(notes: readonly Note[], options: PlayOptions = {}) {
+export function playNotes(notes: readonly Note[], options: PlayOptions = {}): number {
   const audio = getContext()
-  if (!audio) return
-  let start = audio.currentTime
+  if (!audio) return 0
+  const begin = audio.currentTime
+  let start = begin
   for (const [pitch, seconds] of notes) {
     if (pitch !== 'rest') {
       const source = createSource(audio, pitch, options)
       const gain = audio.createGain()
       gain.gain.setValueAtTime(VOLUME, start)
       if (options.fade !== false) gain.gain.exponentialRampToValueAtTime(0.001, start + seconds)
-      source.connect(gain).connect(audio.destination)
+      source.connect(gain).connect(options.destination ?? audio.destination)
       source.start(start)
       source.stop(start + seconds)
     }
     start += seconds
+  }
+  return start - begin
+}
+
+const STOP_FADE = 0.05
+
+/**
+ * Starts a tone that plays until the returned function stops it, with a short
+ * fade so it ends without a click. Like {@link playNotes}, call it from a
+ * click or key handler. Returns undefined where Web Audio is missing.
+ */
+export function startTone(pitch: number, options: PlayOptions = {}): (() => void) | undefined {
+  const audio = getContext()
+  if (!audio) return undefined
+  const source = createSource(audio, pitch, options)
+  const gain = audio.createGain()
+  gain.gain.setValueAtTime(VOLUME, audio.currentTime)
+  source.connect(gain).connect(audio.destination)
+  source.start()
+  return () => {
+    const end = audio.currentTime + STOP_FADE
+    gain.gain.setValueAtTime(VOLUME, audio.currentTime)
+    gain.gain.exponentialRampToValueAtTime(0.001, end)
+    source.stop(end)
   }
 }
 

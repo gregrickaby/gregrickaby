@@ -15,17 +15,54 @@ export function Controls({ children, label }: { children: ReactNode; label?: str
   )
 }
 
+/** A play triangle drawn in pixels, to match the site's 8-bit icons. */
+function PlayIcon() {
+  return (
+    <svg aria-hidden="true" className={styles.icon} shapeRendering="crispEdges" viewBox="0 0 8 8">
+      <path d="M1 0h2v1h2v2h2v2H5v2H3v1H1z" fill="currentcolor" />
+    </svg>
+  )
+}
+
 /**
  * A demo button. `primary` (the default) is for the main action, such as
- * Play; `secondary` is for presets and edits.
+ * Play; `secondary` is for presets and edits. A button that plays sound
+ * passes `playing` instead of children: it reads Play with a triangle, then
+ * Stop with bouncing equalizer bars while it's true, and its demo's frame
+ * dances along.
  */
 export function DemoButton({
+  children,
   className,
+  playing,
   variant = 'primary',
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' }) {
+}: ButtonHTMLAttributes<HTMLButtonElement> & {
+  playing?: boolean
+  variant?: 'primary' | 'secondary'
+}) {
   const classes = [styles.button, styles[variant], className].filter(Boolean).join(' ')
-  return <button className={classes} type="button" {...props} />
+  return (
+    <button className={classes} data-playing={playing || undefined} type="button" {...props}>
+      {playing === undefined ? (
+        children
+      ) : playing ? (
+        <>
+          <span aria-hidden="true" className={styles.bars}>
+            <span />
+            <span />
+            <span />
+          </span>
+          Stop
+        </>
+      ) : (
+        <>
+          <PlayIcon />
+          Play
+        </>
+      )}
+    </button>
+  )
 }
 
 /**

@@ -35,10 +35,13 @@
   }
 
   .button {
+    align-items: center;
     border: 1px solid var(--border);
     border-radius: var(--radius-pill);
+    display: inline-flex;
     font-size: var(--step-minus-1);
     font-weight: 600;
+    gap: var(--space-2);
     padding: var(--space-1) var(--space-4);
 
     &:disabled {
@@ -64,6 +67,64 @@
     &:hover:not(:disabled) {
       border-color: var(--accent);
       color: var(--accent);
+    }
+
+    /* A preset that's loaded right now. */
+    &[aria-pressed='true'] {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
+
+  /* The triangle and the bars share one box (three 3px bars, two 2px gaps), so the label never moves. */
+  .icon,
+  .bars {
+    flex: none;
+    height: 0.75em;
+    width: 13px;
+  }
+
+  /* A tiny equalizer: three pixel bars that bounce while playing. */
+  .bars {
+    align-items: flex-end;
+    display: inline-flex;
+    gap: 2px;
+
+    & span {
+      background: currentcolor;
+      height: 30%;
+      width: 3px;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .button[data-playing] .bars span {
+      animation: bounce 420ms steps(3) infinite alternate;
+    }
+
+    .button[data-playing] .bars span:nth-child(2) {
+      animation-delay: -140ms;
+      animation-duration: 300ms;
+    }
+
+    .button[data-playing] .bars span:nth-child(3) {
+      animation-delay: -260ms;
+      animation-duration: 520ms;
+    }
+  }
+
+  .button[data-playing] .bars span {
+    height: 100%;
+  }
+
+  @keyframes bounce {
+    from {
+      height: 25%;
+    }
+
+    to {
+      height: 100%;
     }
   }
 

@@ -20,4 +20,33 @@
     stroke-width: 2;
     vector-effect: non-scaling-stroke;
   }
+
+  .plot[data-playing] {
+    border-color: var(--accent);
+  }
+
+  .playhead {
+    fill: none;
+    stroke: var(--warning);
+    stroke-dasharray: 8 92;
+    stroke-linecap: square;
+    stroke-width: 4;
+    vector-effect: non-scaling-stroke;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .playhead {
+      animation: run 900ms steps(18) infinite;
+    }
+  }
+
+  @keyframes run {
+    from {
+      stroke-dashoffset: 100;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
 }
