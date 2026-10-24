@@ -46,9 +46,15 @@ function strings(value: unknown): string[] | undefined {
  *
  * @param publicDir - The app's `public/` folder.
  * @param now - The build time to record.
+ * @param options - `drafts` keeps entries marked `draft: true`, for previews
+ *   in development. Builds leave them out, so they never publish.
  * @returns The content index the app reads at runtime.
  */
-export async function buildContent(publicDir: string, now = new Date()): Promise<ContentIndex> {
+export async function buildContent(
+  publicDir: string,
+  now = new Date(),
+  { drafts = false }: { drafts?: boolean } = {},
+): Promise<ContentIndex> {
   const sizes = new Map<string, MeasuredImage | null>()
 
   function measure(publicPath: string): MeasuredImage | null {
@@ -77,6 +83,8 @@ export async function buildContent(publicDir: string, now = new Date()): Promise
       const file = join(dir, slug, 'content.mdx')
       if (!existsSync(file)) continue
       const { data, content } = matter(readFileSync(file, 'utf-8'))
+      const draft = data.draft === true
+      if (draft && !drafts) continue
       const basePath = `/content/${type === 'post' ? 'posts' : 'pages'}/${slug}`
       const { html, images, headings } = await renderMarkdown(content, { basePath, measure })
 
@@ -96,6 +104,7 @@ export async function buildContent(publicDir: string, now = new Date()): Promise
         categories: strings(data.categories),
         tags: strings(data.tags),
         readingMinutes: readingMinutes(content),
+        ...(draft ? { draft } : {}),
       }
       const hero = featured && images[0] !== featured.src ? featured : null
       entries.push({ meta, html, headings, hero })

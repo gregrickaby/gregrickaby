@@ -5,7 +5,7 @@
   "type": "module",
   "description": "My personal website",
   "scripts": {
-    "dev": "npm run content && next dev --experimental-https",
+    "dev": "npm run content -- --drafts && next dev --experimental-https",
     "build": "npm run content && npm run css:types && next build",
     "start": "next start",
     "content": "node scripts/build-content.ts",

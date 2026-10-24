@@ -71,6 +71,12 @@ describe('Article', () => {
     expect(html).toContain('fetchPriority="high"')
   })
 
+  it('marks a draft in the meta line', async () => {
+    const html = await renderServer(<Article post={post({ draft: true })} />)
+    expect(html).toContain('Draft')
+    expect(await renderServer(<Article post={post()} />)).not.toContain('Draft')
+  })
+
   it('leaves out the reading time when it is unknown', async () => {
     const html = await renderServer(
       <Article post={post({ readingMinutes: undefined, categories: undefined })} />,

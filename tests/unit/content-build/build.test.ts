@@ -38,6 +38,11 @@ beforeAll(() => {
   )
   write('content/pages/about/content.mdx', "---\ntitle: 'About'\n---\n\nHi\n")
   write('content/pages/untitled/content.mdx', '---\n---\n\nNo frontmatter\n')
+  write(
+    'content/posts/wip/content.mdx',
+    "---\ntitle: 'Work in progress'\ndate: '2026-10-23T00:00:00'\ndraft: true\n---\n\nSoon\n",
+  )
+  write('content/pages/hidden/content.mdx', "---\ntitle: 'Hidden'\ndraft: true\n---\n\nSoon\n")
   write('content/photos/b.png', PNG)
   write('content/photos/readme.txt', 'skip')
 })
@@ -59,6 +64,17 @@ describe('readingMinutes', () => {
 })
 
 describe('buildContent', () => {
+  it('leaves drafts out unless asked to keep them', async () => {
+    const built = await buildContent(root)
+    expect(built.posts.map((p) => p.meta.slug)).not.toContain('wip')
+    expect(built.pages.map((p) => p.meta.slug)).not.toContain('hidden')
+    expect(built.posts.every((p) => p.meta.draft === undefined)).toBe(true)
+
+    const preview = await buildContent(root, new Date(), { drafts: true })
+    expect(preview.posts[0]?.meta).toMatchObject({ slug: 'wip', draft: true })
+    expect(preview.pages.map((p) => p.meta.slug)).toContain('hidden')
+  })
+
   it('reads posts newest first, with metadata, HTML, and heroes', async () => {
     const index = await buildContent(root, new Date('2026-01-01T00:00:00Z'))
     expect(index.generatedAt).toBe('2026-01-01T00:00:00.000Z')

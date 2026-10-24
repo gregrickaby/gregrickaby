@@ -23,6 +23,8 @@ export interface PostMeta {
   tags?: string[]
   /** Estimated minutes to read the body, at 230 words a minute. */
   readingMinutes?: number
+  /** Set by `draft: true`. Only `npm run dev` includes drafts. */
+  draft?: boolean
 }
 
 /** An h2 or h3 in a post body, for the table of contents. */

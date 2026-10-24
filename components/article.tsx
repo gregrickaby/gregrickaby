@@ -29,6 +29,7 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
           <MetaLine
             className={styles.meta}
             items={[
+              meta.draft ? 'Draft' : null,
               <time dateTime={meta.date} key="date">
                 {formatShortDate(meta.date)}
               </time>,

@@ -30,6 +30,7 @@ Secrets go in `.env.local` (see `.env.example`). Server errors go to stdout (Coo
 ## Architecture
 
 - **Content is built, not read at runtime.** `scripts/build-content.ts` renders Markdown (shiki, heading ids, figure captions), sanitizes the HTML, measures images, and reads photo EXIF into `.generated/content.json`. `lib/content.ts` imports that JSON. The build tools are dev dependencies.
+- **Drafts.** `draft: true` in frontmatter keeps a post or page out of `.generated/content.json`, so builds never publish it. `npm run dev` runs the content build with `--drafts`, which includes drafts and marks them "Draft" in the post's meta line. Delete the line to publish.
 - **Static by contract.** `app/(site)/layout.tsx` sets `ensureStatic = 'navigation'`, so the build fails if a page reads cookies, headers, or search params, or does uncached work. `/search` sits outside the group and is the only per-request page.
 - **Param routes** (`[slug]`, `tag/[tag]`, `category/[category]`, `/search`) set `instant = false` so the prerendered HTML has the full content for crawlers and readers without JavaScript. Links to them use `prefetch={true}` so client navigation still renders at once. `e2e/site.spec.ts` checks this with `instant()`.
 - **Images.** Components use `next/image`. The build writes `/_next/image` URLs and `srcset` into post HTML (`lib/images.ts`). HDR gain map JPEGs (`hdrgm` XMP) use the original file for full-size views, because the optimizer strips the gain map.
