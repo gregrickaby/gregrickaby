@@ -4,59 +4,24 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { SoundToggle } from '@/components/islands/sound-toggle'
 import {
+  playNotes,
   playSound,
   setSoundEnabled,
   soundEnabled,
   subscribeSound,
 } from '@/components/islands/sounds'
-
-const oscillators: { type: string; frequency: { value: number } }[] = []
-const noiseBursts: { buffer: unknown }[] = []
-const contexts = vi.fn()
-const buffers = vi.fn()
-
-class FakeAudioContext {
-  currentTime = 0
-  destination = {}
-  sampleRate = 8
-  constructor() {
-    contexts()
-  }
-  createOscillator() {
-    const oscillator = {
-      type: '',
-      frequency: { value: 0 },
-      connect: (node: unknown) => node,
-      start: vi.fn(),
-      stop: vi.fn(),
-    }
-    oscillators.push(oscillator)
-    return oscillator
-  }
-  createBuffer() {
-    buffers()
-    const data = new Float32Array(8)
-    return { data, getChannelData: () => data }
-  }
-  createBufferSource() {
-    const source = { buffer: null, connect: (node: unknown) => node, start: vi.fn(), stop: vi.fn() }
-    noiseBursts.push(source)
-    return source
-  }
-  createGain() {
-    return {
-      gain: { setValueAtTime: vi.fn(), exponentialRampToValueAtTime: vi.fn() },
-      connect: (node: unknown) => node,
-    }
-  }
-}
+import {
+  buffers,
+  contexts,
+  gains,
+  instances,
+  noiseBursts,
+  oscillators,
+  stubAudio,
+} from '@/tests/helpers/audio'
 
 beforeEach(() => {
-  vi.stubGlobal('AudioContext', FakeAudioContext)
-  oscillators.length = 0
-  noiseBursts.length = 0
-  contexts.mockClear()
-  buffers.mockClear()
+  stubAudio()
   localStorage.clear()
 })
 
@@ -118,6 +83,66 @@ describe('playSound', () => {
     const { data } = noiseBursts[0]!.buffer as { data: Float32Array }
     expect(data[0]).toBe(data[3])
     expect(buffers.mock.calls.length).toBeLessThanOrEqual(1)
+  })
+})
+
+describe('playNotes', () => {
+  it('plays even while sounds are off, fading each note by default', () => {
+    playNotes([[440, 0.1]])
+    expect(oscillators.map((o) => o.frequency.value)).toEqual([440])
+    expect(gains[0]?.exponentialRampToValueAtTime).toHaveBeenCalledWith(0.001, 0.1)
+  })
+
+  it('cuts notes off without a fade when asked', () => {
+    playNotes([[440, 0.1]], { fade: false })
+    expect(gains[0]?.exponentialRampToValueAtTime).not.toHaveBeenCalled()
+  })
+
+  it('builds tones from odd harmonics at 1/n strength', () => {
+    playNotes([[220, 0.1]], { harmonics: 3 })
+    const [oscillator] = oscillators
+    expect(oscillator?.type).toBe('')
+    expect(
+      [...(oscillator?.wave?.imag ?? [])].map((v) => Number((v * Math.PI).toFixed(3))),
+    ).toEqual([0, 4, 0, 1.333, 0, 0.8])
+  })
+
+  it('resumes a context that started suspended, and shrugs off a refused resume', async () => {
+    playNotes([[440, 0.1]])
+    const audio = instances.at(-1)!
+    audio.state = 'suspended'
+    audio.resume.mockRejectedValueOnce(new Error('not allowed'))
+    playNotes([[440, 0.1]])
+    expect(audio.resume).toHaveBeenCalledTimes(1)
+    await Promise.resolve()
+    playNotes([[440, 0.1]])
+    expect(audio.resume).toHaveBeenCalledTimes(2)
+    expect(oscillators.length).toBe(3)
+  })
+
+  it('stays silent where Web Audio is missing', async () => {
+    vi.resetModules()
+    vi.stubGlobal(
+      'AudioContext',
+      class {
+        constructor() {
+          throw new Error('no Web Audio')
+        }
+      },
+    )
+    const fresh = await import('@/components/islands/sounds')
+    expect(() => fresh.playNotes([[440, 0.1]])).not.toThrow()
+    expect(oscillators).toEqual([])
+  })
+
+  it('holds noise values for the given grit, with one buffer per grit', () => {
+    playNotes([['noise', 0.1]], { grit: 2 })
+    playNotes([['noise', 0.1]], { grit: 2 })
+    const [first, second] = noiseBursts
+    expect(first?.buffer).toBe(second?.buffer)
+    const { data } = first?.buffer as { data: Float32Array }
+    expect(data[0]).toBe(data[1])
+    expect(data[1]).not.toBe(data[2])
   })
 })
 

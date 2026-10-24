@@ -12,9 +12,9 @@ const VOLUME = 0.05
  * hiss, like the NES noise channel), or `rest`, and a length in seconds.
  * Notes play in order.
  */
-type Note = readonly [pitch: number | 'noise' | 'rest', seconds: number]
+export type Note = readonly [pitch: number | 'noise' | 'rest', seconds: number]
 
-const SOUNDS = {
+export const SOUNDS = {
   'sound-on': [
     [523, 0.06],
     [659, 0.06],
@@ -98,7 +98,7 @@ export type SoundName = keyof typeof SOUNDS
 
 const listeners = new Set<() => void>()
 let context: AudioContext | undefined
-let noise: AudioBuffer | undefined
+const noise = new Map<number, AudioBuffer>()
 
 /** True when the visitor turned sounds on. Storage can throw in private windows. */
 export function soundEnabled(): boolean {
@@ -129,45 +129,97 @@ export function subscribeSound(listener: () => void) {
   }
 }
 
-/** A second of white noise, each value held for four samples to make it gritty. */
-function noiseBuffer(audio: AudioContext): AudioBuffer {
-  if (noise) return noise
-  noise = audio.createBuffer(1, audio.sampleRate, audio.sampleRate)
-  const data = noise.getChannelData(0)
-  for (let i = 0; i < data.length; i += 4) data.fill(Math.random() * 2 - 1, i, i + 4)
-  return noise
+/**
+ * A second of white noise, each value held for `grit` samples. Holding values
+ * lowers the effective sample rate, which trades fizz for crunch.
+ */
+function noiseBuffer(audio: AudioContext, grit: number): AudioBuffer {
+  const cached = noise.get(grit)
+  if (cached) return cached
+  const buffer = audio.createBuffer(1, audio.sampleRate, audio.sampleRate)
+  const data = buffer.getChannelData(0)
+  for (let i = 0; i < data.length; i += grit) data.fill(Math.random() * 2 - 1, i, i + grit)
+  noise.set(grit, buffer)
+  return buffer
 }
 
-function createSource(audio: AudioContext, pitch: number | 'noise'): AudioScheduledSourceNode {
+/**
+ * A square wave built from its first `harmonics` odd harmonics, each at
+ * 1/n the strength of the fundamental. One harmonic is a sine wave.
+ */
+function partialSquare(audio: AudioContext, harmonics: number): PeriodicWave {
+  const imag = new Float32Array(harmonics * 2)
+  for (let n = 1; n < imag.length; n += 2) imag[n] = 4 / (Math.PI * n)
+  return audio.createPeriodicWave(new Float32Array(imag.length), imag)
+}
+
+/** How {@link playNotes} shapes each note. The site's sounds use the defaults. */
+export interface PlayOptions {
+  /** Fade each note out, which also hides the click of a wave stopping mid-swing. */
+  fade?: boolean
+  /** Samples to hold each noise value for. The site's sounds use 4. */
+  grit?: number
+  /** Build tones from this many odd harmonics instead of a true square wave. */
+  harmonics?: number
+}
+
+function createSource(
+  audio: AudioContext,
+  pitch: number | 'noise',
+  { grit = 4, harmonics }: PlayOptions,
+): AudioScheduledSourceNode {
   if (pitch === 'noise') {
     const source = audio.createBufferSource()
-    source.buffer = noiseBuffer(audio)
+    source.buffer = noiseBuffer(audio, grit)
     return source
   }
   const oscillator = audio.createOscillator()
-  oscillator.type = 'square'
+  if (harmonics) oscillator.setPeriodicWave(partialSquare(audio, harmonics))
+  else oscillator.type = 'square'
   oscillator.frequency.value = pitch
   return oscillator
 }
 
 /**
- * Plays a sound when sounds are on. Call it from a click or key handler:
+ * The shared context, or undefined where Web Audio is missing. A context
+ * made before the visitor's first click (by a hover tick on a fresh page)
+ * starts suspended, so each call asks it to resume; browsers allow that
+ * once a click, tap, or key press has happened.
+ */
+function getContext(): AudioContext | undefined {
+  try {
+    context ??= new AudioContext()
+  } catch {
+    return undefined
+  }
+  if (context.state === 'suspended') context.resume().catch(() => undefined)
+  return context
+}
+
+/**
+ * Plays notes in order, whether or not sounds are on: demos call it from
+ * their own play buttons. Call it from a click or key handler, since
  * browsers only start audio after a user gesture.
  */
-export function playSound(name: SoundName) {
-  if (!soundEnabled()) return
-  context ??= new AudioContext()
-  let start = context.currentTime
-  for (const [pitch, seconds] of SOUNDS[name]) {
+export function playNotes(notes: readonly Note[], options: PlayOptions = {}) {
+  const audio = getContext()
+  if (!audio) return
+  let start = audio.currentTime
+  for (const [pitch, seconds] of notes) {
     if (pitch !== 'rest') {
-      const source = createSource(context, pitch)
-      const gain = context.createGain()
+      const source = createSource(audio, pitch, options)
+      const gain = audio.createGain()
       gain.gain.setValueAtTime(VOLUME, start)
-      gain.gain.exponentialRampToValueAtTime(0.001, start + seconds)
-      source.connect(gain).connect(context.destination)
+      if (options.fade !== false) gain.gain.exponentialRampToValueAtTime(0.001, start + seconds)
+      source.connect(gain).connect(audio.destination)
       source.start(start)
       source.stop(start + seconds)
     }
     start += seconds
   }
+}
+
+/** Plays one of the site's sounds when the visitor turned sounds on. */
+export function playSound(name: SoundName) {
+  if (soundEnabled()) playNotes(SOUNDS[name])
 }
