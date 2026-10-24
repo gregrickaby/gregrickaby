@@ -98,6 +98,17 @@
     [data-copied]::before {
       animation: boop-pop 400ms var(--ease-out);
     }
+
+    /* A tomato ring spreads from the button as the check pops in. */
+    [data-copied]::after {
+      animation: copy-ring 600ms var(--ease-out) both;
+      border: 2px solid var(--tomato-6);
+      border-radius: inherit;
+      content: '';
+      inset: -1px;
+      pointer-events: none;
+      position: absolute;
+    }
   }
 
   /* Scroll reveals: an element with `data-reveal`, and every image in a post,
@@ -203,6 +214,14 @@
     60% {
       opacity: 1;
       transform: rotate(10deg) scale(1.1);
+    }
+  }
+
+  @keyframes copy-ring {
+    to {
+      border-color: var(--tomato-3);
+      opacity: 0;
+      transform: scale(1.5);
     }
   }
 
