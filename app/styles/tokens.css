@@ -84,6 +84,16 @@
     /* A divider of square pixels: a 4px-tall background. */
     --pixel-dots: repeating-linear-gradient(to right, var(--accent) 0 4px, transparent 4px 12px);
 
+    /* LCARS panels on /geocities: always on black, in both themes. */
+    --lcars-black: #000;
+    --lcars-orange: #f90;
+    --lcars-peach: #f96;
+    --lcars-gold: #fc6;
+    --lcars-lilac: #c9c;
+    --lcars-violet: #99f;
+    --lcars-red: #c66;
+    --lcars-ice: #9cf;
+
     /* Layers */
     --z-sticky: 10;
     --z-overlay: 100;

@@ -1,0 +1,183 @@
+@layer components {
+  /* An LCARS console: a rounded end cap, then a row of colored blocks on black. */
+  .player {
+    align-items: stretch;
+    background: var(--lcars-black);
+    border-radius: var(--radius-pill);
+    bottom: var(--space-4);
+    box-shadow: 0 0 0 3px var(--lcars-black);
+    color: var(--lcars-orange);
+    display: flex;
+    font-family: var(--font-lcars);
+    gap: var(--space-1);
+    inset-inline: var(--space-4);
+    margin-inline: auto;
+    max-width: 52rem;
+    min-height: 3.5rem;
+    position: fixed;
+    text-transform: uppercase;
+    z-index: var(--z-overlay);
+  }
+
+  .cap {
+    background: var(--lcars-violet);
+    border-radius: var(--radius-pill) 0 0 var(--radius-pill);
+    flex: 0 0 2.5rem;
+  }
+
+  .label {
+    align-items: flex-end;
+    background: var(--lcars-lilac);
+    color: var(--lcars-black);
+    display: flex;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    padding: var(--space-1) var(--space-3);
+  }
+
+  .engage {
+    align-items: center;
+    background: var(--lcars-orange);
+    border: 0;
+    border-radius: 0;
+    color: var(--lcars-black);
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    font-size: 1.25rem;
+    gap: var(--space-2);
+    justify-content: center;
+    letter-spacing: 0.05em;
+    min-width: 7rem;
+    padding-inline: var(--space-4);
+
+    &:hover {
+      background: var(--lcars-gold);
+    }
+
+    &[data-active] {
+      background: var(--lcars-red);
+    }
+  }
+
+  /* The play triangle and the bars share one box, like the 8-bit post's play buttons. */
+  .icon,
+  .bars {
+    flex: none;
+    height: 0.75em;
+    width: 13px;
+  }
+
+  /* A tiny equalizer: three pixel bars that bounce while the radio plays. */
+  .bars {
+    align-items: flex-end;
+    display: inline-flex;
+    gap: 2px;
+
+    & span {
+      background: currentcolor;
+      height: 100%;
+      width: 3px;
+    }
+  }
+
+  .status {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    min-width: 0;
+    padding-inline: var(--space-3);
+  }
+
+  .lights {
+    align-items: center;
+    background: var(--lcars-peach);
+    border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+    display: flex;
+    gap: var(--space-1);
+    padding-inline: var(--space-3) var(--space-4);
+
+    & span {
+      background: var(--lcars-black);
+      border-radius: var(--radius-pill);
+      height: 0.6rem;
+      width: 0.6rem;
+    }
+  }
+
+  @media (width < 40rem) {
+    .label,
+    .lights {
+      display: none;
+    }
+
+    .engage {
+      min-width: 5.5rem;
+    }
+  }
+
+  /* The sound needs JavaScript. */
+  @media (scripting: none) {
+    .player {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Until the first press, the engage button glows like an incoming hail. */
+    .player:not([data-engaged]) .engage {
+      animation: hail 1.2s var(--ease-pixel) infinite;
+    }
+
+    .bars span {
+      animation: bounce 420ms steps(3) infinite alternate;
+
+      &:nth-child(2) {
+        animation-delay: -140ms;
+        animation-duration: 300ms;
+      }
+
+      &:nth-child(3) {
+        animation-delay: -260ms;
+        animation-duration: 520ms;
+      }
+    }
+
+    .lights[data-active] span {
+      animation: blink 0.6s var(--ease-pixel) infinite;
+
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+
+  @keyframes hail {
+    50% {
+      background: var(--lcars-gold);
+    }
+  }
+
+  @keyframes bounce {
+    from {
+      height: 25%;
+    }
+
+    to {
+      height: 100%;
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      background: var(--lcars-ice);
+    }
+  }
+}

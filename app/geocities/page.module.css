@@ -1,0 +1,320 @@
+@layer components {
+  .page {
+    --font-lcars: var(--font-antonio), 'Arial Narrow', sans-serif;
+    --side: 9rem;
+    --bar: 1.5rem;
+
+    background: var(--lcars-black);
+    color: var(--lcars-gold);
+    min-height: 100vh;
+    padding: var(--space-4) var(--space-4) 7rem;
+  }
+
+  /* Two LCARS elbows, top and bottom, joined by the sidebar. */
+  .frame {
+    display: grid;
+    gap: var(--space-1);
+    grid-template-columns: var(--side) minmax(0, 1fr);
+    margin-inline: auto;
+    max-width: 72rem;
+  }
+
+  .elbow {
+    background: var(--lcars-orange);
+    min-height: 4rem;
+  }
+
+  .elbowTop {
+    border-start-start-radius: 3rem;
+  }
+
+  .elbowBottom {
+    background: var(--lcars-lilac);
+    border-end-start-radius: 3rem;
+  }
+
+  .bar {
+    align-items: flex-start;
+    display: flex;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+
+  .barBottom {
+    align-items: flex-end;
+  }
+
+  /* The inside of the elbow: a block of the elbow's color with a black,
+     rounded corner cut out of it. */
+  .curve {
+    align-self: stretch;
+    background: var(--lcars-orange);
+    flex: 0 0 2rem;
+    margin-inline-start: calc(-1 * var(--space-1));
+    position: relative;
+
+    &::after {
+      background: var(--lcars-black);
+      border-start-start-radius: 1.5rem;
+      content: '';
+      inset: var(--bar) 0 0;
+      position: absolute;
+    }
+  }
+
+  .barBottom .curve {
+    background: var(--lcars-lilac);
+
+    &::after {
+      border-radius: 0 0 0 1.5rem;
+      inset: 0 0 var(--bar);
+    }
+  }
+
+  .block {
+    background: var(--lcars-peach);
+    flex: 1;
+    height: var(--bar);
+
+    &:nth-child(odd) {
+      background: var(--lcars-violet);
+      flex: 0 0 4rem;
+    }
+
+    &:last-child {
+      border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+      flex: 0 0 2rem;
+    }
+  }
+
+  .title {
+    color: var(--lcars-orange);
+    font-family: var(--font-lcars);
+    font-size: 1.5rem;
+    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .deck {
+    align-items: flex-end;
+    background: var(--lcars-red);
+    color: var(--lcars-black);
+    display: flex;
+    font-family: var(--font-lcars);
+    font-size: 1rem;
+    justify-content: flex-end;
+    line-height: 1.1;
+    min-height: 3.5rem;
+    padding: var(--space-1) var(--space-2);
+    text-align: end;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+
+  .code {
+    font-size: 0.75rem;
+    margin-inline-end: auto;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    & ul {
+      display: grid;
+      gap: var(--space-1);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    & li:nth-child(5n + 1) .deck {
+      background: var(--lcars-peach);
+    }
+
+    & li:nth-child(5n + 2) .deck {
+      background: var(--lcars-lilac);
+    }
+
+    & li:nth-child(5n + 3) .deck {
+      background: var(--lcars-violet);
+    }
+
+    & li:nth-child(5n + 4) .deck {
+      background: var(--lcars-ice);
+    }
+  }
+
+  .filler {
+    background: var(--lcars-orange);
+    flex: 1;
+    min-height: 2rem;
+  }
+
+  /* The viewscreen: the Geocities page, starfield and all. */
+  .screen {
+    align-items: center;
+    background: var(--lcars-black) url('/geocities/starstwinkle.gif') center / auto repeat fixed;
+    border-radius: var(--radius-2);
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Comic Sans MS', 'Comic Neue', 'Chalkboard SE', cursive;
+    font-size: 1.15rem;
+    gap: var(--space-5);
+    padding: var(--space-5) var(--space-4);
+    text-align: center;
+
+    & img {
+      height: auto;
+      max-width: 100%;
+    }
+
+    & a {
+      color: var(--lcars-ice);
+    }
+
+    & a:visited {
+      color: var(--lcars-lilac);
+    }
+  }
+
+  .banner {
+    display: block;
+  }
+
+  .row {
+    align-items: center;
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    max-width: 100%;
+  }
+
+  /* A <marquee>, minus the deprecated element. */
+  .marquee {
+    color: var(--lcars-gold);
+    flex: 0 1 22rem;
+    overflow: hidden;
+    white-space: nowrap;
+
+    & span {
+      display: inline-block;
+    }
+  }
+
+  /* The Enterprise crosses the screen at warp. */
+  .flyby {
+    overflow: hidden;
+    width: 100%;
+
+    & img {
+      display: block;
+      max-width: 40cqi;
+    }
+  }
+
+  .report {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: center;
+    max-width: 40rem;
+
+    & p {
+      line-height: 1.6;
+    }
+  }
+
+  .heading {
+    color: var(--lcars-orange);
+    font-family: var(--font-lcars);
+    font-size: var(--step-3);
+    letter-spacing: 0.02em;
+    text-shadow: 3px 3px 0 var(--lcars-red);
+    text-transform: uppercase;
+  }
+
+  .footer {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: center;
+  }
+
+  .badges {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    justify-content: center;
+  }
+
+  .best {
+    color: var(--lcars-peach);
+    font-size: 0.9rem;
+  }
+
+  .blink {
+    color: var(--lcars-red);
+    font-weight: 700;
+  }
+
+  @media (width < 40rem) {
+    .page {
+      --side: 4.5rem;
+    }
+
+    .title,
+    .code {
+      display: none;
+    }
+
+    .deck {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .marquee span {
+      animation: marquee 14s linear infinite;
+      padding-inline-start: 100%;
+    }
+
+    .flyby img {
+      animation: warp 5s linear infinite;
+    }
+
+    .blink {
+      animation: blink 1s steps(1) infinite;
+    }
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  @keyframes warp {
+    from {
+      transform: translateX(-100%);
+    }
+
+    to {
+      transform: translateX(100cqi);
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      visibility: hidden;
+    }
+  }
+}

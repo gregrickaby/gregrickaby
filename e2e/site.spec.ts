@@ -221,7 +221,10 @@ test.describe('platform', () => {
     }
 
     const geocities = await request.get('/geocities')
-    expect(await geocities.text()).toContain('Mr. Data, report...')
+    const retro = await geocities.text()
+    expect(retro).toContain('Mr. Data, report...')
+    expect(retro).toContain('<meta name="robots" content="noindex, nofollow"')
+    expect(retro).not.toContain('<audio')
 
     await page.goto('/about')
     await expect(page).toHaveURL(/\/$/)

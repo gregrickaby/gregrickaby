@@ -16,9 +16,9 @@ export function Controls({ children, label }: { children: ReactNode; label?: str
 }
 
 /** A play triangle drawn in pixels, to match the site's 8-bit icons. */
-function PlayIcon() {
+export function PlayIcon({ className = styles.icon }: { className?: string }) {
   return (
-    <svg aria-hidden="true" className={styles.icon} shapeRendering="crispEdges" viewBox="0 0 8 8">
+    <svg aria-hidden="true" className={className} shapeRendering="crispEdges" viewBox="0 0 8 8">
       <path d="M1 0h2v1h2v2h2v2H5v2H3v1H1z" fill="currentcolor" />
     </svg>
   )
