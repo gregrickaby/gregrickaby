@@ -20,26 +20,32 @@ export function toPath(values: readonly number[], steps = false): string {
 /**
  * A line drawing of values from -1 to 1, such as a waveform, stretched to the
  * demo's width. Pure SVG, so it renders on the server and without JavaScript.
+ * While `playing`, a bright spot runs along the line, like a playhead.
  */
 export function Plot({
   label,
+  playing,
   steps,
   values,
 }: {
   label: string
+  playing?: boolean
   steps?: boolean
   values: readonly number[]
 }) {
+  const d = toPath(values, steps)
   return (
     <svg
       aria-label={label}
       className={styles.plot}
+      data-playing={playing || undefined}
       preserveAspectRatio="none"
       role="img"
       viewBox={`0 0 ${WIDTH} 100`}
     >
       <line className={styles.axis} x1="0" x2={WIDTH} y1="50" y2="50" />
-      <path className={styles.line} d={toPath(values, steps)} />
+      <path className={styles.line} d={d} />
+      {playing ? <path className={styles.playhead} d={d} pathLength={100} /> : null}
     </svg>
   )
 }

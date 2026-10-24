@@ -8,6 +8,7 @@ import {
   playSound,
   setSoundEnabled,
   soundEnabled,
+  startTone,
   subscribeSound,
 } from '@/components/islands/sounds'
 import {
@@ -88,7 +89,12 @@ describe('playSound', () => {
 
 describe('playNotes', () => {
   it('plays even while sounds are off, fading each note by default', () => {
-    playNotes([[440, 0.1]])
+    expect(
+      playNotes([
+        [440, 0.1],
+        ['rest', 0.25],
+      ]),
+    ).toBeCloseTo(0.35)
     expect(oscillators.map((o) => o.frequency.value)).toEqual([440])
     expect(gains[0]?.exponentialRampToValueAtTime).toHaveBeenCalledWith(0.001, 0.1)
   })
@@ -131,7 +137,7 @@ describe('playNotes', () => {
       },
     )
     const fresh = await import('@/components/islands/sounds')
-    expect(() => fresh.playNotes([[440, 0.1]])).not.toThrow()
+    expect(fresh.playNotes([[440, 0.1]])).toBe(0)
     expect(oscillators).toEqual([])
   })
 
@@ -143,6 +149,30 @@ describe('playNotes', () => {
     const { data } = first?.buffer as { data: Float32Array }
     expect(data[0]).toBe(data[1])
     expect(data[1]).not.toBe(data[2])
+  })
+})
+
+describe('startTone', () => {
+  it('plays until stopped, then fades out instead of cutting off', () => {
+    const stop = startTone(440, { harmonics: 1 })
+    expect(oscillators.map((o) => o.frequency.value)).toEqual([440])
+    expect(gains[0]?.exponentialRampToValueAtTime).not.toHaveBeenCalled()
+    stop?.()
+    expect(gains[0]?.exponentialRampToValueAtTime).toHaveBeenCalledWith(0.001, 0.05)
+  })
+
+  it('returns nothing where Web Audio is missing', async () => {
+    vi.resetModules()
+    vi.stubGlobal(
+      'AudioContext',
+      class {
+        constructor() {
+          throw new Error('no Web Audio')
+        }
+      },
+    )
+    const fresh = await import('@/components/islands/sounds')
+    expect(fresh.startTone(440)).toBeUndefined()
   })
 })
 

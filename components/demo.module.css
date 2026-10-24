@@ -6,16 +6,154 @@
     display: grid;
     font-family: var(--font-sans);
     gap: var(--space-3);
-    padding: var(--space-4);
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-6);
+    position: relative;
+    transition: border-color 0.2s;
+
+    &:has([data-playing]) {
+      border-color: var(--accent);
+    }
+  }
+
+  /* A round badge on the frame's left edge, like a callout's, with a pixel gamepad. */
+  .badge {
+    background: var(--accent-fill);
+    border-radius: 50%;
+    color: var(--surface-page);
+    display: grid;
+    height: 1.75rem;
+    inset-block-start: var(--space-4);
+    inset-inline-start: -0.5px;
+    place-items: center;
+    position: absolute;
+    translate: -50% 0;
+    width: 1.75rem;
+  }
+
+  .gamepad {
+    fill: currentcolor;
+    height: 1.125rem;
+    width: 1.125rem;
+  }
+
+  .hole {
+    fill: var(--accent-fill);
+  }
+
+  /* Notes hide behind the badge until a demo plays. */
+  .note {
+    fill: currentcolor;
+    height: 0.625rem;
+    inset-block-start: 0.5rem;
+    inset-inline-start: 0.5rem;
+    opacity: 0;
+    position: absolute;
+    width: 0.625rem;
+  }
+
+  .accent {
+    --drift: -1.25rem;
+
+    color: var(--accent);
+  }
+
+  .info {
+    --drift: 0.25rem;
+
+    color: var(--info);
+  }
+
+  .success {
+    --drift: 1.5rem;
+
+    color: var(--success);
   }
 
   .title {
+    align-items: center;
     color: var(--accent);
+    display: flex;
     font-family: var(--font-pixel);
     font-size: var(--label-size);
+    gap: var(--space-2);
     letter-spacing: var(--label-tracking);
     margin: 0;
+    min-height: 1.75rem;
     text-transform: uppercase;
+  }
+
+  /* A blinking pixel cursor after the title while the demo plays. */
+  .demo:has([data-playing]) .title::after {
+    background: currentcolor;
+    content: '';
+    height: 0.75em;
+    width: 0.5em;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .demo:hover .badge {
+      animation: wiggle 500ms var(--ease-pixel);
+    }
+
+    .demo:has([data-playing]) {
+      .badge {
+        animation: hop 360ms steps(2) infinite alternate;
+      }
+
+      .note {
+        animation: float 1.2s steps(8) infinite;
+      }
+
+      .info {
+        animation-delay: 0.4s;
+      }
+
+      .success {
+        animation-delay: 0.8s;
+      }
+
+      .title::after {
+        animation: blink 700ms steps(1) infinite;
+      }
+    }
+  }
+
+  @keyframes wiggle {
+    33% {
+      transform: rotate(-14deg);
+    }
+
+    66% {
+      transform: rotate(10deg);
+    }
+  }
+
+  @keyframes hop {
+    from {
+      transform: translateY(0) rotate(-8deg);
+    }
+
+    to {
+      transform: translateY(-4px) rotate(8deg) scale(1.08);
+    }
+  }
+
+  @keyframes float {
+    0% {
+      opacity: 1;
+      transform: translate(0, 0) scale(0.6);
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(var(--drift), -2.75rem) scale(1.2) rotate(20deg);
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
   }
 
   .noscript {
