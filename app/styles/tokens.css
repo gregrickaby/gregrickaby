@@ -81,6 +81,9 @@
     --shadow-1: 0 1px 3px color-mix(in srgb, #000 10%, transparent);
     --shadow-2: 0 12px 32px color-mix(in srgb, #000 25%, transparent);
 
+    /* A divider of square pixels: a 4px-tall background. */
+    --pixel-dots: repeating-linear-gradient(to right, var(--accent) 0 4px, transparent 4px 12px);
+
     /* Layers */
     --z-sticky: 10;
     --z-overlay: 100;
