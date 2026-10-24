@@ -49,6 +49,11 @@
       animation: boop-shift 600ms var(--ease-out);
     }
 
+    /* A heart beats twice. */
+    [data-boop='beat']:not(:disabled):hover svg {
+      animation: boop-beat 700ms var(--ease-out);
+    }
+
     /* An X looks the same after a quarter turn. */
     [data-boop='spin']:hover svg {
       animation: boop-spin 500ms var(--ease-out);
@@ -95,6 +100,30 @@
     }
   }
 
+  /* Scroll reveals: an element with `data-reveal`, and every image in a post,
+     fades and rises into place as it enters the viewport. Progress follows
+     the scroll position, so scrolling back up plays it in reverse. The
+     reduced-motion rule in base.css shortens durations, which a scroll
+     timeline ignores, so these opt in to motion instead. Screen only, so a
+     printed page never catches an element halfway in. */
+  @media screen and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      [data-reveal],
+      .prose img {
+        animation: reveal linear both;
+        animation-range: entry 0% entry 10rem;
+        animation-timeline: view();
+      }
+    }
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      translate: 0 1.5rem;
+    }
+  }
+
   @keyframes boop-tilt {
     30% {
       transform: rotate(12deg) scale(1.12);
@@ -120,6 +149,18 @@
 
     80% {
       transform: translate(calc(var(--boop-x, 0px) * 0.1), calc(var(--boop-y, 0px) * 0.1));
+    }
+  }
+
+  @keyframes boop-beat {
+    20%,
+    60% {
+      transform: scale(1.2);
+    }
+
+    40%,
+    80% {
+      transform: scale(0.95);
     }
   }
 

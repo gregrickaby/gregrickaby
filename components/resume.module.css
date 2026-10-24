@@ -144,6 +144,54 @@
     display: none;
   }
 
+  /* The timeline fills with the accent color to the middle of the screen, and
+     each bullet lights up as the fill reaches it. */
+  @media screen and (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .timeline {
+        position: relative;
+        view-timeline: --timeline;
+
+        &::before {
+          animation: fill linear both;
+          animation-range: cover 50vh cover calc(100% - 50vh);
+          animation-timeline: --timeline;
+          background: var(--accent-fill);
+          content: '';
+          inset-block: 0;
+          left: -2px;
+          position: absolute;
+          transform-origin: top;
+          width: 2px;
+        }
+      }
+
+      .entry {
+        view-timeline: --entry;
+
+        &::before {
+          animation: light linear both;
+          animation-range: cover 35vh cover 50vh;
+          animation-timeline: --entry;
+          z-index: 1;
+        }
+      }
+    }
+  }
+
+  @keyframes fill {
+    from {
+      scale: 1 0;
+    }
+  }
+
+  @keyframes light {
+    from {
+      background: var(--border);
+      scale: 0.6;
+    }
+  }
+
   /* "Save as PDF": a plain document on white, with the buttons gone. */
   @media print {
     .resume {

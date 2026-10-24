@@ -4,7 +4,17 @@
     color: var(--text-1);
     font-family: var(--font-sans);
     accent-color: var(--accent);
-    scroll-padding-top: 5rem;
+
+    /* In-page links, like "Back to top", glide; layout.tsx's data-scroll-behavior
+       keeps route changes instant. The reduced-motion rule below turns it off. */
+    scroll-behavior: smooth;
+  }
+
+  /* Keeps anchor targets and focused controls clear of the sticky header. A
+     scroll-padding on html would also apply to the header's own search field,
+     and Chrome then scrolls toward the top of the page on every keystroke. */
+  main :is([id], :focus) {
+    scroll-margin-top: 5rem;
   }
 
   body {

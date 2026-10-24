@@ -21,7 +21,7 @@ export function PostCard({
 }) {
   const href = `/${post.slug}` as Route
   return (
-    <article className={styles.card}>
+    <article className={styles.card} data-reveal>
       {post.featuredImage ? (
         <Link aria-hidden="true" className={styles.imageLink} href={href} prefetch tabIndex={-1}>
           <PostImage
