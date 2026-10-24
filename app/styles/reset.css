@@ -11,10 +11,11 @@
 
   html {
     /* iOS Safari reads only the prefixed property. Without it, Safari
-       enlarges text in sideways-scrolling blocks such as code. */
+       enlarges text in sideways-scrolling blocks such as code. Next's CSS
+       compiler drops the prefix when the unprefixed property is also set, so
+       only the prefixed one is here. */
     /* stylelint-disable-next-line property-no-vendor-prefix */
     -webkit-text-size-adjust: none;
-    text-size-adjust: none;
     interpolate-size: allow-keywords;
   }
 
