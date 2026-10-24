@@ -1,0 +1,172 @@
+@layer components {
+  .deck {
+    margin-inline: auto;
+    max-width: 22rem;
+    position: relative;
+    width: 100%;
+  }
+
+  .cassette {
+    display: block;
+    width: 100%;
+  }
+
+  .shell {
+    fill: var(--surface-page);
+    stroke: var(--text-2);
+    stroke-width: 2;
+  }
+
+  .sticker {
+    fill: var(--accent-soft);
+    stroke: var(--accent);
+  }
+
+  .window {
+    fill: var(--surface-card);
+    stroke: var(--text-2);
+  }
+
+  /* Tape on each spool: the left one empties as the right one fills. */
+  .pack {
+    fill: var(--text-2);
+    opacity: 0.5;
+    transition: r 0.4s;
+  }
+
+  .reel {
+    fill: var(--surface-page);
+    stroke: var(--text-1);
+    stroke-linecap: round;
+    stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .edge {
+    fill: none;
+    stroke: var(--text-2);
+    stroke-width: 2;
+  }
+
+  .screw {
+    fill: var(--border);
+  }
+
+  /* The track name, written on the cassette's sticker. */
+  .label {
+    align-content: center;
+    color: var(--text-heading);
+    display: grid;
+    font-family: var(--font-serif);
+    font-size: var(--step-minus-1);
+    font-style: italic;
+    gap: 2px;
+    height: 34%;
+    inset: 8% 9% auto;
+    line-height: 1.2;
+    margin: 0;
+    position: absolute;
+    text-align: center;
+  }
+
+  .side {
+    color: var(--accent);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    font-style: normal;
+    letter-spacing: var(--label-tracking);
+    text-transform: uppercase;
+  }
+
+  .counter {
+    color: var(--accent);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--label-tracking);
+    margin: 0;
+    text-align: center;
+  }
+
+  .tracks {
+    counter-reset: track;
+    display: grid;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .track {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-1);
+    color: var(--text-1);
+    counter-increment: track;
+    display: flex;
+    font-size: var(--step-minus-1);
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-2);
+    text-align: start;
+    width: 100%;
+
+    &::before {
+      color: var(--text-2);
+      content: counter(track) '.';
+      font-family: var(--font-pixel);
+      font-size: var(--label-size);
+      min-width: 2ch;
+    }
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+
+    &[aria-current] {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+  }
+
+  .length {
+    color: var(--text-2);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    margin-inline-start: auto;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .deck[data-playing] .reel {
+      animation: spin 1.2s steps(6) infinite;
+    }
+
+    .deck[data-playing] .cassette {
+      animation: rock 2.4s ease-in-out infinite alternate;
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rock {
+    from {
+      transform: rotate(-1deg);
+    }
+
+    to {
+      transform: rotate(1deg) translateY(-2px);
+    }
+  }
+
+  @media (scripting: none) {
+    .tracks {
+      display: none;
+    }
+  }
+}

@@ -18,22 +18,86 @@
     text-transform: uppercase;
   }
 
-  .rows {
-    display: grid;
-    gap: var(--space-2);
-    list-style: none;
-    margin: 0;
-    max-height: 20rem;
-    overflow-y: auto;
-    padding: 0;
+  /* The notes as blocks: across by time, up by pitch, noise along the bottom. */
+  .roll {
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    height: 7rem;
+    width: 100%;
+
+    &[data-playing] {
+      border-color: var(--accent);
+    }
   }
 
+  .block,
+  .noiseBlock {
+    fill: var(--accent);
+    transition: fill 0.1s;
+
+    &[data-active] {
+      fill: var(--warning);
+    }
+  }
+
+  .noiseBlock:not([data-active]) {
+    fill: var(--text-2);
+    opacity: 0.6;
+  }
+
+  /* Room around each row for a field's focus ring, which the scroll box would clip. */
+  .rows {
+    display: grid;
+    gap: var(--space-1);
+    list-style: none;
+    margin: 0 calc(var(--space-1) * -1);
+    max-height: 20rem;
+    overflow-y: auto;
+    padding: var(--space-1);
+  }
+
+  /* The column names over the rows. */
+  .heading {
+    padding-block: 0;
+  }
+
+  .heading,
+  .step {
+    color: var(--text-2);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    text-transform: uppercase;
+  }
+
+  .step {
+    text-align: center;
+  }
+
+  /* One tracker row: step number, type, pitch, note name, length, remove. */
   .row {
     align-items: center;
+    border-radius: var(--radius-1);
     display: grid;
     gap: var(--space-2);
-    grid-template-columns: 5.5rem minmax(3.5rem, 6rem) 2.5rem minmax(3.5rem, 5rem) 2rem;
+    grid-template-columns: 1.75rem 5.5rem minmax(3.5rem, 6rem) 2.5rem minmax(3.5rem, 5rem) 2rem;
     margin: 0;
+    padding: 2px;
+    transition:
+      background-color 0.1s,
+      box-shadow 0.1s;
+
+    /* The note sounding right now. */
+    &[data-active] {
+      background: var(--accent-soft);
+      box-shadow: inset 3px 0 var(--accent);
+
+      & .noteName,
+      & .step {
+        color: var(--accent);
+      }
+    }
 
     & select,
     & input {
@@ -43,6 +107,38 @@
       font-size: var(--step-minus-1);
       min-width: 0;
       padding: var(--space-1) var(--space-2);
+      transition: border-color 0.1s;
+
+      &:hover:not(:disabled) {
+        border-color: var(--accent);
+      }
+
+      /* A ring that hugs the field, like the field's own border grew. */
+      &:focus-visible {
+        border-color: var(--focus-ring);
+        outline: 1px solid var(--focus-ring);
+        outline-offset: 0;
+      }
+    }
+
+    /* Numbers in the code font, with the browser's arrows to click and hold. */
+    & input {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* A drawn chevron instead of the native arrow, which sits on the border in Safari. */
+    & select {
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--text-2) 50%),
+        linear-gradient(135deg, var(--text-2) 50%, transparent 50%);
+      background-position:
+        right calc(var(--space-3) + 4px) center,
+        right var(--space-3) center;
+      background-repeat: no-repeat;
+      background-size: 4px 4px;
+      padding-inline-end: calc(var(--space-3) * 2 + 8px);
     }
 
     & input:disabled {
@@ -51,6 +147,7 @@
   }
 
   .remove {
+    aspect-ratio: 1;
     background: none;
     border: 0;
     border-radius: var(--radius-1);
@@ -62,6 +159,12 @@
       background: var(--surface-hover);
       color: var(--danger);
     }
+  }
+
+  /* The code, with a note on what to do with it. */
+  .output {
+    display: grid;
+    gap: var(--space-2);
   }
 
   .code {
@@ -76,10 +179,52 @@
     padding: var(--space-3) var(--space-4);
   }
 
+  /* The stop button panics once the tone has gone on too long. */
+  @media (prefers-reduced-motion: no-preference) {
+    .panic {
+      animation: shake 240ms steps(2) infinite;
+    }
+
+    .row[data-active] .noteName {
+      animation: pop 200ms var(--ease-pixel);
+    }
+
+    /* The block sounding now hops, like a ball bouncing along the lyrics. */
+    .block[data-active],
+    .noiseBlock[data-active] {
+      animation: hop 160ms steps(2);
+      transform-box: fill-box;
+    }
+  }
+
+  @keyframes shake {
+    from {
+      transform: translateX(-2px) rotate(-2deg);
+    }
+
+    to {
+      transform: translateX(2px) rotate(2deg);
+    }
+  }
+
+  @keyframes hop {
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes pop {
+    50% {
+      transform: scale(1.4);
+    }
+  }
+
   /* The editor needs JavaScript; the pictures don't. */
   @media (scripting: none) {
+    .heading,
     .rows,
-    .code {
+    .roll,
+    .output {
       display: none;
     }
   }
