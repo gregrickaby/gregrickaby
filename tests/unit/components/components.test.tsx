@@ -201,6 +201,17 @@ describe('PostNav', () => {
     expect(html).toContain('href="/n"')
   })
 
+  it("shows a neighbor's featured image, or only its title without one", async () => {
+    const html = await renderServer(
+      <PostNav
+        newer={postMeta({ slug: 'n', featuredImage: undefined })}
+        older={postMeta({ slug: 'o' })}
+      />,
+    )
+    expect(html.match(/<img/g)).toHaveLength(1)
+    expect(html).toContain('%2Fcontent%2Fposts%2Fo%2Fhero.jpg')
+  })
+
   it('handles one neighbor, and renders nothing with none', async () => {
     expect(await renderServer(<PostNav newer={null} older={postMeta({ slug: 'o' })} />)).toContain(
       'Previous',
