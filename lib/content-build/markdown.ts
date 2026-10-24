@@ -58,7 +58,7 @@ function remarkFigureCaption() {
   }
 }
 
-const CALLOUT_MARKER = /^\[!(NOTE|TIP|WARNING)\][ \t]*/
+const CALLOUT_MARKER = /^\[!(NOTE|TIP|WARNING)\][ \t]*/i
 
 function isBlank(node: PhrasingContent): boolean {
   return node.type === 'text' && !node.value.trim()
