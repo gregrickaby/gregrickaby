@@ -1,43 +1,51 @@
 ---
-title: 'My website goes beep now'
+title: 'How to make 8-bit sound effects with the Web Audio API'
 slug: '8-bit-sound-effects-with-the-web-audio-api'
-date: '2026-10-23T00:00:00'
-modified: '2026-10-23T00:00:00'
+date: '2026-10-24T00:00:00'
+modified: '2026-10-24T00:00:00'
 type: 'post'
-draft: true
-description: 'How I added NES-style sound effects to this site with about 200 lines of Web Audio API code, square waves, and zero audio files.'
+description: 'How I built NES-style 8-bit sound effects with about 250 lines of Web Audio API code, then pushed it to a four-channel chiptune and a lo-fi tape deck.'
 featuredImage: './_DSC2420__20260719.jpg'
 categories: ['Code']
-tags: ['css', 'javascript', 'react', 'web audio']
+tags: ['css', 'how to', 'javascript', 'react', 'web audio']
 ---
 
 Before we start, find the little speaker icon in the header and click it.
 
 Go on. I'll wait.
 
-Did you hear that? Four notes, climbing up a C major chord, like you just found a secret in a Zelda dungeon. Now hover over the links in the nav. _Tick, tick, tick._ Open a photo in the gallery and you'll hear a camera shutter. Like this post and you'll get the Super Mario coin sound. Like it ten times and... well, you'll see.
+Did you hear that? Four notes, climbing up a C major chord, like you just found a secret in a Zelda dungeon. Now hover over the links in the nav. _Tick, tick, tick._ Open a photo in the gallery and you'll hear a camera shutter. Like this post ten times and... well, you'll see.
 
-Here's the fun part: **there are no audio files on this site.** Not one `.mp3`. Every sound is built from scratch in your browser, a few milliseconds before you hear it, using the same trick the Nintendo Entertainment System used in 1985.
+Here's the fun part: **every one of those sounds is built from scratch in your browser**, a few milliseconds before you hear it, using the same trick the Nintendo Entertainment System used in 1985.
 
-Let's take it apart. Along the way you'll find little machines to play with. Each one has its own play button, and those work even when the site's sounds are off, because pressing "Play" is asking for sound.
+I'm an amateur musician: I've played bass in the worship band for 10 years, I was a drum major in high school, and I've played trumpet since the third grade. That's enough music theory to get me into this, and not always enough to get me out.
 
-## The world's smallest synthesizer
+Let's take it apart. Along the way you'll find little machines to play with. Each one has a Play button that works even with the site's sounds off, since pressing Play is asking for sound.
+
+## The Web Audio API in five lines
 
 Every browser ships a synthesizer, and almost nobody uses it. It's called the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), and its mental model is a bunch of guitar pedals connected by cables.
 
 You make nodes. You plug them into each other. The last one plugs into your speakers.
 
 ```js
+// The audio engine. Everything plugs into this.
 const audio = new AudioContext()
 
-const oscillator = audio.createOscillator() // makes a tone
-const gain = audio.createGain() // a volume knob
+// A tone maker and a volume knob
+const oscillator = audio.createOscillator()
+const gain = audio.createGain()
 
-oscillator.connect(gain).connect(audio.destination) // destination = your speakers
+// Tone into the knob, knob into your speakers
+oscillator.connect(gain).connect(audio.destination)
+
+// Start the tone (and never stop it)
 oscillator.start()
 ```
 
-Run that in your console and you'll get a tone that never stops. (Close the tab. It's fine. I've done it too.)
+Run that in your console and you'll get a tone that never stops. (Close the tab. It's fine. I've done it too.) Or skip the console and press Play here. This one has a Stop button:
+
+<div data-demo="console"></div>
 
 That's the whole engine. An oscillator makes a wave, a gain node turns it up or down, and the destination is the speaker. Everything else is deciding _which_ wave, _how loud_, and _for how long_.
 
@@ -58,14 +66,18 @@ Your ear hears that stack of odd harmonics as a bright, reedy, slightly obnoxiou
 The NES had [five sound channels](https://www.nesdev.org/wiki/APU), and two of them were square waves (Nintendo called them "pulse" channels). Mario's jump, the coin, the Zelda secret jingle: square waves. So that's what my oscillator uses:
 
 ```js
+// The buzzy NES shape, instead of the smooth default sine
 oscillator.type = 'square'
-oscillator.frequency.value = 523 // C5, in hertz
+
+// The pitch in hertz (vibrations per second). 523 is C5.
+oscillator.frequency.value = 523
 ```
 
 > [!NOTE] Wait, where does 523 come from?
 > Music has a formula hiding in it. Every note is the one below it times the twelfth root of two (about 1.0595). Starting from the A above middle C at 440 Hz:
 >
 > ```js
+> // Each semitone up multiplies the pitch by the twelfth root of two
 > const frequency = (semitonesFromA4) => 440 * 2 ** (semitonesFromA4 / 12)
 >
 > frequency(3) // 523.25, C5
@@ -75,65 +87,99 @@ oscillator.frequency.value = 523 // C5, in hertz
 >
 > I rounded to whole numbers. Nobody's ear on a website is that picky, and if yours is, I'm sorry.
 
+Slide through the formula yourself. Each step is one semitone, and every 12 steps the pitch doubles:
+
+<div data-demo="scale"></div>
+
 ## A sound is a list of notes
 
-Once you can play one note, a sound effect is just a few notes in a row. So each sound on this site is a tiny score: a list of `[pitch, seconds]` pairs.
+Once you can play one note, a sound effect is just a few notes in a row. So each sound on this site is a tiny score: a list of notes, played one after another.
+
+In TypeScript, one note looks like this:
 
 ```ts
+// A pitch (hertz, 'noise', or 'rest'), then how long it lasts
 type Note = readonly [pitch: number | 'noise' | 'rest', seconds: number]
+```
 
+That's a tuple, an array with exactly two slots that each have their own type. The first slot is the pitch: a frequency in hertz, or one of two words, `'noise'` for a burst of static (more on that later) or `'rest'` for silence. The second slot is how long it lasts, in seconds. `readonly` stops any code from changing a note once it's written.
+
+Every sound on the site lives in one object, `SOUNDS`. Each key is a name, and each value is a list of notes:
+
+```ts
 const SOUNDS = {
+  // The chime when you turn sound on: a C major chord, one note at a time
   'sound-on': [
     [523, 0.06], // C
     [659, 0.06], // E
     [784, 0.06], // G
     [1047, 0.12], // C, an octave up, held a little longer
   ],
-  /** Super Mario Bros.' coin: B5, then a ringing E6. */
+
+  // Super Mario Bros.' coin: a quick B, then a ringing E
   coin: [
-    [988, 0.08],
-    [1319, 0.5],
+    [988, 0.08], // B5
+    [1319, 0.5], // E6
   ],
+
+  // The tick when you hover a link: one D, 20 milliseconds long
   hover: [[1175, 0.02]],
-} satisfies Record<string, readonly Note[]>
+} satisfies Record<string, readonly Note[]> // every entry must be a list of notes
 ```
 
-Look at that coin sound. Two notes. A short B, then a long E. That's it! That's the most famous sound effect in video game history, and it fits on one line.
+Look at that coin sound. Two notes. A short B, then a long E. That's one of the most recognizable sounds in video games, and it's four numbers.
 
-The `hover` tick is a single D6 that lasts 20 milliseconds, barely long enough to hear a pitch in it. It's barely there on purpose. You'll hear it dozens of times per visit, and anything longer gets old fast.
+The `hover` tick is a single D6 that lasts 20 milliseconds, just long enough to hear a pitch in it. That's on purpose. You'll hear it dozens of times per visit, and anything longer gets old fast.
+
+To play a sound, the site calls `playSound()` with its name, like `playSound('coin')`. So a new sound is one new entry in `SOUNDS`: write the notes, give them a name, and `playSound()` plays them.
 
 > [!TIP] The `satisfies` trick
-> The `satisfies` keyword is doing quiet work here. It checks every entry against the `Note` type, but it keeps the literal keys, so `keyof typeof SOUNDS` becomes a union of every sound name. If I ever type `playSound('cion')`, TypeScript catches it before you hear silence.
+> The `satisfies` keyword checks every entry against the `Note` type, but it keeps the literal keys, so `keyof typeof SOUNDS` becomes a union of every sound name. If I ever type `playSound('cion')`, TypeScript catches it before you hear silence.
 
-Here's the same format, live. Every number is editable. Change the coin's E to something else, add a note, or load the fanfare and break it on purpose. The code underneath updates as you go, so whatever you make, you can paste right into `SOUNDS`.
+That's the whole format, so I built a generator for it. Load one of the five sounds I wrote for it in the NES style, change any number, and press Play. Holding an arrow on a pitch climbs the scale one note at a time:
 
 <div data-demo="notes"></div>
 
-Try this one: load the coin and shorten the E from `0.5` to `0.08`. Same two notes, and the _ding_ turns into a _blip_. Half of what makes that sound famous is how long it rings.
+Try this one: load the power-up and shorten the last note from `0.3` to `0.05`. Same six notes, and the _ta-da_ turns into a _blip_. Half of what makes a sound feel like a reward is how long it rings.
 
-## Playing the score
+The code under the generator is the same kind of list as every entry in `SOUNDS`. Make something you like, add it to `SOUNDS` under a name, and TypeScript checks every note before it ever plays.
 
-Here's the function that turns a list of notes into sound. Every button on the site, and every demo in this post, ends up here:
+## Scheduling notes on the audio clock
+
+Here's the function that turns a list of notes into sound, trimmed a little. Every sound effect on the site ends up here:
 
 ```ts
 export function playNotes(notes: readonly Note[], options: PlayOptions = {}) {
+  // No Web Audio in this browser? Play nothing.
   const audio = getContext()
   if (!audio) return
+
+  // The first note starts right now, on the audio clock
   let start = audio.currentTime
+
   for (const [pitch, seconds] of notes) {
+    // A rest makes no sound. It only moves the clock forward.
     if (pitch !== 'rest') {
+      // A square wave, or noise
       const source = createSource(audio, pitch, options)
+
+      // This note's own volume knob, faded out over the note
       const gain = audio.createGain()
       gain.gain.setValueAtTime(VOLUME, start)
       if (options.fade !== false) gain.gain.exponentialRampToValueAtTime(0.001, start + seconds)
-      source.connect(gain).connect(audio.destination)
+
+      // Wire it to the speakers, and book when it starts and stops
+      source.connect(gain).connect(options.destination ?? audio.destination)
       source.start(start)
       source.stop(start + seconds)
     }
+
+    // The next note starts when this one ends
     start += seconds
   }
 }
 
+// The site plays sounds by name, and only after you turn sound on
 export function playSound(name: SoundName) {
   if (soundEnabled()) playNotes(SOUNDS[name])
 }
@@ -143,21 +189,34 @@ export function playSound(name: SoundName) {
 
 There's a subtle idea in here that took me a minute to get. Notice there's no `setTimeout`. No `await`. The loop runs all at once, in well under a millisecond, and _schedules_ every note in advance.
 
-`audio.currentTime` is the audio clock, and it runs on its own thread. When I say `source.start(start + 0.06)`, I'm not asking JavaScript to wait 60 milliseconds. I'm handing the audio thread a note and saying "play this at exactly this time." The main thread could freeze solid right after, and the jingle would still come out perfectly in rhythm.
+`audio.currentTime` is the audio clock, and it runs on its own thread. By the second note of the sound-on chime, `start` is 60 milliseconds in the future. When the loop calls `source.start(start)`, I'm not asking JavaScript to wait 60 milliseconds. I'm handing the audio thread a note and saying "play this at exactly this time." The main thread could freeze solid right after, and the jingle would still come out perfectly in rhythm.
 
 If you've ever tried to time animations with `setTimeout` and watched them drift, this should feel like a gift.
 
-### The volume ramp
+### Fading each note out
 
-Each note gets its own gain node, and the gain doesn't just stay flat. It starts at `VOLUME` and slides down toward silence over the length of the note.
+Each note gets its own gain node, and the gain doesn't just stay flat. Here are the three lines from `playNotes` that shape it:
 
-Two reasons:
+```ts
+// A volume knob for this one note
+const gain = audio.createGain()
+
+// Full volume when the note starts...
+gain.gain.setValueAtTime(VOLUME, start)
+
+// ...sliding down to almost silent by the time it ends
+gain.gain.exponentialRampToValueAtTime(0.001, start + seconds)
+```
+
+The knob starts at `VOLUME` and slides down toward silence over the length of the note. The browser does the sliding on the audio thread, so there's no loop turning it down a step at a time.
+
+Why fade every note? Two reasons.
 
 First, it sounds better. Real instruments don't stop dead; they decay. A little fade turns a flat beep into a _plink_.
 
-Second, cutting a wave off mid-swing makes an audible _click_. The speaker cone is pushed out, and then suddenly it isn't. That instant jump contains a burst of every frequency at once, and your ear hears it as a pop. Fading to almost nothing before `stop()` hides the seam.
+Second, cutting a wave off mid-swing makes an audible _click_. The speaker cone is pushed out, and then suddenly it isn't. That instant jump contains a burst of every frequency at once, and your ear hears it as a click. Fading to almost nothing before `stop()` hides the seam.
 
-This one is much easier to hear than to read about. Both buttons play the same sine wave for the same length of time. Listen to the very end of each one:
+This one is easier to hear than to read about. Both players play the same sine wave for the same length of time, but the one marked "Without fade" skips the ramp (that's `fade: false` in the options). Listen to the very end of each one:
 
 <div data-demo="fade"></div>
 
@@ -168,19 +227,27 @@ I used a sine wave here on purpose. A square wave's buzz is busy enough to hide 
 
 And `VOLUME` itself is `0.05`. Five percent! That felt way too low when I wrote it. Then I tried `0.3` with headphones on. Square waves are _loud_, because all those stacked harmonics carry a lot of energy. Five percent is plenty.
 
-## Making a camera shutter out of static
+## Noise, for sounds without a pitch
 
 Not every sound is a note. When you open a photo in the gallery, you hear a camera shutter: _ch-chk_. There's no pitch in that. It's just a burst of hiss.
 
-The NES had a channel for exactly this, the noise channel, which made explosions, drums, and the crunch of Mario stomping a Goomba. My version is a buffer of random numbers:
+The NES had a channel for exactly this, the noise channel, which made explosions, crashing waves, and nearly every drum on the system. My version is a buffer of random numbers:
 
 ```ts
 function noiseBuffer(audio: AudioContext, grit: number): AudioBuffer {
+  // Each grit is built once, then reused
   const cached = noise.get(grit)
   if (cached) return cached
+
+  // One channel, one second of samples
   const buffer = audio.createBuffer(1, audio.sampleRate, audio.sampleRate)
   const data = buffer.getChannelData(0)
-  for (let i = 0; i < data.length; i += grit) data.fill(Math.random() * 2 - 1, i, i + grit)
+
+  // A random value from -1 to 1, repeated `grit` samples in a row
+  for (let i = 0; i < data.length; i += grit) {
+    data.fill(Math.random() * 2 - 1, i, i + grit)
+  }
+
   noise.set(grit, buffer)
   return buffer
 }
@@ -199,17 +266,17 @@ Somewhere past 16, it stops sounding like static and starts sounding like a brok
 Then the shutter is two bursts with a gap:
 
 ```ts
-/** A camera shutter: the mirror flips up, then the shutter closes. */
+// A camera shutter: the mirror flips up, then the shutter closes
 shutter: [
-  ['noise', 0.03],
-  ['rest', 0.06],
-  ['noise', 0.05],
+  ['noise', 0.03], // the mirror: ch-
+  ['rest', 0.06], // a beat of silence
+  ['noise', 0.05], // the shutter: -chk
 ],
 ```
 
 The `rest` doesn't play anything. It pushes the start time forward. Same idea as a rest in sheet music.
 
-## The browser doesn't trust you (and that's good)
+## The autoplay policy
 
 Here's the thing that will bite you if you try this:
 
@@ -224,19 +291,24 @@ The fix is to ask for a resume every time:
 
 ```ts
 function getContext(): AudioContext | undefined {
+  // Make the audio engine the first time a sound plays
   try {
     context ??= new AudioContext()
   } catch {
+    // No Web Audio in this browser
     return undefined
   }
+
+  // Asleep? Ask it to wake up. Before your first click, the browser says no.
   if (context.state === 'suspended') context.resume().catch(() => undefined)
+
   return context
 }
 ```
 
-Before your first click, the browser ignores the request. After it, the context wakes up and the sound plays. And the `try`/`catch` handles browsers with no Web Audio at all: no context, no sound, no crash.
+Before your first click, the browser ignores the request. After it, the context wakes up and the sound plays. And the `try`/`catch` covers browsers with no Web Audio at all. They get silence, and the page keeps working.
 
-## Off by default, on by choice
+## Sound is opt-in
 
 The bigger rule, though, isn't technical. **Sound is off until you turn it on.** Nobody wants a website to start beeping at them in a quiet office or at 2 a.m. next to a sleeping partner. The speaker icon is an opt-in, and the site remembers your answer.
 
@@ -245,7 +317,11 @@ Where to remember it took a little thought. Every page on this site is prerender
 But sound only matters _after_ JavaScript loads. So the setting lives in `localStorage`, and the server always renders the toggle as "off":
 
 ```tsx
-const on = useSyncExternalStore(subscribeSound, soundEnabled, () => false)
+const on = useSyncExternalStore(
+  subscribeSound, // listen for changes, even from other tabs
+  soundEnabled, // read the saved setting in the browser
+  () => false, // the server always draws the "off" icon
+)
 ```
 
 `useSyncExternalStore` takes three things: a way to subscribe to changes, a way to read the current value in the browser, and a value to use on the server. That last `() => false` means the server always renders the "off" icon, React hydrates without a mismatch, and then the real saved value takes over.
@@ -254,11 +330,12 @@ The subscribe function also listens for the `storage` event, which fires when _a
 
 One more wrinkle: `localStorage` can throw. Some private browsing modes block it entirely. So reading and writing both sit in a `try`/`catch`, and if storage is unavailable, sound just stays off. A broken beep should never break a page.
 
-### No JavaScript, no button
+### Hiding the toggle without JavaScript
 
 If JavaScript is off, the toggle can't do anything, so it shouldn't be there. CSS has a media query for that now:
 
 ```css
+/* No JavaScript? Hide the toggle. */
 @media (scripting: none) {
   .toggle {
     display: none;
@@ -266,9 +343,9 @@ If JavaScript is off, the toggle can't do anything, so it shouldn't be there. CS
 }
 ```
 
-No flash, no `<noscript>` hacks. The button simply doesn't exist for people who can't use it.
+The button is hidden before the page even paints, for anyone who can't use it, and I didn't need a `<noscript>` hack to do it.
 
-## Hover sounds, but only for mice
+## Hover sounds, for mice only
 
 That _tick_ when you hover over nav links is one of my favorite details. It's also the one most likely to get annoying, so it has rules.
 
@@ -278,9 +355,16 @@ So the handler checks the pointer type:
 
 ```ts
 function onPointerOver(event: PointerEvent<HTMLElement>) {
+  // Taps fire this too, but only a mouse really hovers
   if (event.pointerType !== 'mouse') return
+
+  // The link or button under the pointer, if any
   const control = (event.target as Element).closest('a, button')
+
+  // Where the pointer came from
   const from = event.relatedTarget instanceof Node ? event.relatedTarget : null
+
+  // Tick when the pointer comes in from outside, not when it crosses into an icon inside
   if (control && !control.contains(from)) playSound('hover')
 }
 ```
@@ -296,17 +380,113 @@ OK, I promised you a secret.
 You can like a post up to ten times. Likes one through nine play the coin sound. Number ten plays this:
 
 ```ts
+// The level-clear fanfare: three climbing chords, then a big finish
 fanfare: [
-  [523, 0.07], [659, 0.07], [784, 0.07], [1047, 0.16], ['rest', 0.04], // C
-  [698, 0.07], [880, 0.07], [1047, 0.07], [1397, 0.16], ['rest', 0.04], // F
-  [784, 0.07], [988, 0.07], [1175, 0.07], [1568, 0.16], ['rest', 0.06], // G
+  [523, 0.07], [659, 0.07], [784, 0.07], [1047, 0.16], ['rest', 0.04], // up a C chord
+  [698, 0.07], [880, 0.07], [1047, 0.07], [1397, 0.16], ['rest', 0.04], // up an F chord
+  [784, 0.07], [988, 0.07], [1175, 0.07], [1568, 0.16], ['rest', 0.06], // up a G chord
+
   [1047, 0.09], [1047, 0.09], [1047, 0.09], [2093, 0.7], // ta-ta-ta-TAAA
 ],
 ```
 
 Three rising arpeggios (C, F, G, the I-IV-V that powers half of all pop music), then three quick Cs and one big one held for most of a second. It's a level-clear fanfare. You beat the blog. Congratulations.
 
-I'm not going to tell you to go like this post ten times. But I'm not _not_ telling you.
+Want to hear it for yourself? Find the heart that's waving at you and click it ten times. <span data-like-cue></span>
+
+## Bonus: playing whole songs
+
+The fanfare is 16 notes and a few rests, and it's over in about two seconds. So what would it take to play a whole song?
+
+### A four-channel sequencer
+
+Two things change. First, NES music plays four of those five channels at once: two pulse waves, a triangle, and the noise channel. One list of notes in a row can't do that. Second, a song loops, so it can't book every note up front the way `playNotes` does.
+
+So songs get written the way chiptune composers write them today, in a tracker. Each channel is a lane, and each bar is 16 steps. A note name starts a note, `-` holds it, and `.` is silence:
+
+```ts
+// Each string is one bar of 16 steps
+pulse1: ['E5 . G5 . C6 - - G5 . E5 . G5 A5 - G5 .', ...], // the melody
+
+triangle: ['C3 - . C3 G2 - . G2 C3 - . C3 G2 - C3 .', ...], // the bass
+
+noise: ['k . h . s . h . k . h k s . h .', ...], // k = kick, h = hi-hat, s = snare
+```
+
+Then a sequencer walks the steps. It uses the same audio clock as before, but it only books notes a little at a time:
+
+```ts
+export function startSequencer(audio, stepSeconds, onStep) {
+  let step = 0
+
+  // Start a hair in the future, so the first note isn't late
+  let time = audio.currentTime + 0.05
+
+  function tick() {
+    // Book every step that starts in the next 150 ms
+    while (time < audio.currentTime + LOOKAHEAD) {
+      onStep(step, time) // play this step's notes at this exact time
+      time += stepSeconds(step) // then move to the next step
+      step++
+    }
+  }
+
+  tick()
+
+  // Wake up every 25 ms to book a little more
+  const timer = setInterval(tick, TICK_MS)
+
+  // Call this to stop the song
+  return () => clearInterval(timer)
+}
+```
+
+Every 25 milliseconds, a timer wakes up and books whatever falls in the next 150. The timer is sloppy, and that's fine, because it never decides _when_ a note plays. The audio clock does. The timer only has to show up before the music runs out. Chris Wilson's [A Tale of Two Clocks](https://web.dev/articles/audio-scheduling) is the classic write-up of this trick.
+
+`stepSeconds` also runs again for every step, so each step can have its own length. Hang on to that. It comes back in the lo-fi section.
+
+This player builds a song the way a band does. It starts with just the drums. Every two bars another part comes in: the bass, then the rhythm part, then the melody on top. (As the bass player, I'd like it noted that without us, songs don't sound quite right!) Flip a switch any time to take a part out or put it back.
+
+<div data-demo="jukebox"></div>
+
+The drums alone are the same crunchy hiss as the camera shutter, at three grits: chunky for the kick, crunchy for the snare, and fine for the hi-hat. The bass turns that into a groove. By the time the melody shows up, you've heard every part come in on its own, which you never get to do while playing the actual game.
+
+The two pulse channels sound different on purpose. The NES could make each one high for [12.5%, 25%, 50%, or 75% of every cycle](https://www.nesdev.org/wiki/APU_Pulse), and the narrower the pulse, the thinner and more nasal it sounds. The melody plays at 25%, and the rhythm part plays at 12.5% so it stays out of the melody's way. There's no `type: 'pulse'`, so each one is a `PeriodicWave` built from the pulse's harmonics, the same way the square wave demo builds a square.
+
+### Making it lo-fi
+
+Lo-fi goes the other direction. It takes clean audio and wears it out on purpose: muffle the top end like an old speaker, bend the pitch like a stretched cassette, and lay record crackle over the top.
+
+Each of those is a Web Audio node. The muffling is a `BiquadFilterNode` set to `lowpass`. The crackle is a three-second noise buffer, mostly quiet hiss with a pop every so often, set to loop. The tape wobble is my favorite, because it plugs one node into another node's _knob_:
+
+```ts
+// A wave far too slow to hear: about one wobble every two seconds
+const wobble = audio.createOscillator()
+wobble.frequency.value = 0.45
+
+// How far it bends the pitch, in cents (the lo-fi knob sets this)
+const depth = audio.createGain()
+depth.gain.value = 14
+wobble.connect(depth)
+
+// Plug the wobble into the pitch knob of every note
+depth.connect(oscillator.detune)
+```
+
+An oscillator running at 0.45 Hz is way too slow to hear. But `detune` is an [`AudioParam`](https://developer.mozilla.org/en-US/docs/Web/API/AudioParam), and you can connect a node's output straight into it. Now that slow wave pushes the pitch of every note up and down by 14 cents at the knob's starting spot (a cent is a hundredth of a semitone). That's the warble of a tape that's been left in a hot car.
+
+Remember `stepSeconds`? Here's why it takes the step number. Lo-fi swings: in each pair of sixteenth notes, the first lasts a little longer and the second a little shorter. Swing is one line:
+
+```ts
+// Even steps run a little long, odd steps a little short
+return straight * (step % 2 === 0 ? 1 + track.swing : 1 - track.swing)
+```
+
+Put it all together and you get a tape deck. It plays the same four channels as the jukebox, as if someone taped the game's music off the TV in 1986 and left the cassette on the dashboard. The first track is a lazy groove for World 1-1. The second rains on the warp pipes, with a rim click where the snare would be. The third is a sunset after you finally beat World 8-4, with a bass that jumps octaves. The lo-fi knob runs the filter, the wobble, and the crackle together:
+
+<div data-demo="tape"></div>
+
+Drag the knob to 0 and it sounds like the cartridge. Drag it to 100 and the filter closes down to 600 Hz, which is about where the music goes underwater.
 
 ## What I'd tell you before you try this
 
@@ -318,6 +498,6 @@ A few things I learned the hard way:
 - Pair them with something you can see. Every sound here goes with a visual change, so nobody misses information because their sound is off.
 - Have fun with it. The whole point is a little bit of joy on a page that didn't need any. Pick sounds that make _you_ smile.
 
-The entire sound engine is about 200 lines of TypeScript, with no dependencies and no audio files. If you want to dig through it, it's all in [`components/islands/sounds.ts`](https://github.com/gregrickaby/gregrickaby/blob/main/components/islands/sounds.ts).
+The site's sound engine is about 250 lines of TypeScript with no dependencies, in [`components/islands/sounds.ts`](https://github.com/gregrickaby/gregrickaby/blob/main/components/islands/sounds.ts). The sequencer behind the songs is in [`components/islands/sequencer.ts`](https://github.com/gregrickaby/gregrickaby/blob/main/components/islands/sequencer.ts).
 
 Now go hover over some links. _Tick, tick, tick._
