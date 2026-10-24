@@ -8,51 +8,51 @@ description: >
 
 # Commit
 
-**Triggers:** "commit", "micro commit", "commit this", `/commit`
+Split the uncommitted work into small Conventional Commits on the current branch. This repo commits to `main` directly.
 
-Split the uncommitted work into small commits, one per logical change, with Conventional Commit subjects. Push only when the user asks in the same request.
-
-Run start to finish without asking questions. When a choice comes up, take the default this skill names, commit, and explain the choice in the report. Stop only when `npm run check` or a hook fails and you can't fix it.
+You run in a fresh context: you can't see the conversation, and nobody answers questions. Make each call yourself with the defaults below, and explain it in the report. Push, tag, or open a PR only when this skill's arguments ask for it.
 
 ## 1. Survey
 
-1. Run `git status --short` and `git diff -- . ':!package-lock.json'` (plus `--cached` if anything is staged). Read new files in full.
-2. This skill runs in a fresh context and can't see the conversation, so commit the whole working tree. Leave out only files that look unrelated to the rest of the work (a stray config tweak, a local env file) and list them in the report.
-3. If `npm run check` has not passed since the last edit, run it with `2>&1 | tail -40`. Stop and report if it fails.
+1. Run `git status --short` and `git diff --stat HEAD`. Stop and report if a merge, rebase, or cherry-pick is in progress.
+2. Read the diff one file or group at a time (`git diff HEAD -- <paths>`), not the whole tree at once. Read new text files in full; for new binaries (images, fonts), the file name is enough.
+3. Commit the whole working tree. Leave out only files that look unrelated to the rest (a stray config tweak, a local env file), and list them in the report.
+4. Run `npm run check 2>&1 | tail -40`. If it fails, commit nothing and report the failure.
 
 ## 2. Group
 
-Each commit is one change a reviewer could revert on its own: a feature, a fix, a content edit, a test-only change. Rules:
+Each commit is one change a reviewer could revert on its own: a feature, a fix, a content edit, a dependency bump.
 
-- Tests go in the commit with the code they cover.
-- Generated files (CSS module `.d.ts`, `.generated/`) are gitignored. Never force-add them.
-- Content edits (`public/content/**`) go in their own commits, one per post unless the change is the same across posts.
+- Tests go with the code they cover. `package-lock.json` goes with its `package.json` change.
+- Content edits (`public/content/**`) get their own commits, one per post unless the change is the same across posts.
 - Order commits so each one builds: helpers before their callers, tokens before the CSS that uses them.
+- Never force-add gitignored files (`.generated/`, CSS module `.d.ts`).
 
-When one file holds two changes, stage a version of it with only the first change. `git add -p` is interactive and unavailable, so write the partial version to the scratchpad and stage it directly:
+A file with two changes in it gets split: write a version with only the first change to the scratchpad, stage it, commit, then `git add` the real file for the next commit.
 
 ```bash
 git update-index --add --cacheinfo 100644,$(git hash-object -w /path/to/partial),path/in/repo
 ```
 
-Commit, then `git add` the real file for the next commit. Lefthook lints and formats each commit's staged files, and the final commit matches the tree that `npm run check` passed.
+When a clean split would need partial versions of more than a few files, group by feature instead, put each mixed file in the commit of its main change, and say so in the report. `npm run check` verified only the final tree, so intermediate commits may not build.
 
-When the work is large and many files mix features, so a clean split would take hand-built partial versions of more than a few files, don't ask. Group by feature, put each mixed file in the commit of its main change, and list those files in the report with a note that only the final commit was verified.
+## 3. Write each message
 
-## 3. Write messages
-
-- Format: `type: subject`. Types used here: `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `chore`, `content`.
-- Subject: lowercase, imperative, no period, under 72 characters. Say what changed for the site or reader, not which files moved.
-- Add a body only when the reason is not obvious from the subject. Wrap at 72 columns.
+- `type: subject`, with type one of `feat`, `fix`, `perf`, `refactor`, `test`, `docs`, `chore`, `content`.
+- Subject: lowercase, imperative, no period, under 72 characters. Say what changed for the site, reader, or tooling, not which files moved.
+- Before each commit, read `git diff --cached` and check that the subject covers every change in it. If one subject can't, split the commit or list the rest in a body.
+- Add a body only for a reason the subject can't give. Wrap at 72 columns.
 - Follow the writing rules in `docs/code-standards.md`: no emoji, no em dashes, plain verbs.
-- No trailers, no co-authors, no "Generated with" lines.
+- No trailers, co-authors, or "Generated with" lines.
 
 ## 4. Commit
 
-- Let the lefthook pre-commit hooks run. Never set `LEFTHOOK=0`, pass `--no-verify`, or skip hooks some other way. If a hook fails, fix the cause and commit again.
-- Commit on the current branch. This repo commits to `main` directly.
-- Do not push, tag, or open a PR unless the user asked.
+Let the lefthook pre-commit hooks run; never set `LEFTHOOK=0` or pass `--no-verify`. The hooks format and lint the staged files. If a hook fails on something you can fix without changing behavior (formatting, import order), fix it and commit again. Otherwise stop and report.
 
 ## 5. Report
 
-List the commits as `sha subject`, say whether anything was pushed, and name any files left uncommitted and why. Name any mixed files and which commit holds them, and any other choice you made instead of asking.
+- The commits, as `sha subject`.
+- Whether anything was pushed.
+- Files left uncommitted, and why.
+- Mixed files and the commit that holds each.
+- Any other call you made on your own.
