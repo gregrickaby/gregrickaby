@@ -1,0 +1,317 @@
+---
+title: 'My website goes beep now'
+slug: '8-bit-sound-effects-with-the-web-audio-api'
+date: '2026-10-23T00:00:00'
+modified: '2026-10-23T00:00:00'
+type: 'post'
+draft: true
+description: 'How I added NES-style sound effects to this site with about 200 lines of Web Audio API code, square waves, and zero audio files.'
+featuredImage: './_DSC2420__20260719.jpg'
+categories: ['Code']
+tags: ['css', 'javascript', 'react', 'web audio']
+---
+
+Before we start, find the little speaker icon in the header and click it.
+
+Go on. I'll wait.
+
+Did you hear that? Four notes, climbing up a C major chord, like you just found a secret in a Zelda dungeon. Now hover over the links in the nav. _Tick, tick, tick._ Open a photo in the gallery and you'll hear a camera shutter. Like this post and you'll get the Super Mario coin sound. Like it ten times and... well, you'll see.
+
+Here's the fun part: **there are no audio files on this site.** Not one `.mp3`. Every sound is built from scratch in your browser, a few milliseconds before you hear it, using the same trick the Nintendo Entertainment System used in 1985.
+
+Let's take it apart. Along the way you'll find little machines to play with. Each one has its own play button, and those work even when the site's sounds are off, because pressing "Play" is asking for sound.
+
+## The world's smallest synthesizer
+
+Every browser ships a synthesizer, and almost nobody uses it. It's called the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API), and its mental model is a bunch of guitar pedals connected by cables.
+
+You make nodes. You plug them into each other. The last one plugs into your speakers.
+
+```js
+const audio = new AudioContext()
+
+const oscillator = audio.createOscillator() // makes a tone
+const gain = audio.createGain() // a volume knob
+
+oscillator.connect(gain).connect(audio.destination) // destination = your speakers
+oscillator.start()
+```
+
+Run that in your console and you'll get a tone that never stops. (Close the tab. It's fine. I've done it too.)
+
+That's the whole engine. An **oscillator** makes a wave, a **gain** node turns it up or down, and the **destination** is the speaker. Everything else is deciding _which_ wave, _how loud_, and _for how long_.
+
+## Why square waves sound like Nintendo
+
+An oscillator can make four basic shapes: `sine`, `triangle`, `sawtooth`, and `square`. A sine wave is smooth and pure, like a tuning fork. A square wave snaps between "all the way up" and "all the way down" with nothing in between.
+
+That snapping is where the buzz comes from. Back in 1807, Joseph Fourier showed that any repeating wave can be built by stacking sine waves. For a square wave, the recipe is oddly specific: take the note, then add the 3rd harmonic (three times the pitch) at 1/3 the strength, the 5th at 1/5, the 7th at 1/7, and keep going forever.
+
+Don't take my word for it. Drag the slider:
+
+<div data-demo="harmonics"></div>
+
+With one harmonic, you get a sine wave: round, soft, a little boring. Each harmonic you add squares off the corners and brightens the tone. By 15 it looks (and sounds) like a square, except for those little horns at each corner. That overshoot is called the [Gibbs phenomenon](https://en.wikipedia.org/wiki/Gibbs_phenomenon), and it never goes away, no matter how many harmonics you add. It just gets narrower.
+
+Your ear hears that stack of odd harmonics as a bright, reedy, slightly obnoxious tone. In other words, it sounds exactly like 1985.
+
+The NES had [five sound channels](https://www.nesdev.org/wiki/APU), and two of them were square waves (Nintendo called them "pulse" channels). Mario's jump, the coin, the Zelda secret jingle: square waves. So that's what my oscillator uses:
+
+```js
+oscillator.type = 'square'
+oscillator.frequency.value = 523 // C5, in hertz
+```
+
+### Wait, where does 523 come from?
+
+Music has a formula hiding in it. Every note is the one below it times the twelfth root of two (about 1.0595). Starting from the A above middle C at 440 Hz:
+
+```js
+const frequency = (semitonesFromA4) => 440 * 2 ** (semitonesFromA4 / 12)
+
+frequency(3) // 523.25, C5
+frequency(7) // 659.26, E5
+frequency(12) // 880, A5 (an octave up is exactly double)
+```
+
+I rounded to whole numbers. Nobody's ear on a website is that picky, and if yours is, I'm sorry.
+
+## A sound is a list of notes
+
+Once you can play one note, a sound effect is just a few notes in a row. So each sound on this site is a tiny score: a list of `[pitch, seconds]` pairs.
+
+```ts
+type Note = readonly [pitch: number | 'noise' | 'rest', seconds: number]
+
+const SOUNDS = {
+  'sound-on': [
+    [523, 0.06], // C
+    [659, 0.06], // E
+    [784, 0.06], // G
+    [1047, 0.12], // C, an octave up, held a little longer
+  ],
+  /** Super Mario Bros.' coin: B5, then a ringing E6. */
+  coin: [
+    [988, 0.08],
+    [1319, 0.5],
+  ],
+  hover: [[1175, 0.02]],
+} satisfies Record<string, readonly Note[]>
+```
+
+Look at that coin sound. Two notes. A short B, then a long E. That's it! That's the most famous sound effect in video game history, and it fits on one line.
+
+The `hover` tick is a single D6 that lasts 20 milliseconds, barely long enough to hear a pitch in it. It's barely there on purpose. You'll hear it dozens of times per visit, and anything longer gets old fast.
+
+The `satisfies` keyword is doing quiet work here, too. It checks every entry against the `Note` type, but it keeps the literal keys, so `keyof typeof SOUNDS` becomes a union of every sound name. If I ever type `playSound('cion')`, TypeScript catches it before you hear silence.
+
+Here's the same format, live. Every number is editable. Change the coin's E to something else, add a note, or load the fanfare and break it on purpose. The code underneath updates as you go, so whatever you make, you can paste right into `SOUNDS`.
+
+<div data-demo="notes"></div>
+
+## Playing the score
+
+Here's the function that turns a list of notes into sound. Every button on the site, and every demo in this post, ends up here:
+
+```ts
+export function playNotes(notes: readonly Note[], options: PlayOptions = {}) {
+  const audio = getContext()
+  if (!audio) return
+  let start = audio.currentTime
+  for (const [pitch, seconds] of notes) {
+    if (pitch !== 'rest') {
+      const source = createSource(audio, pitch, options)
+      const gain = audio.createGain()
+      gain.gain.setValueAtTime(VOLUME, start)
+      if (options.fade !== false) gain.gain.exponentialRampToValueAtTime(0.001, start + seconds)
+      source.connect(gain).connect(audio.destination)
+      source.start(start)
+      source.stop(start + seconds)
+    }
+    start += seconds
+  }
+}
+
+export function playSound(name: SoundName) {
+  if (soundEnabled()) playNotes(SOUNDS[name])
+}
+```
+
+(The `options` exist for the demos in this post. The site's own sounds always use the defaults.)
+
+There's a subtle idea in here that took me a minute to get. Notice there's no `setTimeout`. No `await`. The loop runs all at once, in well under a millisecond, and _schedules_ every note in advance.
+
+`audio.currentTime` is the audio clock, and it runs on its own thread. When I say `source.start(start + 0.06)`, I'm not asking JavaScript to wait 60 milliseconds. I'm handing the audio thread a note and saying "play this at exactly this time." The main thread could freeze solid right after, and the jingle would still come out perfectly in rhythm.
+
+If you've ever tried to time animations with `setTimeout` and watched them drift, this should feel like a gift.
+
+### The volume ramp
+
+Each note gets its own gain node, and the gain doesn't just stay flat. It starts at `VOLUME` and slides down toward silence over the length of the note.
+
+Two reasons:
+
+First, it sounds better. Real instruments don't stop dead; they decay. A little fade turns a flat beep into a _plink_.
+
+Second, cutting a wave off mid-swing makes an audible **click**. The speaker cone is pushed out, and then suddenly it isn't. That instant jump contains a burst of every frequency at once, and your ear hears it as a pop. Fading to almost nothing before `stop()` hides the seam.
+
+This one is much easier to hear than to read about. Both buttons play the same sine wave for the same length of time. Listen to the very end of each one:
+
+<div data-demo="fade"></div>
+
+I used a sine wave here on purpose. A square wave's buzz is busy enough to hide the click; a sine wave has nowhere to hide it.
+
+Why `0.001` and not `0`? Because an exponential ramp works by multiplying, and you can multiply forever without reaching zero. Ask it to ramp to `0` and the browser [throws a `RangeError`](https://developer.mozilla.org/en-US/docs/Web/API/AudioParam/exponentialRampToValueAtTime). A thousandth of the starting volume is silent enough.
+
+And `VOLUME` itself is `0.05`. Five percent! That felt way too low when I wrote it. Then I tried `0.3` with headphones on. Square waves are _loud_, because all those stacked harmonics carry a lot of energy. Five percent is plenty.
+
+## Making a camera shutter out of static
+
+Not every sound is a note. When you open a photo in the gallery, you hear a camera shutter: _ch-chk_. There's no pitch in that. It's just a burst of hiss.
+
+The NES had a channel for exactly this, the **noise channel**, which made explosions, drums, and the crunch of Mario stomping a Goomba. My version is a buffer of random numbers:
+
+```ts
+function noiseBuffer(audio: AudioContext, grit: number): AudioBuffer {
+  const cached = noise.get(grit)
+  if (cached) return cached
+  const buffer = audio.createBuffer(1, audio.sampleRate, audio.sampleRate)
+  const data = buffer.getChannelData(0)
+  for (let i = 0; i < data.length; i += grit) data.fill(Math.random() * 2 - 1, i, i + grit)
+  noise.set(grit, buffer)
+  return buffer
+}
+```
+
+A buffer is just a big array of numbers between -1 and 1, one per sample. Fill it with `Math.random()` and you get white noise: the sound of a TV between channels.
+
+But plain white noise sounds too smooth, too _modern_. So the loop steps by `grit` and copies each random value into that many samples in a row. The site uses a grit of 4, which cuts the effective sample rate to a quarter. That knocks off the high-frequency fizz and leaves a crunchier, chunkier hiss. It's the audio version of making pixels bigger.
+
+Crank it and see (and hear) for yourself:
+
+<div data-demo="noise"></div>
+
+Somewhere past 16, it stops sounding like static and starts sounding like a broken robot. The NES did something similar: its noise channel had [16 preset rates](https://www.nesdev.org/wiki/APU_Noise), which is how one channel could play both a hi-hat and an explosion.
+
+Then the shutter is two bursts with a gap:
+
+```ts
+/** A camera shutter: the mirror flips up, then the shutter closes. */
+shutter: [
+  ['noise', 0.03],
+  ['rest', 0.06],
+  ['noise', 0.05],
+],
+```
+
+The `rest` doesn't play anything. It just pushes the start time forward. Same idea as a rest in sheet music.
+
+## The browser doesn't trust you (and that's good)
+
+Here's the thing that will bite you if you try this: **browsers won't play audio until the visitor interacts with the page.** You can create an `AudioContext` whenever you want, but it starts "suspended," and it stays that way until it's created or resumed during a click, tap, or key press.
+
+This is the [autoplay policy](https://developer.chrome.com/blog/autoplay), and it exists because of every website in 2009 that blasted music at you the moment it loaded. We did this to ourselves.
+
+So the context is created lazily, the first time a sound plays. That's usually a click, which the browser trusts. But here's the trap I fell into: if you turned sound on during an earlier visit, the first sound on a fresh page might be a hover tick, and hovering doesn't count as interacting. The context starts suspended and stays that way, silently swallowing every sound after it.
+
+The fix is to ask for a resume every time:
+
+```ts
+function getContext(): AudioContext | undefined {
+  try {
+    context ??= new AudioContext()
+  } catch {
+    return undefined
+  }
+  if (context.state === 'suspended') context.resume().catch(() => undefined)
+  return context
+}
+```
+
+Before your first click, the browser ignores the request. After it, the context wakes up and the sound plays. And the `try`/`catch` handles browsers with no Web Audio at all: no context, no sound, no crash.
+
+## Off by default, on by choice
+
+The bigger rule, though, isn't technical. **Sound is off until you turn it on.** Nobody wants a website to start beeping at them in a quiet office or at 2 a.m. next to a sleeping partner. The speaker icon is an opt-in, and the site remembers your answer.
+
+Where to remember it took a little thought. Every page on this site is prerendered at build time, as plain static HTML. If I stored the setting in a cookie and read it on the server, every page would have to render per request just to draw a speaker icon. That's a terrible trade.
+
+But sound only matters _after_ JavaScript loads. So the setting lives in `localStorage`, and the server always renders the toggle as "off":
+
+```tsx
+const on = useSyncExternalStore(subscribeSound, soundEnabled, () => false)
+```
+
+`useSyncExternalStore` takes three things: a way to subscribe to changes, a way to read the current value in the browser, and a value to use on the server. That last `() => false` means the server always renders the "off" icon, React hydrates without a mismatch, and then the real saved value takes over.
+
+The subscribe function also listens for the `storage` event, which fires when _another tab_ changes `localStorage`. Turn sound on in one tab and every other open tab flips its icon too. I added that because I could, and then I spent five minutes toggling between two tabs, giggling.
+
+One more wrinkle: `localStorage` can throw. Some private browsing modes block it entirely. So reading and writing both sit in a `try`/`catch`, and if storage is unavailable, sound just stays off. A broken beep should never break a page.
+
+### No JavaScript, no button
+
+If JavaScript is off, the toggle can't do anything, so it shouldn't be there. CSS has a media query for that now:
+
+```css
+@media (scripting: none) {
+  .toggle {
+    display: none;
+  }
+}
+```
+
+No flash, no `<noscript>` hacks. The button simply doesn't exist for people who can't use it.
+
+## Hover sounds, but only for mice
+
+That _tick_ when you hover over nav links is one of my favorite details. It's also the one most likely to get annoying, so it has rules.
+
+Touchscreens don't really hover. When you tap a link on a phone, the browser fires `pointerover` too, right before the click. Without a check, every tap would play the hover tick _and_ the click sound on top of each other: _tbleep_. Gross.
+
+So the handler checks the pointer type:
+
+```ts
+function onPointerOver(event: PointerEvent<HTMLElement>) {
+  if (event.pointerType !== 'mouse') return
+  const control = (event.target as Element).closest('a, button')
+  const from = event.relatedTarget instanceof Node ? event.relatedTarget : null
+  if (control && !control.contains(from)) playSound('hover')
+}
+```
+
+That `relatedTarget` line handles a sneaky bug. `pointerover` bubbles, and it fires again every time your mouse crosses into a child element, like the icon inside a button. Without the check, sliding across a single link with an icon in it could tick twice. `relatedTarget` is where the pointer came _from_, so if it came from inside the same link, we stay quiet.
+
+And there's one listener on the whole `<nav>`, with `closest()` finding which link you're on, instead of a listener on every link. Event delegation: still great, 25 years later.
+
+## The tenth like
+
+OK, I promised you a secret.
+
+You can like a post up to ten times. Likes one through nine play the coin sound. Number ten plays this:
+
+```ts
+fanfare: [
+  [523, 0.07], [659, 0.07], [784, 0.07], [1047, 0.16], ['rest', 0.04], // C
+  [698, 0.07], [880, 0.07], [1047, 0.07], [1397, 0.16], ['rest', 0.04], // F
+  [784, 0.07], [988, 0.07], [1175, 0.07], [1568, 0.16], ['rest', 0.06], // G
+  [1047, 0.09], [1047, 0.09], [1047, 0.09], [2093, 0.7], // ta-ta-ta-TAAA
+],
+```
+
+Three rising arpeggios (C, F, G, the I-IV-V that powers half of all pop music), then three quick Cs and one big one held for most of a second. It's a level-clear fanfare. You beat the blog. Congratulations.
+
+I'm not going to tell you to go like this post ten times. But I'm not _not_ telling you.
+
+## What I'd tell you before you try this
+
+A few things I learned the hard way:
+
+- Keep them short. Almost every sound here is under a quarter of a second. Anything longer starts to feel like it's in the way.
+- Keep them quiet. Start lower than you think. Then go lower.
+- Make them optional. Off by default, easy to turn off, remembered.
+- Pair them with something you can see. Every sound here goes with a visual change, so nobody misses information because their sound is off.
+- Have fun with it. The whole point is a little bit of joy on a page that didn't need any. Pick sounds that make _you_ smile.
+
+The entire sound engine is about 200 lines of TypeScript, with no dependencies and no audio files. If you want to dig through it, it's all in [`components/islands/sounds.ts`](https://github.com/gregrickaby/gregrickaby/blob/main/components/islands/sounds.ts).
+
+Now go hover over some links. _Tick, tick, tick._
