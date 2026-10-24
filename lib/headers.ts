@@ -41,6 +41,8 @@ export const headers = [
         value: 'camera=(), microphone=(), geolocation=()',
       },
       { key: 'Content-Security-Policy', value: contentSecurityPolicy },
+      // Points agents at the llms.txt index of the site's Markdown copies.
+      { key: 'Link', value: '</llms.txt>; rel="describedby"' },
     ],
   },
   {

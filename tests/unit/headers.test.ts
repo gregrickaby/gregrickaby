@@ -28,6 +28,16 @@ describe('headers', () => {
     expect(getCspValue(headers)).not.toContain("'unsafe-eval'")
   })
 
+  it('points every path at llms.txt', async () => {
+    vi.resetModules()
+    const { headers } = await import('@/lib/headers')
+    expect(headers[0]!.source).toBe('/:path*')
+    expect(headers[0]!.headers).toContainEqual({
+      key: 'Link',
+      value: '</llms.txt>; rel="describedby"',
+    })
+  })
+
   it('sets long-lived caching on static asset paths', async () => {
     vi.resetModules()
     const { headers } = await import('@/lib/headers')
