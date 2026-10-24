@@ -28,7 +28,7 @@ beforeAll(() => {
   write('content/posts/older/cover.png', PNG)
   write(
     'content/posts/newer/content.mdx',
-    "---\ntitle: 'Newer'\nslug: 'newer'\ndate: '2024-01-11T16:13:21'\nmodified: '2024-02-01T00:00:00'\nfeaturedImage: './hero.png'\n---\n\nHello\n",
+    "---\ntitle: 'Newer'\nslug: 'newer'\ndate: '2024-01-11T16:13:21'\nmodified: '2024-02-01T00:00:00'\nfeaturedImage: './hero.png'\n---\n\nHello\n\n<div data-demo=\"wave\"></div>\n",
   )
   write('content/posts/newer/hero.png', PNG)
   write('content/posts/empty/notes.txt', 'no content file')
@@ -65,18 +65,19 @@ describe('readingMinutes', () => {
 
 describe('buildContent', () => {
   it('leaves drafts out unless asked to keep them', async () => {
-    const built = await buildContent(root)
+    const { index: built, markdown } = await buildContent(root)
     expect(built.posts.map((p) => p.meta.slug)).not.toContain('wip')
     expect(built.pages.map((p) => p.meta.slug)).not.toContain('hidden')
     expect(built.posts.every((p) => p.meta.draft === undefined)).toBe(true)
+    expect(Object.keys(markdown)).not.toContain('wip')
 
-    const preview = await buildContent(root, new Date(), { drafts: true })
+    const { index: preview } = await buildContent(root, new Date(), { drafts: true })
     expect(preview.posts[0]?.meta).toMatchObject({ slug: 'wip', draft: true })
     expect(preview.pages.map((p) => p.meta.slug)).toContain('hidden')
   })
 
   it('reads posts newest first, with metadata, HTML, and heroes', async () => {
-    const index = await buildContent(root, new Date('2026-01-01T00:00:00Z'))
+    const { index } = await buildContent(root, new Date('2026-01-01T00:00:00Z'))
     expect(index.generatedAt).toBe('2026-01-01T00:00:00.000Z')
     expect(index.posts.map((p) => p.meta.slug)).toEqual(['newer', 'older'])
 
@@ -102,8 +103,22 @@ describe('buildContent', () => {
     expect(older?.html).toContain('width="2"')
   })
 
+  it('writes a Markdown copy of each post, with its demo titles, and none for pages', async () => {
+    const { markdown } = await buildContent(root, new Date(), {
+      demoTitles: { newer: { wave: 'Make a wave' } },
+    })
+    expect(Object.keys(markdown).sort()).toEqual(['newer', 'older'])
+    expect(markdown.older).toContain('# Old & Gold')
+    expect(markdown.older).toContain(
+      '![Cover](https://gregrickaby.com/content/posts/older/cover.png)',
+    )
+    expect(markdown.newer).toContain('_Interactive demo: Make a wave.')
+  })
+
   it('reads pages with defaults for missing frontmatter', async () => {
-    const { pages } = await buildContent(root)
+    const {
+      index: { pages },
+    } = await buildContent(root)
     expect(pages.map((p) => p.meta.slug)).toEqual(['about', 'gone', 'untitled'])
     expect(pages[2]?.meta.title).toBe('untitled')
     expect(pages[0]?.meta).toMatchObject({ title: 'About', slug: 'about', type: 'page', date: '' })
@@ -114,14 +129,19 @@ describe('buildContent', () => {
   })
 
   it('reads image files in the photos folder', async () => {
-    const { photos } = await buildContent(root)
+    const {
+      index: { photos },
+    } = await buildContent(root)
     expect(photos.map((p) => p.filename)).toEqual(['b.png'])
     expect(photos[0]).toMatchObject({ width: 2, height: 1, title: 'B' })
   })
 
   it('returns empty lists when the folders are missing', async () => {
     const empty = mkdtempSync(join(tmpdir(), 'empty-'))
-    expect(await buildContent(empty)).toMatchObject({ posts: [], pages: [], photos: [] })
+    expect(await buildContent(empty)).toMatchObject({
+      index: { posts: [], pages: [], photos: [] },
+      markdown: {},
+    })
     rmSync(empty, { recursive: true, force: true })
   })
 })

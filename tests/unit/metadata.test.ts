@@ -36,6 +36,13 @@ describe('buildContentMetadata', () => {
     expect(result.alternates?.canonical).toBe('/test-page')
   })
 
+  it('links a post to its Markdown copy, and a page to none', async () => {
+    const post = await buildContentMetadata(postMeta, '/test-post', makeParent())
+    expect(post.alternates?.types).toEqual({ 'text/markdown': '/test-post.md' })
+    const page = await buildContentMetadata(baseMeta, '/test-page', makeParent())
+    expect(page.alternates).not.toHaveProperty('types')
+  })
+
   it('constructs openGraph.url from SITE.url and canonicalPath', async () => {
     const result = await buildContentMetadata(baseMeta, '/test-page', makeParent())
     expect(result.openGraph?.url).toBe(`${SITE.url}/test-page`)

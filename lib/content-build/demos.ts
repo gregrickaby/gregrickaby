@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 /**
@@ -31,4 +31,28 @@ export function buildDemoRegistry(demosDir: string): string {
     '}',
     '',
   ].join('\n')
+}
+
+const DEMO_TITLE = /^\s*['"]?([\w-]+)['"]?:\s*\{\s*title:\s*(['"])(.*?)\2/gm
+
+/**
+ * Reads each post's demo titles from its `registry.ts`, for the Markdown copy
+ * of the post. The registries import client components, so the build reads
+ * their source instead of importing them.
+ *
+ * @param demosDir - The `components/islands/demos` folder.
+ * @returns Demo titles by name, keyed by post slug.
+ */
+export function readDemoTitles(demosDir: string): Record<string, Record<string, string>> {
+  const titles: Record<string, Record<string, string>> = {}
+  if (!existsSync(demosDir)) return titles
+  for (const slug of readdirSync(demosDir)) {
+    const file = join(demosDir, slug, 'registry.ts')
+    if (!existsSync(file)) continue
+    const source = readFileSync(file, 'utf8')
+    titles[slug] = Object.fromEntries(
+      [...source.matchAll(DEMO_TITLE)].map(([, name, , title]) => [String(name), String(title)]),
+    )
+  }
+  return titles
 }

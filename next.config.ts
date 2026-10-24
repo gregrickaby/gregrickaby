@@ -35,8 +35,12 @@ const nextConfig: NextConfig = {
     return headers
   },
   // The Geocities easter egg is a standalone HTML page in public/geocities.
+  // Each post's Markdown copy is served by app/md/[slug]/route.ts.
   async rewrites() {
-    return [{ source: '/geocities', destination: '/geocities/index.html' }]
+    return [
+      { source: '/geocities', destination: '/geocities/index.html' },
+      { source: '/:slug.md', destination: '/md/:slug' },
+    ]
   },
 }
 
