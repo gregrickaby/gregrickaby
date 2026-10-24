@@ -228,5 +228,78 @@
       border-radius: 0;
       width: 100%;
     }
+
+    /* Callouts from `> [!NOTE]`, `> [!TIP]`, and `> [!WARNING]`: a tinted card
+       with a round icon badge sitting on its edge. */
+    & .callout {
+      --callout: var(--info);
+      --callout-soft: var(--info-soft);
+      --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0'/%3E%3Cpath d='M12 9h.01'/%3E%3Cpath d='M11 12h1v4h1'/%3E%3C/svg%3E");
+
+      background: var(--callout-soft);
+      border-end-end-radius: var(--radius-2);
+      border-inline-start: 3px solid var(--callout);
+      border-start-end-radius: var(--radius-2);
+      margin-block: 2em;
+      padding: var(--space-5) var(--space-5) var(--space-5) var(--space-6);
+      position: relative;
+
+      /* Break out of the text column once there's room for the card and its badge. */
+      @media (width >= 50rem) {
+        margin-inline: -40px;
+      }
+
+      & > * + * {
+        margin-block-start: 1em;
+      }
+
+      /* The badge, then the icon cut out of it. */
+      &::before,
+      &::after {
+        content: '';
+        height: 1.75rem;
+        inset-block-start: var(--space-5);
+        inset-inline-start: -1.5px;
+        position: absolute;
+        translate: -50% 0;
+        width: 1.75rem;
+      }
+
+      &::before {
+        background: var(--callout);
+        border-radius: 50%;
+      }
+
+      &::after {
+        background: var(--surface-page);
+        mask: var(--callout-icon) center / 1.125rem no-repeat;
+      }
+
+      & :not(pre) > code {
+        background: var(--surface-page);
+      }
+
+      & figure[data-rehype-pretty-code-figure] pre {
+        border-color: var(--callout);
+      }
+    }
+
+    & .callout-title {
+      color: var(--text-heading);
+      font-family: var(--font-sans);
+      font-weight: 700;
+    }
+
+    & .callout-tip {
+      --callout: var(--success);
+      --callout-soft: var(--success-soft);
+      --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7'/%3E%3Cpath d='M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3'/%3E%3Cpath d='M9.7 17l4.6 0'/%3E%3C/svg%3E");
+    }
+
+    & .callout-warning {
+      --callout: var(--warning);
+      --callout-soft: var(--warning-soft);
+      --callout-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 9v4'/%3E%3Cpath d='M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z'/%3E%3Cpath d='M12 16h.01'/%3E%3C/svg%3E");
+    }
   }
 }

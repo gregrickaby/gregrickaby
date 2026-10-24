@@ -1,5 +1,5 @@
 import type { Element, ElementContent, Root as HastRoot } from 'hast'
-import type { Root as MdastRoot, Paragraph } from 'mdast'
+import type { Blockquote, Root as MdastRoot, Paragraph, PhrasingContent } from 'mdast'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
@@ -54,6 +54,55 @@ function remarkFigureCaption() {
         /* v8 ignore next */
         value: `<figure>\n<img src="${escapeAttr(img.url)}" alt="${escapeAttr(img.alt ?? '')}" />\n<figcaption>${escapeText(img.title)}</figcaption>\n</figure>`,
       })
+    })
+  }
+}
+
+const CALLOUT_MARKER = /^\[!(NOTE|TIP|WARNING)\][ \t]*/
+
+function isBlank(node: PhrasingContent): boolean {
+  return node.type === 'text' && !node.value.trim()
+}
+
+/**
+ * Turns a blockquote that starts with a GitHub alert marker (`> [!NOTE]`,
+ * `> [!TIP]`, `> [!WARNING]`) into an `<aside>` callout. The rest of the
+ * marker's line becomes the callout's title.
+ */
+function remarkCallouts() {
+  return (tree: MdastRoot) => {
+    visit(tree, 'blockquote', (node: Blockquote) => {
+      const first = node.children[0]
+      if (first?.type !== 'paragraph') return
+      const lead = first.children[0]
+      if (lead?.type !== 'text') return
+      const match = CALLOUT_MARKER.exec(lead.value)
+      if (!match) return
+      lead.value = lead.value.slice(match[0].length)
+
+      const title: PhrasingContent[] = []
+      for (let child = first.children[0]; child; child = first.children[0]) {
+        const newline = child.type === 'text' ? child.value.indexOf('\n') : -1
+        if (child.type === 'text' && newline !== -1) {
+          title.push({ type: 'text', value: child.value.slice(0, newline) })
+          child.value = child.value.slice(newline + 1)
+          break
+        }
+        title.push(child)
+        first.children.shift()
+      }
+      if (first.children.length === 0) node.children.shift()
+      if (!title.every(isBlank)) {
+        node.children.unshift({
+          type: 'paragraph',
+          data: { hProperties: { className: ['callout-title'] } },
+          children: title,
+        })
+      }
+      node.data = {
+        hName: 'aside',
+        hProperties: { className: ['callout', `callout-${String(match[1]).toLowerCase()}`] },
+      }
     })
   }
 }
@@ -247,7 +296,7 @@ export interface RenderedMarkdown {
 
 /**
  * Renders a post or page body: GitHub-flavored Markdown with raw HTML, heading
- * ids and a list of headings, figure captions, shiki code highlighting with
+ * ids and a list of headings, figure captions, callouts, shiki code highlighting with
  * copy buttons, optimized images, and demo markers. The HTML is sanitized,
  * so the page can inject it as-is.
  *
@@ -265,6 +314,7 @@ export async function renderMarkdown(
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkFigureCaption)
+    .use(remarkCallouts)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeSlug)

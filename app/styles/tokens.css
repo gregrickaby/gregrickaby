@@ -40,6 +40,10 @@
     --danger-soft: light-dark(#fff5f5, #3b1f1f);
     --success: light-dark(#2b8a3e, #69db7c);
     --success-soft: light-dark(#ebfbee, #1e3323);
+    --info: light-dark(#1971c2, #74c0fc);
+    --info-soft: light-dark(#e7f5ff, #1b2a38);
+    --warning: light-dark(#e67700, #ffd43b);
+    --warning-soft: light-dark(#fff9db, #352d15);
 
     /* Type */
     --font-sans: var(--font-roboto), -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;

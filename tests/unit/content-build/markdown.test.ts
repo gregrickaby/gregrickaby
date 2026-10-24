@@ -138,6 +138,42 @@ describe('renderMarkdown', () => {
     expect(html).not.toContain('data-demo="noise"')
   })
 
+  it('turns an alert blockquote into a callout with a title', async () => {
+    const { html } = await render('> [!NOTE] Where does 523 come from?\n> Music has a formula.')
+    expect(html).toBe(
+      '<aside class="callout callout-note">\n<p class="callout-title">Where does 523 come from?</p>\n<p>Music has a formula.</p>\n</aside>',
+    )
+  })
+
+  it('renders a callout without a title', async () => {
+    const { html } = await render('> [!WARNING]\n>\n> Square waves are `loud`.')
+    expect(html).toBe(
+      '<aside class="callout callout-warning">\n<p>Square waves are <code>loud</code>.</p>\n</aside>',
+    )
+  })
+
+  it('keeps the rest of the paragraph when the marker line has more after it', async () => {
+    const { html } = await render('> [!TIP]\n> Use `satisfies`.')
+    expect(html).toBe(
+      '<aside class="callout callout-tip">\n<p>Use <code>satisfies</code>.</p>\n</aside>',
+    )
+  })
+
+  it('keeps inline markup in the title', async () => {
+    const { html } = await render('> [!TIP] The `satisfies` trick\n> It checks types.')
+    expect(html).toBe(
+      '<aside class="callout callout-tip">\n<p class="callout-title">The <code>satisfies</code> trick</p>\n<p>It checks types.</p>\n</aside>',
+    )
+  })
+
+  it('leaves ordinary and unknown blockquotes alone', async () => {
+    for (const md of ['> A quote', '> [!CAUTION] Hot', '> `[!NOTE]`', '> - [!NOTE] a list']) {
+      const { html } = await render(md)
+      expect(html).toContain('<blockquote>')
+      expect(html).not.toContain('callout')
+    }
+  })
+
   it('strips scripts and event handlers', async () => {
     const { html } = await render('<script>alert(1)</script>\n\n<img src="x" onerror="alert(1)">')
     expect(html).not.toContain('<script')
