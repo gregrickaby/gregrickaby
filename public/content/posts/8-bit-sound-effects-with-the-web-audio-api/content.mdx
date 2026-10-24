@@ -39,7 +39,7 @@ oscillator.start()
 
 Run that in your console and you'll get a tone that never stops. (Close the tab. It's fine. I've done it too.)
 
-That's the whole engine. An **oscillator** makes a wave, a **gain** node turns it up or down, and the **destination** is the speaker. Everything else is deciding _which_ wave, _how loud_, and _for how long_.
+That's the whole engine. An oscillator makes a wave, a gain node turns it up or down, and the destination is the speaker. Everything else is deciding _which_ wave, _how loud_, and _for how long_.
 
 ## Why square waves sound like Nintendo
 
@@ -62,19 +62,18 @@ oscillator.type = 'square'
 oscillator.frequency.value = 523 // C5, in hertz
 ```
 
-### Wait, where does 523 come from?
-
-Music has a formula hiding in it. Every note is the one below it times the twelfth root of two (about 1.0595). Starting from the A above middle C at 440 Hz:
-
-```js
-const frequency = (semitonesFromA4) => 440 * 2 ** (semitonesFromA4 / 12)
-
-frequency(3) // 523.25, C5
-frequency(7) // 659.26, E5
-frequency(12) // 880, A5 (an octave up is exactly double)
-```
-
-I rounded to whole numbers. Nobody's ear on a website is that picky, and if yours is, I'm sorry.
+> [!NOTE] Wait, where does 523 come from?
+> Music has a formula hiding in it. Every note is the one below it times the twelfth root of two (about 1.0595). Starting from the A above middle C at 440 Hz:
+>
+> ```js
+> const frequency = (semitonesFromA4) => 440 * 2 ** (semitonesFromA4 / 12)
+>
+> frequency(3) // 523.25, C5
+> frequency(7) // 659.26, E5
+> frequency(12) // 880, A5 (an octave up is exactly double)
+> ```
+>
+> I rounded to whole numbers. Nobody's ear on a website is that picky, and if yours is, I'm sorry.
 
 ## A sound is a list of notes
 
@@ -103,11 +102,14 @@ Look at that coin sound. Two notes. A short B, then a long E. That's it! That's 
 
 The `hover` tick is a single D6 that lasts 20 milliseconds, barely long enough to hear a pitch in it. It's barely there on purpose. You'll hear it dozens of times per visit, and anything longer gets old fast.
 
-The `satisfies` keyword is doing quiet work here, too. It checks every entry against the `Note` type, but it keeps the literal keys, so `keyof typeof SOUNDS` becomes a union of every sound name. If I ever type `playSound('cion')`, TypeScript catches it before you hear silence.
+> [!TIP] The `satisfies` trick
+> The `satisfies` keyword is doing quiet work here. It checks every entry against the `Note` type, but it keeps the literal keys, so `keyof typeof SOUNDS` becomes a union of every sound name. If I ever type `playSound('cion')`, TypeScript catches it before you hear silence.
 
 Here's the same format, live. Every number is editable. Change the coin's E to something else, add a note, or load the fanfare and break it on purpose. The code underneath updates as you go, so whatever you make, you can paste right into `SOUNDS`.
 
 <div data-demo="notes"></div>
+
+Try this one: load the coin and shorten the E from `0.5` to `0.08`. Same two notes, and the _ding_ turns into a _blip_. Half of what makes that sound famous is how long it rings.
 
 ## Playing the score
 
@@ -153,7 +155,7 @@ Two reasons:
 
 First, it sounds better. Real instruments don't stop dead; they decay. A little fade turns a flat beep into a _plink_.
 
-Second, cutting a wave off mid-swing makes an audible **click**. The speaker cone is pushed out, and then suddenly it isn't. That instant jump contains a burst of every frequency at once, and your ear hears it as a pop. Fading to almost nothing before `stop()` hides the seam.
+Second, cutting a wave off mid-swing makes an audible _click_. The speaker cone is pushed out, and then suddenly it isn't. That instant jump contains a burst of every frequency at once, and your ear hears it as a pop. Fading to almost nothing before `stop()` hides the seam.
 
 This one is much easier to hear than to read about. Both buttons play the same sine wave for the same length of time. Listen to the very end of each one:
 
@@ -161,7 +163,8 @@ This one is much easier to hear than to read about. Both buttons play the same s
 
 I used a sine wave here on purpose. A square wave's buzz is busy enough to hide the click; a sine wave has nowhere to hide it.
 
-Why `0.001` and not `0`? Because an exponential ramp works by multiplying, and you can multiply forever without reaching zero. Ask it to ramp to `0` and the browser [throws a `RangeError`](https://developer.mozilla.org/en-US/docs/Web/API/AudioParam/exponentialRampToValueAtTime). A thousandth of the starting volume is silent enough.
+> [!NOTE] Why `0.001` and not `0`?
+> Because an exponential ramp works by multiplying, and you can multiply forever without reaching zero. Ask it to ramp to `0` and the browser [throws a `RangeError`](https://developer.mozilla.org/en-US/docs/Web/API/AudioParam/exponentialRampToValueAtTime). A thousandth of the starting volume is silent enough.
 
 And `VOLUME` itself is `0.05`. Five percent! That felt way too low when I wrote it. Then I tried `0.3` with headphones on. Square waves are _loud_, because all those stacked harmonics carry a lot of energy. Five percent is plenty.
 
@@ -169,7 +172,7 @@ And `VOLUME` itself is `0.05`. Five percent! That felt way too low when I wrote 
 
 Not every sound is a note. When you open a photo in the gallery, you hear a camera shutter: _ch-chk_. There's no pitch in that. It's just a burst of hiss.
 
-The NES had a channel for exactly this, the **noise channel**, which made explosions, drums, and the crunch of Mario stomping a Goomba. My version is a buffer of random numbers:
+The NES had a channel for exactly this, the noise channel, which made explosions, drums, and the crunch of Mario stomping a Goomba. My version is a buffer of random numbers:
 
 ```ts
 function noiseBuffer(audio: AudioContext, grit: number): AudioBuffer {
@@ -183,7 +186,7 @@ function noiseBuffer(audio: AudioContext, grit: number): AudioBuffer {
 }
 ```
 
-A buffer is just a big array of numbers between -1 and 1, one per sample. Fill it with `Math.random()` and you get white noise: the sound of a TV between channels.
+A buffer is a big array of numbers between -1 and 1, one per sample. Fill it with `Math.random()` and you get white noise: the sound of a TV between channels.
 
 But plain white noise sounds too smooth, too _modern_. So the loop steps by `grit` and copies each random value into that many samples in a row. The site uses a grit of 4, which cuts the effective sample rate to a quarter. That knocks off the high-frequency fizz and leaves a crunchier, chunkier hiss. It's the audio version of making pixels bigger.
 
@@ -204,11 +207,14 @@ shutter: [
 ],
 ```
 
-The `rest` doesn't play anything. It just pushes the start time forward. Same idea as a rest in sheet music.
+The `rest` doesn't play anything. It pushes the start time forward. Same idea as a rest in sheet music.
 
 ## The browser doesn't trust you (and that's good)
 
-Here's the thing that will bite you if you try this: **browsers won't play audio until the visitor interacts with the page.** You can create an `AudioContext` whenever you want, but it starts "suspended," and it stays that way until it's created or resumed during a click, tap, or key press.
+Here's the thing that will bite you if you try this:
+
+> [!WARNING] Browsers won't play audio until the visitor interacts with the page.
+> You can create an `AudioContext` whenever you want, but it starts "suspended," and it stays that way until it's created or resumed during a click, tap, or key press.
 
 This is the [autoplay policy](https://developer.chrome.com/blog/autoplay), and it exists because of every website in 2009 that blasted music at you the moment it loaded. We did this to ourselves.
 
