@@ -7,7 +7,7 @@ import './styles/motion.css'
 import './styles/utilities.css'
 
 import type { Metadata, Viewport } from 'next'
-import { Roboto, Roboto_Mono, Roboto_Slab } from 'next/font/google'
+import { Roboto, Roboto_Mono, Roboto_Slab, Silkscreen } from 'next/font/google'
 
 import { JsonLd } from '@/components/json-ld'
 import { SiteFooter } from '@/components/site-footer'
@@ -21,6 +21,12 @@ import styles from './layout.module.css'
 const sans = Roboto({ subsets: ['latin'], variable: '--font-roboto', display: 'swap' })
 const serif = Roboto_Slab({ subsets: ['latin'], variable: '--font-roboto-slab', display: 'swap' })
 const mono = Roboto_Mono({ subsets: ['latin'], variable: '--font-roboto-mono', display: 'swap' })
+const pixel = Silkscreen({
+  subsets: ['latin'],
+  variable: '--font-silkscreen',
+  weight: '400',
+  display: 'swap',
+})
 
 /*
  * Applies the saved theme before first paint without reading cookies on the
@@ -61,7 +67,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
     <html
-      className={`${sans.variable} ${serif.variable} ${mono.variable}`}
+      className={`${sans.variable} ${serif.variable} ${mono.variable} ${pixel.variable}`}
       data-scroll-behavior="smooth"
       data-theme="system"
       lang="en"

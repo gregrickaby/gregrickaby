@@ -24,6 +24,11 @@
     }
   }
 
+  .count {
+    font-family: var(--font-pixel);
+    font-weight: 400;
+  }
+
   .liked {
     color: var(--accent);
   }

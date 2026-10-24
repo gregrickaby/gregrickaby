@@ -99,7 +99,7 @@ export function LikeButton({ slug }: { slug: string }) {
             </span>
           ) : null}
         </span>
-        {count === null ? null : <span>{count}</span>}
+        {count === null ? null : <span className={styles.count}>{count}</span>}
         <span className="visually-hidden">
           {count === null ? '' : count === 1 ? ' like. ' : ' likes. '}
           {getLabel(mine)}

@@ -115,8 +115,9 @@
     border-radius: var(--radius-1);
     color: var(--accent);
     display: inline-block;
-    font-size: var(--step-minus-1);
-    font-weight: 600;
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
     padding: var(--space-1) var(--space-3);
     text-decoration: none;
     text-transform: uppercase;

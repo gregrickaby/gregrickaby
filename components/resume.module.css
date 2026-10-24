@@ -30,7 +30,7 @@
 
     & dt {
       color: var(--text-2);
-      font-family: var(--font-mono);
+      font-family: var(--font-pixel);
       font-size: var(--label-size);
       letter-spacing: var(--label-tracking);
       text-transform: uppercase;

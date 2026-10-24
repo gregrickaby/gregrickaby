@@ -45,10 +45,11 @@
     --font-sans: var(--font-roboto), -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
     --font-serif: var(--font-roboto-slab), georgia, serif;
     --font-mono: var(--font-roboto-mono), ui-monospace, sfmono-regular, menlo, monospace;
+    --font-pixel: var(--font-silkscreen), var(--font-mono);
 
-    /* Small uppercase metadata, styled like a camera's EXIF readout */
+    /* Small uppercase metadata in a pixel font, like an NES status bar */
     --label-size: 0.75rem;
-    --label-tracking: 0.08em;
+    --label-tracking: 0.04em;
     --step-minus-1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
     --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
     --step-1: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);

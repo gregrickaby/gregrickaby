@@ -6,7 +6,12 @@ import { renderServer } from '@/tests/helpers/render-server'
 vi.mock('@/.generated/content.json', () => ({ default: contentIndex() }))
 vi.mock('next/font/google', () => {
   const font = (name: string) => () => ({ variable: `font-${name}` })
-  return { Roboto: font('sans'), Roboto_Slab: font('serif'), Roboto_Mono: font('mono') }
+  return {
+    Roboto: font('sans'),
+    Roboto_Slab: font('serif'),
+    Roboto_Mono: font('mono'),
+    Silkscreen: font('pixel'),
+  }
 })
 vi.mock('next/navigation', () => ({ usePathname: () => '/' }))
 vi.mock('next/form', () => ({
@@ -23,7 +28,7 @@ describe('root layout', () => {
       children: React.ReactNode
     }) => React.ReactElement
     const html = await renderServer(<RootLayout>Page body</RootLayout>)
-    expect(html).toContain('font-sans font-serif font-mono')
+    expect(html).toContain('font-sans font-serif font-mono font-pixel')
     expect(html).toContain('data-theme="system"')
     expect(html).toContain('theme=(light|dark)')
     expect(html).toContain('"@type":"WebSite"')
