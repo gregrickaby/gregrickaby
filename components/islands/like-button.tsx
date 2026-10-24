@@ -42,6 +42,13 @@ function getLabel(mine: number): string {
   return `You liked this post ${MAX_LIKES} times`
 }
 
+/** The hover tooltip, in Super Mario Bros. terms. Screen readers get {@link getLabel}. */
+function getTip(mine: number): string {
+  if (mine === 0) return 'Hit the ? block!'
+  if (mine < MAX_LIKES) return `x${mine} coins! Hit it again`
+  return 'Course clear!'
+}
+
 /**
  * A heart and a like count beside a post. The form posts to a server action,
  * so liking works without JavaScript. With it, the count loads after
@@ -111,6 +118,7 @@ export function LikeButton({ slug }: { slug: string }) {
         className={mine > 0 ? `${styles.button} ${styles.liked}` : styles.button}
         data-boop="beat"
         data-cue={(cue && mine === 0) || undefined}
+        data-tip={getTip(mine)}
         disabled={full || pending}
         ref={ref}
         type="submit"
@@ -121,8 +129,8 @@ export function LikeButton({ slug }: { slug: string }) {
           </span>
         ) : null}
         <span className={styles.heart} style={{ '--fill': mine / MAX_LIKES } as CSSProperties}>
-          <HeartIcon />
-          <HeartIcon className={styles.fill} />
+          <HeartIcon size={24} />
+          <HeartIcon className={styles.fill} size={24} />
           {burst ? (
             <span aria-hidden="true" className={styles.burst} key={burst.id}>
               {burst.sparkles.map((style, index) => (
@@ -131,7 +139,9 @@ export function LikeButton({ slug }: { slug: string }) {
             </span>
           ) : null}
         </span>
-        {count === null ? null : <span className={styles.count}>{count}</span>}
+        {count === null ? null : (
+          <span className={styles.count}>{count.toLocaleString('en-US')}</span>
+        )}
         <span className="visually-hidden">
           {count === null ? '' : count === 1 ? ' like. ' : ' likes. '}
           {getLabel(mine)}

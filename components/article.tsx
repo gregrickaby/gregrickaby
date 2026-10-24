@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
-import { LikeButton } from '@/components/islands/like-button'
 import { Sidebar } from '@/components/islands/sidebar'
 import { SoundNav } from '@/components/islands/sound-nav'
 import { TableOfContents } from '@/components/islands/table-of-contents'
 import { MetaLine } from '@/components/meta-line'
+import { PostActions } from '@/components/post-actions'
 import { PostImage } from '@/components/post-image'
 import { Prose } from '@/components/prose'
 import { formatShortDate } from '@/lib/format'
@@ -14,10 +14,11 @@ import styles from './article.module.css'
 
 /**
  * A full post or page: date, reading time, and categories, then the title,
- * hero image, and body. A post also gets a table of contents and like button,
- * in a sticky sidebar on wide screens (the contents above the body and the
- * button below it on narrow ones), and its tags. On the home page the hero
- * banner owns the `h1`, so the article title drops to `h2` there.
+ * hero image, and body. A post also gets a table of contents and its actions
+ * (copy, share, and like), in a sticky sidebar on wide screens (the contents
+ * above the body and the actions below it on narrow ones), and its tags. On
+ * the home page the hero banner owns the `h1`, so the article title drops to
+ * `h2` there.
  */
 export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' | 'h2' }) {
   const { meta, html, headings, hero } = post
@@ -62,15 +63,15 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
           <aside className={styles.aside}>
             <Sidebar className={styles.sidebar}>
               {headings.length > 0 ? <TableOfContents headings={headings} /> : null}
-              <div className={styles.sideLike}>
-                <LikeButton slug={meta.slug} />
+              <div className={styles.sideActions}>
+                <PostActions meta={meta} />
               </div>
             </Sidebar>
           </aside>
           <Prose html={html} slug={meta.slug} />
           {/* The narrow-screen copy, after the body so focus order matches what readers see. */}
-          <div className={styles.endLike}>
-            <LikeButton slug={meta.slug} />
+          <div className={styles.endActions}>
+            <PostActions meta={meta} />
           </div>
         </div>
       ) : (

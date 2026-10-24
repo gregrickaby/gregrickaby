@@ -20,7 +20,7 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 ## Functions and components
 
 - Top-level functions are function declarations (lint). Arrow functions are for callbacks, inline handlers, and consts with a type annotation (`const rule: Rule = ...`).
-- Server Components by default. Client code lives in `components/islands/` and never fetches (lint).
+- Server Components by default. Client code lives in `components/islands/` and never fetches (lint). The copy Markdown button is the one exception: it loads the post's static `/<slug>.md` on click.
 - Type props inline in the signature. Name them with an `interface` only when another module uses the type.
 - No `memo()`, `useCallback()`, or `useMemo()`: the React Compiler handles it.
 - JSX props are sorted alphabetically (lint).

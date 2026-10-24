@@ -113,6 +113,20 @@ describe('Article', () => {
     expect(html).toContain('class="progress"')
   })
 
+  it('puts copy and share icons above the like button, with share links for the post', async () => {
+    const html = await renderServer(<Article post={post({ title: 'Moon & Stars' })} />)
+    const url = encodeURIComponent('https://gregrickaby.com/first-post')
+    const title = encodeURIComponent('Moon & Stars')
+    expect(html).toContain('href="/first-post.md"')
+    expect(html).toContain(`href="https://www.reddit.com/submit?url=${url}&amp;title=${title}"`)
+    expect(html).toContain(`href="https://www.linkedin.com/sharing/share-offsite/?url=${url}"`)
+    expect(html).toContain(`href="https://www.facebook.com/sharer/sharer.php?u=${url}"`)
+    expect(html).toContain(`href="https://x.com/intent/tweet?url=${url}&amp;text=${title}"`)
+    expect(html).toContain('data-tip="Share on Reddit"')
+    expect(html).toContain('rel="noopener noreferrer"')
+    expect(html.indexOf('Share on X')).toBeLessThan(html.indexOf('Like this post'))
+  })
+
   it('shows the like button without tags or headings', async () => {
     const html = await renderServer(<Article post={post({ tags: undefined })} />)
     expect(html).not.toContain('aria-label="Tags"')

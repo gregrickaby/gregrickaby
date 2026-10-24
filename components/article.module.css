@@ -35,7 +35,7 @@
   }
 
   /* Narrow screens: the sidebar's contents join the body's column above it,
-     and the like button shows its copy after the body. */
+     and the post's actions show their copy after the body. */
   .body {
     display: flex;
     flex-direction: column;
@@ -47,16 +47,11 @@
     display: contents;
   }
 
-  .sideLike {
+  .sideActions {
     display: none;
   }
 
-  .endLike {
-    display: flex;
-    justify-content: center;
-  }
-
-  /* Wide screens: the contents and like button sit in a sidebar in the right margin, which sticks
+  /* Wide screens: the contents and actions sit in a sidebar in the right margin, which sticks
      below the header while the body scrolls. The body and footer shift left so the sidebar's right
      edge lines up with the hero's. */
   @media (width >= 80rem) {
@@ -109,18 +104,18 @@
       }
     }
 
-    /* A long list scrolls on its own, so the like button stays in view. */
-    .sidebar > :not(.sideLike) {
+    /* A long list scrolls on its own, so the actions stay in view. */
+    .sidebar > :not(.sideActions) {
       min-block-size: 0;
       overflow-y: auto;
     }
 
-    .sideLike {
-      display: flex;
+    .sideActions {
+      display: block;
       flex: none;
     }
 
-    .endLike {
+    .endActions {
       display: none;
     }
   }

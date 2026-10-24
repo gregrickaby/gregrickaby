@@ -12,14 +12,17 @@ const { ThemeToggle } = await import('@/components/islands/theme-toggle')
 const { MobileMenu } = await import('@/components/islands/mobile-menu')
 const { Lightbox, toSlide } = await import('@/components/islands/lightbox')
 const { CodeCopy } = await import('@/components/islands/code-copy')
+const { CopyMarkdown } = await import('@/components/islands/copy-markdown')
 
 const likePost = vi.fn(async (previous: { count: number | null; mine: number }) => ({
   count: (previous.count ?? 4) + 1,
   mine: previous.mine + 1,
 }))
-const getLikes = vi.fn(async (slug: string) =>
-  slug === 'post' ? { count: 4, mine: 0 } : { count: 12, mine: 10 },
-)
+const LIKES: Record<string, { count: number; mine: number }> = {
+  post: { count: 4, mine: 0 },
+  popular: { count: 10000, mine: 0 },
+}
+const getLikes = vi.fn(async (slug: string) => LIKES[slug] ?? { count: 12, mine: 10 })
 vi.mock('@/lib/like-post', () => ({ getLikes, likePost }))
 const { LikeButton } = await import('@/components/islands/like-button')
 const { TableOfContents } = await import('@/components/islands/table-of-contents')
@@ -346,6 +349,81 @@ describe('CodeCopy', () => {
   })
 })
 
+describe('CopyMarkdown', () => {
+  class FakeClipboardItem {
+    constructor(readonly items: Record<string, Promise<Blob>>) {}
+  }
+
+  function stubClipboard(
+    write = vi.fn(async (items: FakeClipboardItem[]) => {
+      await items[0]?.items['text/plain']
+    }),
+  ) {
+    vi.stubGlobal('ClipboardItem', FakeClipboardItem)
+    vi.stubGlobal('navigator', { clipboard: { write } })
+    return write
+  }
+
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.unstubAllGlobals()
+  })
+
+  it('links to the Markdown file for readers without JavaScript', () => {
+    render(<CopyMarkdown className="icon" slug="post" />)
+    const link = screen.getByRole('link', { name: 'View as Markdown' })
+    expect(link.getAttribute('href')).toBe('/post.md')
+    expect(link.className).toContain('icon')
+  })
+
+  it("copies the post's Markdown, says so, then resets", async () => {
+    vi.useFakeTimers()
+    const fetch = vi.fn(async () => new Response('# Post\n'))
+    vi.stubGlobal('fetch', fetch)
+    const write = stubClipboard()
+    render(<CopyMarkdown className="icon" slug="post" />)
+    const button = screen.getByRole('button', { name: 'Copy as Markdown' })
+    expect(button.dataset.tip).toBe('Copy as Markdown')
+    await act(async () => fireEvent.click(button))
+    expect(fetch).toHaveBeenCalledWith('/post.md')
+    const blob = await write.mock.calls[0]?.[0][0]?.items['text/plain']
+    expect(blob?.type).toBe('text/plain')
+    expect(await blob?.text()).toBe('# Post\n')
+    expect(playSound).toHaveBeenCalledWith('select')
+    expect(button.dataset.tip).toBe('Copied')
+    expect(button.hasAttribute('data-copied')).toBe(true)
+    expect(screen.getByRole('status').textContent).toBe('Copied')
+    act(() => vi.advanceTimersByTime(2000))
+    expect(button.dataset.tip).toBe('Copy as Markdown')
+    expect(button.hasAttribute('data-copied')).toBe(false)
+    expect(screen.getByRole('status').textContent).toBe('')
+  })
+
+  it('says so when the file is missing', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => new Response('Not found', { status: 404 })),
+    )
+    stubClipboard()
+    render(<CopyMarkdown className="icon" slug="gone" />)
+    await act(async () => fireEvent.click(screen.getByRole('button')))
+    expect(playSound).not.toHaveBeenCalled()
+    expect(screen.getByRole('status').textContent).toBe('Could not copy')
+  })
+
+  it('says so when the clipboard refuses', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => new Response('# Post')),
+    )
+    stubClipboard(vi.fn().mockRejectedValue(new Error('denied')))
+    render(<CopyMarkdown className="icon" slug="post" />)
+    await act(async () => fireEvent.click(screen.getByRole('button')))
+    expect(screen.getByRole('status').textContent).toBe('Could not copy')
+    expect(screen.getByRole('button').dataset.tip).toBe('Could not copy')
+  })
+})
+
 describe('LikeButton', () => {
   const fill = (button: HTMLElement) =>
     (button.querySelector('[style]') as HTMLElement).style.getPropertyValue('--fill')
@@ -354,6 +432,7 @@ describe('LikeButton', () => {
     render(<LikeButton slug="post" />)
     const button = screen.getByRole('button')
     expect(button.textContent).toBe('Like this post')
+    expect(button.dataset.tip).toBe('Hit the ? block!')
     expect(await screen.findByText('4')).toBeTruthy()
     expect(button.textContent).toContain('4 likes. Like this post')
     expect(fill(button)).toBe('0')
@@ -364,7 +443,13 @@ describe('LikeButton', () => {
     expect(button.querySelectorAll('[aria-hidden="true"] > [style]')).toHaveLength(10)
     expect(button.textContent).toContain('5 likes. Like this post again (1 of 10)')
     expect(fill(button)).toBe('0.1')
+    expect(button.dataset.tip).toBe('x1 coins! Hit it again')
     expect((button as HTMLButtonElement).disabled).toBe(false)
+  })
+
+  it('groups the thousands in a big count', async () => {
+    render(<LikeButton slug="popular" />)
+    expect(await screen.findByText('10,000')).toBeTruthy()
   })
 
   it('bursts again on each like', async () => {
@@ -398,6 +483,7 @@ describe('LikeButton', () => {
     const button = screen.getByRole('button') as HTMLButtonElement
     expect(button.textContent).toContain('12 likes. You liked this post 10 times')
     expect(fill(button)).toBe('1')
+    expect(button.dataset.tip).toBe('Course clear!')
     expect(button.disabled).toBe(true)
   })
 
