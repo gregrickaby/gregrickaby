@@ -57,18 +57,39 @@
   }
 
   /* Wide screens: the contents and like button sit in a sidebar in the right margin, which sticks
-     below the header while the body scrolls. */
+     below the header while the body scrolls. The body and footer shift left so the sidebar's right
+     edge lines up with the hero's. */
   @media (width >= 80rem) {
+    .article {
+      --aside-size: 15rem;
+      --aside-gap: calc(var(--space-8) + var(--space-6));
+      --shift: calc(var(--measure) / 2 + var(--aside-gap) + var(--aside-size) - var(--wide) / 2);
+    }
+
+    .body,
+    .footer {
+      margin-inline: calc(-1 * var(--shift)) var(--shift);
+    }
+
     .body {
       display: block;
       position: relative;
     }
 
+    /* Wide and full-width images undo the shift, so they line up with the hero. */
+    .body :global(.alignwide) {
+      margin-inline-start: calc(50% + var(--shift) - min(var(--wide) / 2, 50vw));
+    }
+
+    .body :global(.alignfull) {
+      margin-inline-start: calc(50% + var(--shift) - 50vw);
+    }
+
     .aside {
       display: block;
-      inline-size: 15rem;
+      inline-size: var(--aside-size);
       inset-block: 0;
-      inset-inline-start: calc(100% + var(--space-7));
+      inset-inline-start: calc(100% + var(--aside-gap));
       position: absolute;
     }
 
@@ -79,6 +100,13 @@
       inset-block-start: 6rem;
       max-block-size: calc(100dvh - 8rem);
       position: sticky;
+      transition: opacity 0.2s;
+
+      /* Out of the way of a wide image scrolling past, unless a reader is tabbing through it. */
+      &[data-covered]:not(:focus-within) {
+        opacity: 0;
+        pointer-events: none;
+      }
     }
 
     /* A long list scrolls on its own, so the like button stays in view. */
