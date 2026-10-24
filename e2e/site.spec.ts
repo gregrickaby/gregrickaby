@@ -206,6 +206,20 @@ test.describe('platform', () => {
     expect(await feed.text()).toContain('<rss version="2.0"')
     expect((await request.get('/sitemap.xml')).ok()).toBe(true)
 
+    const llms = await request.get('/llms.txt')
+    expect(llms.headers()['content-type']).toContain('text/markdown')
+    const post = await request.get('/the-moons-of-2023')
+    expect(post.headers()['link']).toContain('</llms.txt>; rel="describedby"')
+    const firstPost = (await llms.text()).match(
+      /^- \[.+?\]\((https:\/\/gregrickaby\.com\/[^)]+\.md)\)/m,
+    )
+    expect(firstPost).not.toBeNull()
+    expect((await request.get(new URL(firstPost![1]!).pathname)).ok()).toBe(true)
+    for (const path of ['/resume.md', '/photos.md']) {
+      const markdown = await request.get(path)
+      expect(markdown.headers()['content-type']).toContain('text/markdown')
+    }
+
     const geocities = await request.get('/geocities')
     expect(await geocities.text()).toContain('Mr. Data, report...')
 

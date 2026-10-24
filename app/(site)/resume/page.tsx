@@ -10,7 +10,7 @@ import { SITE } from '@/lib/site'
 
 export async function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise<Metadata> {
   const page = getPage('resume')
-  return page ? buildContentMetadata(page.meta, '/resume', parent) : {}
+  return page ? buildContentMetadata(page.meta, '/resume', parent, '/resume.md') : {}
 }
 
 export default function ResumePage() {

@@ -52,6 +52,9 @@ const sitemap = await import('@/app/sitemap')
 const robots = await import('@/app/robots')
 const feed = await import('@/app/feed.xml/route')
 const markdownRoute = await import('@/app/md/[slug]/route')
+const llms = await import('@/app/llms.txt/route')
+const resumeMarkdown = await import('@/app/resume.md/route')
+const photosMarkdown = await import('@/app/photos.md/route')
 const photosJson = await import('@/app/photos.json/route')
 const health = await import('@/app/api/health/route')
 
@@ -169,6 +172,7 @@ describe('photos, resume, and contact', () => {
     const html = await renderServer(<photos.default />)
     expect(html).toContain('/content/photos/Castle.jpg')
     expect(photos.metadata.title).toBe('Photos')
+    expect(photos.metadata.alternates?.types).toEqual({ 'text/markdown': '/photos.md' })
   })
 
   it('says so when there are no photos', async () => {
@@ -178,7 +182,10 @@ describe('photos, resume, and contact', () => {
 
   it('renders the resume and contact pages with metadata', async () => {
     expect(await renderServer(<resume.default />)).toContain('Mindsize')
-    expect(await resume.generateMetadata({}, parent)).toMatchObject({ title: 'Resume' })
+    expect(await resume.generateMetadata({}, parent)).toMatchObject({
+      title: 'Resume',
+      alternates: { types: { 'text/markdown': '/resume.md' } },
+    })
     const html = await renderServer(<contact.default />)
     expect(html).toContain('href="mailto:greg@gregrickaby.com"')
     expect(html).toContain('WebPage')
@@ -250,6 +257,22 @@ describe('sitemap, robots, feed, health', () => {
     const xml = await res.text()
     expect(xml).toContain('<link>https://gregrickaby.com/newest</link>')
     expect(xml).toContain('Sun, 11 Oct 2026')
+  })
+
+  it('serves llms.txt as Markdown, linking each post', async () => {
+    const res = llms.GET()
+    expect(res.headers.get('Content-Type')).toBe('text/markdown; charset=utf-8')
+    const text = await res.text()
+    expect(text).toMatch(/^# Greg Rickaby\n/)
+    expect(text).toContain('](https://gregrickaby.com/newest.md)')
+  })
+
+  it('serves the resume and photos as Markdown', async () => {
+    for (const route of [resumeMarkdown, photosMarkdown]) {
+      expect(route.GET().headers.get('Content-Type')).toBe('text/markdown; charset=utf-8')
+    }
+    expect(await resumeMarkdown.GET().text()).toContain('### Technical Lead, [Mindsize]')
+    expect(await photosMarkdown.GET().text()).toContain('## Castle')
   })
 
   it('prerenders a Markdown copy of each post', () => {

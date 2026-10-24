@@ -52,17 +52,19 @@ export async function buildPageMetadata(
  * Handles parent OG image inheritance,
  * URL construction from SITE, canonical alternate, and OG type
  * inference (article fields are emitted automatically for posts). Posts also
- * link their Markdown copy at `/<slug>.md`.
+ * link their Markdown copy at `/<slug>.md`; other pages pass `markdownPath`.
  *
  * @param meta - The post or page frontmatter fields consumed by this function.
  * @param canonicalPath - Absolute path from root, e.g. '/about' or '/my-post'.
  * @param parent - The ResolvingMetadata passed into generateMetadata by Next.js.
+ * @param markdownPath - The page's Markdown copy, linked as `text/markdown`.
  * @returns A fully-formed Metadata object ready to return from generateMetadata.
  */
 export async function buildContentMetadata(
   meta: ContentMetaInput,
   canonicalPath: string,
   parent: ResolvingMetadata,
+  markdownPath = meta.type === 'post' ? `/${meta.slug}.md` : undefined,
 ): Promise<Metadata> {
   const previousImages = (await parent).openGraph?.images ?? []
 
@@ -74,7 +76,7 @@ export async function buildContentMetadata(
     description: meta.description,
     alternates: {
       canonical: canonicalPath,
-      ...(meta.type === 'post' && { types: { 'text/markdown': `/${meta.slug}.md` } }),
+      ...(markdownPath && { types: { 'text/markdown': markdownPath } }),
     },
     openGraph: {
       ...OPEN_GRAPH_BASE,
