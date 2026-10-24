@@ -1,5 +1,7 @@
 ---
 name: code-review
+model: claude-opus-5-5
+context: fork
 description: Review changed code against this repo's architecture rules and conventions, and fix issues before committing. Use when the user says "review my code", "do a code review", or "/code-review".
 ---
 
@@ -56,21 +58,34 @@ Tag each finding **Blocker**, **Suggestion**, **Nit**, or **Praise**. Fix every 
 
 ## 4. Validate
 
-```bash
-npm run format:check
-npm run check
-npm run build
-```
+This is the only place the build, E2E, and browser checks run; work sessions skip them. Run in this order:
 
-`npm run check` includes coverage, which must stay at 100%. Run `npm run test:e2e` when a change touches a user flow. For UI changes, check the page in Chrome against the user's dev server at https://localhost:3000 when the Chrome tools are available (never start a server); otherwise say live checking wasn't possible.
+1. `npm run format:check` and `npm run check`. `check` includes coverage, which must stay at 100%.
+2. For UI changes, check the page in Chrome against the user's dev server at https://localhost:3000 when the Chrome tools are available (never start a server). Run `npm run content -- --drafts` first so drafts show. Check the rendered page in light and dark themes, at phone width, the main interaction, and console errors. Save a screenshot of each visual change to disk and list the paths in the report. If Chrome isn't available, say live checking wasn't possible.
+3. `npm run build`, after the Chrome check because it disrupts the dev server.
+4. `npm run test:e2e` when a change touches a user flow. It builds too.
 
 Fix what fails and re-run. If something still fails after two attempts, stop and report it.
 
-## 5. Report
+Pipe long output through `tail -40` and read screenshots back only to judge them; the report carries paths, not images.
+
+## 5. Record the pass
+
+When validation passed and nothing is left for the user, and only then, record the tree so `commit` can check it:
+
+```bash
+.claude/skills/code-review/tree-hash.sh > "$(git rev-parse --git-dir)/review-passed"
+```
+
+Make no edits after this step. Otherwise delete that file if it exists.
+
+## 6. Report
 
 The report is relayed to the user, so it's the only output that matters.
 
 | #   | File | Line | Severity | Finding | Fix |
 | --- | ---- | ---- | -------- | ------- | --- |
 
-One row per finding, none for files without one. The Fix column says what changed, or "flagged only" with the reason. Then one line each for validation results and anything left for the user to decide.
+One row per finding, none for files without one. The Fix column says what changed, or "flagged only" with the reason. Then one line each for validation results, screenshot paths, and anything left for the user to decide.
+
+End with a verdict line: `Ready to commit: yes` when validation passed and nothing was left for the user, otherwise `Ready to commit: no` and why.
