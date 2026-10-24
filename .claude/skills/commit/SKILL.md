@@ -1,7 +1,5 @@
 ---
 name: commit
-model: claude-haiku-5-5
-context: fork
 description: >
   Commit the working tree as small conventional commits, one per logical chunk of work. Use when the user says "commit", "micro commit", "commit this", or "/commit". Does not push unless asked.
 ---
