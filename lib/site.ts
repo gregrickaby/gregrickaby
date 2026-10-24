@@ -1,5 +1,8 @@
 import type { Route } from 'next'
 
+/** How many times one visitor can like a post. Each like fills a tenth of the heart. */
+export const MAX_LIKES = 10
+
 /** Site name, copy, and links. */
 export const SITE = {
   name: 'Greg Rickaby',

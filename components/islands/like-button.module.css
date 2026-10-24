@@ -26,15 +26,21 @@
 
   .liked {
     color: var(--accent);
-
-    & svg {
-      fill: currentcolor;
-    }
   }
 
   .heart {
     display: inline-flex;
     position: relative;
+  }
+
+  /* A filled heart over the outline, uncovered from the bottom a tenth per
+     like. The heart spans about 14% to 84% of the icon's height. */
+  .fill {
+    clip-path: inset(calc(14% + (1 - var(--fill)) * 70%) 0 0);
+    fill: currentcolor;
+    inset: 0;
+    position: absolute;
+    transition: clip-path var(--duration-enter) var(--ease-out);
   }
 
   /* A like sends out sparkles that drift from tomato toward gold, flicker,

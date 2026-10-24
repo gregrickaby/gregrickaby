@@ -13,12 +13,14 @@ const { MobileMenu } = await import('@/components/islands/mobile-menu')
 const { Lightbox, toSlide } = await import('@/components/islands/lightbox')
 const { CodeCopy } = await import('@/components/islands/code-copy')
 
-const likePost = vi.fn(async (_: unknown, data: FormData) => ({
-  count: data.get('slug') === 'post' ? 5 : 0,
-  liked: true,
+const likePost = vi.fn(async (previous: { count: number | null; mine: number }) => ({
+  count: (previous.count ?? 4) + 1,
+  mine: previous.mine + 1,
 }))
-const getLikeCount = vi.fn(async (slug: string) => (slug === 'post' ? 4 : 1))
-vi.mock('@/lib/like-post', () => ({ getLikeCount, likePost }))
+const getLikes = vi.fn(async (slug: string) =>
+  slug === 'post' ? { count: 4, mine: 0 } : { count: 12, mine: 10 },
+)
+vi.mock('@/lib/like-post', () => ({ getLikes, likePost }))
 const { LikeButton } = await import('@/components/islands/like-button')
 const { TableOfContents } = await import('@/components/islands/table-of-contents')
 
@@ -344,31 +346,69 @@ describe('CodeCopy', () => {
 })
 
 describe('LikeButton', () => {
-  it('loads the count, then likes the post, plays a sound, and remembers it', async () => {
+  const fill = (button: HTMLElement) =>
+    (button.querySelector('[style]') as HTMLElement).style.getPropertyValue('--fill')
+
+  it('loads the count, then likes the post with a sound and a burst', async () => {
     render(<LikeButton slug="post" />)
     const button = screen.getByRole('button')
     expect(button.textContent).toBe('Like this post')
     expect(await screen.findByText('4')).toBeTruthy()
     expect(button.textContent).toContain('4 likes. Like this post')
+    expect(fill(button)).toBe('0')
     await act(async () => {
       fireEvent.click(button)
     })
     expect(playSound).toHaveBeenCalledWith('coin')
     expect(button.querySelectorAll('[aria-hidden="true"] > [style]')).toHaveLength(10)
-    expect(button.textContent).toContain('5 likes. You liked this post')
-    expect((button as HTMLButtonElement).disabled).toBe(true)
-    expect(localStorage.getItem('liked:post')).toBe('yes')
+    expect(button.textContent).toContain('5 likes. Like this post again (1 of 10)')
+    expect(fill(button)).toBe('0.1')
+    expect((button as HTMLButtonElement).disabled).toBe(false)
   })
 
-  it('starts filled when this browser liked the post before', async () => {
-    localStorage.setItem('liked:other', 'yes')
+  it('bursts again on each like', async () => {
+    render(<LikeButton slug="post" />)
+    const button = screen.getByRole('button')
+    await act(async () => {
+      fireEvent.click(button)
+    })
+    const first = button.querySelector('[aria-hidden="true"] > [style]')
+    await act(async () => {
+      fireEvent.click(button)
+    })
+    expect(button.querySelector('[aria-hidden="true"] > [style]')).not.toBe(first)
+    expect(button.textContent).toContain('(2 of 10)')
+  })
+
+  it('plays a fanfare for the tenth like', async () => {
+    getLikes.mockResolvedValueOnce({ count: 20, mine: 9 })
+    render(<LikeButton slug="post" />)
+    expect(await screen.findByText('20')).toBeTruthy()
+    await act(async () => {
+      fireEvent.click(screen.getByRole('button'))
+    })
+    expect(playSound).toHaveBeenCalledWith('fanfare')
+    expect(playSound).not.toHaveBeenCalledWith('coin')
+  })
+
+  it('fills the heart and stops at ten likes', async () => {
     render(<LikeButton slug="other" />)
+    expect(await screen.findByText('12')).toBeTruthy()
+    const button = screen.getByRole('button') as HTMLButtonElement
+    expect(button.textContent).toContain('12 likes. You liked this post 10 times')
+    expect(fill(button)).toBe('1')
+    expect(button.disabled).toBe(true)
+  })
+
+  it('says one like', async () => {
+    getLikes.mockResolvedValueOnce({ count: 1, mine: 1 })
+    render(<LikeButton slug="post" />)
     expect(await screen.findByText('1')).toBeTruthy()
-    expect(screen.getByRole('button').textContent).toContain('1 like. You liked this post')
+    expect(screen.getByRole('button').textContent).toContain('1 like. Like this post again')
   })
 
   it('shows no count when it fails to load, and ignores a count that lands after unmount', async () => {
-    getLikeCount.mockRejectedValueOnce(new Error('offline'))
+    getLikes.mockRejectedValueOnce(new Error('offline'))
     const { unmount } = render(<LikeButton slug="post" />)
     await act(async () => {})
     expect(screen.getByRole('button').textContent).toBe('Like this post')
@@ -377,35 +417,14 @@ describe('LikeButton', () => {
     await act(async () => {})
   })
 
-  it('forgets a like the server did not save, and bursts again on a retry', async () => {
+  it('keeps the loaded count when the server does not save a like', async () => {
     likePost.mockImplementationOnce(async (previous) => previous as never)
     render(<LikeButton slug="post" />)
-    const button = screen.getByRole('button')
-    await act(async () => {
-      fireEvent.click(button)
-    })
-    expect(button.textContent).toContain('Like this post')
-    expect(localStorage.getItem('liked:post')).toBeNull()
-    const first = button.querySelector('[style]')
-    await act(async () => {
-      fireEvent.click(button)
-    })
-    expect(button.querySelector('[style]')).not.toBe(first)
-    expect(button.textContent).toContain('You liked this post')
-  })
-
-  it('still likes when storage throws', async () => {
-    vi.spyOn(localStorage, 'getItem').mockImplementation(() => {
-      throw new Error('blocked')
-    })
-    vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
-      throw new Error('blocked')
-    })
-    render(<LikeButton slug="other" />)
+    expect(await screen.findByText('4')).toBeTruthy()
     await act(async () => {
       fireEvent.click(screen.getByRole('button'))
     })
-    expect(screen.getByRole('button').textContent).toContain('You liked this post')
+    expect(screen.getByRole('button').textContent).toContain('4 likes. Like this post')
   })
 })
 

@@ -14,7 +14,7 @@ const { likePost } = await import('@/lib/like-post')
 describe('likePost without a database', () => {
   it('logs and leaves the button as it was', async () => {
     const log = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const before = { count: 3, liked: false }
+    const before = { count: 3, mine: 0 }
     const data = new FormData()
     data.set('slug', index.posts[0]!.meta.slug)
     expect(await likePost(before, data)).toBe(before)

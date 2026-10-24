@@ -137,15 +137,21 @@ test.describe('search and theme', () => {
 })
 
 test.describe('likes', () => {
-  test('a like counts once and the heart stays filled after a reload', async ({ page }) => {
+  test('each like fills the heart a tenth, up to ten, and survives a reload', async ({ page }) => {
     await page.goto('/stable-diffusion-xl-1-0-impresses')
     const like = page.getByRole('button', { name: /Like this post/ })
     await like.click()
-    const liked = page.getByRole('button', { name: /You liked this post/ })
-    await expect(liked).toBeDisabled()
-    await expect(liked).toContainText(/[1-9]/)
+    await expect(like).toHaveAccessibleName(/\(1 of 10\)/)
+    await expect(like).toContainText(/[1-9]/)
     await page.reload()
-    await expect(page.getByRole('button', { name: /You liked this post/ })).toBeDisabled()
+    await expect(like).toHaveAccessibleName(/\(1 of 10\)/)
+    for (let mine = 2; mine <= 9; mine++) {
+      await like.click()
+      await expect(like).toHaveAccessibleName(new RegExp(`\\(${mine} of 10\\)`))
+    }
+    await like.click()
+    const full = page.getByRole('button', { name: /You liked this post 10 times/ })
+    await expect(full).toBeDisabled()
   })
 })
 
@@ -203,7 +209,7 @@ test.describe('without JavaScript @nojs', () => {
 
     await page.goto('/how-gain-maps-elevate-hdr-photography')
     await page.getByRole('button', { name: /Like this post/ }).click()
-    await expect(page.getByRole('button', { name: /You liked this post/ })).toContainText(/[1-9]/)
+    await expect(page.getByRole('button', { name: /Like this post again/ })).toContainText(/[1-9]/)
 
     await page.goto('/contact')
     await expect(page.getByRole('link', { name: 'greg@gregrickaby.com' })).toHaveAttribute(

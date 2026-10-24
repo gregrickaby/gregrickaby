@@ -1,39 +1,16 @@
 'use client'
 
-import {
-  useActionState,
-  useEffect,
-  useState,
-  useSyncExternalStore,
-  type CSSProperties,
-} from 'react'
+import { useActionState, useEffect, useState, type CSSProperties } from 'react'
 
 import { HeartIcon } from '@/components/icons'
-import { getLikeCount, likePost } from '@/lib/like-post'
+import { getLikes, likePost } from '@/lib/like-post'
+import { MAX_LIKES } from '@/lib/site'
 
 import styles from './like-button.module.css'
 import { playSound } from './sounds'
 
 const SPARKLE_COUNT = 10
 const SPARKLE_TONES = ['--tomato-2', '--tomato-3', '--tomato-4', '--tomato-5', '--tomato-6']
-
-function storageKey(slug: string) {
-  return `liked:${slug}`
-}
-
-/** True when this browser liked the post before. Storage can throw in private windows. */
-function hasLiked(slug: string): boolean {
-  try {
-    return localStorage.getItem(storageKey(slug)) === 'yes'
-  } catch {
-    return false
-  }
-}
-
-/** Nothing else writes the flag while the page is open, so there's nothing to hear. */
-function subscribe() {
-  return () => {}
-}
 
 function between(min: number, max: number) {
   return min + Math.random() * (max - min)
@@ -58,51 +35,47 @@ function buildSparkles(): CSSProperties[] {
   )
 }
 
+/** The button's label after the count, for screen readers. */
+function getLabel(mine: number): string {
+  if (mine === 0) return 'Like this post'
+  if (mine < MAX_LIKES) return `Like this post again (${mine} of ${MAX_LIKES})`
+  return `You liked this post ${MAX_LIKES} times`
+}
+
 /**
- * A heart and a like count under a post. The form posts to a server action,
+ * A heart and a like count beside a post. The form posts to a server action,
  * so liking works without JavaScript. With it, the count loads after
- * hydration, which keeps the post's HTML static. The server ignores repeat
- * likes; this browser remembers its own so the heart stays filled next time.
+ * hydration, which keeps the post's HTML static. A visitor can like a post up
+ * to `MAX_LIKES` times, and the heart fills from the bottom as they do. The
+ * last like plays a fanfare.
  */
 export function LikeButton({ slug }: { slug: string }) {
-  const [state, action, pending] = useActionState(likePost, { count: null, liked: false })
-  const [loaded, setLoaded] = useState<number | null>(null)
+  const [state, action, pending] = useActionState(likePost, { count: null, mine: 0 })
+  const [loaded, setLoaded] = useState<{ count: number; mine: number } | null>(null)
   const [burst, setBurst] = useState<{ id: number; sparkles: CSSProperties[] } | null>(null)
-  const remembered = useSyncExternalStore(
-    subscribe,
-    () => hasLiked(slug),
-    () => false,
-  )
-  const liked = state.liked || remembered
-  const count = state.count ?? loaded
+  // Once a like lands, the action's answer is newer than the loaded one.
+  const current = state.count === null ? loaded : state
+  const count = current?.count ?? null
+  const mine = current?.mine ?? 0
+  const full = mine >= MAX_LIKES
 
   useEffect(() => {
-    let current = true
-    getLikeCount(slug).then(
+    let active = true
+    getLikes(slug).then(
       (value) => {
-        if (current) setLoaded(value)
+        if (active) setLoaded(value)
       },
       () => {
         // The heart still works; it just shows no count.
       },
     )
     return () => {
-      current = false
+      active = false
     }
   }, [slug])
 
-  // Remember the like only once the server has recorded it.
-  useEffect(() => {
-    if (!state.liked) return
-    try {
-      localStorage.setItem(storageKey(slug), 'yes')
-    } catch {
-      // The heart fills for this visit only.
-    }
-  }, [slug, state.liked])
-
   function onSubmit() {
-    playSound('coin')
+    playSound(mine === MAX_LIKES - 1 ? 'fanfare' : 'coin')
     setBurst((previous) => ({ id: (previous?.id ?? 0) + 1, sparkles: buildSparkles() }))
   }
 
@@ -110,13 +83,14 @@ export function LikeButton({ slug }: { slug: string }) {
     <form action={action} className={styles.form} onSubmit={onSubmit}>
       <input name="slug" type="hidden" value={slug} />
       <button
-        className={liked ? `${styles.button} ${styles.liked}` : styles.button}
+        className={mine > 0 ? `${styles.button} ${styles.liked}` : styles.button}
         data-boop="beat"
-        disabled={liked || pending}
+        disabled={full || pending}
         type="submit"
       >
-        <span className={styles.heart}>
+        <span className={styles.heart} style={{ '--fill': mine / MAX_LIKES } as CSSProperties}>
           <HeartIcon />
+          <HeartIcon className={styles.fill} />
           {burst ? (
             <span aria-hidden="true" className={styles.burst} key={burst.id}>
               {burst.sparkles.map((style, index) => (
@@ -128,7 +102,7 @@ export function LikeButton({ slug }: { slug: string }) {
         {count === null ? null : <span>{count}</span>}
         <span className="visually-hidden">
           {count === null ? '' : count === 1 ? ' like. ' : ' likes. '}
-          {liked ? 'You liked this post' : 'Like this post'}
+          {getLabel(mine)}
         </span>
       </button>
     </form>
