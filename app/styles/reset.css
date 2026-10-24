@@ -10,6 +10,10 @@
   }
 
   html {
+    /* iOS Safari reads only the prefixed property. Without it, Safari
+       enlarges text in sideways-scrolling blocks such as code. */
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-text-size-adjust: none;
     text-size-adjust: none;
     interpolate-size: allow-keywords;
   }
