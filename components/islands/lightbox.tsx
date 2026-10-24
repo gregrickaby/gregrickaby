@@ -141,6 +141,9 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
               data-boop="drop"
               download
               href={slide.download}
+              onAnimationEnd={(event) => delete event.currentTarget.dataset.saved}
+              // Drops the arrow into the tray. Cleared when it lands.
+              onClick={(event) => (event.currentTarget.dataset.saved = '')}
             >
               <DownloadIcon />
             </a>

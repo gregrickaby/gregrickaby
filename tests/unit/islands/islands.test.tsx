@@ -152,6 +152,17 @@ describe('Lightbox', () => {
     expect(screen.getByLabelText('Download original').getAttribute('href')).toBe('/o/1.jpg')
   })
 
+  it('marks a download for its animation, then clears it', () => {
+    gallery()
+    fireEvent.click(screen.getByAltText('one'))
+    const download = screen.getByLabelText('Download original')
+    download.addEventListener('click', (event) => event.preventDefault())
+    fireEvent.click(download)
+    expect(download.hasAttribute('data-saved')).toBe(true)
+    fireEvent.animationEnd(download)
+    expect(download.hasAttribute('data-saved')).toBe(false)
+  })
+
   it('moves with buttons, arrow keys, and swipes, wrapping at the ends', () => {
     gallery()
     fireEvent.click(screen.getByAltText('two'))

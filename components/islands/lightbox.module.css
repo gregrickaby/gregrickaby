@@ -95,4 +95,36 @@
   .next {
     right: var(--space-3);
   }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Downloading drops the arrow into the tray, which flashes tomato, and a
+       new arrow falls in from the top. */
+    .control[data-saved] svg path:not(:first-child) {
+      animation: save-drop 500ms var(--ease-out);
+    }
+
+    .control[data-saved] svg path:first-child {
+      animation: save-tray 500ms var(--ease-out);
+    }
+  }
+
+  @keyframes save-drop {
+    40% {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    41% {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+  }
+
+  @keyframes save-tray {
+    40%,
+    60% {
+      stroke: var(--tomato-4);
+      transform: scaleX(1.15);
+    }
+  }
 }
