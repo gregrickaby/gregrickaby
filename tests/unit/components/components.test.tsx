@@ -85,6 +85,20 @@ describe('Article', () => {
     expect(html).not.toContain('<time')
     expect(html).not.toContain('<img')
     expect(html).not.toContain('/tag/')
+    expect(html).not.toContain('<footer')
+  })
+
+  it('gives a post a like button and a reading progress bar', async () => {
+    const html = await renderServer(<Article post={post()} />)
+    expect(html).toContain('aria-label="Tags"')
+    expect(html).toContain('Like this post')
+    expect(html).toContain('class="progress"')
+  })
+
+  it('shows the like button without tags', async () => {
+    const html = await renderServer(<Article post={post({ tags: undefined })} />)
+    expect(html).not.toContain('aria-label="Tags"')
+    expect(html).toContain('Like this post')
   })
 })
 

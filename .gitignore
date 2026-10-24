@@ -64,3 +64,6 @@ certificates
 /test-results/
 
 !.env.example
+
+# likes database (lib/likes.ts)
+/.data/

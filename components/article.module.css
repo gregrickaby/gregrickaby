@@ -35,7 +35,12 @@
   }
 
   .footer {
+    align-items: center;
     border-block-start: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    justify-content: space-between;
     margin-block-start: var(--space-7);
     padding-block-start: var(--space-4);
   }
@@ -60,6 +65,40 @@
 
     &:hover {
       border-color: var(--accent);
+    }
+  }
+
+  /* A reading progress bar along the top of the window, filled by how much
+     of the article has scrolled past. Hidden where scroll timelines don't exist. */
+  .progress {
+    display: none;
+  }
+
+  @media screen {
+    @supports (animation-timeline: view()) {
+      .article {
+        view-timeline: --article;
+      }
+
+      .progress {
+        animation: progress linear both;
+        animation-range: contain;
+        animation-timeline: --article;
+        background: var(--accent);
+        display: block;
+        height: 3px;
+        inset: 0 0 auto;
+        position: fixed;
+        scale: 0 1;
+        transform-origin: left;
+        z-index: calc(var(--z-sticky) + 1);
+      }
+    }
+  }
+
+  @keyframes progress {
+    to {
+      scale: 1 1;
     }
   }
 }

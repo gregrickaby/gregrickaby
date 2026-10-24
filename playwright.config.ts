@@ -24,7 +24,8 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] }, grep: /@mobile/ },
   ],
   webServer: {
-    command: `npm run build && npx next start -p ${PORT}`,
+    // An in-memory likes database, so test likes never land in .data/likes.db.
+    command: `export LIKES_DB_PATH=:memory: && npm run build && npx next start -p ${PORT}`,
     url: `${APP_URL}/api/health`,
     timeout: 300_000,
     reuseExistingServer: !process.env.CI,

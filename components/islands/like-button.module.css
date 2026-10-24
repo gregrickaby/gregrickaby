@@ -1,0 +1,34 @@
+@layer components {
+  .form {
+    display: inline-block;
+  }
+
+  .button {
+    align-items: center;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    color: var(--text-1);
+    display: inline-flex;
+    font-weight: 600;
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    padding: var(--space-2) var(--space-4);
+    transition:
+      border-color var(--duration-exit) ease,
+      color var(--duration-exit) ease;
+
+    &:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
+
+  .liked {
+    color: var(--accent);
+
+    & svg {
+      fill: currentcolor;
+    }
+  }
+}

@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import { LikeButton } from '@/components/islands/like-button'
+import { SoundNav } from '@/components/islands/sound-nav'
 import { MetaLine } from '@/components/meta-line'
 import { PostImage } from '@/components/post-image'
 import { Prose } from '@/components/prose'
@@ -10,14 +12,15 @@ import styles from './article.module.css'
 
 /**
  * A full post or page: date, reading time, and categories, then the title,
- * hero image, body, and tags. On the home page the hero banner owns the `h1`,
- * so the article title drops to `h2` there.
+ * hero image, body, and, for a post, its tags and like button. On the home
+ * page the hero banner owns the `h1`, so the article title drops to `h2` there.
  */
 export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' | 'h2' }) {
   const { meta, html, hero } = post
   const Title = heading
   return (
     <article className={styles.article}>
+      {meta.type === 'post' ? <div aria-hidden="true" className={styles.progress} /> : null}
       <header className={styles.header}>
         {meta.type === 'post' ? (
           <MetaLine
@@ -51,17 +54,22 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
 
       <Prose html={html} />
 
-      {meta.tags?.length ? (
+      {meta.type === 'post' ? (
         <footer className={styles.footer}>
-          <ul className={styles.tags} role="list">
-            {meta.tags.map((tag) => (
-              <li key={tag}>
-                <Link className={styles.tag} href={`/tag/${encodeURIComponent(tag)}`} prefetch>
-                  {tag}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {meta.tags?.length ? (
+            <SoundNav aria-label="Tags" clickSound="select">
+              <ul className={styles.tags} role="list">
+                {meta.tags.map((tag) => (
+                  <li key={tag}>
+                    <Link className={styles.tag} href={`/tag/${encodeURIComponent(tag)}`} prefetch>
+                      {tag}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </SoundNav>
+          ) : null}
+          <LikeButton slug={meta.slug} />
         </footer>
       ) : null}
     </article>
