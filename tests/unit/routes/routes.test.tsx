@@ -51,7 +51,7 @@ const searchLayout = await import('@/app/search/layout')
 const notFoundPage = await import('@/app/not-found')
 const siteNotFound = await import('@/app/(site)/not-found')
 const sitemap = await import('@/app/sitemap')
-const robots = await import('@/app/robots')
+const robots = await import('@/app/robots.txt/route')
 const feed = await import('@/app/feed.xml/route')
 const markdownRoute = await import('@/app/md/[slug]/route')
 const llms = await import('@/app/llms.txt/route')
@@ -268,11 +268,12 @@ describe('sitemap, robots, feed, health', () => {
     expect(urls).not.toContain('https://gregrickaby.com/feed.xml')
   })
 
-  it('keeps search out of the index', () => {
-    expect(robots.default()).toMatchObject({
-      rules: { disallow: '/search' },
-      sitemap: 'https://gregrickaby.com/sitemap.xml',
-    })
+  it('keeps search out of the index and signals AI use', async () => {
+    const res = robots.GET()
+    expect(res.headers.get('Content-Type')).toBe('text/plain; charset=utf-8')
+    const text = await res.text()
+    expect(text).toContain('Disallow: /search')
+    expect(text).toContain('Content-Signal: search=yes, ai-input=yes, ai-train=no')
   })
 
   it('serves RSS', async () => {
