@@ -105,9 +105,11 @@ test.describe('reading', () => {
 
   test('the HDR post keeps its gain-map originals', async ({ page }) => {
     await page.goto('/how-gain-maps-elevate-hdr-photography')
-    const hdr = page.locator('.prose img[src$="_HDR_20221205.jpg"]').first()
+    const hdr = page.locator(
+      '.prose img[src$="Indiana-Jones-Epic-Stunt-Spectacular_HDR_20221205.jpg"]',
+    )
     await expect(hdr).toHaveAttribute('src', /^\/content\/posts\//)
-    const sdr = page.locator('.prose img[src*="_SDR_"]').first()
+    const sdr = page.locator('.prose img[src*="Indiana-Jones-Epic-Stunt-Spectacular_SDR_"]')
     await expect(sdr).toHaveAttribute('src', /^\/_next\/image/)
   })
 })
@@ -251,7 +253,7 @@ test.describe('without JavaScript @nojs', () => {
     await page.getByRole('searchbox', { name: 'Search posts' }).first().fill('hdr')
     await page.keyboard.press('Enter')
     await expect(page).toHaveURL(/\/search\?q=hdr/)
-    await expect(page.getByRole('link', { name: /Gain Maps/ })).toBeVisible()
+    await expect(page.getByRole('link', { name: /gain maps/i })).toBeVisible()
 
     await page.goto('/how-gain-maps-elevate-hdr-photography')
     await page.getByRole('button', { name: /Like this post/ }).click()
