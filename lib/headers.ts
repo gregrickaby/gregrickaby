@@ -25,7 +25,14 @@ const contentSecurityPolicy = [
   'upgrade-insecure-requests',
 ].join('; ')
 
-/** HTTP security and caching headers, applied via `next.config.ts`. */
+/**
+ * HTTP security and caching headers, applied via `next.config.ts`.
+ * Cloudflare's "Add security headers" managed transform also writes these on
+ * the live site, and wins where the two differ. Referrer-Policy matches its
+ * `same-origin` here so the code says what browsers see. The transform adds
+ * X-XSS-Protection and Expect-CT, which this file leaves alone because both
+ * are deprecated.
+ */
 export const headers = [
   {
     source: '/:path*',
@@ -37,7 +44,10 @@ export const headers = [
       },
       { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
       { key: 'X-Content-Type-Options', value: 'nosniff' },
-      { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      { key: 'Referrer-Policy', value: 'same-origin' },
+      { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+      { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
+      { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
       {
         key: 'Permissions-Policy',
         value: 'camera=(), microphone=(), geolocation=()',

@@ -44,7 +44,7 @@ Secrets go in `.env.local` (see `.env.example`). Server errors go to stdout (Coo
 - **HTML injection** only in `components/prose.tsx`, `components/json-ld.tsx` (`serializeSchema`), and the theme script in `app/layout.tsx`. ESLint enforces it.
 - **Theme.** Color tokens use `light-dark()` in `app/styles/tokens.css`. A `theme` cookie, applied by an inline script before paint, sets `data-theme` on `<html>`, which only switches `color-scheme`.
 - **View transitions.** Post cards and article heroes share a `<ViewTransition>` name (`components/post-image.tsx`).
-- **Site config.** Copy, nav, and links in `lib/site.ts`; old WordPress redirects in `lib/redirects.ts`; security headers and CSP in `lib/headers.ts`.
+- **Site config.** Copy, nav, and links in `lib/site.ts`; old WordPress redirects in `lib/redirects.ts`; security headers and CSP in `lib/headers.ts`. Cloudflare's "Add security headers" managed transform rewrites `Referrer-Policy` and adds `X-XSS-Protection` and `Expect-CT`; the values in `lib/headers.ts` match what the edge sends.
 
 ## Rules
 
@@ -78,3 +78,5 @@ A task: `npm run format:check` and `npm run check` pass, with coverage at 100%. 
 ## Deploy
 
 Coolify (Railpack) builds `main` and runs `npm start` on port 3000, with a health check on `/api/health`. Cloudflare sits in front and caches `/_next/image`; Coolify keeps `.next/cache` on a volume and runs `npm run purge-cdn` after each deploy.
+
+The origin answers on 443 with no Cloudflare in front when asked directly, so the host firewall still has to be narrowed to Cloudflare's published ranges (or moved to a tunnel). Until then, `cf-connecting-ip` can be forged and like counts are only best-effort.
