@@ -1,12 +1,399 @@
 @layer components {
+  /*
+   * The ghost's side and the deck's side, lined up at the top, stacked once
+   * the dialog box would get too narrow.
+   */
   .notFound {
+    align-items: start;
     display: grid;
-    gap: var(--space-3);
-    padding-block: var(--space-8);
-    text-align: center;
+    gap: var(--space-7);
+    padding-block: var(--space-7) var(--space-8);
+  }
+
+  @media (width >= 72rem) {
+    .notFound {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
+    }
+  }
+
+  .heading {
+    display: grid;
+    gap: var(--space-2);
+    grid-area: heading;
+    justify-items: start;
   }
 
   .title {
-    font-size: var(--step-3);
+    color: var(--text-heading);
+    font-family: var(--font-pixel);
+    font-size: clamp(4.5rem, 3rem + 7vw, 8rem);
+    line-height: 0.9;
+    margin: 0;
+
+    /*
+     * The pixel font leaves space above and before each glyph. These line the
+     * 404 up with the top of the deck and the edge of the dialog box.
+     */
+    margin-block-start: -0.18em;
+    margin-inline-start: -0.08em;
+    text-shadow:
+      5px 5px 0 var(--accent),
+      10px 10px 0 var(--accent-soft);
+  }
+
+  .subtitle,
+  .prompt,
+  .speaker {
+    color: var(--accent);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  /*
+   * The ghost faces its dialog box, like a character in a game. The heading,
+   * the box, and the menu share a left edge; the ghost stands beside them.
+   */
+  .scene {
+    align-items: center;
+    display: grid;
+    gap: var(--space-5) var(--space-6);
+    grid-template:
+      '. heading' auto
+      'stage dialog' auto
+      '. ways' auto / auto minmax(0, 26rem);
+    justify-content: center;
+  }
+
+  .ways {
+    grid-area: ways;
+  }
+
+  /* On a phone, everything stacks and centers, and the tail goes. */
+  @media (width < 36rem) {
+    .scene {
+      grid-template:
+        'heading' auto
+        'stage' auto
+        'dialog' auto
+        'ways' auto / minmax(0, 1fr);
+      justify-items: center;
+    }
+
+    .heading {
+      justify-items: center;
+    }
+
+    .title {
+      margin-inline-start: 0;
+    }
+
+    .dialog::before {
+      display: none;
+    }
+  }
+
+  /* The ghost floats over a ground of square pixels, under a few stars. */
+  .stage {
+    grid-area: stage;
+    padding: var(--space-4) var(--space-3) var(--space-4);
+    position: relative;
+
+    &::after {
+      background: var(--pixel-dots);
+      block-size: 4px;
+      content: '';
+      inset: auto 0 0;
+      position: absolute;
+    }
+  }
+
+  .ghost {
+    display: block;
+    inline-size: 7.5rem;
+    shape-rendering: crispedges;
+  }
+
+  .outline {
+    fill: var(--text-heading);
+  }
+
+  .sheet {
+    fill: var(--on-scrim);
+  }
+
+  .eye {
+    fill: var(--scrim);
+  }
+
+  .blush {
+    fill: var(--tomato-3);
+  }
+
+  /* The ghost's shadow on the ground, which shrinks as the ghost rises. */
+  .shadow {
+    background: var(--border);
+    block-size: 4px;
+    inline-size: 4rem;
+    inset: auto 50% var(--space-2) auto;
+    position: absolute;
+    translate: 50% 0;
+  }
+
+  /* One pixel, copied around the ghost with box shadows. */
+  .stars {
+    block-size: 6px;
+    box-shadow:
+      -3.75rem -2.5rem 0 var(--accent),
+      3.5rem -2rem 0 var(--text-2),
+      -4rem 1rem 0 var(--text-2),
+      3.75rem 0.5rem 0 var(--accent),
+      1rem -3.25rem 0 var(--text-2);
+    inline-size: 6px;
+    inset: 50% 50% auto auto;
+    position: absolute;
+  }
+
+  .note {
+    color: var(--accent);
+    font-size: var(--step-1);
+    inset-block-start: 0;
+    opacity: 0;
+    position: absolute;
+
+    &:nth-of-type(2) {
+      inset-inline-start: 0;
+    }
+
+    &:nth-of-type(3) {
+      inset-inline-end: 0;
+    }
+
+    &:nth-of-type(4) {
+      inset-inline-start: 45%;
+    }
+  }
+
+  /*
+   * A game's dialog box. Four box shadows draw the border one pixel step
+   * outside the box, which leaves the corners notched.
+   */
+  .dialog {
+    --frame: var(--text-1);
+
+    background: var(--surface-card);
+    grid-area: dialog;
+    box-shadow:
+      0 -4px 0 var(--frame),
+      0 4px 0 var(--frame),
+      -4px 0 0 var(--frame),
+      4px 0 0 var(--frame);
+    display: grid;
+    gap: var(--space-2);
+    margin: 4px;
+    padding: var(--space-4) var(--space-5) var(--space-5);
+    position: relative;
+
+    & p {
+      margin: 0;
+    }
+
+    /* A pixel tail on the left side, pointing at the ghost. */
+    &::before {
+      background: var(--frame);
+      block-size: 4px;
+      box-shadow:
+        4px -4px 0 var(--frame),
+        4px 0 0 var(--surface-card),
+        4px 4px 0 var(--frame),
+        8px -8px 0 var(--frame),
+        8px -4px 0 var(--surface-card),
+        8px 0 0 var(--surface-card),
+        8px 4px 0 var(--surface-card),
+        8px 8px 0 var(--frame),
+        12px -12px 0 var(--frame),
+        12px -8px 0 var(--surface-card),
+        12px -4px 0 var(--surface-card),
+        12px 0 0 var(--surface-card),
+        12px 4px 0 var(--surface-card),
+        12px 8px 0 var(--surface-card),
+        12px 12px 0 var(--frame);
+      content: '';
+      inline-size: 4px;
+      inset: 50% auto auto -16px;
+      position: absolute;
+    }
+
+    /* The "more text" arrow in the corner. */
+    &::after {
+      color: var(--accent);
+      content: '▼';
+      font-size: 0.6rem;
+      inset: auto var(--space-3) var(--space-2) auto;
+      position: absolute;
+    }
+  }
+
+  /* A game menu: a pointer marks the first link, or the one you're on. */
+  .menu {
+    display: grid;
+    font-family: var(--font-pixel);
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-2);
+    text-transform: uppercase;
+
+    & a {
+      color: var(--text-heading);
+      display: inline-flex;
+      gap: var(--space-2);
+      text-decoration: none;
+
+      &::before {
+        color: var(--accent);
+        content: '▶';
+        visibility: hidden;
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: var(--accent);
+      }
+    }
+
+    & a:is(:hover, :focus-visible)::before,
+    &:not(:has(a:hover, a:focus-visible)) li:first-child a::before {
+      visibility: visible;
+    }
+  }
+
+  .player {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: center;
+  }
+
+  /* Without scripts the deck can't play, and it says so itself. */
+  @media (scripting: none) {
+    .prompt {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ghost {
+      animation: float 1.6s var(--ease-pixel) infinite alternate;
+    }
+
+    .shadow {
+      animation: squash 1.6s var(--ease-pixel) infinite alternate;
+    }
+
+    .eye {
+      animation: blink-eyes 4s steps(1) infinite;
+    }
+
+    .stars {
+      animation: twinkle 1.8s steps(1) infinite;
+    }
+
+    .dialog::after,
+    .prompt {
+      animation: blink 1s steps(1) infinite;
+    }
+
+    .menu a::before {
+      animation: nudge 0.6s steps(1) infinite;
+    }
+
+    /* While a tape plays, the ghost dances and notes drift up. */
+    .notFound:has([data-playing]) {
+      & .ghost {
+        animation: dance 0.8s steps(2) infinite alternate;
+      }
+
+      & .shadow {
+        animation: squash 0.8s steps(2) infinite alternate;
+      }
+
+      & .note {
+        animation: drift 2.4s steps(6) infinite;
+      }
+
+      & .note:nth-of-type(3) {
+        animation-delay: -0.8s;
+      }
+
+      & .note:nth-of-type(4) {
+        animation-delay: -1.6s;
+      }
+
+      & .prompt {
+        animation: none;
+      }
+    }
+  }
+
+  @keyframes float {
+    to {
+      translate: 0 -8px;
+    }
+  }
+
+  @keyframes squash {
+    to {
+      scale: 0.7 1;
+    }
+  }
+
+  @keyframes blink-eyes {
+    96% {
+      fill: var(--on-scrim);
+    }
+  }
+
+  @keyframes twinkle {
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes nudge {
+    50% {
+      translate: 3px 0;
+    }
+  }
+
+  @keyframes dance {
+    from {
+      rotate: -8deg;
+      translate: -4px 0;
+    }
+
+    to {
+      rotate: 8deg;
+      translate: 4px -8px;
+    }
+  }
+
+  @keyframes drift {
+    from {
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    to {
+      opacity: 0;
+      translate: 0 -3rem;
+    }
   }
 }
