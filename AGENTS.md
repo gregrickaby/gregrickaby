@@ -72,7 +72,7 @@ Unit tests live in `tests/unit/`. They run in Node; component tests add `// @vit
 
 ## Definition of done
 
-A task: `npm run format:check` and `npm run check` pass, with coverage at 100%. Shipping: the `code-review` skill adds a Chrome check against `https://localhost:3000`, and CI (`.github/workflows/ci.yml`) runs `npm run test:e2e`, which builds, on the pull request. The global instructions set the rest.
+A task: `npm run format:check` and `npm run check` pass, with coverage at 100%. Shipping: the `code-review` skill reviews and fixes the diff (a Chrome check against `https://localhost:3000` only on request), and CI (`.github/workflows/ci.yml`) runs `npm run test:e2e`, which builds, on the pull request. The global instructions set the rest.
 
 ## Deploy
 
