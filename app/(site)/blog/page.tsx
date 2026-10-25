@@ -16,6 +16,12 @@ export function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise
   )
 }
 
+/**
+ * Every card prefetches its post's prerendered HTML, so navigation is instant
+ * for readers without JavaScript. That is about 400 KB today. Revisit at 40
+ * posts: measure the index transfer, then decide whether prefetch should wait
+ * for hover or the viewport.
+ */
 export default function BlogPage() {
   return (
     <>
