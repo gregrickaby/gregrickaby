@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { contentIndex } from '@/tests/helpers/content'
+import { contentIndex, post } from '@/tests/helpers/content'
 
 vi.mock('@/.generated/content.json', () => ({ default: contentIndex() }))
 
@@ -50,5 +50,25 @@ describe('content', () => {
     expect(content.searchPosts('moon post').map((p) => p.slug)).toEqual(['newest'])
     expect(content.searchPosts('   ')).toEqual([])
     expect(content.searchPosts('zebra')).toEqual([])
+  })
+})
+
+describe('production content', () => {
+  const originalEnv = process.env.NODE_ENV
+
+  afterEach(() => {
+    vi.stubEnv('NODE_ENV', originalEnv ?? 'test')
+    vi.doUnmock('@/.generated/content.json')
+    vi.resetModules()
+  })
+
+  it('fails to load when the production index holds a draft', async () => {
+    vi.stubEnv('NODE_ENV', 'production')
+    vi.resetModules()
+    vi.doMock('@/.generated/content.json', () => ({
+      default: { ...contentIndex(), posts: [post({ slug: 'wip', draft: true })] },
+    }))
+
+    await expect(import('@/lib/content')).rejects.toThrow('Draft content reached production: wip')
   })
 })

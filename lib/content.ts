@@ -1,6 +1,7 @@
 import 'server-only'
 
 import data from '@/.generated/content.json'
+import { assertNoDrafts } from '@/lib/drafts'
 import type { ContentIndex, Photo, Post, PostMeta } from '@/lib/types'
 
 /*
@@ -9,6 +10,10 @@ import type { ContentIndex, Photo, Post, PostMeta } from '@/lib/types'
  * that uses them prerenders (`ensureStatic = 'navigation'`).
  */
 const content = data as ContentIndex
+
+// A production build reads whatever `.generated/content.json` holds, so drafts
+// there mean `npm run content` never ran and every page would publish them.
+assertNoDrafts(content, process.env.NODE_ENV === 'production')
 
 /** All post metadata, newest first. */
 export function getAllPosts(): PostMeta[] {
