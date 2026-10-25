@@ -246,6 +246,12 @@ describe('not found', () => {
     expect(html).toContain('href="#main"')
   })
 
+  it('has a tape deck that says it needs JavaScript', async () => {
+    const html = await renderServer(<notFoundPage.default />)
+    expect(html).toContain('404 blues')
+    expect(html).toContain('Turn on JavaScript to play the tapes.')
+  })
+
   it('leaves the shell to the (site) layout for a missing post', async () => {
     const html = await renderServer(<siteNotFound.default />)
     expect(html).toContain('404')

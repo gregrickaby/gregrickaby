@@ -1,0 +1,45 @@
+@layer components {
+  /*
+   * A pixel frame, lit up while a tape plays. Four box shadows draw the border
+   * one pixel step outside the box, which leaves the corners notched.
+   */
+  .radio {
+    --frame: var(--border);
+
+    background: var(--surface-card);
+    box-shadow:
+      0 -4px 0 var(--frame),
+      0 4px 0 var(--frame),
+      -4px 0 0 var(--frame),
+      4px 0 0 var(--frame);
+    box-sizing: border-box;
+    display: grid;
+    gap: var(--space-3);
+    margin-inline: auto;
+    max-width: 32rem;
+    padding: var(--space-4);
+    text-align: start;
+    width: calc(100% - 8px);
+
+    &:has([data-playing]) {
+      --frame: var(--accent);
+    }
+  }
+
+  .noscript {
+    display: none;
+  }
+
+  @media (scripting: none) {
+    .noscript {
+      color: var(--text-2);
+      display: block;
+      font-family: var(--font-pixel);
+      font-size: var(--label-size);
+      letter-spacing: var(--label-tracking);
+      margin: 0;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  }
+}
