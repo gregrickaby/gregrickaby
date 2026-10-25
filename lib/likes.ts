@@ -14,6 +14,17 @@ import { MAX_LIKES } from './site'
 const DB_PATH = process.env.LIKES_DB_PATH || '.data/likes.db'
 
 let db: DatabaseSync | undefined
+let warnedAboutSalt = false
+
+/**
+ * Says so once when production has no salt. A missing environment variable
+ * weakens every hash, but it should not take the site down.
+ */
+function warnIfUnsalted(): void {
+  if (warnedAboutSalt || process.env.NODE_ENV !== 'production' || process.env.LIKES_SALT) return
+  warnedAboutSalt = true
+  console.warn('LIKES_SALT is not set: visitor hashes are unsalted. Set it in production.')
+}
 
 /**
  * Opens the database on first use. One row per visitor per post, with how
@@ -21,6 +32,7 @@ let db: DatabaseSync | undefined
  * the `times` column, so their existing likes count once.
  */
 function getDb(): DatabaseSync {
+  warnIfUnsalted()
   if (db) return db
   mkdirSync(dirname(DB_PATH), { recursive: true })
   db = new DatabaseSync(DB_PATH)
