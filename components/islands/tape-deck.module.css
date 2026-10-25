@@ -164,8 +164,10 @@
     }
   }
 
+  /* The track list and the knob's caption need scripts, like the controls. */
   @media (scripting: none) {
-    .tracks {
+    .tracks,
+    .caption {
       display: none;
     }
   }

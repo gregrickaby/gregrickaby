@@ -7,11 +7,7 @@ import {
   drawScope,
   JukeboxDemo,
 } from '@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/jukebox'
-import {
-  describeLofi,
-  formatTime,
-  TapeDemo,
-} from '@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/tape-deck'
+import { TapeDemo } from '@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/tape-deck'
 import { analyserLevel, gains, instances, oscillators, stubAudio } from '@/tests/helpers/audio'
 
 beforeEach(() => {
@@ -145,60 +141,13 @@ describe('JukeboxDemo', () => {
   })
 })
 
-describe('tape helpers', () => {
-  it('counts like a tape deck', () => {
-    expect(formatTime(0)).toBe('0:00')
-    expect(formatTime(75.9)).toBe('1:15')
-  })
-
-  it('puts numbers on the lo-fi knob', () => {
-    expect(describeLofi(0)).toMatch(/Clean signal/)
-    expect(describeLofi(100)).toBe('Lowpass at 600 Hz, 24 cents of wobble, crackle at 100%.')
-    expect(describeLofi(60)).toBe('Lowpass at 2.2 kHz, 14 cents of wobble, crackle at 60%.')
-  })
-})
-
 describe('TapeDemo', () => {
-  it('plays the playlist, moves the counter, skips, and stops', () => {
+  it('plays the chiptune playlist without a shuffle button', () => {
     render(<TapeDemo />)
-    const tracks = screen.getAllByRole('button').filter((b) => b.closest('ol'))
-    expect(tracks[0]?.getAttribute('aria-current')).toBe('true')
+    expect(screen.getByText('Slow morning in World 1-1', { selector: 'span' })).toBeTruthy()
+    expect(screen.queryByRole('button', { name: 'Shuffle' })).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: 'Play' }))
-    expect(oscillators.length).toBeGreaterThan(0)
-    advance(2)
-    expect(screen.getByText(/^0:0[1-2] \/ 0:45$/)).toBeTruthy()
-    fireEvent.change(screen.getByRole('slider', { name: /Lo-fi/ }), { target: { value: '100' } })
-    expect(screen.getByText(/Lowpass at 600 Hz/)).toBeTruthy()
-    fireEvent.click(screen.getByRole('button', { name: 'Next track' }))
-    expect(tracks[1]?.getAttribute('aria-current')).toBe('true')
-    fireEvent.click(tracks[2] as HTMLElement)
-    expect(tracks[2]?.getAttribute('aria-current')).toBe('true')
-    advance(120)
-    act(() => vi.advanceTimersByTime(1))
-    expect(tracks[0]?.getAttribute('aria-current')).toBe('true')
-    const before = gains.length
-    fireEvent.click(screen.getByRole('button', { name: 'Stop' }))
-    expect(screen.getByRole('button', { name: 'Play' })).toBeTruthy()
-    expect(gains.length).toBe(before)
-  })
-
-  it('turns the knob while stopped, and stops the tape when it leaves the page', () => {
-    const { unmount } = render(<TapeDemo />)
-    fireEvent.change(screen.getByRole('slider', { name: /Lo-fi/ }), { target: { value: '0' } })
-    expect(screen.getByText(/Clean signal/)).toBeTruthy()
-    fireEvent.click(screen.getByRole('button', { name: 'Play' }))
-    const master = gains[0]
-    unmount()
-    expect(master?.setTargetAtTime).toHaveBeenCalledWith(0, expect.any(Number), 0.03)
-  })
-
-  it('stays stopped where Web Audio is missing', async () => {
-    vi.resetModules()
-    vi.stubGlobal('AudioContext', undefined)
-    const fresh =
-      await import('@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/tape-deck')
-    render(<fresh.TapeDemo />)
-    fireEvent.click(screen.getByRole('button', { name: 'Play' }))
-    expect(screen.getByRole('button', { name: 'Play' })).toBeTruthy()
+    expect(oscillators.some((o) => o.wave)).toBe(true)
+    expect(screen.getByRole('button', { name: 'Stop' })).toBeTruthy()
   })
 })

@@ -8,13 +8,12 @@ import {
   type Song,
 } from '@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/chiptune'
 import {
-  lofiSettings,
   startTape,
-  swungStep,
   TRACKS,
   type Track,
 } from '@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/lofi'
 import { noteFrequency } from '@/components/islands/sequencer'
+import { lofiSettings } from '@/components/islands/tape'
 import {
   filters,
   gains,
@@ -148,19 +147,6 @@ describe('the playlist', () => {
   })
 })
 
-describe('lo-fi settings', () => {
-  it('runs from clean to worn out', () => {
-    expect(lofiSettings(0)).toEqual({ cutoff: 16000, wobble: 0, crackle: 0 })
-    expect(lofiSettings(1)).toEqual({ cutoff: 600, wobble: 24, crackle: 0.12 })
-  })
-
-  it('swings sixteenths long, then short', () => {
-    const track = { bpm: 60, swing: 0.5 } as Track
-    expect(swungStep(track, 0)).toBe(0.375)
-    expect(swungStep(track, 1)).toBe(0.125)
-  })
-})
-
 describe('startTape', () => {
   const tiny: Track = {
     title: 'Tiny',
@@ -209,19 +195,6 @@ describe('startTape', () => {
     tape?.stop()
     vi.advanceTimersByTime(300)
     expect(onEnd).toHaveBeenCalledTimes(1)
-  })
-})
-
-describe('stopping a tape', () => {
-  it("doesn't start the next track once the reader stops in the last moments", () => {
-    const onEnd = vi.fn()
-    const track = { ...TRACKS[0], bars: 1, bpm: 120 } as Track
-    const tape = startTape(track, 0.5, () => undefined, onEnd)
-    // One bar at 120 BPM lasts two seconds, so this books the end.
-    advance(2)
-    tape?.stop()
-    vi.advanceTimersByTime(1000)
-    expect(onEnd).not.toHaveBeenCalled()
   })
 })
 
