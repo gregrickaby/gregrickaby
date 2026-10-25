@@ -58,7 +58,7 @@ const eslintConfig = defineConfig([
   {
     // Next.js route files and tool configs are loaded by their default export.
     files: [
-      'app/**/{page,layout,template,default,error,global-error,not-found,opengraph-image,icon,sitemap,robots,manifest}.{ts,tsx}',
+      'app/**/{page,layout,template,default,error,global-error,not-found,opengraph-image,icon,sitemap,manifest}.{ts,tsx}',
       '*.config.ts',
       'stylelint/**/*.ts',
     ],
