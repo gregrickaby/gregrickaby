@@ -38,6 +38,15 @@ describe('headers', () => {
     })
   })
 
+  it('repeats the robots.txt content signals on every response', async () => {
+    vi.resetModules()
+    const { headers } = await import('@/lib/headers')
+    expect(headers[0]!.headers).toContainEqual({
+      key: 'Content-Signal',
+      value: 'search=yes, ai-input=yes, ai-train=no',
+    })
+  })
+
   it('sets long-lived caching on static asset paths', async () => {
     vi.resetModules()
     const { headers } = await import('@/lib/headers')
