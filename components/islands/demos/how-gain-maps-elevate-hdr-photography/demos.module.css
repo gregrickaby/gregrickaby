@@ -1,0 +1,310 @@
+@layer components {
+  .checks {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+  }
+
+  .check {
+    align-items: baseline;
+    display: flex;
+    gap: var(--space-3);
+    justify-content: space-between;
+  }
+
+  .checkLabel {
+    color: var(--text-2);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    text-transform: uppercase;
+  }
+
+  .checkValue {
+    background: var(--danger-soft);
+    border-radius: var(--radius-pill);
+    color: var(--danger);
+    font-size: var(--step-minus-1);
+    font-weight: 600;
+    margin: 0;
+    padding: 0 var(--space-3);
+
+    &[data-ok] {
+      background: var(--success-soft);
+      color: var(--success);
+    }
+
+    /* While the browser answers: a gray pill with a blinking 8-bit ellipsis. */
+    &[data-pending] {
+      background: var(--surface-card);
+      color: var(--text-2);
+
+      &::after {
+        animation: dots 1.2s steps(1, end) infinite;
+        content: '...';
+        display: inline-block;
+        font-family: var(--font-mono);
+        line-height: 1;
+        vertical-align: baseline;
+        width: 3ch;
+      }
+    }
+  }
+
+  /* Reveals the dots one at a time without changing the pill's width. */
+  @keyframes dots {
+    0% {
+      clip-path: inset(0 3ch 0 0);
+    }
+
+    25% {
+      clip-path: inset(0 2ch 0 0);
+    }
+
+    50% {
+      clip-path: inset(0 1ch 0 0);
+    }
+
+    75% {
+      clip-path: inset(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .checkValue[data-pending]::after {
+      animation: none;
+    }
+  }
+
+  /* Two photos stacked; the top one (HDR) is clipped to the right of the divider. Every photo
+     shares the 3:2 frame, so switching never changes the height. */
+  .wipe {
+    aspect-ratio: 3 / 2;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .photo {
+    display: block;
+    height: 100%;
+    inset: 0;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+  }
+
+  .divider {
+    background: var(--surface-page);
+    box-shadow: 0 0 0 1px var(--accent);
+    inset-block: 0;
+    pointer-events: none;
+    position: absolute;
+    translate: -50% 0;
+    width: 2px;
+  }
+
+  .tag {
+    background: var(--surface-page);
+    border-radius: var(--radius-pill);
+    color: var(--text-1);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    inset-block-start: var(--space-2);
+    letter-spacing: var(--label-tracking);
+    padding: 0 var(--space-2);
+    pointer-events: none;
+    position: absolute;
+
+    &[data-side='sdr'] {
+      inset-inline-start: var(--space-2);
+    }
+
+    &[data-side='hdr'] {
+      inset-inline-end: var(--space-2);
+    }
+  }
+
+  /* An invisible range input over the whole photo, so dragging anywhere moves the divider. */
+  .handle {
+    cursor: ew-resize;
+    height: 100%;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .wipe:has(.handle:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Captions that take turns sit in one grid cell, so the slot fits the longest one. */
+  .notes {
+    display: grid;
+  }
+
+  .note {
+    display: grid;
+    gap: var(--space-2);
+    grid-area: 1 / 1;
+    visibility: hidden;
+
+    &[data-active] {
+      visibility: visible;
+    }
+  }
+
+  /* The color space chart, on the same dark background as the headroom chart. The canvas paints
+     the colors and the SVG on top draws the lines. */
+  .gamut {
+    background: var(--night);
+    border-radius: var(--radius-1);
+    display: grid;
+    padding: var(--space-4);
+    place-items: center;
+    position: relative;
+  }
+
+  .diagram {
+    aspect-ratio: 8 / 9;
+    position: relative;
+    width: min(100%, 22rem);
+  }
+
+  .layer {
+    display: block;
+    height: 100%;
+    inset: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  /* Dims the colors outside the picked triangle. */
+  .mask {
+    fill: var(--night);
+    fill-opacity: 0.75;
+    fill-rule: evenodd;
+  }
+
+  .locus,
+  .triangle {
+    fill: none;
+    stroke: var(--night-text);
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .locus {
+    stroke-width: 1;
+  }
+
+  .triangle {
+    stroke-dasharray: 4 4;
+    stroke-opacity: 0.6;
+    stroke-width: 1;
+
+    &[data-active] {
+      stroke: var(--night-glow);
+      stroke-dasharray: none;
+      stroke-opacity: 1;
+      stroke-width: 2;
+    }
+  }
+
+  /* The headroom chart: a dark room, so a line above white can glow. `--glow` runs from 0 to 1. */
+  .chart {
+    background: var(--night);
+    border-radius: var(--radius-1);
+    overflow: hidden;
+  }
+
+  /* The left margin holds the tick labels. */
+  .plotArea {
+    height: 12rem;
+    margin: var(--space-4) var(--space-3) var(--space-5) 3.75rem;
+    position: relative;
+  }
+
+  .tick,
+  .limitLabel {
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    line-height: 1;
+    position: absolute;
+    text-transform: uppercase;
+  }
+
+  .tick {
+    color: var(--night-text);
+    inset-inline-end: calc(100% + var(--space-2));
+    translate: 0 -50%;
+  }
+
+  .limitLabel {
+    color: var(--tomato-5);
+    inset-inline-end: 0;
+    translate: 0 calc(-100% - var(--space-1));
+  }
+
+  .lines {
+    display: block;
+    height: 100%;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .grid,
+  .white,
+  .trace,
+  .glow,
+  .limit {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .grid {
+    stroke: var(--night-text);
+    stroke-dasharray: 2 4;
+    stroke-opacity: 0.3;
+    stroke-width: 1;
+  }
+
+  .white {
+    stroke: var(--night-text);
+    stroke-width: 1;
+  }
+
+  .trace {
+    stroke: var(--night-text);
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+
+  /* The part of the line above white, brighter and blurrier as the gain map kicks in. */
+  .glow {
+    filter: drop-shadow(0 0 calc(var(--glow) * 4px) var(--night-glow))
+      drop-shadow(0 0 calc(var(--glow) * 10px) var(--tomato-4));
+    stroke: color-mix(in oklab, var(--tomato-4), var(--night-glow) calc(var(--glow) * 100%));
+    stroke-linejoin: round;
+    stroke-width: calc(1.5px + var(--glow) * 1.5px);
+  }
+
+  .limit {
+    stroke: var(--tomato-5);
+    stroke-dasharray: 6 4;
+    stroke-width: 1.5;
+  }
+
+  @media (scripting: none) {
+    .handle,
+    .divider {
+      display: none;
+    }
+  }
+}
