@@ -15,6 +15,15 @@
     }
   }
 
+  /* A demo stays in the text column until there's room on both sides for the frame and its
+     badge. */
+  @media (width < 60rem) {
+    .demo:global(.alignwide) {
+      margin-inline-start: 0;
+      width: auto;
+    }
+  }
+
   /* A round badge on the frame's left edge, like a callout's, with a pixel gamepad. */
   .badge {
     background: var(--accent-fill);
