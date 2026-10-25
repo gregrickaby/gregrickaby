@@ -30,6 +30,7 @@ Check for:
 - **Without JavaScript:** pages, links, search, and likes still work.
 - **Security:** unsanitized HTML, JSON-LD not through `serializeSchema`, CSP or header regressions.
 - **Conventions and prose:** naming, comments, tests, and the writing rules in `docs/code-standards.md`.
+- **E2E specs:** CI runs them, not you, so grep `e2e/` for every title, heading, label, selector, and file name the diff changed or moved, and update the specs that depend on them.
 - **Leftovers:** images, modules, styles, or tests nothing references after the diff (grep for the file name). Delete them.
 
 Tag each finding **Blocker**, **Suggestion**, or **Nit**, and fix it. Leave one unfixed only for a good reason and say why. Take anything that's the user's call (a design choice, a waiver) to them as a **Question** instead of guessing.
