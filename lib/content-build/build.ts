@@ -3,7 +3,7 @@ import { join } from 'node:path'
 import matter from 'gray-matter'
 import { imageSize } from 'image-size'
 
-import type { ContentIndex, ImageAsset, Post, PostMeta } from '../types.ts'
+import type { ContentIndex, ImageAsset, KnownPaths, Post, PostMeta } from '../types.ts'
 import { renderMarkdown, type MeasuredImage } from './markdown.ts'
 import { comparePhotos, hasGainMap, readPhoto } from './photos.ts'
 import { buildPostMarkdown } from './post-markdown.ts'
@@ -47,6 +47,12 @@ export interface BuiltContent {
   index: ContentIndex
   /** Each post's Markdown copy, keyed by slug. */
   markdown: Record<string, string>
+  /** What has a page, so Proxy can send everything else to the 404 page. */
+  paths: KnownPaths
+}
+
+function lowercaseNames(posts: Post[], pick: (meta: PostMeta) => string[] | undefined): string[] {
+  return [...new Set(posts.flatMap((p) => pick(p.meta) ?? []).map((n) => n.toLowerCase()))].sort()
 }
 
 /**
@@ -58,7 +64,7 @@ export interface BuiltContent {
  * @param options - `drafts` keeps entries marked `draft: true`, for previews
  *   in development. Builds leave them out, so they never publish.
  *   `demoTitles` names each post's demos in its Markdown copy, keyed by slug.
- * @returns The content index and each post's Markdown copy.
+ * @returns The content index, each post's Markdown copy, and the known paths.
  */
 export async function buildContent(
   publicDir: string,
@@ -144,5 +150,11 @@ export async function buildContent(
     await Promise.all(photoFiles.map((f) => readPhoto(readFileSync(join(photosDir, f)), f)))
   ).sort(comparePhotos)
 
-  return { index: { generatedAt: now.toISOString(), posts, pages, photos }, markdown }
+  const paths: KnownPaths = {
+    posts: posts.map((p) => p.meta.slug),
+    tags: lowercaseNames(posts, (meta) => meta.tags),
+    categories: lowercaseNames(posts, (meta) => meta.categories),
+  }
+
+  return { index: { generatedAt: now.toISOString(), posts, pages, photos }, markdown, paths }
 }
