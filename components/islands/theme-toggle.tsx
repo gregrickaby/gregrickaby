@@ -27,7 +27,7 @@ export function ThemeToggle() {
     const next = current === 'dark' ? 'light' : 'dark'
     root.dataset.theme = next
     playSound(next === 'dark' ? 'switch-off' : 'switch-on')
-    document.cookie = `${THEME_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax`
+    document.cookie = `${THEME_COOKIE}=${next}; path=/; max-age=31536000; samesite=lax; secure`
     // Spins in the icon that appears. Cleared when the animation ends, so hover boops resume.
     event.currentTarget.dataset.switched = ''
   }

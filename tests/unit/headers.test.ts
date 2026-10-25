@@ -56,4 +56,17 @@ describe('headers', () => {
       value: 'public, max-age=31536000, immutable',
     })
   })
+
+  it('sends the security headers the edge transform also writes', async () => {
+    vi.resetModules()
+    const { headers } = await import('@/lib/headers')
+    expect(headers[0]!.headers).toEqual(
+      expect.arrayContaining([
+        { key: 'Referrer-Policy', value: 'same-origin' },
+        { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
+        { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
+        { key: 'X-Permitted-Cross-Domain-Policies', value: 'none' },
+      ]),
+    )
+  })
 })
