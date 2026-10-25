@@ -1,11 +1,6 @@
-import {
-  noteAt,
-  noteFrequency,
-  parseLane,
-  startSequencer,
-  toneAt,
-} from '@/components/islands/sequencer'
-import { getContext, noiseBuffer } from '@/components/islands/sounds'
+import { noteAt, noteFrequency, parseLane, toneAt } from '@/components/islands/sequencer'
+import { noiseBuffer } from '@/components/islands/sounds'
+import { playTape, type StartTape, type TapeTrack } from '@/components/islands/tape'
 
 import { pulseTerms } from './chiptune'
 
@@ -17,14 +12,9 @@ export type Duty = 0.125 | 0.25 | 0.5
  * tape. Pulse 1 plays the lead, pulse 2 breaks each bar's chord into an
  * arpeggio, the triangle plays bass, and the noise channel plays the drums.
  * The lanes are 16-step bars that loop on their own, so a one-bar drum beat
- * runs under an eight-bar lead. `swing` stretches each on-beat sixteenth and
- * shortens the next.
+ * runs under an eight-bar lead.
  */
-export interface Track {
-  title: string
-  bpm: number
-  swing: number
-  bars: number
+export interface Track extends TapeTrack {
   chords: readonly string[]
   /** Break each chord into eighth notes, or roll through it every sixteenth. */
   comp: 'eighths' | 'sixteenths'
@@ -37,8 +27,6 @@ export interface Track {
   hat: string
   /** The snare's grit and length: a fat snare or a rim click. */
   snareTone: readonly [grit: number, seconds: number]
-  /** What plays under the music. */
-  texture: 'vinyl' | 'rain'
 }
 
 const REST = '. . . . . . . . . . . . . . . .'
@@ -146,177 +134,71 @@ const LEVELS = { lead: 0.05, chord: 0.03, bass: 0.14 }
 const KICK = [24, 0.12, 0.09] as const
 const HAT = [1, 0.03, 0.025] as const
 
-/** How a lo-fi amount from 0 (clean) to 1 (worn-out tape) sets each effect. */
-export function lofiSettings(amount: number): { cutoff: number; wobble: number; crackle: number } {
-  return {
-    cutoff: Math.round(16000 * (600 / 16000) ** amount),
-    wobble: Math.round(amount * 24),
-    crackle: amount * 0.12,
-  }
-}
-
-/** Seconds a sixteenth note lasts, with swing: long on the beat, short off it. */
-export function swungStep(track: Track, step: number): number {
-  const straight = 60 / track.bpm / 4
-  return straight * (step % 2 === 0 ? 1 + track.swing : 1 - track.swing)
-}
-
 /**
- * Three seconds of record noise: a faint hiss with a pop every so often. The
- * pops come from a seeded generator, so every play crackles the same way.
+ * Plays a chiptune track through the tape's lo-fi chain until stopped.
+ * Returns undefined where Web Audio is missing.
  */
-function crackleBuffer(audio: AudioContext): AudioBuffer {
-  const buffer = audio.createBuffer(1, audio.sampleRate * 3, audio.sampleRate)
-  const data = buffer.getChannelData(0)
-  let seed = 11
-  function random() {
-    seed = (seed * 16807) % 2147483647
-    return seed / 2147483647
-  }
-  let pop = 0
-  for (let i = 0; i < data.length; i++) {
-    if (random() < 0.0003) pop = (random() * 2 - 1) * 0.9
-    data[i] = (random() * 2 - 1) * 0.015 + pop
-    pop *= 0.6
-  }
-  return buffer
-}
+export const startTape: StartTape<Track> = (track, lofi, onStep, onEnd) =>
+  playTape(track, lofi, onStep, onEnd, ({ audio, bend, filter }) => {
+    const lanes = {
+      bass: parseLane(track.bass),
+      lead: parseLane(track.lead),
+      kick: parseLane([track.kick]),
+      snare: parseLane([track.snare]),
+      hat: parseLane([track.hat]),
+    }
+    const chords = track.chords.map((chord) =>
+      chord.split(' ').flatMap((name) => noteFrequency(name) ?? []),
+    )
+    const barSeconds = 16 * (60 / track.bpm / 4)
 
-/** A track that's playing, with the lo-fi knob still live. */
-export interface Tape {
-  now: () => number
-  setLofi: (amount: number) => void
-  stop: () => void
-}
+    /** A pulse channel's wave, built from its harmonics like the jukebox's. */
+    function pulseWave(duty: Duty): PeriodicWave {
+      const { imag, real } = pulseTerms(duty)
+      return audio.createPeriodicWave(real, imag)
+    }
 
-/**
- * Plays a track through a lo-fi chain until stopped: everything runs through
- * a lowpass filter, a slow wobble bends every note like a stretched tape, and a
- * crackle loop plays on top. `onStep` hears each sixteenth note and its
- * audio-clock time; `onEnd` runs when the track's last bar finishes. Returns
- * undefined where Web Audio is missing.
- */
-export function startTape(
-  track: Track,
-  lofi: number,
-  onStep: (step: number, time: number) => void,
-  onEnd: () => void,
-): Tape | undefined {
-  const context = getContext()
-  if (!context) return undefined
-  const audio = context
-  const settings = lofiSettings(lofi)
+    const leadWave = pulseWave(track.leadDuty)
+    const chordWave = pulseWave(track.chordDuty)
 
-  const master = audio.createGain()
-  master.gain.value = 0.9
-  master.connect(audio.destination)
+    /**
+     * One note on a pulse wave, or on the triangle without one, bent by the
+     * tape wobble. The volume drops a little after the attack, like the jukebox.
+     */
+    function playTone(
+      wave: PeriodicWave | undefined,
+      hz: number,
+      time: number,
+      seconds: number,
+      level: number,
+    ) {
+      const oscillator = audio.createOscillator()
+      if (wave) oscillator.setPeriodicWave(wave)
+      else oscillator.type = 'triangle'
+      oscillator.frequency.value = hz
+      bend(oscillator)
+      const gain = audio.createGain()
+      gain.gain.setValueAtTime(level, time)
+      gain.gain.setTargetAtTime(level * 0.6, time, 0.1)
+      gain.gain.setTargetAtTime(0, time + seconds - 0.02, 0.01)
+      oscillator.connect(gain).connect(filter)
+      oscillator.start(time)
+      oscillator.stop(time + seconds + 0.05)
+    }
 
-  const filter = audio.createBiquadFilter()
-  filter.type = 'lowpass'
-  filter.frequency.value = settings.cutoff
-  filter.connect(master)
+    /** A drum from the noise channel: grit, length, and loudness. */
+    function playDrum([grit, seconds, level]: readonly [number, number, number], time: number) {
+      const source = audio.createBufferSource()
+      source.buffer = noiseBuffer(audio, grit)
+      const gain = audio.createGain()
+      gain.gain.setValueAtTime(level, time)
+      gain.gain.exponentialRampToValueAtTime(0.001, time + seconds)
+      source.connect(gain).connect(filter)
+      source.start(time)
+      source.stop(time + seconds)
+    }
 
-  const wobble = audio.createOscillator()
-  wobble.frequency.value = 0.45
-  const depth = audio.createGain()
-  depth.gain.value = settings.wobble
-  wobble.connect(depth)
-  wobble.start()
-
-  // Vinyl is the crackle loop. Rain is noise through a bandpass filter, with
-  // the crackle under it for the drops.
-  const crackle = audio.createBufferSource()
-  crackle.buffer = crackleBuffer(audio)
-  crackle.loop = true
-  const crackleLevel = audio.createGain()
-  crackleLevel.gain.value = settings.crackle
-  crackle.connect(crackleLevel).connect(master)
-  crackle.start()
-  const rain = audio.createBufferSource()
-  rain.buffer = noiseBuffer(audio, 1)
-  rain.loop = true
-  const rainBand = audio.createBiquadFilter()
-  rainBand.type = 'bandpass'
-  rainBand.frequency.value = 1400
-  const rainLevel = audio.createGain()
-  rainLevel.gain.value = track.texture === 'rain' ? settings.crackle * 0.5 : 0
-  rain.connect(rainBand).connect(rainLevel).connect(master)
-  rain.start()
-
-  const lanes = {
-    bass: parseLane(track.bass),
-    lead: parseLane(track.lead),
-    kick: parseLane([track.kick]),
-    snare: parseLane([track.snare]),
-    hat: parseLane([track.hat]),
-  }
-  const chords = track.chords.map((chord) =>
-    chord.split(' ').flatMap((name) => noteFrequency(name) ?? []),
-  )
-  const totalSteps = track.bars * 16
-  const barSeconds = 16 * (60 / track.bpm / 4)
-
-  /** A pulse channel's wave, built from its harmonics like the jukebox's. */
-  function pulseWave(duty: Duty): PeriodicWave {
-    const { imag, real } = pulseTerms(duty)
-    return audio.createPeriodicWave(real, imag)
-  }
-
-  const leadWave = pulseWave(track.leadDuty)
-  const chordWave = pulseWave(track.chordDuty)
-
-  /**
-   * One note on a pulse wave, or on the triangle without one, bent by the
-   * tape wobble. The volume drops a little after the attack, like the jukebox.
-   */
-  function playTone(
-    wave: PeriodicWave | undefined,
-    hz: number,
-    time: number,
-    seconds: number,
-    level: number,
-  ) {
-    const oscillator = audio.createOscillator()
-    if (wave) oscillator.setPeriodicWave(wave)
-    else oscillator.type = 'triangle'
-    oscillator.frequency.value = hz
-    depth.connect(oscillator.detune)
-    // The wobble never stops, so its link would keep every finished note alive.
-    oscillator.onended = () => depth.disconnect(oscillator.detune)
-    const gain = audio.createGain()
-    gain.gain.setValueAtTime(level, time)
-    gain.gain.setTargetAtTime(level * 0.6, time, 0.1)
-    gain.gain.setTargetAtTime(0, time + seconds - 0.02, 0.01)
-    oscillator.connect(gain).connect(filter)
-    oscillator.start(time)
-    oscillator.stop(time + seconds + 0.05)
-  }
-
-  /** A drum from the noise channel: grit, length, and loudness. */
-  function playDrum([grit, seconds, level]: readonly [number, number, number], time: number) {
-    const source = audio.createBufferSource()
-    source.buffer = noiseBuffer(audio, grit)
-    const gain = audio.createGain()
-    gain.gain.setValueAtTime(level, time)
-    gain.gain.exponentialRampToValueAtTime(0.001, time + seconds)
-    source.connect(gain).connect(filter)
-    source.start(time)
-    source.stop(time + seconds)
-  }
-
-  let ending: ReturnType<typeof setTimeout> | undefined
-
-  const stopSequencer = startSequencer(
-    audio,
-    (step) => swungStep(track, step),
-    (step, time) => {
-      if (step >= totalSteps) {
-        if (step === totalSteps) {
-          ending = setTimeout(onEnd, Math.max(0, time - audio.currentTime) * 1000)
-        }
-        return
-      }
-      onStep(step, time)
+    return (step, time) => {
       // The modulo always lands on a chord; the array type allows undefined.
       /* v8 ignore next */
       const chord = chords[Math.floor(step / 16) % chords.length] ?? []
@@ -334,31 +216,5 @@ export function startTape(
       if (noteAt(lanes.kick, step)) playDrum(KICK, time)
       if (noteAt(lanes.snare, step)) playDrum([...track.snareTone, 0.05], time)
       if (noteAt(lanes.hat, step)) playDrum(HAT, time)
-    },
-  )
-
-  return {
-    now: () => audio.currentTime,
-    setLofi(amount) {
-      const next = lofiSettings(amount)
-      filter.frequency.setTargetAtTime(next.cutoff, audio.currentTime, 0.05)
-      depth.gain.setTargetAtTime(next.wobble, audio.currentTime, 0.05)
-      crackleLevel.gain.setTargetAtTime(next.crackle, audio.currentTime, 0.05)
-      if (track.texture === 'rain') {
-        rainLevel.gain.setTargetAtTime(next.crackle * 0.5, audio.currentTime, 0.05)
-      }
-    },
-    stop() {
-      stopSequencer()
-      // A track stopped in its last moments shouldn't start the next one.
-      clearTimeout(ending)
-      master.gain.setTargetAtTime(0, audio.currentTime, 0.03)
-      setTimeout(() => {
-        wobble.stop()
-        crackle.stop()
-        rain.stop()
-        master.disconnect()
-      }, 300)
-    },
-  }
-}
+    }
+  })
