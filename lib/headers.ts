@@ -1,3 +1,5 @@
+import { CONTENT_SIGNAL } from './content-signal'
+
 /**
  * Content-Security-Policy value. `unsafe-inline` is required for script-src
  * (JSON-LD `<script>` tags and the root layout's theme script) and style-src
@@ -43,6 +45,9 @@ export const headers = [
       { key: 'Content-Security-Policy', value: contentSecurityPolicy },
       // Points agents at the llms.txt index of the site's Markdown copies.
       { key: 'Link', value: '</llms.txt>; rel="describedby"' },
+      // Cloudflare's Markdown for Agents otherwise stamps its permissive default
+      // on converted responses; this keeps them in line with robots.txt.
+      { key: 'Content-Signal', value: CONTENT_SIGNAL },
     ],
   },
   {
