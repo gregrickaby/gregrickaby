@@ -9,14 +9,14 @@ Group the uncommitted work into micro commits, push the branch, and open a pull 
 
 ## Steps
 
-1. `git status --short && git diff --stat HEAD`. Stop if a merge or rebase is in progress, or if `code-review` ended with `Ready to commit: no`. On `main`, create `<type>/<short-slug>` first.
+1. `git status --short && git diff --stat HEAD`. Stop if a merge or rebase is in progress, or if `code-review` ended with `Ready to commit: no`. On `main`, or on a branch whose pull request already merged (`gh pr view --json state -q .state` prints `MERGED`), run `git fetch origin main && git switch -c <type>/<short-slug> origin/main` first; the uncommitted work comes along.
 2. Group from what you already know: each commit is one change a reviewer could revert. Tests go with their code, `package-lock.json` with `package.json`, and each post's content on its own. A file with two changes goes in the commit of its main one. Read a file's diff only if you don't know what changed in it. Never force-add gitignored files.
 3. Commit each group with `git add <paths> && git commit -m "<subject>"`. Let the lefthook hooks run (never `--no-verify`). If a hook fails, fix it and retry once; otherwise stop and report.
-4. Push, then open the pull request unless the branch already has one:
+4. Push, then open the pull request unless the branch already has an open one:
 
 ```bash
 git push -u origin HEAD
-gh pr view --json url -q .url 2>/dev/null || {
+[ "$(gh pr view --json state -q .state 2>/dev/null)" = OPEN ] || {
   gh pr create --base main --title "<main commit subject>" --body "<one line per commit>"
   gh pr merge --auto --rebase --delete-branch
 }
