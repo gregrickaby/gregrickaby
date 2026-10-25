@@ -1,6 +1,5 @@
 import Link from 'next/link'
 
-import { Sidebar } from '@/components/islands/sidebar'
 import { SoundNav } from '@/components/islands/sound-nav'
 import { TableOfContents } from '@/components/islands/table-of-contents'
 import { MetaLine } from '@/components/meta-line'
@@ -61,12 +60,12 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
       {meta.type === 'post' ? (
         <div className={styles.body}>
           <aside className={styles.aside}>
-            <Sidebar className={styles.sidebar}>
+            <div className={styles.sidebar}>
               {headings.length > 0 ? <TableOfContents headings={headings} /> : null}
               <div className={styles.sideActions}>
                 <PostActions meta={meta} />
               </div>
-            </Sidebar>
+            </div>
           </aside>
           <Prose html={html} slug={meta.slug} />
           {/* The narrow-screen copy, after the body so focus order matches what readers see. */}
