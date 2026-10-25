@@ -9,7 +9,7 @@ const NOTE_COLORS = ['accent', 'info', 'success'] as const
  * doesn't list renders nothing. Without JavaScript the frame keeps any
  * pictures and says the controls need scripts. A pixel gamepad badge sits on
  * the frame's edge, and while a demo plays (any child with `data-playing`)
- * it hops and spits out notes.
+ * it hops and spits out notes. Every demo is as wide as a wide image.
  */
 export function Demo({ name, slug }: { name: string; slug: string }) {
   const demos = POST_DEMOS[slug]
@@ -17,7 +17,7 @@ export function Demo({ name, slug }: { name: string; slug: string }) {
   if (!demo) return null
   const { title, Body } = demo
   return (
-    <section aria-label={title} className={styles.demo}>
+    <section aria-label={title} className={`${styles.demo} alignwide`}>
       <span aria-hidden="true" className={styles.badge}>
         <svg className={styles.gamepad} shapeRendering="crispEdges" viewBox="0 0 16 16">
           <path d="M2 4H14V5H15V11H14V12H10V11H6V12H2V11H1V5H2Z" />

@@ -212,9 +212,9 @@
 
     /* Wide images break out of the text column. */
     & .alignwide {
-      margin-inline-start: calc(50% - min(var(--wide) / 2, 50vw));
+      margin-inline-start: calc(50% - min(var(--wide-image) / 2, 50vw));
       max-width: none;
-      width: min(var(--wide), 100vw);
+      width: min(var(--wide-image), 100vw);
     }
 
     & .alignfull {

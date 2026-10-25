@@ -71,11 +71,14 @@
       position: relative;
     }
 
-    /* Wide and full-width images undo the shift, so they line up with the hero. */
+    /* Wide images stay centered on the text and reach halfway into the gap on each side, clear of
+       the sidebar. */
     .body :global(.alignwide) {
-      margin-inline-start: calc(50% + var(--shift) - min(var(--wide) / 2, 50vw));
+      margin-inline-start: calc(-0.5 * var(--aside-gap));
+      width: calc(var(--measure) + var(--aside-gap));
     }
 
+    /* Full-width images undo the shift, so they line up with the hero. */
     .body :global(.alignfull) {
       margin-inline-start: calc(50% + var(--shift) - 50vw);
     }
@@ -95,13 +98,6 @@
       inset-block-start: 6rem;
       max-block-size: calc(100dvh - 8rem);
       position: sticky;
-      transition: opacity 0.2s;
-
-      /* Out of the way of a wide image scrolling past, unless a reader is tabbing through it. */
-      &[data-covered]:not(:focus-within) {
-        opacity: 0;
-        pointer-events: none;
-      }
     }
 
     /* A long list scrolls on its own, so the actions stay in view. */

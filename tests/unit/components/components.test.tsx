@@ -152,6 +152,12 @@ describe('Prose', () => {
     expect(html.indexOf('Box body')).toBeLessThan(html.indexOf('After'))
   })
 
+  it('gives every demo the wide image class', async () => {
+    const { Prose } = await import('@/components/prose')
+    const html = await renderServer(<Prose html={'<div data-demo="box"></div>'} slug="post" />)
+    expect(html).toMatch(/aria-label="A box" class="[^"]+ alignwide"/)
+  })
+
   it('renders nothing for a post without demos', async () => {
     const { Prose } = await import('@/components/prose')
     const html = await renderServer(<Prose html={'<div data-demo="box"></div>'} slug="other" />)

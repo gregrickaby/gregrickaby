@@ -45,6 +45,11 @@
     --warning: light-dark(#c45f00, #ffd43b);
     --warning-soft: light-dark(#fff9db, #352d15);
 
+    /* A dark room in both themes, where a line can glow brighter than the page */
+    --night: #12100e;
+    --night-text: #a8a29a;
+    --night-glow: #fff4cc;
+
     /* Type */
     --font-sans: var(--font-roboto), -apple-system, blinkmacsystemfont, 'Segoe UI', sans-serif;
     --font-serif: var(--font-roboto-slab), georgia, serif;
@@ -61,6 +66,9 @@
     --step-3: clamp(1.6rem, 1.2rem + 2vw, 2.6rem);
     --measure: 680px;
     --wide: 1100px;
+
+    /* Wide images in posts: halfway between the text column and --wide. */
+    --wide-image: calc((var(--measure) + var(--wide)) / 2);
     --page: 1200px;
 
     /* Space (4px base) */
