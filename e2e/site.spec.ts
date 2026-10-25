@@ -239,7 +239,7 @@ test.describe('platform', () => {
 })
 
 test.describe('without JavaScript @nojs', () => {
-  test('pages, search, likes, Markdown, and contact links work without scripts @nojs', async ({
+  test('pages, search, likes, Markdown, contact links, and 404s work without scripts @nojs', async ({
     page,
   }) => {
     await page.goto('/the-moons-of-2023')
@@ -264,6 +264,14 @@ test.describe('without JavaScript @nojs', () => {
       'href',
       'mailto:greg@gregrickaby.com',
     )
+
+    for (const path of ['/no-such-post', '/tag/zzz-none']) {
+      const missing = await page.goto(path)
+      expect(missing?.status()).toBe(404)
+      await expect(page.getByRole('heading', { level: 1, name: '404' })).toBeVisible()
+      await expect(page.getByRole('main')).toHaveCount(1)
+      await expect(page.getByRole('banner')).toHaveCount(1)
+    }
   })
 })
 
