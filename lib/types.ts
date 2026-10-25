@@ -82,6 +82,15 @@ export interface ContentIndex {
   photos: Photo[]
 }
 
+/** The post slugs, tags, and categories that have a page, for `proxy.ts`. */
+export interface KnownPaths {
+  posts: string[]
+  /** Lowercase. */
+  tags: string[]
+  /** Lowercase. */
+  categories: string[]
+}
+
 /** One job in the resume timeline. */
 export interface ResumeEntry {
   role: string

@@ -136,11 +136,17 @@ describe('buildContent', () => {
     expect(photos[0]).toMatchObject({ width: 2, height: 1, title: 'B' })
   })
 
+  it('lists the post slugs, tags, and categories that have a page', async () => {
+    const { paths } = await buildContent(root)
+    expect(paths).toEqual({ posts: ['newer', 'older'], tags: ['php'], categories: ['code'] })
+  })
+
   it('returns empty lists when the folders are missing', async () => {
     const empty = mkdtempSync(join(tmpdir(), 'empty-'))
     expect(await buildContent(empty)).toMatchObject({
       index: { posts: [], pages: [], photos: [] },
       markdown: {},
+      paths: { posts: [], tags: [], categories: [] },
     })
     rmSync(empty, { recursive: true, force: true })
   })
