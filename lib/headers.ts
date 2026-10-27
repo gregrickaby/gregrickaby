@@ -1,5 +1,11 @@
 import { CONTENT_SIGNAL } from './content-signal'
 
+function datadogIntake(): string {
+  if (!process.env.DD_APPLICATION_ID || !process.env.DD_CLIENT_TOKEN) return ''
+  const site = process.env.DD_SITE || 'us5.datadoghq.com'
+  return ` https://browser-intake-${site.replace(/\.(?=.*\.)/g, '-')}`
+}
+
 /**
  * Content-Security-Policy value. `unsafe-inline` is required for script-src
  * (JSON-LD `<script>` tags and the root layout's theme script) and style-src
@@ -9,7 +15,9 @@ import { CONTENT_SIGNAL } from './content-signal'
  * `unsafe-eval` is added in development only: React uses `eval()` there to
  * rebuild server error stacks in the browser. `static.cloudflareinsights.com`
  * is Cloudflare's Web Analytics beacon, injected at the edge; its POST goes to
- * same-origin `/cdn-cgi/rum`, already covered by `connect-src 'self'`.
+ * same-origin `/cdn-cgi/rum`, already covered by `connect-src 'self'`. The
+ * Datadog browser SDK posts to its intake host, which `DD_SITE` names; the SDK
+ * is bundled, so `script-src` needs nothing.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -17,7 +25,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self'",
-  "connect-src 'self'",
+  `connect-src 'self'${datadogIntake()}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
