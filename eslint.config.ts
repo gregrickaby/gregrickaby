@@ -111,6 +111,11 @@ const eslintConfig = defineConfig([
     files: ['scripts/**/*.ts'],
     rules: { 'no-console': 'off' },
   },
+  {
+    // The console fallback for anything the logger would send to Datadog.
+    files: ['lib/datadog/server.ts'],
+    rules: { 'no-console': 'off' },
+  },
   globalIgnores([
     '.next/**',
     '.generated/**',

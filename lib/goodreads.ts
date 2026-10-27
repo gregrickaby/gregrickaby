@@ -2,6 +2,7 @@ import 'server-only'
 
 import { cacheLife } from 'next/cache'
 
+import { errorFields, logger } from './datadog/server'
 import { SITE } from './site'
 
 /** A book on Greg's Goodreads "currently-reading" shelf. */
@@ -74,7 +75,7 @@ export async function getCurrentlyReading(): Promise<Book[]> {
     if (!response.ok) throw new Error(`Goodreads responded ${response.status}`)
     return parseShelf(await response.text())
   } catch (error) {
-    console.error('Could not load the Goodreads shelf', error)
+    logger.error('Could not load the Goodreads shelf', errorFields(error))
     return []
   }
 }
