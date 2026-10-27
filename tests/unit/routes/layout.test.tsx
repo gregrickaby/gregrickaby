@@ -14,6 +14,9 @@ vi.mock('next/font/google', () => {
   }
 })
 vi.mock('next/navigation', () => ({ usePathname: () => '/' }))
+vi.mock('@datadog/browser-rum-nextjs', () => ({
+  DatadogAppRouter: () => <span data-datadog-router />,
+}))
 vi.mock('next/form', () => ({
   default: ({ children, ...props }: React.ComponentProps<'form'>) => (
     <form {...props}>{children}</form>
@@ -33,7 +36,7 @@ describe('root layout', () => {
     expect(html).toContain('theme=(light|dark)')
     expect(html).toContain('"@type":"WebSite"')
     expect(html).not.toContain('href="#main"')
-    expect(html).toContain('<body>Page body</body>')
+    expect(html).toContain('<body><span data-datadog-router="true"></span>Page body</body>')
   })
 
   it('sets site metadata', () => {
