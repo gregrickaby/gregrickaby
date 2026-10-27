@@ -31,9 +31,9 @@
   },
   "homepage": "https://gregrickaby.com",
   "dependencies": {
-    "@datadog/browser-logs": "7.16.1",
-    "@datadog/browser-rum-nextjs": "7.16.1",
-    "@datadog/browser-rum-slim": "7.16.1",
+    "@datadog/browser-logs": "7.16.2",
+    "@datadog/browser-rum-nextjs": "7.16.2",
+    "@datadog/browser-rum-slim": "7.16.2",
     "dd-trace": "6.21.0",
     "next": "16.4.3",
     "react": "19.3.1",
