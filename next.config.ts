@@ -5,6 +5,19 @@ import { redirects } from './lib/redirects'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  env: {
+    /*
+     * Datadog's browser SDK reads these through `instrumentation-client.ts`,
+     * and `env` inlines them at build time. The client token is public by
+     * design; the API key stays server-side.
+     */
+    DD_APPLICATION_ID: process.env.DD_APPLICATION_ID ?? '',
+    DD_CLIENT_TOKEN: process.env.DD_CLIENT_TOKEN ?? '',
+    DD_SITE: process.env.DD_SITE || 'us5.datadoghq.com',
+    DD_SERVICE: process.env.DD_SERVICE || 'gregrickaby',
+    DD_ENV: process.env.DD_ENV || 'production',
+    DD_VERSION: process.env.DD_VERSION || process.env.SOURCE_COMMIT || '',
+  },
   partialPrefetching: true,
   reactCompiler: true,
   typedRoutes: true,

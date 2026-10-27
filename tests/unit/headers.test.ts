@@ -3,10 +3,8 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { headers as Headers } from '@/lib/headers'
 
 describe('headers', () => {
-  const originalEnv = process.env.NODE_ENV
-
   afterEach(() => {
-    vi.stubEnv('NODE_ENV', originalEnv ?? 'test')
+    vi.unstubAllEnvs()
     vi.resetModules()
   })
 
@@ -26,6 +24,43 @@ describe('headers', () => {
     vi.resetModules()
     const { headers } = await import('@/lib/headers')
     expect(getCspValue(headers)).not.toContain("'unsafe-eval'")
+  })
+
+  it('allows the Datadog browser intake only when the RUM app is configured', async () => {
+    vi.stubEnv('DD_APPLICATION_ID', '')
+    vi.stubEnv('DD_CLIENT_TOKEN', '')
+    vi.resetModules()
+    const withoutDatadog = await import('@/lib/headers')
+    expect(getCspValue(withoutDatadog.headers)).not.toContain('browser-intake')
+
+    vi.stubEnv('DD_APPLICATION_ID', 'app')
+    vi.stubEnv('DD_CLIENT_TOKEN', 'token')
+    vi.stubEnv('DD_SITE', 'us5.datadoghq.com')
+    vi.resetModules()
+    const configured = await import('@/lib/headers')
+    expect(getCspValue(configured.headers)).toContain(
+      "connect-src 'self' https://browser-intake-us5-datadoghq.com",
+    )
+  })
+
+  it('falls back to the us5 intake when DD_SITE is empty', async () => {
+    vi.stubEnv('DD_APPLICATION_ID', 'app')
+    vi.stubEnv('DD_CLIENT_TOKEN', 'token')
+    vi.stubEnv('DD_SITE', '')
+    vi.resetModules()
+    const { headers } = await import('@/lib/headers')
+    expect(getCspValue(headers)).toContain('https://browser-intake-us5-datadoghq.com')
+  })
+
+  it('keeps the US1 intake host as is', async () => {
+    vi.stubEnv('DD_APPLICATION_ID', 'app')
+    vi.stubEnv('DD_CLIENT_TOKEN', 'token')
+    vi.stubEnv('DD_SITE', 'datadoghq.com')
+    vi.resetModules()
+    const { headers } = await import('@/lib/headers')
+    expect(getCspValue(headers)).toContain(
+      "connect-src 'self' https://browser-intake-datadoghq.com",
+    )
   })
 
   it('points every path at llms.txt', async () => {
