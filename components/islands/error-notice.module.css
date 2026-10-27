@@ -1,0 +1,50 @@
+@layer components {
+  .error {
+    display: grid;
+    gap: var(--space-4);
+    margin-inline: auto;
+    max-inline-size: var(--measure);
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .title {
+    color: var(--text-heading);
+    font-family: var(--font-pixel);
+    font-size: var(--step-3);
+    letter-spacing: var(--label-tracking);
+    margin: 0;
+  }
+
+  .lede {
+    color: var(--text-2);
+    font-size: var(--step-1);
+    margin: 0;
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+
+  .retry {
+    background: var(--accent-fill);
+    border: 0;
+    border-radius: 999px;
+    color: var(--accent-contrast);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    padding: var(--space-2) var(--space-5);
+
+    &:hover {
+      background: var(--accent-fill-hover);
+    }
+  }
+
+  .home {
+    color: var(--accent);
+    font-weight: 600;
+  }
+}
