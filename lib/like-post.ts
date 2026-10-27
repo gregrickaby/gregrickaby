@@ -3,6 +3,7 @@
 import { headers } from 'next/headers'
 
 import { getPost } from './content'
+import { errorFields, logger } from './datadog/server'
 import { addLike, countLikes, countVisitorLikes, hashVisitor } from './likes'
 
 /** What the like button shows. `count` is null until it loads. */
@@ -46,7 +47,7 @@ export async function likePost(previous: LikeState, formData: FormData): Promise
     const mine = addLike(slug, visitor)
     return { count: countLikes(slug), mine }
   } catch (error) {
-    console.error('Could not save a like', error)
+    logger.error('Could not save a like', errorFields(error))
     return previous
   }
 }

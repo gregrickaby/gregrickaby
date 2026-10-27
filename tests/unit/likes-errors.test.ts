@@ -18,6 +18,9 @@ describe('likePost without a database', () => {
     const data = new FormData()
     data.set('slug', index.posts[0]!.meta.slug)
     expect(await likePost(before, data)).toBe(before)
-    expect(log).toHaveBeenCalledWith('Could not save a like', expect.any(Error))
+    expect(log).toHaveBeenCalledWith(
+      'Could not save a like',
+      expect.objectContaining({ error: expect.any(String) }),
+    )
   })
 })

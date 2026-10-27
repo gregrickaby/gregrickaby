@@ -5,6 +5,7 @@ import { mkdirSync } from 'node:fs'
 import { dirname } from 'node:path'
 import { DatabaseSync } from 'node:sqlite'
 
+import { logger } from './datadog/server'
 import { MAX_LIKES } from './site'
 
 /**
@@ -23,7 +24,7 @@ let warnedAboutSalt = false
 function warnIfUnsalted(): void {
   if (warnedAboutSalt || process.env.NODE_ENV !== 'production' || process.env.LIKES_SALT) return
   warnedAboutSalt = true
-  console.warn('LIKES_SALT is not set: visitor hashes are unsalted. Set it in production.')
+  logger.warn('LIKES_SALT is not set: visitor hashes are unsalted. Set it in production.')
 }
 
 /**

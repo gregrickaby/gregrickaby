@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "npm run content -- --drafts && next dev --experimental-https",
     "build": "npm run content && npm run css:types && next build",
-    "start": "next start",
+    "start": "NODE_OPTIONS='--require dd-trace/init' next start",
     "content": "node scripts/build-content.ts",
     "purge-cdn": "node scripts/purge-cdn.ts",
     "lint": "eslint && stylelint \"**/*.css\"",
@@ -31,6 +31,10 @@
   },
   "homepage": "https://gregrickaby.com",
   "dependencies": {
+    "@datadog/browser-logs": "7.16.1",
+    "@datadog/browser-rum-nextjs": "7.16.1",
+    "@datadog/browser-rum-slim": "7.16.1",
+    "dd-trace": "6.21.0",
     "next": "16.4.3",
     "react": "19.3.1",
     "react-dom": "19.3.1",

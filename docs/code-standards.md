@@ -50,6 +50,7 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 - The content build works around gaps instead of failing: an image it can't measure ships without a size, and a photo without EXIF takes its title from the file name.
 - Runtime lookups return `null` for a missing post or page, and the page calls `notFound()`.
 - Islands catch what can fail in the browser (clipboard, storage, audio) and degrade quietly.
+- App and lib code log through `lib/datadog/server.ts`. The logger falls back to the console, so callers never check for Datadog. Scripts in `scripts/` may print to the console.
 
 ## Tests
 
