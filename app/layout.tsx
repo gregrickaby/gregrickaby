@@ -8,6 +8,7 @@ import './styles/utilities.css'
 
 import type { Metadata, Viewport } from 'next'
 import { Roboto, Roboto_Mono, Roboto_Slab, Silkscreen } from 'next/font/google'
+import { DatadogAppRouter } from '@datadog/browser-rum-nextjs'
 
 import { JsonLd } from '@/components/json-ld'
 import { OPEN_GRAPH_BASE } from '@/lib/metadata'
@@ -73,7 +74,11 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <JsonLd graph={buildWebSiteGraph()} />
       </head>
-      <body>{children}</body>
+      <body>
+        {/* RUM starts no session until this reports the first view; see instrumentation-client.ts. */}
+        <DatadogAppRouter />
+        {children}
+      </body>
     </html>
   )
 }
