@@ -1,16 +1,20 @@
 @layer components {
+  /* As wide as the icons, with the like button centered under them. The block
+     is centered unless the caller sets --actions-margin, as the post sidebar does. */
   .actions {
     align-items: center;
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    inline-size: fit-content;
+    margin-inline: var(--actions-margin, auto);
   }
 
+  /* Two even rows of three, which fit the sidebar. */
   .icons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    justify-content: center;
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(3, auto);
   }
 
   .icon {
@@ -21,8 +25,8 @@
     color: var(--text-2);
     display: inline-flex;
     justify-content: center;
-    min-block-size: 2.5rem;
-    min-inline-size: 2.5rem;
+    min-block-size: 3rem;
+    min-inline-size: 3rem;
     position: relative;
     transition:
       border-color var(--duration-exit) ease,

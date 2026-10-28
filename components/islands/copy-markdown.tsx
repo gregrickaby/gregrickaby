@@ -43,7 +43,7 @@ export function CopyMarkdown({ className, slug }: { className: string; slug: str
         data-tip="View as Markdown"
         href={href}
       >
-        <MarkdownIcon size={18} />
+        <MarkdownIcon size={22} />
       </a>
       <button
         aria-label="Copy as Markdown"
@@ -53,7 +53,7 @@ export function CopyMarkdown({ className, slug }: { className: string; slug: str
         onClick={copy}
         type="button"
       >
-        <MarkdownIcon size={18} />
+        <MarkdownIcon size={22} />
       </button>
       <span className="visually-hidden" role="status">
         {status}

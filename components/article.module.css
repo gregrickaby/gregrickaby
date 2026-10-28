@@ -107,6 +107,8 @@
     }
 
     .sideActions {
+      --actions-margin: 0 auto;
+
       display: block;
       flex: none;
     }
