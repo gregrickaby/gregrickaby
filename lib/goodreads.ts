@@ -16,7 +16,7 @@ export interface Book {
   cover?: string
 }
 
-const FEED_URL = `https://www.goodreads.com/review/list_rss/${SITE.author.goodreadsUserId}?shelf=currently-reading`
+const PROFILE_URL = `https://www.goodreads.com/user/show/${SITE.author.goodreadsUserId}`
 
 const ENTITIES: Record<string, string> = {
   '&amp;': '&',
@@ -32,49 +32,57 @@ function decodeEntity(entity: string): string {
   return code ? String.fromCodePoint(parseInt(code[2]!, code[1] ? 16 : 10)) : ENTITIES[entity]!
 }
 
-/** The text of `<tag>` in an RSS item, with or without CDATA. */
-function readTag(item: string, tag: string): string {
-  const match = new RegExp(
-    `<${tag}>\\s*(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?\\s*</${tag}>`,
-  ).exec(item)
-  return (match?.[1] ?? '')
+/** The first capture of `pattern` in `html`, trimmed, with entities decoded. */
+function readText(html: string, pattern: RegExp): string {
+  return (pattern.exec(html)?.[1] ?? '')
     .trim()
     .replaceAll(/&(?:amp|lt|gt|quot|apos|#\d+|#[xX][\da-fA-F]+);/g, decodeEntity)
 }
 
-/** Parses the shelf's RSS into books, skipping items without a title. */
-export function parseShelf(xml: string): Book[] {
+/**
+ * Parses the "Currently Reading" box on Greg's profile page into books,
+ * skipping entries without a title. Returns null when the page has no such
+ * box, which means Goodreads changed its markup or served a sign-in page.
+ */
+export function parseShelf(html: string): Book[] | null {
+  const section = /id="currentlyReadingReviews"([\s\S]*?)(?:bigBoxBottom|$)/.exec(html)?.[1]
+  if (section === undefined) return null
   const books: Book[] = []
-  for (const [, item = ''] of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
-    const fullTitle = readTag(item, 'title')
-    if (!fullTitle) continue
+  for (const update of section.split('class="Updates').slice(1)) {
+    const fullTitle = readText(update, /<a class="bookTitle"[^>]*>([^<]*)<\/a>/)
+    const bookId = /<a class="bookTitle" href="\/book\/show\/(\d+)/.exec(update)?.[1]
+    if (!fullTitle || !bookId) continue
     const series = /^(.*?)\s*\(([^()]*#[\d.]+)\)$/.exec(fullTitle)
-    const cover = readTag(item, 'book_large_image_url')
-    const bookId = readTag(item, 'book_id')
+    // The profile shows a 98px-wide thumbnail; the size suffix asks for the 475px-tall cover.
+    const cover = /<img [^>]*src="(https:\/\/i\.gr-assets\.com\/[^"]+)"/.exec(update)?.[1]
     books.push({
       title: series?.[1] ?? fullTitle,
       series: series?.[2],
-      author: readTag(item, 'author_name'),
-      url: bookId ? `https://www.goodreads.com/book/show/${bookId}` : readTag(item, 'link'),
-      cover: cover.startsWith('https://i.gr-assets.com/') ? cover : undefined,
+      author: readText(update, /<a class="authorName"[^>]*>([^<]*)<\/a>/),
+      url: `https://www.goodreads.com/book/show/${bookId}`,
+      cover: cover?.replace(/\._S[XY]\d+_\./, '._SY475_.'),
     })
   }
   return books
 }
 
 /**
- * The books Greg is reading now, from Goodreads' public RSS feed. Cached for
- * four hours, so pages stay prerendered and refresh in the background. A
- * failed fetch logs and shows no books instead of breaking the home page.
+ * The books Greg is reading now, from his public Goodreads profile page
+ * (Goodreads dropped the shelf RSS feeds). Cached for four hours, so pages
+ * stay prerendered and refresh in the background. A failed fetch logs, shows
+ * no books, and caches that for 15 minutes so the next refresh retries soon.
  */
 export async function getCurrentlyReading(): Promise<Book[]> {
   'use cache'
-  cacheLife({ revalidate: 4 * 60 * 60, expire: 7 * 24 * 60 * 60 })
   try {
-    const response = await fetch(FEED_URL)
+    const response = await fetch(PROFILE_URL)
     if (!response.ok) throw new Error(`Goodreads responded ${response.status}`)
-    return parseShelf(await response.text())
+    const books = parseShelf(await response.text())
+    if (!books) throw new Error('Goodreads profile has no Currently Reading box')
+    cacheLife({ revalidate: 4 * 60 * 60, expire: 7 * 24 * 60 * 60 })
+    return books
   } catch (error) {
+    cacheLife({ revalidate: 15 * 60, expire: 60 * 60 })
     logger.error('Could not load the Goodreads shelf', errorFields(error))
     return []
   }
