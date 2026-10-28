@@ -13,7 +13,7 @@ Catch what a careful human reviewer would flag, fix it, and validate once. Runs 
 git status --short && git diff --stat HEAD
 ```
 
-Review `.ts`, `.tsx`, `.css`, and Markdown under `public/content/`. Skip `.generated/`, `*.module.css.d.ts`, and `node_modules`. If the arguments name a commit range, review that instead.
+Review `.ts`, `.tsx`, `.css`, and Markdown under `public/content/`. Skip `.generated/`, `*.module.css.d.ts`, and `node_modules`. If the arguments name a commit range, review that instead. Don't report what `npm run check` or `npm run format` catches (formatting, lint, types, coverage); step 5 fixes those.
 
 ## 2. Standards
 
@@ -33,9 +33,19 @@ Check for:
 - **E2E specs:** CI runs them, not you, so grep `e2e/` for every title, heading, label, selector, and file name the diff changed or moved, and update the specs that depend on them.
 - **Leftovers:** images, modules, styles, or tests nothing references after the diff (grep for the file name). Delete them.
 
-Tag each finding **Blocker**, **Suggestion**, or **Nit**, and fix it. Leave one unfixed only for a good reason and say why. Take anything that's the user's call (a design choice, a waiver) to them as a **Question** instead of guessing.
+Tag each finding:
+
+- **Blocker:** a page, link, search, or like breaks (with or without JavaScript), a draft or secret ships, a log leaks visitor data, or copy and docs state something the code doesn't do.
+- **Suggestion:** a break from `AGENTS.md` or `docs/code-standards.md`, a missing test on a risky boundary, or a leftover.
+- **Nit:** naming or wording taste. Report at most five.
+
+Cite the `file:line` each finding is about. A claim about behavior points to the code that does it, not a guess from a name. Re-read that code before fixing, and drop the finding if it doesn't hold up.
+
+Fix each finding that survives. Leave one unfixed only for a good reason and say why. Take anything that's the user's call (a design choice, a waiver) to them as a **Question** instead of guessing.
 
 ## 4. Report
+
+Start with the count, such as `3 findings: 1 Blocker, 2 Nits`. With none, write `No findings` and skip the table.
 
 | #   | File | Line | Severity | Finding | Fix |
 | --- | ---- | ---- | -------- | ------- | --- |
