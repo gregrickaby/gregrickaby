@@ -15,7 +15,7 @@ export const SITE = {
     linkedin: 'https://www.linkedin.com/in/gregrickaby/',
     github: 'https://github.com/gregrickaby',
     goodreads: 'https://www.goodreads.com/author/show/16999736.Greg_Rickaby',
-    /** The reader profile behind the author page; its shelves have RSS feeds. */
+    /** The reader profile behind the author page, which lists what Greg is reading. */
     goodreadsUserId: '91475042',
   },
   license: {
