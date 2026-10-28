@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { exifSummary, formatShortDate, validDate } from '@/lib/format'
-import { fullImageUrl, optimizedImageUrl } from '@/lib/images'
+import { aspectRatio, fullImageUrl, optimizedImageUrl } from '@/lib/images'
 
 describe('formatShortDate', () => {
   it('prints a short date, reading zone-less dates as UTC', () => {
@@ -46,5 +46,9 @@ describe('image URLs', () => {
     expect(fullImageUrl('/a.jpg', 5000, false)).toContain('w=3840')
     expect(fullImageUrl('/a.jpg', 2500, false)).toContain('w=2048')
     expect(fullImageUrl('/a.jpg', 800, false)).toContain('w=1920')
+  })
+
+  it('states the aspect ratio as a style', () => {
+    expect(aspectRatio({ width: 1707, height: 2560 })).toEqual({ aspectRatio: '1707 / 2560' })
   })
 })

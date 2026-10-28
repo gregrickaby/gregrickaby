@@ -258,10 +258,12 @@
   }
 
   .cover {
+    aspect-ratio: 316 / 475;
     border-radius: var(--radius-1);
     box-shadow: var(--shadow-1);
     flex: none;
     height: auto;
+    object-fit: cover;
     width: 96px;
   }
 

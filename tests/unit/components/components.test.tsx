@@ -264,6 +264,7 @@ describe('PhotoGallery', () => {
     expect(html).toContain('data-details="SONY ILCE-7RM5 · f/6.3 · ISO 100"')
     expect(html).toContain('data-full="/content/photos/h.jpg"')
     expect(html).toContain('data-caption="Moon: Dusk"')
+    expect(html).toMatch(/aspect-ratio:\d+ \/ \d+/)
   })
 })
 

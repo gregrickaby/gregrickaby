@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react'
+
 /**
  * Widths requested from Next's image optimizer for images inside post HTML.
  * Each one is in Next's default `deviceSizes`, so the optimizer accepts it.
@@ -33,4 +35,16 @@ export function fullImageUrl(src: string, width: number, hdr: boolean): string {
   if (hdr) return src
   const fit = FULL_WIDTHS.filter((w) => w <= width).at(-1) ?? FULL_WIDTHS[0]
   return optimizedImageUrl(src, fit)
+}
+
+/**
+ * An image's aspect ratio as an inline style. Chrome reports a lazy image whose
+ * CSS sizes one side `auto` (such as `height: auto`) as missing dimensions,
+ * even with `width` and `height` attributes, unless CSS sets `aspect-ratio`.
+ *
+ * @param image - The image's width and height in pixels.
+ * @returns A `style` value for `next/image`.
+ */
+export function aspectRatio({ width, height }: { width: number; height: number }): CSSProperties {
+  return { aspectRatio: `${width} / ${height}` }
 }

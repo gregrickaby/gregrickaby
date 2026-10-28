@@ -46,10 +46,12 @@ describe('HomeAbout and CameraBag', () => {
     expect(about).toContain('Lead text')
     expect(about).not.toContain('Story')
     expect(about).toContain('<img')
+    expect(about).toContain('aspect-ratio:')
 
     const bag = await renderServer(<CameraBag page={page} />)
     expect(bag).toContain('Behind the camera')
     expect(bag).toContain('alt="A camera and telephoto lens')
+    expect(bag).toContain('aspect-ratio:1707 / 2560')
     expect(bag).toContain('Camera')
     expect(bag).toContain('aria-label="Affiliate disclaimer"')
     expect(bag).not.toContain('Lead text')
@@ -86,6 +88,7 @@ describe('strips', () => {
     expect(html).toContain('data-lightbox')
     expect(html).toContain('data-details="SONY ILCE-7RM5')
     expect(html).toContain('sizes="(max-width: 640px) 330px, 420px"')
+    expect(html).toMatch(/aspect-ratio:\d+ \/ \d+/)
   })
 })
 
