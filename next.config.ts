@@ -22,6 +22,13 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   typedRoutes: true,
   poweredByHeader: false,
+  /*
+   * Keeps React's font preloads in the HTML and out of the Link header. When a
+   * page revalidates at runtime (the home page, for Goodreads), Next stores the
+   * whole Link header with the cached page, including the llms.txt link from
+   * lib/headers.ts, and adds it again on every serve, so copies pile up.
+   */
+  reactMaxHeadersLength: 0,
   // Coolify sets SOURCE_COMMIT. Tabs left open across a deploy reload instead of mixing builds.
   deploymentId: process.env.SOURCE_COMMIT,
   images: {
