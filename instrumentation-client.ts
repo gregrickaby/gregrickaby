@@ -13,6 +13,15 @@ function isCancelledPrefetch(statusCode: number | undefined, url: string | undef
   return statusCode === 0 && Boolean(url?.includes('_rsc='))
 }
 
+/**
+ * Chrome reports a ResizeObserver whose callback resized what it watches as an
+ * uncaught error with no stack. The site has no ResizeObserver, so it comes
+ * from an extension or the browser, and the next frame delivers the change.
+ */
+function isResizeObserverLoop(message: string | undefined) {
+  return Boolean(message?.includes('ResizeObserver loop'))
+}
+
 // Both inits are no-ops until Coolify passes the RUM app's ID and token.
 if (applicationId && clientToken) {
   const shared = {
@@ -42,7 +51,8 @@ if (applicationId && clientToken) {
     beforeSend: (event) =>
       !(
         event.type === 'error' &&
-        isCancelledPrefetch(event.error.resource?.status_code, event.error.resource?.url)
+        (isCancelledPrefetch(event.error.resource?.status_code, event.error.resource?.url) ||
+          isResizeObserverLoop(event.error.message))
       ),
   })
 
@@ -50,6 +60,10 @@ if (applicationId && clientToken) {
     ...shared,
     forwardErrorsToLogs: true,
     beforeSend: (log) =>
-      !(log.status === 'error' && isCancelledPrefetch(log.http?.status_code, log.http?.url)),
+      !(
+        log.status === 'error' &&
+        (isCancelledPrefetch(log.http?.status_code, log.http?.url) ||
+          isResizeObserverLoop(log.message))
+      ),
   })
 }

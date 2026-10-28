@@ -13,14 +13,18 @@ vi.mock('@datadog/browser-rum-nextjs', () => ({ nextjsPlugin, onRouterTransition
 interface RumOptions {
   beforeSend: (event: {
     type: string
-    error?: { resource?: { status_code?: number; url?: string } }
+    error?: { message?: string; resource?: { status_code?: number; url?: string } }
   }) => boolean
   plugins: unknown[]
   version?: string
 }
 
 interface LogsOptions {
-  beforeSend: (log: { status?: string; http?: { status_code?: number; url?: string } }) => boolean
+  beforeSend: (log: {
+    status?: string
+    message?: string
+    http?: { status_code?: number; url?: string }
+  }) => boolean
 }
 
 const CONFIGURED = {
@@ -97,5 +101,16 @@ describe('browser RUM', () => {
     expect(beforeSend({ status: 'error', http: { status_code: 500 } })).toBe(true)
     expect(beforeSend({ status: 'error' })).toBe(true)
     expect(beforeSend({ status: 'info' })).toBe(true)
+  })
+  it('drops the ResizeObserver loop notice from RUM and browser logs', async () => {
+    await loadClient(CONFIGURED)
+    const rum = (rumInit.mock.calls[0]![0] as RumOptions).beforeSend
+    const logs = (logsInit.mock.calls[0]![0] as LogsOptions).beforeSend
+    const message = 'ResizeObserver loop completed with undelivered notifications.'
+    expect(rum({ type: 'error', error: { message } })).toBe(false)
+    expect(rum({ type: 'error', error: { message: 'TypeError: x is undefined' } })).toBe(true)
+    expect(logs({ status: 'error', message: `Uncaught "${message}"` })).toBe(false)
+    expect(logs({ status: 'info', message })).toBe(true)
+    expect(logs({ status: 'error', message: 'Failed to load chunk' })).toBe(true)
   })
 })
