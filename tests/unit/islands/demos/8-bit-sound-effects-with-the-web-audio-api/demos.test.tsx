@@ -202,6 +202,13 @@ describe('NotesDemo', () => {
     expect(second?.hasAttribute('data-active')).toBe(false)
   })
 
+  it('names every note field, so Chrome has no unnamed fields to flag', () => {
+    const { container } = render(<NotesDemo />)
+    const fields = [...container.querySelectorAll('input, select')]
+    expect(fields.length).toBeGreaterThan(0)
+    expect(fields.filter((field) => !field.getAttribute('name'))).toEqual([])
+  })
+
   it('edits, adds, and removes notes', () => {
     render(<NotesDemo />)
     expect(screen.getByRole('button', { name: 'Jump' }).getAttribute('aria-pressed')).toBe('true')

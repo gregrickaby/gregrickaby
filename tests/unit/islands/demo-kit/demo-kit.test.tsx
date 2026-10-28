@@ -72,6 +72,7 @@ describe('controls', () => {
     const onChange = vi.fn()
     render(<Slider label="Grit" max={8} min={1} onChange={onChange} value={3} />)
     const slider = screen.getByRole('slider', { name: /Grit/ })
+    expect(slider.getAttribute('name')).toBe('Grit')
     fireEvent.change(slider, { target: { value: '5' } })
     expect(onChange).toHaveBeenCalledWith(5)
     expect(screen.getByText('3').tagName).toBe('OUTPUT')

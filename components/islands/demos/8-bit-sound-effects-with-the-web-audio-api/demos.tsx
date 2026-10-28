@@ -528,6 +528,7 @@ export function NotesDemo() {
             </span>
             <select
               aria-label={`Note ${i + 1} type`}
+              name="kind"
               onChange={(event) => update(i, { kind: event.target.value as NoteKind }, true)}
               value={row.kind}
             >
@@ -541,6 +542,7 @@ export function NotesDemo() {
               inputMode="numeric"
               max={5000}
               min={20}
+              name="pitch"
               onChange={(event) => {
                 const old = Number.parseFloat(row.pitch)
                 const next = Number.parseFloat(event.target.value)
@@ -562,6 +564,7 @@ export function NotesDemo() {
               inputMode="decimal"
               max={2}
               min={0.01}
+              name="seconds"
               onChange={(event) => update(i, { seconds: event.target.value }, stepped(event))}
               step={0.01}
               type="number"

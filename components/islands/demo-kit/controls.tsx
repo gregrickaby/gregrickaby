@@ -88,6 +88,7 @@ export function Slider({
       <input
         max={max}
         min={min}
+        name={label}
         onChange={(event) => onChange(Number(event.target.value))}
         type="range"
         value={value}
