@@ -126,6 +126,17 @@ describe('playNotes', () => {
     expect(oscillators.length).toBe(3)
   })
 
+  it('makes no context before the page has had a click, tap, or key press', async () => {
+    vi.resetModules()
+    vi.stubGlobal('navigator', { userActivation: { hasBeenActive: false } })
+    const fresh = await import('@/components/islands/sounds')
+    expect(fresh.playNotes([[440, 0.1]])).toBe(0)
+    expect(contexts).not.toHaveBeenCalled()
+    vi.stubGlobal('navigator', { userActivation: { hasBeenActive: true } })
+    expect(fresh.playNotes([[440, 0.1]])).toBeCloseTo(0.1)
+    expect(oscillators.length).toBe(1)
+  })
+
   it('stays silent where Web Audio is missing', async () => {
     vi.resetModules()
     vi.stubGlobal(

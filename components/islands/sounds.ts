@@ -183,12 +183,14 @@ function createSource(
 }
 
 /**
- * The shared context, or undefined where Web Audio is missing. A context
- * made before the visitor's first click (by a hover tick on a fresh page)
- * starts suspended, so each call asks it to resume; browsers allow that
- * once a click, tap, or key press has happened.
+ * The shared context, or undefined where Web Audio is missing or the page
+ * hasn't had a click, tap, or key press yet. Browsers warn about a context
+ * made before then (by a hover tick on a fresh page) and keep it silent
+ * anyway. A context can still be suspended later, so each call asks it to
+ * resume.
  */
 export function getContext(): AudioContext | undefined {
+  if (navigator.userActivation?.hasBeenActive === false) return undefined
   try {
     context ??= new AudioContext()
   } catch {
