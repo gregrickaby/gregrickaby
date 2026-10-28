@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react'
 
 import { FacebookIcon, LinkedInIcon, RedditIcon, XIcon } from '@/components/icons'
+import { CopyLink } from '@/components/islands/copy-link'
 import { CopyMarkdown } from '@/components/islands/copy-markdown'
 import { LikeButton } from '@/components/islands/like-button'
 import { SITE } from '@/lib/site'
@@ -39,18 +40,22 @@ const SHARE_SITES: ShareSite[] = [
 ]
 
 /**
- * A row of icons to copy a post's Markdown or share it, each with a tooltip,
+ * A row of icons to copy a post's Markdown or link, or share it, each with a tooltip,
  * and the like button under them. Share links are plain links to each site's
  * share page, so they work without JavaScript and load nothing from those sites.
  */
 export function PostActions({ meta }: { meta: Pick<PostMeta, 'slug' | 'title'> }) {
-  const url = encodeURIComponent(`${SITE.url}/${meta.slug}`)
+  const link = `${SITE.url}/${meta.slug}`
+  const url = encodeURIComponent(link)
   const title = encodeURIComponent(meta.title)
   return (
     <div className={styles.actions}>
       <ul aria-label="Copy or share this post" className={styles.icons} role="list">
         <li>
           <CopyMarkdown className={styles.icon} slug={meta.slug} />
+        </li>
+        <li>
+          <CopyLink className={styles.icon} url={link} />
         </li>
         {SHARE_SITES.map(({ name, Icon, href }) => (
           <li key={name}>
@@ -62,7 +67,7 @@ export function PostActions({ meta }: { meta: Pick<PostMeta, 'slug' | 'title'> }
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Icon size={18} />
+              <Icon size={22} />
             </a>
           </li>
         ))}
