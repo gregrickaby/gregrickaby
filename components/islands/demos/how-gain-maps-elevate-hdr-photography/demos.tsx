@@ -342,6 +342,7 @@ export function WipeDemo() {
           className={styles.handle}
           max={100}
           min={0}
+          name="split"
           onChange={(event) => wipe(Number(event.target.value))}
           type="range"
           value={split}

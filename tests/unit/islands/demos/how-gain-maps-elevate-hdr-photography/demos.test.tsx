@@ -239,6 +239,7 @@ describe('wipe', () => {
     const hdr = screen.getByAltText(`${PAIRS[0]!.alt}, HDR`)
     expect(hdr.getAttribute('src')).toBe(pairSrc(PAIRS[0]!, 'HDR'))
     expect(hdr.getAttribute('style')).toContain('inset(0 0 0 50%)')
+    expect(screen.getByLabelText('Wipe between SDR and HDR').getAttribute('name')).toBe('split')
 
     fireEvent.change(screen.getByLabelText('Wipe between SDR and HDR'), {
       target: { value: '20' },
