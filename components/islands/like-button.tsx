@@ -27,7 +27,7 @@ function buildSparkles(): CSSProperties[] {
       ({
         '--angle': `${(360 / SPARKLE_COUNT) * index + between(-12, 12)}deg`,
         '--color': `var(${SPARKLE_TONES[index % SPARKLE_TONES.length]})`,
-        '--distance': `${between(1.5, 2.5)}rem`,
+        '--distance': `${between(3, 5)}rem`,
         '--shift': `${between(20, 50)}deg`,
         '--size': `${between(4, 8)}px`,
         '--twinkle': `${between(120, 260)}ms`,
@@ -129,8 +129,8 @@ export function LikeButton({ slug }: { slug: string }) {
           </span>
         ) : null}
         <span className={styles.heart} style={{ '--fill': mine / MAX_LIKES } as CSSProperties}>
-          <HeartIcon size={24} />
-          <HeartIcon className={styles.fill} size={24} />
+          <HeartIcon size={48} />
+          <HeartIcon className={styles.fill} size={48} />
           {burst ? (
             <span aria-hidden="true" className={styles.burst} key={burst.id}>
               {burst.sparkles.map((style, index) => (
