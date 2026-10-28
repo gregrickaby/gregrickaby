@@ -11,7 +11,7 @@ import { Prose } from '@/components/prose'
 import { exifSummary } from '@/lib/format'
 import type { Book } from '@/lib/goodreads'
 import { splitSections } from '@/lib/html'
-import { fullImageUrl } from '@/lib/images'
+import { aspectRatio, fullImageUrl } from '@/lib/images'
 import { resumeEntries } from '@/lib/resume'
 import { HOME, SITE } from '@/lib/site'
 import type { Photo, Post, PostMeta } from '@/lib/types'
@@ -65,6 +65,7 @@ export function HomeAbout({ page }: { page: Post }) {
           height={page.meta.featuredImage.height}
           sizes="(max-width: 860px) 100vw, 480px"
           src={page.meta.featuredImage.src}
+          style={aspectRatio(page.meta.featuredImage)}
           width={page.meta.featuredImage.width}
         />
       ) : null}
@@ -106,6 +107,7 @@ export function CameraBag({ page }: { page: Post }) {
           height={HOME.cameraPhoto.height}
           sizes="(max-width: 860px) 384px, 360px"
           src={HOME.cameraPhoto.src}
+          style={aspectRatio(HOME.cameraPhoto)}
           width={HOME.cameraPhoto.width}
         />
       </div>
@@ -234,6 +236,7 @@ export function GalleryStrip({ photos }: { photos: Photo[] }) {
               height={photo.height}
               sizes={stripSizes(photo)}
               src={photo.src}
+              style={aspectRatio(photo)}
               width={photo.width}
             />
           </a>

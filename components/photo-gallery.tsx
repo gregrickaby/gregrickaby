@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { Lightbox } from '@/components/islands/lightbox'
 import { exifSummary } from '@/lib/format'
-import { fullImageUrl } from '@/lib/images'
+import { aspectRatio, fullImageUrl } from '@/lib/images'
 import type { Photo } from '@/lib/types'
 
 import styles from './photo-gallery.module.css'
@@ -33,6 +33,7 @@ export function PhotoGallery({ photos }: { photos: Photo[] }) {
               preload={i < 3}
               sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 360px"
               src={photo.src}
+              style={aspectRatio(photo)}
               width={photo.width}
             />
             <span aria-hidden="true" className={styles.overlay}>
