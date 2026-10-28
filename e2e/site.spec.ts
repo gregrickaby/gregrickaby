@@ -103,6 +103,16 @@ test.describe('reading', () => {
     expect((await request.get('/no-such-post.md')).status()).toBe(404)
   })
 
+  test('a post copies its link', async ({ context, page }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+    await page.goto('/the-moons-of-2023')
+    await page.getByRole('button', { name: 'Copy link' }).click()
+    await expect(page.getByRole('status').filter({ hasText: 'Copied' })).toHaveCount(1)
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+      'https://gregrickaby.com/the-moons-of-2023',
+    )
+  })
+
   test('the HDR post keeps its gain-map originals', async ({ page }) => {
     await page.goto('/how-gain-maps-elevate-hdr-photography')
     const hdr = page.locator(
@@ -248,6 +258,7 @@ test.describe('without JavaScript @nojs', () => {
     const markdown = page.getByRole('link', { name: 'View as Markdown' })
     await expect(markdown).toHaveAttribute('href', '/the-moons-of-2023.md')
     await expect(page.getByRole('button', { name: 'Copy as Markdown' })).toBeHidden()
+    await expect(page.getByRole('button', { name: 'Copy link' })).toBeHidden()
 
     await page.goto('/')
     await page.getByRole('searchbox', { name: 'Search posts' }).first().fill('hdr')

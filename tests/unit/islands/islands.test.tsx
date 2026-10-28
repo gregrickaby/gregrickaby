@@ -12,6 +12,7 @@ const { ThemeToggle } = await import('@/components/islands/theme-toggle')
 const { MobileMenu } = await import('@/components/islands/mobile-menu')
 const { Lightbox, toSlide } = await import('@/components/islands/lightbox')
 const { CodeCopy } = await import('@/components/islands/code-copy')
+const { CopyLink } = await import('@/components/islands/copy-link')
 const { CopyMarkdown } = await import('@/components/islands/copy-markdown')
 
 const likePost = vi.fn(async (previous: { count: number | null; mine: number }) => ({
@@ -418,6 +419,42 @@ describe('CopyMarkdown', () => {
     stubClipboard(vi.fn().mockRejectedValue(new Error('denied')))
     render(<CopyMarkdown className="icon" slug="post" />)
     await act(async () => fireEvent.click(screen.getByRole('button')))
+    expect(screen.getByRole('status').textContent).toBe('Could not copy')
+    expect(screen.getByRole('button').dataset.tip).toBe('Could not copy')
+  })
+})
+
+describe('CopyLink', () => {
+  afterEach(() => {
+    vi.useRealTimers()
+    vi.unstubAllGlobals()
+  })
+
+  it("copies the post's URL, says so, then resets", async () => {
+    vi.useFakeTimers()
+    const writeText = vi.fn().mockResolvedValue(undefined)
+    vi.stubGlobal('navigator', { clipboard: { writeText } })
+    render(<CopyLink className="icon" url="https://gregrickaby.com/post" />)
+    const button = screen.getByRole('button', { name: 'Copy link' })
+    expect(button.className).toContain('icon')
+    expect(button.dataset.tip).toBe('Copy link')
+    await act(async () => fireEvent.click(button))
+    expect(writeText).toHaveBeenCalledWith('https://gregrickaby.com/post')
+    expect(playSound).toHaveBeenCalledWith('select')
+    expect(button.dataset.tip).toBe('Copied')
+    expect(button.hasAttribute('data-copied')).toBe(true)
+    expect(screen.getByRole('status').textContent).toBe('Copied')
+    act(() => vi.advanceTimersByTime(2000))
+    expect(button.dataset.tip).toBe('Copy link')
+    expect(button.hasAttribute('data-copied')).toBe(false)
+    expect(screen.getByRole('status').textContent).toBe('')
+  })
+
+  it('says so when the clipboard refuses', async () => {
+    vi.stubGlobal('navigator', { clipboard: { writeText: vi.fn().mockRejectedValue(new Error()) } })
+    render(<CopyLink className="icon" url="https://gregrickaby.com/post" />)
+    await act(async () => fireEvent.click(screen.getByRole('button')))
+    expect(playSound).not.toHaveBeenCalled()
     expect(screen.getByRole('status').textContent).toBe('Could not copy')
     expect(screen.getByRole('button').dataset.tip).toBe('Could not copy')
   })

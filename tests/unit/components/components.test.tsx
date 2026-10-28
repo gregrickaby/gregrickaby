@@ -122,6 +122,7 @@ describe('Article', () => {
     expect(html).toContain(`href="https://www.linkedin.com/sharing/share-offsite/?url=${url}"`)
     expect(html).toContain(`href="https://www.facebook.com/sharer/sharer.php?u=${url}"`)
     expect(html).toContain(`href="https://x.com/intent/tweet?url=${url}&amp;text=${title}"`)
+    expect(html).toContain('data-tip="Copy link"')
     expect(html).toContain('data-tip="Share on Reddit"')
     expect(html).toContain('rel="noopener noreferrer"')
     expect(html.indexOf('Share on X')).toBeLessThan(html.indexOf('Like this post'))

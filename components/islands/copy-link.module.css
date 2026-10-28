@@ -1,0 +1,12 @@
+@layer components {
+  /* The caller styles the button; the wrapper only lifts this rule above its styles. */
+  .copy {
+    display: contents;
+  }
+
+  @media (scripting: none) {
+    .copy > .button {
+      display: none;
+    }
+  }
+}
