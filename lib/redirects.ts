@@ -69,6 +69,25 @@ export const redirects = [
   { source: '/tag/portraits', destination: '/', permanent: true },
   { source: '/tag/snow', destination: '/', permanent: true },
 
+  // Tags folded into broader ones.
+  { source: '/tag/astrophotography', destination: '/tag/photography', permanent: true },
+  { source: '/tag/automatic1111', destination: '/tag/ai', permanent: true },
+  { source: '/tag/chase', destination: '/tag/family', permanent: true },
+  { source: '/tag/chloe', destination: '/tag/family', permanent: true },
+  { source: '/tag/gallery', destination: '/tag/photography', permanent: true },
+  { source: '/tag/genesis', destination: '/tag/wordpress', permanent: true },
+  { source: '/tag/hdr', destination: '/tag/photography', permanent: true },
+  { source: '/tag/kids', destination: '/tag/family', permanent: true },
+  { source: '/tag/moon', destination: '/tag/photography', permanent: true },
+  { source: '/tag/personal', destination: '/tag/family', permanent: true },
+  { source: '/tag/radio', destination: '/tag/audio', permanent: true },
+  { source: '/tag/react', destination: '/tag/javascript', permanent: true },
+  { source: '/tag/snippets', destination: '/tag/tutorials', permanent: true },
+  { source: '/tag/tara', destination: '/tag/family', permanent: true },
+  { source: '/tag/typography', destination: '/tag/css', permanent: true },
+  { source: '/tag/ubuntu', destination: '/tag/hosting', permanent: true },
+  { source: '/tag/wyatt', destination: '/tag/family', permanent: true },
+
   // Old slugs that no longer exist.
   {
     source: '/2013-2014-alabama-hunting-seasons',
