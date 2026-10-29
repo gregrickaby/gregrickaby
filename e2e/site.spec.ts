@@ -240,6 +240,9 @@ test.describe('platform', () => {
 
     await page.goto('/about')
     await expect(page).toHaveURL(/\/$/)
+    expect((await request.get('/feed')).url()).toMatch(/\/feed\.xml$/)
+    const favicon = await request.get('/favicon.ico')
+    expect(favicon.headers()['content-type']).toContain('image/jpeg')
     const missing = await page.goto('/no-such-post')
     expect(missing?.status()).toBe(404)
     await expect(page.getByRole('heading', { level: 1, name: '404' })).toBeVisible()
