@@ -22,8 +22,13 @@ function isResizeObserverLoop(message: string | undefined) {
   return Boolean(message?.includes('ResizeObserver loop'))
 }
 
+/** Headless and automated browsers would skew page speed numbers built from a few dozen views. */
+function isBot() {
+  return navigator.webdriver || /headless|bot|crawler|spider/i.test(navigator.userAgent)
+}
+
 // Both inits are no-ops until Coolify passes the RUM app's ID and token.
-if (applicationId && clientToken) {
+if (applicationId && clientToken && !isBot()) {
   const shared = {
     clientToken,
     site: process.env.DD_SITE,
