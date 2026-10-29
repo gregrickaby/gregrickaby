@@ -5,8 +5,28 @@ updates:
     schedule:
       interval: 'weekly'
       day: 'monday'
+    groups:
+      next-react:
+        patterns:
+          - 'next'
+          - '@next/*'
+          - 'eslint-config-next'
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+          - '@types/react-dom'
+      datadog:
+        patterns:
+          - '@datadog/*'
+          - 'dd-trace'
+      tooling:
+        dependency-type: 'development'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
       day: 'monday'
+    groups:
+      actions:
+        patterns:
+          - '*'
