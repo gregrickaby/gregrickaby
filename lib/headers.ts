@@ -13,15 +13,13 @@ function datadogIntake(): string {
  * dynamic rendering on every route, which `ensureStatic` forbids.
  * `experimental.sri` in next.config.ts covers the integrity of JS bundles.
  * `unsafe-eval` is added in development only: React uses `eval()` there to
- * rebuild server error stacks in the browser. `static.cloudflareinsights.com`
- * is Cloudflare's Web Analytics beacon, injected at the edge; its POST goes to
- * same-origin `/cdn-cgi/rum`, already covered by `connect-src 'self'`. The
- * Datadog browser SDK posts to its intake host, which `DD_SITE` names; the SDK
- * is bundled, so `script-src` needs nothing.
+ * rebuild server error stacks in the browser. The Datadog browser SDK posts
+ * to its intake host, which `DD_SITE` names; the SDK is bundled, so
+ * `script-src` needs nothing.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self'",
