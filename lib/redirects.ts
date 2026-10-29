@@ -5,8 +5,14 @@
  */
 export const redirects = [
   // Legacy feed URL.
+  { source: '/feed', destination: '/feed.xml', permanent: true },
   { source: '/blog/feed/', destination: '/feed.xml', permanent: true },
   { source: '/feed/atom', destination: '/feed.xml', permanent: true },
+
+  // Browsers and crawlers ask for these by name, ignoring the icon link tag.
+  { source: '/favicon.ico', destination: '/icon.jpg', permanent: true },
+  { source: '/apple-touch-icon.png', destination: '/icon.jpg', permanent: true },
+  { source: '/apple-touch-icon-precomposed.png', destination: '/icon.jpg', permanent: true },
 
   // About is now the homepage.
   { source: '/about', destination: '/', permanent: true },
