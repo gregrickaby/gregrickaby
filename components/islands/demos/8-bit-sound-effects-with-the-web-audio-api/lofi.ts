@@ -1,8 +1,7 @@
+import { pulseTerms } from '@/components/islands/chiptune'
 import { noteAt, noteFrequency, parseLane, toneAt } from '@/components/islands/sequencer'
 import { noiseBuffer } from '@/components/islands/sounds'
 import { playTape, type StartTape, type TapeTrack } from '@/components/islands/tape'
-
-import { pulseTerms } from './chiptune'
 
 /** How much of each cycle a pulse channel stays high: thin, nasal, or square. */
 export type Duty = 0.125 | 0.25 | 0.5
