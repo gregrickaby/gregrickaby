@@ -4,7 +4,6 @@ slug: 'how-to-use-the-gamepad-api'
 date: '2026-10-28T00:00:00'
 modified: '2026-10-28T00:00:00'
 type: 'post'
-draft: true
 description: 'Learn the JavaScript Gamepad API: read an Xbox or PlayStation controller with getGamepads(), poll buttons and sticks, add rumble, and play a platformer demo.'
 featuredImage: './xbox-controller-20261031.jpg'
 categories: ['Code']
@@ -54,7 +53,7 @@ function poll() {
 requestAnimationFrame(poll)
 ```
 
-That `?.connected` is there because Chrome always hands back four slots, and the empty ones are `null`. Plug in one controller, get one controller and three holes.
+That `?.connected` is there because `getGamepads()` doesn't hand back a list of just your controllers. In Chrome, it hands back eight slots, one for each controller it can track, and a slot with nothing plugged into it is `null`. Plug in one controller and you get the controller plus seven `null`s. The `?.` skips the empty ones.
 
 Each button gives you two things: `pressed`, a yes or no, and `value`, from `0` to `1`. On the face buttons, `value` is only ever `0` or `1`. Pull a trigger slowly in the box up top, though, and watch its `value` climb through every number in between. The trigger knows how far you pulled it.
 
