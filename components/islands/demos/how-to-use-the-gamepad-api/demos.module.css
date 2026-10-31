@@ -1,0 +1,286 @@
+@layer components {
+  /* The ghost's pixels, colored like the 404 page's. */
+  .outline {
+    fill: var(--text-heading);
+  }
+
+  .sheet {
+    fill: var(--on-scrim);
+  }
+
+  .eye {
+    fill: var(--scrim);
+  }
+
+  .blush {
+    fill: var(--tomato-3);
+  }
+
+  /* The level's sprites: notes, static, and the cassette. */
+  .note {
+    fill: var(--accent-fill);
+  }
+
+  .static {
+    fill: var(--text-2);
+  }
+
+  .shell {
+    fill: var(--surface-card);
+  }
+
+  .label {
+    fill: var(--tomato-3);
+  }
+
+  .reel {
+    fill: var(--on-scrim);
+  }
+
+  .solid {
+    fill: var(--surface-card);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  /* The start and finish screens dim the level behind a pixel-font banner. */
+  .dim {
+    fill: var(--scrim);
+    opacity: 0.55;
+  }
+
+  /* The score and lives along the top of the level. */
+  .hud {
+    fill: var(--text-heading);
+    font-family: var(--font-pixel);
+    font-size: 8px;
+  }
+
+  .banner {
+    dominant-baseline: middle;
+    fill: var(--on-scrim);
+    font-family: var(--font-pixel);
+    font-size: 14px;
+    text-anchor: middle;
+  }
+
+  /* A status light that turns green once the browser shows the controller. */
+  .status {
+    align-items: center;
+    color: var(--text-2);
+    display: flex;
+    font-size: var(--step-minus-1);
+    gap: var(--space-2);
+  }
+
+  .light {
+    background: var(--border);
+    border-radius: 50%;
+    flex: none;
+    height: 0.625rem;
+    width: 0.625rem;
+
+    .status[data-connected] & {
+      background: var(--success);
+    }
+  }
+
+  .id {
+    color: var(--text-1);
+    font-family: var(--font-mono);
+    overflow-wrap: anywhere;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    & li {
+      background: var(--surface-page);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-pill);
+      color: var(--text-2);
+      font-size: var(--step-minus-1);
+      margin: 0;
+      padding: 0 var(--space-3);
+    }
+  }
+
+  .diagram {
+    justify-self: center;
+    max-width: 20rem;
+    width: 100%;
+  }
+
+  .body {
+    fill: var(--surface-page);
+    stroke: var(--border);
+    stroke-width: 1.5;
+  }
+
+  .key {
+    fill: var(--surface-card);
+    stroke: var(--text-2);
+    stroke-width: 1;
+    transition: fill 0.05s;
+
+    &[data-pressed] {
+      fill: var(--accent-fill);
+      stroke: var(--accent-fill);
+    }
+  }
+
+  .fill {
+    fill: var(--accent-fill);
+  }
+
+  .well {
+    fill: var(--surface-card);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  /* Raw values in two columns of monospace rows; pressed buttons light up. */
+  .raw {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  }
+
+  .values {
+    display: grid;
+    font-size: var(--step-minus-1);
+    gap: 1px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-content: start;
+
+    & li {
+      border-radius: var(--radius-1);
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: 6.5rem 1fr auto;
+      margin: 0;
+      padding: 0 var(--space-2);
+
+      &[data-pressed] {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
+    }
+  }
+
+  .name {
+    color: var(--text-2);
+  }
+
+  .number {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    grid-column: 3;
+  }
+
+  .ground {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .shadow {
+    fill: var(--border);
+  }
+
+  /* The jump demo's stage is one big button, so a press anywhere on it jumps. */
+  .stage {
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    padding: 0;
+    touch-action: manipulation;
+    user-select: none;
+
+    & svg {
+      display: block;
+      width: 100%;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+  }
+
+  /* The level's switches, two to a row, or one on a narrow screen. */
+  .switches {
+    display: grid;
+    gap: var(--space-2) var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(max(12rem, calc(50% - var(--space-4))), 1fr));
+  }
+
+  /* An on/off switch like the 8-bit post's jukebox: the knob slides right and the track fills in. */
+  .switch {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-1);
+    color: var(--text-1);
+    display: grid;
+    gap: 0 var(--space-2);
+    grid-template-columns: auto 1fr;
+    padding: var(--space-1);
+    text-align: start;
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+
+  .track {
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    grid-row: span 2;
+    height: 1.25rem;
+    padding: 2px;
+    transition: background-color 0.15s;
+    width: 2.25rem;
+
+    .switch[aria-checked='true'] & {
+      background: var(--accent-fill);
+    }
+  }
+
+  .knob {
+    background: var(--surface-page);
+    border-radius: 50%;
+    display: block;
+    height: 1rem;
+    transition: translate 0.15s var(--ease-out);
+    width: 1rem;
+
+    .switch[aria-checked='true'] & {
+      translate: 1rem 0;
+    }
+  }
+
+  .switchLabel {
+    font-size: var(--step-minus-1);
+    font-weight: 600;
+  }
+
+  .hint {
+    color: var(--text-2);
+    font-size: var(--step-minus-1);
+  }
+
+  @media (scripting: none) {
+    .status,
+    .stage,
+    .switches {
+      display: none;
+    }
+  }
+}
