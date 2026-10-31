@@ -2,18 +2,11 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { startChiptune, type Channel, type Chiptune } from '@/components/islands/chiptune'
 import { Caption, Controls, DemoButton } from '@/components/islands/demo-kit/controls'
 import { claimSpeakers, releaseSpeakers } from '@/components/islands/demo-kit/speakers'
 
-import {
-  BUILD_ORDER,
-  CHANNEL_NAMES,
-  ROLES,
-  SONG,
-  startChiptune,
-  type Channel,
-  type Chiptune,
-} from './chiptune'
+import { BUILD_ORDER, CHANNEL_NAMES, ROLES, SONG } from './chiptune'
 import styles from './jukebox.module.css'
 
 /** What each step of the build adds, keyed by how many channels are on. */
