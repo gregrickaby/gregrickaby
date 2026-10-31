@@ -1,30 +1,9 @@
 import Link from 'next/link'
 
+import { GHOST } from '@/components/ghost'
 import { LofiRadio } from '@/components/islands/lofi-radio'
 
 import styles from './missing-page.module.css'
-
-/**
- * A lost ghost, one string per row of pixels: `x` is its outline, `#` its
- * sheet, `o` its eyes, `b` its blush, and a space is empty.
- */
-const GHOST = [
-  '     xxxxxx     ',
-  '   xx######xx   ',
-  '  x##########x  ',
-  ' x############x ',
-  ' x############x ',
-  'x###oo####oo###x',
-  'x###oo####oo###x',
-  'x##############x',
-  'x#bb########bb#x',
-  'x##############x',
-  'x##############x',
-  'x##############x',
-  'x##############x',
-  'x##xx##xx##xx##x',
-  ' xx  xx  xx  xx ',
-]
 
 /** The class that colors each kind of pixel in `GHOST`. */
 const PIXELS: Record<string, string | undefined> = {
