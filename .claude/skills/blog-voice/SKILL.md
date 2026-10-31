@@ -103,7 +103,7 @@ draft: true                                        # until Greg publishes
 description: 'One specific sentence: what, how, and a concrete number.'
 featuredImage: './file.jpg'
 categories: ['Code']                               # or ['Blog']
-tags: ['lowercase', 'tags']
+tags: ['tutorials', 'javascript']                  # reuse existing tags; one lowercase word each
 ---
 ```
 

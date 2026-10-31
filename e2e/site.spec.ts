@@ -59,10 +59,8 @@ test.describe('reading', () => {
 
   test('tags and categories list their posts', async ({ page }) => {
     await page.goto('/the-moons-of-2023')
-    await page.getByRole('link', { name: 'Astrophotography', exact: true }).click()
-    await expect(
-      page.getByRole('heading', { level: 1, name: 'Tag: Astrophotography' }),
-    ).toBeVisible()
+    await page.getByRole('link', { name: 'photography', exact: true }).click()
+    await expect(page.getByRole('heading', { level: 1, name: 'Tag: photography' })).toBeVisible()
     await expect(page.getByRole('link', { name: 'The Moons of 2023' })).toBeVisible()
 
     await page.goto('/category/Code')
