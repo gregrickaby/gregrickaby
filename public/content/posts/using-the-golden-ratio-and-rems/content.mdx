@@ -1,8 +1,8 @@
 ---
-title: 'Web Typography: Using The Golden Ratio and REMs'
+title: 'Golden ratio typography with REM units'
 slug: 'using-the-golden-ratio-and-rems'
 date: '2013-05-19T08:03:21'
-modified: '2026-04-09T00:00:00'
+modified: '2026-11-03T00:00:00'
 type: 'post'
 description: 'How to use REM units and the Golden Ratio Typography Calculator to set font sizes, line heights, and margins with mathematical precision.'
 featuredImage: './DSC02796.jpg'
@@ -79,6 +79,26 @@ h4 {
 ```
 
 That looks simple enough, right? Just move the decimal. Now your fonts will scale perfectly during a browser re-size (if using responsive design), or if a user were to zoom in or out.
+
+## How do I convert rem to px?
+
+Multiply the rem value by the root font size. Browsers default to `16px`, so `1.8rem` is `28.8px`. With the `62.5%` root above, the root is `10px` and `1.8rem` is `18px`.
+
+| rem      | px (16px root) | px (10px root) |
+| -------- | -------------- | -------------- |
+| `0.5rem` | 8px            | 5px            |
+| `1rem`   | 16px           | 10px           |
+| `1.2rem` | 19.2px         | 12px           |
+| `1.5rem` | 24px           | 15px           |
+| `1.6rem` | 25.6px         | 16px           |
+| `1.8rem` | 28.8px         | 18px           |
+| `2rem`   | 32px           | 20px           |
+| `2.4rem` | 38.4px         | 24px           |
+| `2.6rem` | 41.6px         | 26px           |
+| `3rem`   | 48px           | 30px           |
+| `4.8rem` | 76.8px         | 48px           |
+
+To go the other way, divide the pixel size by the root size: `24px ÷ 16 = 1.5rem`.
 
 ## Putting it all together with CSS custom properties
 
