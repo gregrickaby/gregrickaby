@@ -24,6 +24,7 @@ export default defineConfig({
         'app/**/*.{ts,tsx}',
         'components/**/*.{ts,tsx}',
         'stylelint/**/*.ts',
+        'oxlint/**/*.ts',
       ],
       exclude: ['**/*.d.ts'],
       reporter: ['text-summary', 'text', 'html'],

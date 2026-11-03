@@ -128,7 +128,7 @@ export function Lightbox({
         {slide ? (
           <figure className={styles.figure}>
             {/* Already an optimized URL (or an HDR original), so next/image would only re-wrap it. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {/* oxlint-disable-next-line nextjs/no-img-element */}
             <img alt={slide.alt} className={styles.image} key={slide.src} src={slide.src} />
             <figcaption className={styles.caption}>
               {slide.caption ? <span className={styles.title}>{slide.caption}</span> : null}
