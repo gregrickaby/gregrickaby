@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "sortPackageJson": false,
+  // Imports go in three groups: packages (Node built-ins, then Next and React, then the rest),
+  // `@/` paths, and relative paths.
+  "sortImports": {
+    "customGroups": [
+      { "groupName": "next-react", "elementNamePattern": ["next", "next/**", "react", "react/**"] }
+    ],
+    "groups": [
+      ["side_effect", "side_effect_style"],
+      "builtin",
+      { "newlinesBetween": false },
+      "next-react",
+      { "newlinesBetween": false },
+      "external",
+      "internal",
+      ["parent", "sibling", "index"],
+      "unknown"
+    ]
+  },
+  // .gitignore covers the rest.
+  "ignorePatterns": ["/.claude", "/public/", "package-lock.json"]
+}
