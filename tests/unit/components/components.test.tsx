@@ -42,9 +42,10 @@ describe('SiteHeader', () => {
 
 describe('SiteFooter', () => {
   it('shows the copyright with the build year and the license', async () => {
-    const text = (await renderServer(<SiteFooter />)).replace(/<[^>]+>/g, '')
-    expect(text).toContain(
-      '© 1981–2026. Shot, written, and built by Greg Rickaby. Unless noted, all photos and writing are licensed CC BY-NC-ND 4.0.',
+    // React separates adjacent text and expressions with empty comments.
+    const html = (await renderServer(<SiteFooter />)).replaceAll('<!-- -->', '')
+    expect(html).toContain(
+      '© 1981–2026. Shot, written, and built by Greg Rickaby. Unless noted, all photos and writing are licensed <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" rel="license noopener" target="_blank">CC BY-NC-ND 4.0</a>.',
     )
   })
 })
