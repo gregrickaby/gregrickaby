@@ -6,7 +6,7 @@ const parse = vi.fn()
 vi.mock('exifr', () => ({ default: { parse } }))
 vi.mock('image-size', () => ({ imageSize: () => ({ width: 3000, height: 2000 }) }))
 
-const { comparePhotos, fixMojibake, hasGainMap, readPhoto, titleFromFilename } =
+const { comparePhotos, dateFromFilename, fixMojibake, hasGainMap, readPhoto, titleFromFilename } =
   await import('@/lib/content-build/photos')
 
 beforeEach(() => parse.mockReset())
@@ -93,5 +93,18 @@ describe('readPhoto', () => {
     expect(result).toMatchObject({ title: 'Morning Mist', hdr: false })
     expect(result.camera).toBeUndefined()
     expect(result.dateTaken).toBeUndefined()
+  })
+
+  it('takes the date from the filename when there is no EXIF date', async () => {
+    parse.mockResolvedValue(undefined)
+    const result = await readPhoto(Buffer.from(''), 'Orion_Nebula_(M42)_20250323.jpg')
+    expect(result.dateTaken).toBe('2025-03-23T00:00:00.000Z')
+  })
+})
+
+describe('dateFromFilename', () => {
+  it('reads a trailing _YYYYMMDD and ignores names without one', () => {
+    expect(dateFromFilename('Moon_20240101.jpg')).toBe('2024-01-01T00:00:00.000Z')
+    expect(dateFromFilename('moon.jpg')).toBeUndefined()
   })
 })

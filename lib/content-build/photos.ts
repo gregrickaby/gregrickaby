@@ -9,6 +9,7 @@ const LATIN1_RANGE = /[\x80-\xff]/
 const EXTENSION = /\.\w+$/
 const SEPARATOR = /[-_]/g
 const WORD_START = /\b\w/g
+const FILENAME_DATE = /_(\d{4})(\d{2})(\d{2})\.\w+$/
 
 /** True when a JPEG carries an Ultra HDR / Adobe gain map (`hdrgm` XMP namespace). */
 export function hasGainMap(buffer: Buffer): boolean {
@@ -45,6 +46,12 @@ export function titleFromFilename(filename: string): string {
     .replaceAll(WORD_START, (c) => c.toUpperCase())
 }
 
+/** "Orion_20250323.jpg" becomes "2025-03-23T00:00:00.000Z"; a name without a date gives undefined. */
+export function dateFromFilename(filename: string): string | undefined {
+  const match = FILENAME_DATE.exec(filename)
+  return match ? `${match[1]}-${match[2]}-${match[3]}T00:00:00.000Z` : undefined
+}
+
 function text(value: unknown): string | undefined {
   return typeof value === 'string' && value ? fixMojibake(value.trim()) : undefined
 }
@@ -58,7 +65,7 @@ function camera(exif: Exif | null): string | undefined {
 
 /**
  * Reads a photo's size, EXIF, and IPTC fields. A photo without EXIF still gets
- * a title from its filename.
+ * a title from its filename, and a date from a `_YYYYMMDD` suffix.
  *
  * @param buffer - The image file.
  * @param filename - The file's name, used for the URL and as a title fallback.
@@ -106,7 +113,7 @@ export async function readPhoto(buffer: Buffer, filename: string): Promise<Photo
     shutterSpeed: exposure === undefined ? undefined : formatShutterSpeed(exposure),
     iso: iso === undefined ? undefined : String(iso),
     focalLength: focal === undefined ? undefined : `${Math.round(focal)}mm`,
-    dateTaken: taken instanceof Date ? taken.toISOString() : undefined,
+    dateTaken: taken instanceof Date ? taken.toISOString() : dateFromFilename(filename),
   }
 }
 
