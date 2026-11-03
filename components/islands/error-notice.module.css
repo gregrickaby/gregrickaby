@@ -28,7 +28,7 @@
     gap: var(--space-4);
   }
 
-  .retry {
+  .reload {
     background: var(--accent-fill);
     border: 0;
     border-radius: 999px;

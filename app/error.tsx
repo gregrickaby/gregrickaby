@@ -8,13 +8,10 @@ import { ErrorNotice } from '@/components/islands/error-notice'
  * no site shell, which can't come back here: its footer reads `lib/content`,
  * which is server-only.
  */
-export default function ErrorPage(props: {
-  error: Error & { digest?: string }
-  retry: () => void
-}) {
+export default function ErrorPage({ error }: { error: Error & { digest?: string } }) {
   return (
     <main>
-      <ErrorNotice {...props} />
+      <ErrorNotice error={error} />
     </main>
   )
 }
