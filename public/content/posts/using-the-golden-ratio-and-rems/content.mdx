@@ -1,88 +1,57 @@
 ---
-title: 'Golden ratio typography with REM units'
+title: 'Golden ratio typography with rem units'
 slug: 'using-the-golden-ratio-and-rems'
 date: '2013-05-19T08:03:21'
 modified: '2026-11-03T00:00:00'
 type: 'post'
-description: 'How to use REM units and the Golden Ratio Typography Calculator to set font sizes, line heights, and margins with mathematical precision.'
+description: 'A golden ratio typography calculator, plus how to convert rem to px, build a type scale, pick a line height with the 1.618 formula, and make headings fluid with clamp().'
 featuredImage: './DSC02796.jpg'
 categories: ['Code']
 tags: ['css', 'tutorials']
 ---
 
-[WordPress 3.5 beta 1](https://wordpress.org/news/2012/09/wordpress-3-5-beta-1/) shipped with the a new default theme: [_Twenty Twelve_](http://wordpress.org/extend/themes/twentytwelve). While looking at [style.css](http://core.trac.wordpress.org/browser/trunk/wp-content/themes/twentytwelve/style.css), I noticed the use of "REM" to set font sizes and margins. I had NO idea what REM was. In fact, I just started using EMs in other child themes. Immediately, I turned to Google and started researching.
+Back in 2012, I opened the stylesheet for Twenty Twelve, WordPress's new default theme, and found font sizes in a unit called `rem`.
 
-## I thought REM was a band?
+I had NO idea what a rem was. I thought R.E.M. was a band.
 
-By definition, the [REM unit](http://www.w3.org/TR/css3-values/#rem-unit) is: _"Equal to the computed value of ‘font-size’ on the root element. When specified on the ‘font-size’ property of the root element, the ‘rem’ units refer to the property's initial value._"
+So I did what you do. I read everything, wrote this post in 2013, and told you to put `html { font-size: 62.5% }` at the top of every stylesheet. Thirteen years later, I don't do that anymore, and I'd like to explain why before you copy it out of a post with my name on it.
 
-**tl;dr** The REM is one of the newest font-size standards for CSS3. It stands for "Root EM". You base your calculation on the _default font size_ of the HTML element – NOT the parent-like EM. **It's basically "EM v2.0".**
+This is the rewrite. It still covers rem to px and golden ratio typography, but now there are five little machines to play with, and none of them ask you to take my word for anything. The first one is a whole calculator, because I know some of you came here for numbers, not my life story.
 
-## So what?
+## Golden ratio typography calculator
 
-The problem with pixels is, they absolutely do-not-scale. Furthermore, with the onset of Responsive Web Design, having fonts that scale (in relation to the screen width) has become paramount. Percentages (%) and EMs are better, but they're tricky and compound. Still not an answer. A real solution?
+Tell it your body font size and how wide your text column is. It works out the rest: the line height, the best width for your size and the best size for your width, a heading scale where every level gets its own line height, spacing, and the CSS to paste into your site.
 
-## Using REM
+<div data-demo="calculator"></div>
 
-First, you need to set a default "root" font-size variable:
+Start at `16px` and `680px`, close to what you're reading right now. Then drag the width out to `1200px` and watch the line height grow with it. Wide lines need more room between them, and the math knows it.
 
-```css
-html {
-  font-size: 62.5%;
-}
-```
+> [!NOTE] What's the width for a whole-pixel line height?
+> The formula gives line heights like `25.96px`. If you'd rather use a whole `26px`, the width that keeps the proportions golden moves too, and the calculator solves for it. Chris Pearson calls that typographical tuning.
 
-_Why 62.5% instead of 100%?_ Simplicity.
+How does it work? Everything below is the long version: rems first, then the golden ratio, the line height formula, and fluid type.
 
-Our default font is now `10px`, which makes math easier. Now, `1.0rem = 10px`. This becomes our `--rem-base` CSS custom property.
+## What a rem is
 
-Calculate other font sizes by dividing your desired size by the `--rem-base` custom property (in pixels). Let's say, you want your `<h1>` tags to be 26px:
+A rem is a "root em": [the font size of the root element](https://www.w3.org/TR/css-values-4/#font-relative-lengths), which is the `<html>` tag. Every browser sets that to `16px` unless the reader changes it. So `1rem` is `16px`, `2rem` is `32px`, and `0.5rem` is `8px`.
 
-```text
-26 ÷ 10 = 2.6rem
-```
-
-or
-
-```text
-32 ÷ 10 = 3.2rem
-48 ÷ 10 = 4.8rem
-```
-
-and so on.
-
-Let's take a look at a sample Stylesheet:
+An `em` is the same idea, measured from the _parent_ instead of the root. That sounds harmless until you nest things:
 
 ```css
-:root {
-  --rem-base: 10;
-}
-
-html {
-  font-size: 62.5%;
-}
-
-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1.6rem; /* 16 ÷ var(--rem-base) */
-}
-
-h1,
-h2 {
-  font-size: 2.6rem; /* 26 ÷ var(--rem-base) */
-}
-
-h3,
-h4 {
-  font-size: 1.8rem; /* 18 ÷ var(--rem-base) */
+li {
+  font-size: 1.2em; /* 20% bigger than the parent */
 }
 ```
 
-That looks simple enough, right? Just move the decimal. Now your fonts will scale perfectly during a browser re-size (if using responsive design), or if a user were to zoom in or out.
+A list inside a list inside a list is now `1.2 × 1.2 × 1.2 = 1.728` times the body size. Every level compounds. A rem never does: `1.2rem` is `19.2px` no matter how deep it sits.
 
 ## How do I convert rem to px?
 
-Multiply the rem value by the root font size. Browsers default to `16px`, so `1.8rem` is `28.8px`. With the `62.5%` root above, the root is `10px` and `1.8rem` is `18px`.
+Multiply the rem value by the root font size. With the browser's default `16px` root, `1.5rem` is `24px`. Drag the root size and watch the whole table move:
+
+<div data-demo="rem"></div>
+
+That's the whole trick, and also the whole point: change one number at the root and everything sized in rem follows it. If you need the numbers without JavaScript, here they are at a `16px` root and at the `10px` root you get from `62.5%`:
 
 | rem      | px (16px root) | px (10px root) |
 | -------- | -------------- | -------------- |
@@ -100,55 +69,147 @@ Multiply the rem value by the root font size. Browsers default to `16px`, so `1.
 
 To go the other way, divide the pixel size by the root size: `24px ÷ 16 = 1.5rem`.
 
-## Putting it all together with CSS custom properties
+## The 62.5% trick (and why I stopped)
 
-Rather than computing these values by hand each time, define them once as CSS custom properties at the `:root` level. Every selector that follows reads from those variables.
+The old version of this post had you write this:
 
 ```css
-:root {
-  --rem-base: 10;
-  --font-base: 16;
-  --line-height-base: 1.625; /* from the Golden Ratio Calculator */
-}
-
 html {
-  font-size: 62.5%; /* sets 1rem = 10px */
+  font-size: 62.5%; /* 62.5% of 16px is 10px */
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1.6rem;
-  line-height: var(--line-height-base);
-}
-
-h1,
-h2 {
-  font-size: 2.6rem;
-  line-height: 1;
-}
-
-h3,
-h4 {
-  font-size: 1.8rem;
-  line-height: 1.444;
-}
-
-.some-div {
-  margin: 2.4rem 0;
-}
-
-.another-div {
-  padding: 4.8rem;
-  margin-bottom: 2.4rem;
+  font-size: 1.6rem; /* back up to 16px */
 }
 ```
 
-CSS custom properties are [universally supported](https://caniuse.com/css-variables) in every modern browser. Unlike Sass variables, they work at runtime, can be overridden at any scope, and are visible in DevTools — making them a better fit for responsive type scales.
+The appeal is obvious. With a `10px` root, `2.6rem` is `26px`. Just move the decimal! I loved it.
 
-### Further reading
+> [!WARNING] The 62.5% root breaks things you didn't write
+> A percentage still scales with the reader's browser setting, so that part is fine. The trouble is everything else on the page. Any text you forget to size renders at `10px`. And every rem in a library, an embed, or a component you pulled in assumes `1rem` is `16px`, so it all shows up at 62.5% of the size its author meant. Writing `html { font-size: 10px }` is worse: a fixed pixel root ignores the reader's setting entirely.
 
-- [https://grtcalculator.com/](https://grtcalculator.com/)
-- [http://snook.ca/archives/html_and_css/font-size-with-rem](http://snook.ca/archives/html_and_css/font-size-with-rem)
-- [http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/](http://blog.typekit.com/2011/11/09/type-study-sizing-the-legible-letter/)
-- [http://jsbin.com/acide4/8](http://jsbin.com/acide4/8)
-- [http://offroadcode.com/prototypes/rem-calculator/](http://offroadcode.com/prototypes/rem-calculator/)
+Here's what changed my mind: dividing by 16 isn't hard, and I don't do it by hand anymore. I define the sizes once, as custom properties, and never think about them again. Which brings us to the fun part.
+
+## Golden ratio typography
+
+The golden ratio is about `1.618`. It's the proportion you get when a line is split so that the whole is to the long part as the long part is to the short part, and it shows up in sunflowers, seashells, and a lot of breathless design blog posts.
+
+For type, the idea is simple: pick a body size, then multiply by the ratio once for each step up. Body text at `16px` gives an h3 of `25.9px`, an h2 of `41.9px`, and an h1 of `67.8px`. Pick a ratio and see how it feels:
+
+<div data-demo="scale"></div>
+
+Did you try the golden ratio first? That h1 is _huge_. Three steps of 1.618 multiply out to 4.236, so a `16px` body gets a `67.8px` headline. That's great for a poster and a lot for a blog post on a phone.
+
+The perfect fourth (1.333) and the minor third (1.2) climb gentler slopes, which is why most type scale tools default to one of them. The headings you're reading now step up by less than 1.3.
+
+> [!NOTE] Why do the ratios have music names?
+> They're musical intervals. Play a note, then one with a frequency 4/3 as high, and you've played a perfect fourth. 6/5 (1.2) is a minor third. I've played bass in a worship band for 10 years, and I still find it a little delightful that a type scale and a chord chart share a vocabulary.
+
+The CSS under the demo is real. Copy it, and you have a whole scale in rem that respects the reader's root size.
+
+## Golden ratio line height
+
+This is the part of golden ratio typography I still use. In 2011, Chris Pearson worked out a [formula that picks a line height](https://pearsonified.com/golden-ratio-typography-intro/) from the font size _and_ the line width.
+
+The idea: your eye has to jump from the end of one line back to the start of the next. Wider lines need a little more room to land on the right one. Here's the formula, written as JavaScript:
+
+```js
+const PHI = 1.618
+
+// The width a line reads best at for this font size
+const goldenWidth = (fontSize * PHI) ** 2
+
+// At the golden width, the line height is exactly fontSize × 1.618
+const lineHeight = fontSize * (PHI - (1 / (2 * PHI)) * (1 - width / goldenWidth))
+```
+
+Drag the width and watch the gaps between lines:
+
+<div data-demo="line-height"></div>
+
+At `16px` the golden width is `670.2px`, and the line height there is exactly `25.9px` (1.618). Squeeze the column to `300px` and it drops to about `23.2px`. The change is small, a pixel or two, but you can _see_ the narrow column tighten up. That's the formula doing what a good typographer does by eye.
+
+This site's text column is `680px` wide, with body text around `17px`. The formula says `1.587`. I use `1.7`, because I like a little more air than the math does.
+
+That's the formula the [calculator at the top](#golden-ratio-typography-calculator) runs, once for the body and once for every heading. If the line height it gives you comes out under `1.5`, your column is too narrow for your font size, and its best size tells you how far to come down.
+
+## Fluid type with clamp()
+
+A fixed scale has one problem left: a headline that looks great on a laptop takes four lines on a phone. [`clamp()`](https://developer.mozilla.org/en-US/docs/Web/CSS/clamp) fixes that. It takes a minimum, a preferred value, and a maximum, and the preferred value can grow with the screen width (`vw`).
+
+Shrink the screen and compare the two headlines:
+
+<div data-demo="fluid"></div>
+
+At `390px`, about the width of a phone, the fixed `3.5rem` headline stacks about a word per line. The fluid one is `33.5px` and reads like a headline again. Drag all the way up and they meet at `56px`, because `clamp()` stops growing at the maximum.
+
+The math behind that middle value is a straight line between two points (`32px` on a `320px` screen, `56px` on a `1440px` one). [Utopia](https://utopia.fyi/) will do it for you. This site's body text is `clamp(1rem, 0.95rem + 0.25vw, 1.15rem)`, from [tokens.css](https://github.com/gregrickaby/gregrickaby/blob/main/app/styles/tokens.css).
+
+> [!TIP] Keep a rem in the middle value
+> `clamp(2rem, 4vw, 3.5rem)` looks simpler, but `vw` ignores the reader's font size setting. Adding a rem (`1.571rem + 2.143vw`) keeps the preferred value tied to the root, so a reader who sets a bigger font size still gets a bigger headline.
+
+## rem or em for spacing?
+
+Both, for different jobs.
+
+Use rem for layout: margins between sections, gaps in a grid, padding on a card. Those should follow the reader's font size, but not the size of the text inside them.
+
+Use em for things that belong to their own text. A button's padding should grow when the button's text grows, and an icon next to a heading should match the heading:
+
+```css
+.button {
+  font-size: 1.125rem;
+  padding: 0.5em 1em; /* scales with this button's text */
+}
+
+.card {
+  margin-block: 2rem; /* scales with the root, not the card's text */
+}
+```
+
+## Putting it all together
+
+Here's the stylesheet I'd write today. No `62.5%`, sizes in rem against the reader's own root, a golden ratio line height, and one fluid headline:
+
+```css
+:root {
+  --step-0: 1rem; /* 16px */
+  --step-1: 1.333rem; /* 21.3px */
+  --step-2: 1.778rem; /* 28.4px */
+  --step-3: clamp(2rem, 1.571rem + 2.143vw, 3.5rem);
+  --line-height: 1.62; /* the golden ratio formula at 16px and 680px */
+}
+
+body {
+  font-size: var(--step-0);
+  line-height: var(--line-height);
+}
+
+h1 {
+  font-size: var(--step-3);
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: var(--step-2);
+}
+```
+
+Every value comes from the reader's root, so if they set their browser to 20px, the whole page grows with it. [Custom properties work in every modern browser](https://caniuse.com/css-variables), and you can tweak them live in DevTools.
+
+## What I'd tell 2013 me
+
+1. **Leave the root alone.** `16px` is the reader's choice, and dividing by 16 is fine.
+2. **Use rem for sizes and layout.** It never compounds, so you always know what you'll get.
+3. **Try the golden ratio, then try 1.25.** The golden ratio is a great line height and a steep type scale.
+4. **Make headlines fluid.** One `clamp()` on the biggest sizes fixes most of the phone problems.
+5. **Use em for padding that belongs to its text.** Buttons and badges grow with their own label.
+
+## Where to read more
+
+- [CSS values and units](https://developer.mozilla.org/en-US/docs/Web/CSS/length) on MDN, for rem, em, and everything else
+- [The surprising truth about pixels and accessibility](https://www.joshwcomeau.com/css/surprising-truth-about-pixels-and-accessibility/) by Josh Comeau, on when to use px, rem, and em
+- [Utopia](https://utopia.fyi/), a fluid type and space calculator
+- [Font sizing with rem](https://snook.ca/archives/html_and_css/font-size-with-rem) by Jonathan Snook, from 2011, one of the posts I learned rem from
+
+R.E.M. is still a band. These days, it's also the first unit I reach for.
