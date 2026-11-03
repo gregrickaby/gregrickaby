@@ -44,6 +44,7 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 - CSS Modules, with every rule inside `@layer components` (lint).
 - Colors come from the tokens in `app/styles/tokens.css` (lint). `light-dark()` handles the themes.
 - Inline `style` only for values computed from data, such as an aspect ratio.
+- Sizes are in `rem`: media query breakpoints, the text column (`--measure`), card grids, and `next/image` `sizes` that follow them, so the layout scales with the reader's font size. Spacing comes from the `--space-*` tokens, which are in `rem`. Use `px` only for hairlines and small fixed details: borders, outlines, shadows, and pixel-art offsets.
 
 ## Errors
 
