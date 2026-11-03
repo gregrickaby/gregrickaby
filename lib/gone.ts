@@ -7,6 +7,7 @@ const GONE = new Set([
   '/faq',
   '/happy-little-trees',
   '/home-networking-upgrade',
+  '/how-to-install-lamp-on-ubuntu',
   '/mobile-website-statistics-from-2009-through-2013',
   '/movie-theater-popcorn-at-home',
   '/pcb-wheel',
@@ -24,9 +25,11 @@ const GONE = new Set([
   '/category/photos',
   '/tag/disney',
   '/tag/gx85',
+  '/tag/hosting',
   '/tag/portrait',
   '/tag/portraits',
   '/tag/snow',
+  '/tag/ubuntu',
   '/tag/year in review',
 ])
 

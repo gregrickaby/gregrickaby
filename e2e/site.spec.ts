@@ -229,7 +229,7 @@ test.describe('likes', () => {
 
 test.describe('table of contents', () => {
   test('links to each section', async ({ page }) => {
-    await page.goto('/how-to-install-lamp-on-ubuntu')
+    await page.goto('/using-the-golden-ratio-and-rems')
     const contents = page.getByRole('navigation', { name: 'Table of contents' })
     await expect(contents).toBeVisible()
     const link = contents.getByRole('link').nth(2)
