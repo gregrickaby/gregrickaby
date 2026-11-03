@@ -1,0 +1,133 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "jsx-a11y", "nextjs", "import"],
+  "jsPlugins": ["./oxlint/plugin.ts"],
+  "categories": { "correctness": "error" },
+  "settings": { "react": { "version": "19.3" } },
+  "env": { "browser": true, "node": true, "es2024": true },
+  "ignorePatterns": [
+    ".next/**",
+    ".generated/**",
+    "out/**",
+    "build/**",
+    "coverage/**",
+    "public/**",
+    ".claude/**",
+    "next-env.d.ts",
+    "**/*.module.css.d.ts"
+  ],
+  "rules": {
+    "typescript/no-explicit-any": "error",
+    "typescript/consistent-type-imports": ["error", { "fixStyle": "inline-type-imports" }],
+    "typescript/consistent-type-definitions": ["error", "interface"],
+    "react/no-danger": "error",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    // Lists keep role="list" because Safari drops list semantics under list-style: none,
+    // and plots, live regions, and the search form use roles on purpose.
+    "jsx-a11y/no-redundant-roles": "off",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    // The home page's photo strip takes focus so the keyboard can scroll it.
+    "jsx-a11y/no-noninteractive-tabindex": "off",
+    // Flags variables local to an effect, such as a requestAnimationFrame id.
+    "react/immutability": "off",
+    "gregrickaby/jsx-sort-props": "error",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-restricted-exports": [
+      "error",
+      {
+        "restrictDefaultExports": {
+          "direct": true,
+          "named": true,
+          "defaultFrom": true,
+          "namedFrom": true,
+          "namespaceFrom": true
+        }
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      { "patterns": [{ "group": ["../**"], "message": "Import from another folder with `@/`." }] }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["{app,components,lib,scripts,stylelint,oxlint}/**/*.{ts,tsx}"],
+      "rules": {
+        "gregrickaby/function-declarations": "error",
+        "gregrickaby/no-react-namespace": "error"
+      }
+    },
+    {
+      "files": [
+        "app/**/{page,layout,template,default,error,global-error,not-found,opengraph-image,icon,sitemap,manifest}.{ts,tsx}",
+        "*.config.{ts,mjs}",
+        "stylelint/**/*.ts",
+        "oxlint/**/*.ts"
+      ],
+      "rules": { "no-restricted-exports": "off" }
+    },
+    {
+      "files": ["lib/content-build/**/*.ts", "scripts/**/*.ts"],
+      "rules": { "no-restricted-imports": "off" }
+    },
+    {
+      "files": ["app/layout.tsx", "components/json-ld.tsx", "components/prose.tsx"],
+      "rules": { "react/no-danger": "off" }
+    },
+    {
+      "files": ["components/islands/**/*.{ts,tsx}"],
+      "rules": {
+        "no-restricted-globals": ["error", "fetch", "XMLHttpRequest", "EventSource", "WebSocket"],
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              { "group": ["../**"], "message": "Import from another folder with `@/`." },
+              {
+                "group": ["@/lib/content", "@/lib/content-build/*"],
+                "allowTypeImports": true,
+                "message": "Islands may only import types from server modules."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["components/islands/copy-markdown.tsx"],
+      "rules": {
+        "no-restricted-globals": ["error", "XMLHttpRequest", "EventSource", "WebSocket"]
+      }
+    },
+    {
+      // Delegated click handlers on a container, and a link whose content comes through props.
+      "files": [
+        "components/islands/code-copy.tsx",
+        "components/islands/lightbox.tsx",
+        "components/islands/sound-link.tsx"
+      ],
+      "rules": {
+        "jsx-a11y/anchor-has-content": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "jsx-a11y/no-static-element-interactions": "off"
+      }
+    },
+    {
+      // Fixtures stand in for post HTML with plain <img> and <a>, and a test that
+      // reads past a missing value fails, which is the point.
+      "files": ["tests/**/*.{ts,tsx}"],
+      "rules": {
+        "jsx-a11y/control-has-associated-label": "off",
+        "nextjs/no-html-link-for-pages": "off",
+        "nextjs/no-img-element": "off",
+        "no-unsafe-optional-chaining": "off"
+      }
+    },
+    {
+      "files": ["scripts/**/*.ts", "lib/datadog/server.ts"],
+      "rules": { "no-console": "off" }
+    }
+  ]
+}

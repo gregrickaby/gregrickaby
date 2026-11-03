@@ -10,7 +10,6 @@ updates:
         patterns:
           - 'next'
           - '@next/*'
-          - 'eslint-config-next'
           - 'react'
           - 'react-dom'
           - '@types/react'

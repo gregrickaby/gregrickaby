@@ -21,6 +21,7 @@ function form(slug: string | null) {
 }
 
 beforeEach(() => {
+  // oxlint-disable-next-line unicorn/no-useless-spread -- deleting while iterating Headers skips entries.
   for (const name of [...request.keys()]) request.delete(name)
 })
 

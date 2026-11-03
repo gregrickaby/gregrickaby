@@ -61,7 +61,7 @@ export async function renderOgImage({
       }}
     >
       {background ? (
-        // eslint-disable-next-line @next/next/no-img-element -- Satori renders plain <img> only.
+        // oxlint-disable-next-line nextjs/no-img-element -- Satori renders plain <img> only.
         <img
           alt=""
           height={OG_SIZE.height}
@@ -102,7 +102,7 @@ export async function renderOgImage({
         </div>
         {byline ? (
           <div style={{ alignItems: 'center', display: 'flex', gap: 16, marginTop: 32 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element -- Satori renders plain <img> only. */}
+            {/* oxlint-disable-next-line nextjs/no-img-element -- Satori renders plain <img> only. */}
             <img alt="" height={56} src={avatar} style={{ borderRadius: 28 }} width={56} />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ fontSize: 26, fontWeight: 700 }}>{SITE.name}</div>
