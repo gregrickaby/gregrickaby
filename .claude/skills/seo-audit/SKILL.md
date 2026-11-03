@@ -52,7 +52,7 @@ httpRequestsAdaptiveGroups(limit: 2000, orderBy: [count_DESC], filter: {
 
 The same query with `edgeResponseStatus_geq: 500` finds errors crawlers hit. Exclude `userAgent_notlike: "%early hints%"` (see `triage-errors`).
 
-AI crawlers: the same dataset grouped by `userAgent` and `edgeResponseStatus`, filtered with `userAgent_like` for each bot name in `site.ts`, shows which ones read the site and whether they got 200s. Also read the zone's `GET /zones/{zone_id}/bot_management`: `ai_bots_protection`, `ai_search`, and `ai_user` should be `disabled`, and `is_robots_txt_managed` `false`, because the app writes its own robots.txt with the Content-Signal. `fight_mode` is on and fine: it lets verified bots through. `site.ts` only proves a crawler's user agent isn't blocked; the logs show whether the real crawlers got 200s.
+AI crawlers: the same dataset grouped by `userAgent` and `edgeResponseStatus`, filtered with `userAgent_like` for each bot name in `site.ts`, shows which ones read the site and whether they got 200s. Also read the zone's `GET /zones/{zone_id}/bot_management`: `ai_bots_protection`, `ai_search`, and `ai_user` should be `disabled`, and `is_robots_txt_managed` `false` (`docs/adr/0005-markdown-copies-and-llms-txt.md` says why). `fight_mode` is on and fine: it lets verified bots through. `site.ts` only proves a crawler's user agent isn't blocked; the logs show whether the real crawlers got 200s.
 
 **Coolify** (app UUID `y998hjxu9uor06xecbjnht8l`): failed deploys or restarts in the window, which crawlers see as 5xx.
 
