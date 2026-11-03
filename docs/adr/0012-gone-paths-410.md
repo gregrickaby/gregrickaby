@@ -13,7 +13,7 @@ The proxy can't rewrite to the not-found route with any status but 404: Next's r
 
 `lib/gone.ts` lists the gone paths, and `proxy.ts` checks it before the missing-path check ([0002](0002-missing-path-404s.md)). For a gone path, the proxy fetches `/404/missing` from its own origin once per process, keeps the HTML in memory, and returns it with a 410. If that fetch fails or answers anything but 404, the proxy logs the error and falls back to the 404 rewrite, and tries the fetch again on the next request.
 
-Redirects run before the proxy, so a gone pattern can overlap a redirect: the six date-based URLs that map to posts still redirect. Only `/about` and `/home` redirect to the home page, which replaced them.
+Redirects run before the proxy, so a gone pattern can overlap a redirect: the date-based URLs that map to posts still redirect. Only `/about` and `/home` redirect to the home page, which replaced them.
 
 ## Consequences
 
