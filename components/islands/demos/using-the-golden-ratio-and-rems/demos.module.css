@@ -1,0 +1,135 @@
+@layer components {
+  .preview,
+  .column {
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    display: grid;
+    gap: var(--space-2);
+    overflow: hidden;
+    padding: var(--space-4);
+  }
+
+  .level {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .size {
+    color: var(--text-2);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    text-transform: uppercase;
+  }
+
+  .sample,
+  .headline {
+    color: var(--text-heading);
+    font-family: var(--font-serif);
+    line-height: 1.1;
+    margin: 0;
+    overflow-wrap: break-word;
+  }
+
+  .headline {
+    font-weight: 700;
+    margin-block-end: var(--space-3);
+  }
+
+  /* The column narrows like a phone screen; the transition keeps the slider from jittering it. */
+  .column {
+    transition: max-width 0.1s;
+    width: 100%;
+  }
+
+  .paragraph {
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    color: var(--text-1);
+    margin: 0;
+    padding: var(--space-4);
+  }
+
+  .results {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+  }
+
+  .result {
+    align-items: baseline;
+    display: flex;
+    gap: var(--space-3);
+    justify-content: space-between;
+  }
+
+  .answer {
+    color: var(--accent-on-card);
+    font-size: var(--step-1);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* The calculator's preview: every size, line height, and margin comes inline from the
+     math. */
+  .sheet {
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    color: var(--text-1);
+    font-family: var(--font-sans);
+    overflow: hidden;
+    padding: var(--space-4) var(--space-5);
+    transition: max-width 0.1s;
+    width: 100%;
+
+    &[data-typeface='serif'] {
+      font-family: var(--font-serif);
+    }
+  }
+
+  .sheetHeading {
+    color: var(--text-heading);
+    font-weight: 700;
+    overflow-wrap: break-word;
+  }
+
+  .spacing {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .space {
+    align-items: center;
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 10rem 1fr;
+  }
+
+  .bar {
+    background: var(--accent-fill);
+    border-radius: var(--radius-1);
+    height: 0.5rem;
+    max-width: 100%;
+  }
+
+  .table {
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+    width: 100%;
+  }
+
+  .code {
+    background: var(--surface-code);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    font-family: var(--font-mono);
+    font-size: var(--step-minus-1);
+    margin: 0;
+    overflow: auto;
+    padding: var(--space-3) var(--space-4);
+  }
+}
