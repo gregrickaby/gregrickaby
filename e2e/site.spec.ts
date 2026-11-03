@@ -1,14 +1,40 @@
+import { AxeBuilder } from '@axe-core/playwright'
 import { instant } from '@next/playwright'
 import { expect, test, type Page } from '@playwright/test'
 
-/** Fails the test on any Content-Security-Policy violation or uncaught error. */
-function watchConsole(page: Page) {
+/**
+ * Collects Content-Security-Policy violations and uncaught errors, and with
+ * `errors`, every console error too.
+ */
+function watchConsole(page: Page, { errors = false } = {}) {
   const problems: string[] = []
   page.on('console', (message) => {
-    if (/Content Security Policy/i.test(message.text())) problems.push(message.text())
+    const text = message.text()
+    if (/Content Security Policy/i.test(text) || (errors && message.type() === 'error')) {
+      problems.push(text)
+    }
   })
   page.on('pageerror', (error) => problems.push(error.message))
   return problems
+}
+
+/** Every path in the sitemap, which lists the pages, posts, tags, and categories. */
+async function getSitemapPaths(page: Page) {
+  const xml = await (await page.request.get('/sitemap.xml')).text()
+  return [...xml.matchAll(/<loc>https:\/\/gregrickaby\.com([^<]*)<\/loc>/g)].map(
+    (match) => match[1] || '/',
+  )
+}
+
+/** Scrolls to the bottom and back, so every element that fades in on scroll is showing. */
+async function revealAll(page: Page) {
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += 600) {
+      window.scrollTo(0, y)
+      await new Promise((resolve) => setTimeout(resolve, 50))
+    }
+    window.scrollTo(0, 0)
+  })
 }
 
 test.describe('reading', () => {
@@ -261,6 +287,54 @@ test.describe('platform', () => {
     await expect(page.getByRole('main')).toHaveCount(1)
     await expect(page.getByRole('banner')).toHaveCount(1)
   })
+})
+
+test.describe('every page', () => {
+  test('every sitemap page loads with no errors or CSP violations', async ({ page }) => {
+    test.setTimeout(180_000)
+    const paths = await getSitemapPaths(page)
+    expect(paths.length).toBeGreaterThan(20)
+    const problems = watchConsole(page, { errors: true })
+    for (const path of paths) {
+      const response = await page.goto(path, { waitUntil: 'networkidle' })
+      expect(response?.status(), path).toBe(200)
+      expect(problems, path).toEqual([])
+    }
+  })
+
+  for (const colorScheme of ['light', 'dark'] as const) {
+    test.describe(`${colorScheme} mode`, () => {
+      // Reduced motion skips the fade-ins, which axe would read as low contrast mid-animation.
+      test.use({ colorScheme, reducedMotion: 'reduce' })
+
+      test(`key pages pass axe's WCAG AA checks in ${colorScheme} mode`, async ({ page }) => {
+        test.setTimeout(180_000)
+        for (const path of [
+          '/',
+          '/blog',
+          '/photos',
+          '/gear',
+          '/resume',
+          '/contact',
+          '/the-moons-of-2023',
+          '/8-bit-sound-effects-with-the-web-audio-api',
+          '/how-gain-maps-elevate-hdr-photography',
+          '/how-to-use-the-gamepad-api',
+          '/no-such-page',
+        ]) {
+          await page.goto(path, { waitUntil: 'networkidle' })
+          await revealAll(page)
+          const { violations } = await new AxeBuilder({ page })
+            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+            .analyze()
+          expect(
+            violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+            path,
+          ).toEqual([])
+        }
+      })
+    })
+  }
 })
 
 test.describe('without JavaScript @nojs', () => {
