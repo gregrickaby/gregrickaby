@@ -8,13 +8,7 @@ import { addNextjsError } from '@datadog/browser-rum-nextjs'
  * tokens, and CSS are not loaded; the inline styles follow the OS color scheme
  * instead.
  */
-export default function GlobalError({
-  error,
-  retry,
-}: {
-  error: Error & { digest?: string }
-  retry: () => void
-}) {
+export default function GlobalError({ error }: { error: Error & { digest?: string } }) {
   useEffect(() => addNextjsError(error), [error])
 
   return (
@@ -30,9 +24,9 @@ export default function GlobalError({
         <title>Couldn&apos;t load this page - Greg Rickaby</title>
         <main style={{ margin: '0 auto', maxWidth: '40rem', padding: '4rem 1rem' }}>
           <h1>Couldn&apos;t load this page</h1>
-          <p>Trying again usually works.</p>
+          <p>Something broke on my end. A fresh reload sometimes fixes it.</p>
           <button
-            onClick={() => retry()}
+            onClick={() => window.location.reload()}
             style={{
               background: 'Canvas',
               border: '1px solid GrayText',
@@ -45,7 +39,7 @@ export default function GlobalError({
             }}
             type="button"
           >
-            Try again
+            Reload the page
           </button>
         </main>
       </body>

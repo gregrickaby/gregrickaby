@@ -10,9 +10,13 @@ const { default: SiteError } = await import('@/app/(site)/error')
 const { default: SearchError } = await import('@/app/search/error')
 const { default: GlobalError } = await import('@/app/global-error')
 
+const reload = vi.fn()
+Object.defineProperty(window, 'location', { value: { reload }, configurable: true })
+
 afterEach(() => {
   cleanup()
   addNextjsError.mockClear()
+  reload.mockClear()
 })
 
 describe('error boundary', () => {
@@ -20,31 +24,29 @@ describe('error boundary', () => {
     ['root', RootError],
     ['site', SiteError],
     ['search', SearchError],
-  ])('%s reports the error and offers a retry and a way home', (_name, ErrorPage) => {
+  ])('%s reports the error and offers a reload and a way home', (_name, ErrorPage) => {
     const error = Object.assign(new Error('boom'), { digest: 'd1' })
-    const retry = vi.fn()
-    render(<ErrorPage error={error} retry={retry} />)
+    render(<ErrorPage error={error} />)
 
     expect(addNextjsError).toHaveBeenCalledWith(error)
     expect(screen.getByRole('heading', { name: "Couldn't load this page" })).toBeTruthy()
     expect(screen.getByRole('link', { name: 'Back to the home page' }).getAttribute('href')).toBe(
       '/',
     )
-    fireEvent.click(screen.getByRole('button', { name: 'Try again' }))
-    expect(retry).toHaveBeenCalledOnce()
+    fireEvent.click(screen.getByRole('button', { name: 'Reload the page' }))
+    expect(reload).toHaveBeenCalledOnce()
   })
 })
 
 describe('global error boundary', () => {
-  it('reports the error and offers a retry', () => {
+  it('reports the error and offers a reload', () => {
     const error = Object.assign(new Error('boom'), { digest: 'd2' })
-    const retry = vi.fn()
-    render(<GlobalError error={error} retry={retry} />)
+    render(<GlobalError error={error} />)
 
     expect(addNextjsError).toHaveBeenCalledWith(error)
     expect(document.title).toBe("Couldn't load this page - Greg Rickaby")
     expect(screen.getByRole('heading', { name: "Couldn't load this page" })).toBeTruthy()
-    fireEvent.click(screen.getByRole('button', { name: 'Try again' }))
-    expect(retry).toHaveBeenCalledOnce()
+    fireEvent.click(screen.getByRole('button', { name: 'Reload the page' }))
+    expect(reload).toHaveBeenCalledOnce()
   })
 })
