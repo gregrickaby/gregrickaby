@@ -24,6 +24,12 @@ export const OPEN_GRAPH_BASE = {
 } as const
 
 /**
+ * The feed link every page advertises. A page's `alternates` replaces the root
+ * layout's whole object, like `openGraph`, so each builder repeats it.
+ */
+export const FEED_ALTERNATE = { 'application/rss+xml': '/feed.xml' } as const
+
+/**
  * Metadata for a page with no Markdown behind it, such as the blog index or a
  * tag archive. The share image comes from the nearest opengraph-image route.
  */
@@ -35,7 +41,7 @@ export async function buildPageMetadata(
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: path, types: FEED_ALTERNATE },
     openGraph: {
       ...OPEN_GRAPH_BASE,
       title,
@@ -76,7 +82,7 @@ export async function buildContentMetadata(
     description: meta.description,
     alternates: {
       canonical: canonicalPath,
-      ...(markdownPath && { types: { 'text/markdown': markdownPath } }),
+      types: { ...FEED_ALTERNATE, ...(markdownPath && { 'text/markdown': markdownPath }) },
     },
     openGraph: {
       ...OPEN_GRAPH_BASE,

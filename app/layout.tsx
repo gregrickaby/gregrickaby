@@ -11,7 +11,7 @@ import { Roboto, Roboto_Mono, Roboto_Slab, Silkscreen } from 'next/font/google'
 import { DatadogAppRouter } from '@datadog/browser-rum-nextjs'
 
 import { JsonLd } from '@/components/json-ld'
-import { OPEN_GRAPH_BASE } from '@/lib/metadata'
+import { FEED_ALTERNATE, OPEN_GRAPH_BASE } from '@/lib/metadata'
 import { buildWebSiteGraph } from '@/lib/schema'
 import { SITE } from '@/lib/site'
 
@@ -47,9 +47,7 @@ export const metadata: Metadata = {
     title: SITE.name,
     url: SITE.url,
   },
-  alternates: {
-    types: { 'application/rss+xml': '/feed.xml' },
-  },
+  alternates: { types: FEED_ALTERNATE },
   // The image comes from app/opengraph-image.tsx; X falls back to it.
   twitter: { card: 'summary_large_image' },
 }
