@@ -1,7 +1,12 @@
 import type { ResolvingMetadata } from 'next'
 import { describe, expect, it } from 'vitest'
 
-import { buildContentMetadata, buildPageMetadata, OPEN_GRAPH_BASE } from '@/lib/metadata'
+import {
+  buildContentMetadata,
+  buildPageMetadata,
+  FEED_ALTERNATE,
+  OPEN_GRAPH_BASE,
+} from '@/lib/metadata'
 import { SITE } from '@/lib/site'
 import type { PostMeta } from '@/lib/types'
 
@@ -36,16 +41,19 @@ describe('buildContentMetadata', () => {
     expect(result.alternates?.canonical).toBe('/test-page')
   })
 
-  it('links a post to its Markdown copy, and a page to none', async () => {
+  it('links the feed on every page, and a post to its Markdown copy', async () => {
     const post = await buildContentMetadata(postMeta, '/test-post', makeParent())
-    expect(post.alternates?.types).toEqual({ 'text/markdown': '/test-post.md' })
+    expect(post.alternates?.types).toEqual({
+      ...FEED_ALTERNATE,
+      'text/markdown': '/test-post.md',
+    })
     const page = await buildContentMetadata(baseMeta, '/test-page', makeParent())
-    expect(page.alternates).not.toHaveProperty('types')
+    expect(page.alternates?.types).toEqual(FEED_ALTERNATE)
   })
 
   it('links a page to the Markdown copy it passes', async () => {
     const page = await buildContentMetadata(baseMeta, '/test-page', makeParent(), '/test-page.md')
-    expect(page.alternates?.types).toEqual({ 'text/markdown': '/test-page.md' })
+    expect(page.alternates?.types).toEqual({ ...FEED_ALTERNATE, 'text/markdown': '/test-page.md' })
   })
 
   it('constructs openGraph.url from SITE.url and canonicalPath', async () => {
@@ -111,7 +119,7 @@ describe('buildPageMetadata', () => {
     expect(result).toMatchObject({
       title: 'Blog',
       description: 'Posts.',
-      alternates: { canonical: '/blog' },
+      alternates: { canonical: '/blog', types: FEED_ALTERNATE },
       openGraph: {
         ...OPEN_GRAPH_BASE,
         title: 'Blog',
