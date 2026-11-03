@@ -204,9 +204,9 @@ describe('PostCard and PostGrid', () => {
     const posts = ['a', 'b', 'c'].map((slug) => postMeta({ slug, title: slug.toUpperCase() }))
     const html = await renderServer(<PostGrid posts={posts} />)
     expect(html.match(/<article/g)).toHaveLength(3)
-    expect(html).toContain('590px')
-    expect(html).toContain('390px')
-    expect(await renderServer(<PostGrid posts={posts.slice(0, 1)} />)).not.toContain('390px')
+    expect(html).toContain('36.875rem')
+    expect(html).toContain('24.375rem')
+    expect(await renderServer(<PostGrid posts={posts.slice(0, 1)} />)).not.toContain('24.375rem')
   })
 })
 
