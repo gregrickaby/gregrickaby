@@ -44,6 +44,12 @@ test.describe('reading', () => {
       page.getByRole('heading', { level: 2, name: 'Latest from the blog' }),
     ).toBeVisible()
 
+    // The career row scrolls sideways; its left button shows only after the first step.
+    const left = page.getByRole('button', { name: 'Scroll roles left' })
+    await expect(left).toHaveCount(0)
+    await page.getByRole('button', { name: 'Scroll roles right' }).click()
+    await expect(left).toBeVisible()
+
     await page.locator('main a[data-lightbox]').first().click()
     await expect(page.getByRole('dialog', { name: 'Image viewer' })).toBeVisible()
   })
@@ -135,6 +141,15 @@ test.describe('photos', () => {
     await expect(viewer).toContainText(/2 of \d+/)
     await viewer.getByRole('button', { name: 'Close' }).click()
     await expect(viewer).toBeHidden()
+  })
+
+  test('the gallery links to the gear page, with its affiliate note', async ({ page }) => {
+    await page.goto('/photos')
+    await page.getByRole('link', { name: "Here's my gear." }).click()
+    await expect(page.getByRole('heading', { level: 1, name: 'Camera gear' })).toBeVisible()
+    await expect(page.getByRole('note', { name: 'Affiliate disclaimer' })).toContainText(
+      'Amazon Associate',
+    )
   })
 })
 
@@ -261,6 +276,7 @@ test.describe('without JavaScript @nojs', () => {
     await expect(page.getByRole('button', { name: 'Copy link' })).toBeHidden()
 
     await page.goto('/')
+    await expect(page.getByRole('button', { name: /^Scroll / })).toHaveCount(0)
     await page.getByRole('searchbox', { name: 'Search posts' }).first().fill('hdr')
     await page.keyboard.press('Enter')
     await expect(page).toHaveURL(/\/search\?q=hdr/)
@@ -299,7 +315,15 @@ test.describe('phones @mobile', () => {
   })
 
   test('the page never scrolls sideways @mobile', async ({ page }) => {
-    for (const path of ['/', '/blog', '/the-moons-of-2023', '/photos', '/resume', '/contact']) {
+    for (const path of [
+      '/',
+      '/blog',
+      '/the-moons-of-2023',
+      '/photos',
+      '/gear',
+      '/resume',
+      '/contact',
+    ]) {
       await page.goto(path)
       const overflow = await page.evaluate(
         () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
