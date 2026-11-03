@@ -21,6 +21,10 @@
     gap: var(--space-1);
   }
 
+  .affiliate {
+    font-size: 0.85em;
+  }
+
   .footer a {
     color: inherit;
 
