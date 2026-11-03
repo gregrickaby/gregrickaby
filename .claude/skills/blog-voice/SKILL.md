@@ -97,7 +97,7 @@ When drafting a post, list proposed demos (name, title, control, what the reader
 title: 'Short, sentence case, a little playful'   # 'My website goes beep now'
 slug: 'keyword-rich-slug'                          # matches the folder name
 date: '2026-10-23T00:00:00'
-modified: '2026-10-23T00:00:00'
+modified: '2026-10-23T00:00:00'                    # same as date; bump only for real changes (AGENTS.md)
 type: 'post'
 draft: true                                        # until Greg publishes
 description: 'One specific sentence: what, how, and a concrete number.'
