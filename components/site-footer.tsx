@@ -15,14 +15,15 @@ export function SiteFooter() {
       <div className={styles.inner}>
         <div className={styles.legal}>
           <p>
-            &copy; {`1981-${year}`} {SITE.name}
-          </p>
-          <p>
-            Unless otherwise noted, all photos and content are licensed under{' '}
+            &copy; {`1981–${year}`}. Shot, written, and built by {SITE.name}. Unless noted, all
+            photos and writing are licensed{' '}
             <a href={SITE.license.url} rel="license noopener" target="_blank">
               {SITE.license.name}
             </a>
             .
+          </p>
+          <p className={styles.affiliate}>
+            As an Amazon Associate I earn from qualifying purchases.
           </p>
         </div>
         <ul className={styles.social} role="list">

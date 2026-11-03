@@ -41,12 +41,11 @@ describe('SiteHeader', () => {
 })
 
 describe('SiteFooter', () => {
-  it('shows the build year, license, and profiles', async () => {
-    const html = await renderServer(<SiteFooter />)
-    expect(html).toContain('1981-2026')
-    expect(html).toContain('CC BY-NC-ND 4.0')
-    expect(html).toContain('https://github.com/gregrickaby')
-    expect(html).toContain('href="#top"')
+  it('shows the copyright with the build year and the license', async () => {
+    const text = (await renderServer(<SiteFooter />)).replace(/<[^>]+>/g, '')
+    expect(text).toContain(
+      '© 1981–2026. Shot, written, and built by Greg Rickaby. Unless noted, all photos and writing are licensed CC BY-NC-ND 4.0.',
+    )
   })
 })
 
@@ -258,9 +257,12 @@ describe('PhotoGallery', () => {
             aperture: undefined,
             iso: undefined,
           }),
+          photo({ filename: 'z.jpg', width: 0, height: 0 }),
         ]}
       />,
     )
+    expect(html).toContain('--ratio:1.5')
+    expect(html).toContain('--ratio:1"')
     expect(html).toContain('href="/content/photos/Moon_20240101.jpg"')
     expect(html).toContain('data-details="SONY ILCE-7RM5 · f/6.3 · ISO 100"')
     expect(html).toContain('data-full="/content/photos/h.jpg"')
