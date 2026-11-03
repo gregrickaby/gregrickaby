@@ -1,19 +1,27 @@
 @layer components {
   .gallery {
-    columns: 3 280px;
-    column-gap: var(--space-3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
     margin-inline-start: calc(50% - min(var(--wide) / 2, 50vw));
     padding-inline: var(--gutter);
     width: min(var(--wide), 100vw);
+
+    /* Fills the last row's leftover space, so its photos keep their base size. */
+    &::after {
+      content: '';
+      flex-grow: 9999;
+    }
   }
 
   .photo {
     border-radius: var(--radius-2);
     position: relative;
-    break-inside: avoid;
     cursor: zoom-in;
     display: block;
-    margin-block-end: var(--space-3);
+
+    /* Width and growth scale with the aspect ratio, so every photo in a row is the same height. */
+    flex: var(--ratio) 1 calc(var(--ratio) * 15rem);
     overflow: hidden;
   }
 
