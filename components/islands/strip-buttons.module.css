@@ -1,0 +1,33 @@
+@layer components {
+  /* Over the row's edges, centered on the cards (the row's bottom padding holds the scrollbar). */
+  .button {
+    align-items: center;
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    box-shadow: var(--shadow-2);
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    height: 2.75rem;
+    justify-content: center;
+    position: absolute;
+    top: calc(50% - var(--space-3) / 2);
+    translate: 0 -50%;
+    width: 2.75rem;
+    z-index: 2;
+
+    &:hover {
+      background: var(--surface-hover);
+      color: var(--accent);
+    }
+  }
+
+  .left {
+    inset-inline-start: var(--space-2);
+  }
+
+  .right {
+    inset-inline-end: var(--space-2);
+  }
+}
