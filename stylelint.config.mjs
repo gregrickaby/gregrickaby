@@ -1,6 +1,5 @@
-import type { Config } from 'stylelint'
-
-const config: Config = {
+/** @type {import('stylelint').Config} */
+const config = {
   extends: ['stylelint-config-standard', 'stylelint-config-css-modules'],
   plugins: ['./stylelint/require-components-layer.ts'],
   ignoreFiles: ['.next/**', 'coverage/**', 'node_modules/**'],
