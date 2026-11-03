@@ -55,7 +55,7 @@ describe('renderMarkdown', () => {
     )
     expect(html).toContain('w=640&amp;q=75 640w')
     expect(html).toContain('w=1920&amp;q=75 1920w')
-    expect(html).toContain('sizes="(max-width: 720px) 100vw, 680px"')
+    expect(html).toContain('sizes="(max-width: 45rem) 100vw, 42.5rem"')
     expect(html).toContain(
       'data-full="/_next/image?url=%2Fcontent%2Fposts%2Fp%2Fbig.jpg&amp;w=3840',
     )
@@ -84,7 +84,7 @@ describe('renderMarkdown', () => {
     const wide = await render(
       '<figure className="alignwide"><img src="./big.jpg" alt="" /></figure>',
     )
-    expect(wide.html).toContain('sizes="(max-width: 1100px) 100vw, 1100px"')
+    expect(wide.html).toContain('sizes="(max-width: 68.75rem) 100vw, 68.75rem"')
     const full = await render('<figure class="alignfull"><img src="./big.jpg" alt="" /></figure>')
     expect(full.html).toContain('sizes="100vw"')
   })

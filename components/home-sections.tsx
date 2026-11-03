@@ -61,7 +61,7 @@ export function HomeAbout({ page }: { page: Post }) {
           alt="The Rickaby family"
           className={styles.aboutPhoto}
           height={page.meta.featuredImage.height}
-          sizes="(max-width: 860px) 100vw, 480px"
+          sizes="(max-width: 53.75rem) 100vw, 30rem"
           src={page.meta.featuredImage.src}
           style={aspectRatio(page.meta.featuredImage)}
           width={page.meta.featuredImage.width}
@@ -123,7 +123,7 @@ export function LatestWriting({ posts }: { posts: PostMeta[] }) {
           <PostCard
             key={post.slug}
             post={post}
-            sizes="(max-width: 680px) 100vw, (max-width: 1000px) 50vw, 390px"
+            sizes="(max-width: 42.5rem) 100vw, (max-width: 62.5rem) 50vw, 24.375rem"
           />
         ))}
       </div>
@@ -174,7 +174,7 @@ export function CurrentlyReading({ books }: { books: Book[] }) {
  */
 function stripSizes({ width, height }: Photo) {
   const ratio = width / height
-  return `(max-width: 640px) ${Math.round(220 * ratio)}px, ${Math.round(280 * ratio)}px`
+  return `(max-width: 40rem) ${Math.round(220 * ratio)}px, ${Math.round(280 * ratio)}px`
 }
 
 /** Recent photos in a row that scrolls sideways; each opens in the lightbox. */

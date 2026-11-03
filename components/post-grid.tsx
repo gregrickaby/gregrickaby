@@ -3,9 +3,9 @@ import type { PostMeta } from '@/lib/types'
 
 import styles from './post-grid.module.css'
 
-// Matches the column widths in post-grid.module.css at a 1200px page.
-const FEATURED_SIZES = '(max-width: 900px) 100vw, 590px'
-const REST_SIZES = '(max-width: 680px) 100vw, (max-width: 1000px) 50vw, 390px'
+// Matches the column widths in post-grid.module.css at a 75rem page.
+const FEATURED_SIZES = '(max-width: 56.25rem) 100vw, 36.875rem'
+const REST_SIZES = '(max-width: 42.5rem) 100vw, (max-width: 62.5rem) 50vw, 24.375rem'
 
 /** Posts as cards. The first two are larger, in two columns; the rest use three. */
 export function PostGrid({ posts }: { posts: PostMeta[] }) {

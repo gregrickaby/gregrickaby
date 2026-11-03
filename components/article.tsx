@@ -52,7 +52,7 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
           className={styles.hero}
           image={hero}
           priority
-          sizes="(max-width: 1100px) 100vw, 1100px"
+          sizes="(max-width: 68.75rem) 100vw, 68.75rem"
           slug={meta.slug}
         />
       ) : null}

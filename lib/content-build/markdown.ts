@@ -33,8 +33,8 @@ export interface RenderOptions {
   measure: MeasureImage
 }
 
-const SIZES_DEFAULT = '(max-width: 720px) 100vw, 680px'
-const SIZES_WIDE = '(max-width: 1100px) 100vw, 1100px'
+const SIZES_DEFAULT = '(max-width: 45rem) 100vw, 42.5rem'
+const SIZES_WIDE = '(max-width: 68.75rem) 100vw, 68.75rem'
 const SIZES_FULL = '100vw'
 
 const MEDIA_TAGS = new Set(['img', 'source', 'audio', 'video'])
