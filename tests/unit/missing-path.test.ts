@@ -74,10 +74,12 @@ describe('proxy', () => {
     expect(unstable_doesMiddlewareMatch({ config, nextConfig, url: '/api/health' })).toBe(false)
   })
 
-  it('rewrites missing paths to one no route matches, and passes the rest', () => {
-    const missing = proxy(new NextRequest('https://gregrickaby.com/no-such-post'))
+  it('rewrites missing paths to one no route matches, and passes the rest', async () => {
+    const missing = await proxy(new NextRequest('https://gregrickaby.com/no-such-post'))
     expect(isRewrite(missing)).toBe(true)
     expect(getRewrittenUrl(missing)).toBe('https://gregrickaby.com/404/missing')
-    expect(isRewrite(proxy(new NextRequest('https://gregrickaby.com/hello-world')))).toBe(false)
+    expect(isRewrite(await proxy(new NextRequest('https://gregrickaby.com/hello-world')))).toBe(
+      false,
+    )
   })
 })

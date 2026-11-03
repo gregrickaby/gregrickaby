@@ -286,6 +286,11 @@ test.describe('platform', () => {
     await expect(page.getByRole('heading', { level: 1, name: '404' })).toBeVisible()
     await expect(page.getByRole('main')).toHaveCount(1)
     await expect(page.getByRole('banner')).toHaveCount(1)
+
+    const gone = await page.goto('/tag/disney')
+    expect(gone?.status()).toBe(410)
+    await expect(page).toHaveURL(/\/tag\/disney$/)
+    await expect(page.getByRole('heading', { level: 1, name: '404' })).toBeVisible()
   })
 })
 
