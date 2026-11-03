@@ -37,7 +37,7 @@ Coolify MCP (deferred tools, load with ToolSearch):
 
 Cloudflare MCP (`mcp__cloudflare-api__*`): check for 5xx at the edge, WAF blocks, or cache rules that could explain an error. Read-only. The zone has a proxied wildcard (`*.gregrickaby.com`), so scanners hitting made-up subdomains fill it with 526s: filter GraphQL queries to `clientRequestHTTPHost` `gregrickaby.com` and `www.gregrickaby.com`. Exclude `userAgent_notlike: "%early hints%"`: Cloudflare's own Early Hints fetches log as 504s with origin status 0, more than a thousand a day, and no visitor sees them.
 
-For a failed synthetics check, find the probe at the edge (`userAgent_like: "%Datadog%"`). A 200 cache HIT at the edge for a probe Datadog logged as a timeout means the stall was between Cloudflare and the probe, not the origin. reddit-viewer's checks failed in the same windows until Early Hints was turned off on both zones on 2026-10-28.
+For a failed synthetics check, find the probe at the edge (`userAgent_like: "%Datadog%"`). A 200 cache HIT at the edge for a probe Datadog logged as a timeout means the stall was between Cloudflare and the probe, not the origin. Early Hints is off on both zones; see `docs/adr/0006-deploy.md` for why.
 
 `pup` rate limits: logs aggregate allows 2 calls per 10 seconds, and traces search is close to that. Sleep a few seconds between calls.
 
