@@ -659,11 +659,20 @@ export function GameDemo() {
   const caption = describeGame(playing, shown, help, silent)
   const flicker = shown.time % 0.2 < 0.1
   const crackle = flicker ? CRACKLE[0] : CRACKLE[1]
+  const score = `Score ${String(shown.score).padStart(5, '0')}`
+  const lives = `Lives ${shown.lives}`
+  let banner: string | null = null
+  if (!playing) banner = 'Press Start'
+  else if (shown.won) banner = 'Tape found!'
+  else if (shown.over) banner = 'Game over'
+  // The name starts with the text drawn on the button, so voice control can target what it shows.
+  // Each HUD <text> ends in a space (SVG doesn't draw it) so that text reads as separate words.
+  const label = [score, lives, banner].filter(Boolean).join(' ')
 
   return (
     <>
       <button
-        aria-label="Play the level. Move with the arrow keys and jump with Space."
+        aria-label={`${label}. Play the level. Move with the arrow keys and jump with Space.`}
         className={styles.stage}
         onBlur={() => held.current.clear()}
         onClick={startOrRestart}
@@ -696,19 +705,19 @@ export function GameDemo() {
             {shown.dying > 0 && flicker ? null : <Sprite art={GHOST} x={ghost.x} y={ghost.y} />}
           </g>
           <text className={styles.hud} x="6" y="12">
-            {`Score ${String(shown.score).padStart(5, '0')}`}
+            {score}{' '}
           </text>
           <text className={styles.hud} textAnchor="end" x={VIEW_WIDTH - 6} y="12">
-            {`Lives ${shown.lives}`}
+            {lives}{' '}
           </text>
-          {playing && !shown.won && !shown.over ? null : (
+          {banner ? (
             <>
               <rect className={styles.dim} height={VIEW_HEIGHT} width={VIEW_WIDTH} />
               <text className={styles.banner} x={VIEW_WIDTH / 2} y={VIEW_HEIGHT / 2}>
-                {playing ? (shown.won ? 'Tape found!' : 'Game over') : 'Press Start'}
+                {banner}
               </text>
             </>
-          )}
+          ) : null}
         </svg>
       </button>
       <div className={styles.switches}>

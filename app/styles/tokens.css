@@ -27,6 +27,9 @@
 
     /* Tomato step 5 on white is about 3:1 (fails AA text), so light mode uses step 8. */
     --accent: light-dark(var(--tomato-8), var(--tomato-5));
+
+    /* Small accent labels on cards: tomato-8 on the card surface is 4.35:1, under WCAG AA's 4.5:1. */
+    --accent-on-card: light-dark(var(--tomato-9), var(--tomato-5));
     --accent-soft: light-dark(var(--tomato-0), #3d2518);
     --accent-fill: var(--tomato-8);
     --accent-fill-hover: var(--tomato-9);
@@ -38,7 +41,7 @@
     --focus-ring: light-dark(#1c7ed6, #4dabf7);
     --danger: light-dark(#c92a2a, #ff6b6b);
     --danger-soft: light-dark(#fff5f5, #3b1f1f);
-    --success: light-dark(#2b8a3e, #69db7c);
+    --success: light-dark(#237a36, #69db7c);
     --success-soft: light-dark(#ebfbee, #1e3323);
     --info: light-dark(#1971c2, #74c0fc);
     --info-soft: light-dark(#e7f5ff, #1b2a38);
