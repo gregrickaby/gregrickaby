@@ -164,7 +164,7 @@
   }
 
   .photoImage {
-    height: 280px;
+    height: 17.5rem;
     object-fit: cover;
     transition: scale var(--duration-enter) var(--ease-out);
     width: auto;
@@ -176,7 +176,7 @@
 
   @media (width <= 40rem) {
     .photoImage {
-      height: 220px;
+      height: 13.75rem;
     }
   }
 

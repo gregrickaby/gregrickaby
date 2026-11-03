@@ -268,9 +268,12 @@ describe('PhotoGallery', () => {
             iso: undefined,
           }),
           photo({ filename: 'z.jpg', width: 0, height: 0 }),
+          photo({ filename: 'w.jpg', width: 4000, height: 3000 }),
         ]}
       />,
     )
+    expect(html).toContain('sizes="(max-width: 37.5rem) 100vw, 37.5rem"')
+    expect(html).toContain('sizes="(max-width: 33.33rem) 100vw, 33.33rem"')
     expect(html).toContain('--ratio:1.5')
     expect(html).toContain('--ratio:1"')
     expect(html).toContain('href="/content/photos/Moon_20240101.jpg"')
