@@ -6,7 +6,7 @@
 export const redirects = [
   // Legacy feed URL.
   { source: '/feed', destination: '/feed.xml', permanent: true },
-  { source: '/blog/feed/', destination: '/feed.xml', permanent: true },
+  { source: '/blog/feed', destination: '/feed.xml', permanent: true },
   { source: '/feed/atom', destination: '/feed.xml', permanent: true },
 
   // Browsers and crawlers ask for these by name, ignoring the icon link tag.
@@ -14,8 +14,12 @@ export const redirects = [
   { source: '/apple-touch-icon.png', destination: '/icon.jpg', permanent: true },
   { source: '/apple-touch-icon-precomposed.png', destination: '/icon.jpg', permanent: true },
 
+  // Yoast's sitemap index.
+  { source: '/sitemap_index.xml', destination: '/sitemap.xml', permanent: true },
+
   // About is now the homepage.
   { source: '/about', destination: '/', permanent: true },
+  { source: '/home', destination: '/', permanent: true },
 
   // Old WordPress routes
   { source: '/wp-json/:path*', destination: '/', permanent: true },
@@ -87,6 +91,12 @@ export const redirects = [
   { source: '/tag/typography', destination: '/tag/css', permanent: true },
   { source: '/tag/ubuntu', destination: '/tag/hosting', permanent: true },
   { source: '/tag/wyatt', destination: '/tag/family', permanent: true },
+
+  // Old tags with spaces in their names.
+  { source: '/tag/gain%20map', destination: '/tag/photography', permanent: true },
+  { source: '/tag/how%20to', destination: '/tag/tutorials', permanent: true },
+  { source: '/tag/stable%20diffusion', destination: '/tag/ai', permanent: true },
+  { source: '/tag/year%20in%20review', destination: '/', permanent: true },
 
   // Old slugs that no longer exist.
   {

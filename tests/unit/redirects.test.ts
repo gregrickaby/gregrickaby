@@ -40,6 +40,10 @@ describe('redirects', () => {
     expect(shadowing.map((r) => r.source)).toEqual([])
   })
 
+  it('has no source with a trailing slash, which Next strips before matching', () => {
+    expect(redirects.filter((r) => r.source.endsWith('/')).map((r) => r.source)).toEqual([])
+  })
+
   it('marks every redirect as permanent', () => {
     expect(redirects.every((r) => r.permanent)).toBe(true)
   })
