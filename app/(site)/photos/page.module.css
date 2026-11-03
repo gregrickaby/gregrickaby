@@ -1,0 +1,8 @@
+@layer components {
+  .intro {
+    color: var(--text-2);
+    margin: 0 auto var(--space-6);
+    max-width: var(--measure);
+    text-align: center;
+  }
+}

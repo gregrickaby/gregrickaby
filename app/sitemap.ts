@@ -23,6 +23,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: SITE.url, lastModified: built, changeFrequency: 'weekly', priority: 1 },
     ...pages,
+    { url: `${SITE.url}/gear`, lastModified: built, changeFrequency: 'monthly', priority: 0.5 },
     ...posts,
   ]
 }

@@ -43,7 +43,6 @@ test.describe('reading', () => {
     await expect(
       page.getByRole('heading', { level: 2, name: 'Latest from the blog' }),
     ).toBeVisible()
-    await expect(page.getByRole('heading', { level: 2, name: 'Behind the camera' })).toBeVisible()
 
     await page.locator('main a[data-lightbox]').first().click()
     await expect(page.getByRole('dialog', { name: 'Image viewer' })).toBeVisible()

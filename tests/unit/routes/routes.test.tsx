@@ -45,6 +45,7 @@ const tag = await import('@/app/(site)/tag/[tag]/page')
 const photos = await import('@/app/(site)/photos/page')
 const resume = await import('@/app/(site)/resume/page')
 const contact = await import('@/app/(site)/contact/page')
+const gear = await import('@/app/(site)/gear/page')
 const search = await import('@/app/search/page')
 const staticLayout = await import('@/app/(site)/layout')
 const searchLayout = await import('@/app/search/layout')
@@ -178,7 +179,7 @@ describe.each([
   })
 })
 
-describe('photos, resume, and contact', () => {
+describe('photos, resume, contact, and gear', () => {
   it('renders the gallery', async () => {
     const html = await renderServer(<photos.default />)
     expect(html).toContain('/content/photos/Castle.jpg')
@@ -201,20 +202,25 @@ describe('photos, resume, and contact', () => {
     expect(html).toContain('href="mailto:greg@gregrickaby.com"')
     expect(html).toContain('WebPage')
     expect(await contact.generateMetadata({}, parent)).toMatchObject({ title: 'Contact' })
+    expect(await renderServer(<gear.default />)).toContain('Sony a7RV')
+    expect(await gear.generateMetadata({}, parent)).toMatchObject({ title: 'Camera gear' })
   })
 
   it('falls back to the site description for a page without one', async () => {
     index.pages[1]!.meta.description = undefined
+    index.pages[3]!.meta.description = undefined
     expect(await renderServer(<resume.default />)).toContain('Alabama-based software engineer')
+    expect(await renderServer(<gear.default />)).toContain('Alabama-based software engineer')
   })
 
   it('is a 404 when a page file is missing', async () => {
     index.pages = []
-    for (const Page of [home.default, resume.default, contact.default]) {
+    for (const Page of [home.default, resume.default, contact.default, gear.default]) {
       await expect(renderServer(<Page />)).rejects.toBeInstanceOf(NotFound)
     }
     expect(await resume.generateMetadata({}, parent)).toEqual({})
     expect(await contact.generateMetadata({}, parent)).toEqual({})
+    expect(await gear.generateMetadata({}, parent)).toEqual({})
   })
 })
 
@@ -264,6 +270,7 @@ describe('sitemap, robots, feed, health', () => {
     const urls = sitemap.default().map((e) => e.url)
     expect(urls[0]).toBe('https://gregrickaby.com')
     expect(urls).toContain('https://gregrickaby.com/blog')
+    expect(urls).toContain('https://gregrickaby.com/gear')
     expect(urls).toContain('https://gregrickaby.com/middle')
     expect(urls).not.toContain('https://gregrickaby.com/feed.xml')
   })

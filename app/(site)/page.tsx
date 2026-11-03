@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 
 import { HomeHero } from '@/components/home-hero'
 import {
-  CameraBag,
   CareerStrip,
   CurrentlyReading,
   GalleryStrip,
@@ -27,7 +26,7 @@ export async function generateMetadata(_: unknown, parent: ResolvingMetadata): P
   }
 }
 
-/** The home page: a photo banner, About beside the family photo, then career, writing, reading, photos, and gear in rows. */
+/** The home page: a photo banner, About beside the family photo, then career, writing, reading, and photos in rows. */
 export default async function HomePage() {
   const page = getPage('about')
   if (!page) notFound()
@@ -41,7 +40,6 @@ export default async function HomePage() {
       <LatestWriting posts={getAllPosts().slice(0, 3)} />
       <CurrentlyReading books={books} />
       <GalleryStrip photos={getPhotos().slice(0, 10)} />
-      <CameraBag page={page} />
     </>
   )
 }

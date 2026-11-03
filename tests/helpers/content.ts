@@ -41,7 +41,7 @@ export function photo(overrides: Partial<Photo> = {}): Photo {
   }
 }
 
-/** Three posts (newest first), the about/resume/contact pages, and two photos. */
+/** Three posts (newest first), the about/resume/contact/gear pages, and two photos. */
 export function contentIndex(): ContentIndex {
   return {
     generatedAt: '2026-10-11T20:00:00.000Z',
@@ -78,6 +78,10 @@ export function contentIndex(): ContentIndex {
         featuredImage: undefined,
         description: undefined,
       }),
+      post(
+        { slug: 'gear', title: 'Camera gear', type: 'page', featuredImage: undefined },
+        '<ul><li>Sony a7RV</li></ul>',
+      ),
     ],
     photos: [
       photo(),

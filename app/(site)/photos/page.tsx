@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 import { JsonLd } from '@/components/json-ld'
 import { PageTitle } from '@/components/page-title'
@@ -7,6 +8,8 @@ import { getPhotos } from '@/lib/content'
 import { OPEN_GRAPH_BASE } from '@/lib/metadata'
 import { buildWebPageGraph } from '@/lib/schema'
 import { SITE } from '@/lib/site'
+
+import styles from './page.module.css'
 
 const TITLE = 'Photos'
 const DESCRIPTION = 'A collection of my photos.'
@@ -31,6 +34,9 @@ export default function PhotosPage() {
         graph={buildWebPageGraph({ title: TITLE, description: DESCRIPTION, path: 'photos' })}
       />
       <PageTitle>{TITLE}</PageTitle>
+      <p className={styles.intro}>
+        Curious what I shoot with? <Link href="/gear">Here&apos;s my gear.</Link>
+      </p>
       {photos.length > 0 ? <PhotoGallery photos={photos} /> : <p>No photos yet.</p>}
     </>
   )
