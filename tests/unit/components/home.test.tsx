@@ -61,8 +61,8 @@ describe('CameraGear', () => {
       { slug: 'gear', type: 'page' },
       '<p><strong>Kit:</strong></p><ul><li>Camera</li></ul><h2 id="affiliate-disclaimer">Affiliate disclaimer</h2><p>Small print</p>',
     )
-    const html = (await renderServer(<CameraGear page={page} />)).replace(/<[^>]+>/g, ' ')
-    expect(html).toMatch(/Kit:\s+Camera[\s\S]*Small print/)
+    const html = await renderServer(<CameraGear page={page} />)
+    expect(html).toMatch(/Kit:[\s\S]*Camera[\s\S]*role="note"[\s\S]*Small print/)
   })
 
   it('leaves out the note without a disclaimer section', async () => {
