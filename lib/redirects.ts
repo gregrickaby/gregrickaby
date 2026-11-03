@@ -23,18 +23,8 @@ export const redirects = [
   // Old WordPress date-based URLs that map to existing posts. The rest answer
   // 410 from proxy.ts (lib/gone.ts).
   {
-    source: '/2011/05/how-to-install-lamp-on-ubuntu-1104-natty.html',
-    destination: '/how-to-install-lamp-on-ubuntu',
-    permanent: true,
-  },
-  {
     source: '/2013/05/genesis-code-snippets',
     destination: '/genesis-code-snippets',
-    permanent: true,
-  },
-  {
-    source: '/2013/05/how-to-install-lamp-on-ubuntu',
-    destination: '/how-to-install-lamp-on-ubuntu',
     permanent: true,
   },
   {
@@ -73,7 +63,6 @@ export const redirects = [
   { source: '/tag/snippets', destination: '/tag/tutorials', permanent: true },
   { source: '/tag/tara', destination: '/tag/family', permanent: true },
   { source: '/tag/typography', destination: '/tag/css', permanent: true },
-  { source: '/tag/ubuntu', destination: '/tag/hosting', permanent: true },
   { source: '/tag/wyatt', destination: '/tag/family', permanent: true },
 
   // Old tags with spaces in their names.
