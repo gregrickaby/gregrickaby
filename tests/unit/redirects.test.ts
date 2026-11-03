@@ -11,18 +11,9 @@ const paths = JSON.parse(
 ) as KnownPaths
 
 describe('redirects', () => {
-  it('places the date-based catch-all last', () => {
-    const catchAllIndex = redirects.findIndex((r) => r.source.includes('20[0-9]{2}'))
-    expect(catchAllIndex).toBe(redirects.length - 1)
-  })
-
-  it('places specific WordPress date-based redirects before the catch-all', () => {
-    const catchAllIndex = redirects.findIndex((r) => r.source.includes('20[0-9]{2}'))
-    const specificDateRedirectIndex = redirects.findIndex(
-      (r) => r.source === '/2011/05/how-to-install-lamp-on-ubuntu-1104-natty.html',
-    )
-    expect(specificDateRedirectIndex).toBeGreaterThanOrEqual(0)
-    expect(specificDateRedirectIndex).toBeLessThan(catchAllIndex)
+  it('sends only pages the home page replaces to the home page', () => {
+    const home = redirects.filter((r) => r.destination === '/').map((r) => r.source)
+    expect(home).toEqual(['/about', '/home'])
   })
 
   it('has no duplicate source paths', () => {
