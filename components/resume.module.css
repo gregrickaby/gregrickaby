@@ -2,7 +2,7 @@
   .resume {
     line-height: 1.65;
     margin-inline: auto;
-    max-width: 700px;
+    max-width: 43.75rem;
 
     & a {
       text-decoration: underline;

@@ -67,12 +67,12 @@
     --step-1: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
     --step-2: clamp(1.3rem, 1.1rem + 1vw, 1.8rem);
     --step-3: clamp(1.6rem, 1.2rem + 2vw, 2.6rem);
-    --measure: 680px;
-    --wide: 1100px;
+    --measure: 42.5rem;
+    --wide: 68.75rem;
 
     /* Wide images in posts: halfway between the text column and --wide. */
     --wide-image: calc((var(--measure) + var(--wide)) / 2);
-    --page: 1200px;
+    --page: 75rem;
 
     /* Space (4px base) */
     --space-1: 0.25rem;

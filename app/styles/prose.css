@@ -70,7 +70,7 @@
     & p:has(> img ~ img) {
       display: grid;
       gap: var(--space-2);
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
     }
 
     & p:has(> img ~ img) img {
