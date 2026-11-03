@@ -13,13 +13,13 @@ Greg Rickaby's personal site (<https://gregrickaby.com>): blog, photo gallery, r
 
 ## Stack
 
-Next.js 16.4 (App Router, Cache Components, Partial Prefetching, typed routes, Rust React Compiler) · React 19.3 · TypeScript (strict) · CSS Modules with cascade layers · Vitest 5 + Testing Library + happy-dom · Playwright with `@next/playwright` · ESLint, Stylelint, Prettier, lefthook · Datadog (`dd-trace`, browser RUM).
+Next.js 16.4 (App Router, Cache Components, Partial Prefetching, typed routes, Rust React Compiler) · React 19.3 · TypeScript 7 (strict) · CSS Modules with cascade layers · Vitest 5 + Testing Library + happy-dom · Playwright with `@next/playwright` · Oxlint with a local plugin in `oxlint/`, Oxfmt ([ADR 0011](docs/adr/0011-oxlint-and-oxfmt.md)), Stylelint, lefthook · Datadog (`dd-trace`, browser RUM).
 
 ## Commands
 
 ```bash
 npm run check      # content, CSS module types, typecheck, lint, unit tests with coverage
-npm run format     # Prettier (CI runs format:check)
+npm run format     # Oxfmt (CI runs format:check)
 npm run build      # content + production build
 npm run test:e2e   # Playwright: builds and runs critical paths, with and without JavaScript
 npm run content -- --drafts  # rebuild .generated/ after editing Markdown, photos, or demos
@@ -44,7 +44,7 @@ Secrets go in `.env.local` (see `.env.example`). Server logs, traces, and browse
 - **Goodreads** ([ADR 0004](docs/adr/0004-goodreads.md)). `lib/goodreads.ts` scrapes the "Currently Reading" box for the home page in a `'use cache'` function. Keep `reactMaxHeadersLength: 0` in `next.config.ts`, or the `llms.txt` link header repeats.
 - **Observability** ([ADR 0007](docs/adr/0007-observability.md)). Server logs go through `lib/datadog/server.ts`, which falls back to `console` without `DD_API_KEY`. `instrumentation.ts` reports server errors and a 15-minute heartbeat; `instrumentation-client.ts` starts RUM and browser logs, and the error boundaries report client errors. `app/(site)/error.tsx` and `app/search/error.tsx` render `ErrorNotice` inside their site shell; `app/error.tsx` catches the rest without it. Browser values inline at build time without `NEXT_PUBLIC_`. Logs carry no visitor IPs, raw headers, or query strings.
 - **Easter egg.** `/geocities` (`app/geocities/`) is a Geocities page in an LCARS frame, with its GIFs in `public/geocities/`. It sits outside the `(site)` group, so it skips `SiteShell` (the header and footer). Its radio (`components/islands/subspace-player.tsx`) is fixed to the bottom of the screen and synthesizes a dial-up handshake and an original fanfare (`subspace.ts`). Its metadata sets `noindex, nofollow`; it stays out of the robots.txt disallow list so crawlers can read that.
-- **HTML injection** only in `components/prose.tsx`, `components/json-ld.tsx` (`serializeSchema`), and the theme script in `app/layout.tsx`. ESLint enforces it.
+- **HTML injection** only in `components/prose.tsx`, `components/json-ld.tsx` (`serializeSchema`), and the theme script in `app/layout.tsx`. Oxlint enforces it.
 - **Theme.** Color tokens use `light-dark()` in `app/styles/tokens.css`. A `theme` cookie, applied by an inline script before paint, sets `data-theme` on `<html>`, which only switches `color-scheme`.
 - **View transitions.** Post cards and article heroes share a `<ViewTransition>` name (`components/post-image.tsx`).
 - **Site config.** Copy, nav, and links in `lib/site.ts`; old WordPress redirects in `lib/redirects.ts`; security headers and CSP in `lib/headers.ts`, whose values match what Cloudflare's managed transform sends ([ADR 0006](docs/adr/0006-deploy.md)).

@@ -1,6 +1,6 @@
 # Code standards
 
-How code in this repo is written. `AGENTS.md` covers the architecture and what keeps the site static; this file covers the code itself. ESLint, Stylelint, and Prettier enforce the rules marked (lint). Review catches the rest.
+How code in this repo is written. `AGENTS.md` covers the architecture and what keeps the site static; this file covers the code itself. Oxlint (`.oxlintrc.json`, with the repo's own rules in `oxlint/plugin.ts`), Stylelint, and Oxfmt (`.oxfmtrc.json`) enforce the rules marked (lint). Review catches the rest.
 
 ## TypeScript
 
@@ -13,7 +13,7 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 
 - Named exports only (lint). Default exports are for files Next.js or a tool loads by default: route files (`page`, `layout`, `opengraph-image`, `sitemap`, and the rest) and `*.config.ts`.
 - No barrel files. Import from the module that defines the thing.
-- Imports sort into three groups, separated by a blank line: packages (Node built-ins, then `next` and `react`, then the rest), `@/` paths, and `./` siblings. Prettier sorts them on format (lint). Side-effect imports (`import 'server-only'`, global CSS) stay where they are, so put them first.
+- Imports sort into three groups, separated by a blank line: packages (Node built-ins, then `next` and `react`, then the rest), `@/` paths, and `./` siblings. Oxfmt sorts them on format (lint). Side-effect imports (`import 'server-only'`, global CSS) go first, in the order written.
 - Import from another folder with `@/`, and from the same folder with `./` (lint bans `../`). `lib/content-build/` and `scripts/` are the exception: Node runs them directly, so they import by relative path with the `.ts` extension.
 - Modules that must never reach the browser start with `import 'server-only'`.
 
