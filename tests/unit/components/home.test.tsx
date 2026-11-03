@@ -12,13 +12,11 @@ afterEach(() => {
 })
 
 const { HomeHero } = await import('@/components/home-hero')
-const { CameraBag, CareerStrip, CurrentlyReading, GalleryStrip, HomeAbout, LatestWriting } =
+const { CameraGear } = await import('@/components/camera-gear')
+const { CareerStrip, CurrentlyReading, GalleryStrip, HomeAbout, LatestWriting } =
   await import('@/components/home-sections')
 const { MetaLine } = await import('@/components/meta-line')
 const { HOME } = await import('@/lib/site')
-
-const ABOUT_HTML =
-  '<p>Lead text</p><h2 id="photographer">Photographer</h2><p>Story</p><p><strong>Kit:</strong></p><ul><li>Camera</li></ul><h2 id="affiliate-disclaimer">Affiliate Disclaimer</h2><p>Small print</p>'
 
 describe('HomeHero', () => {
   it('shows the configured photo with its EXIF, the name, and the three ways in', async () => {
@@ -39,31 +37,37 @@ describe('HomeHero', () => {
   })
 })
 
-describe('HomeAbout and CameraBag', () => {
-  it('puts the lead beside the photo and the later sections in the camera bag', async () => {
-    const page = post({ slug: 'about', type: 'page' }, ABOUT_HTML)
+describe('HomeAbout', () => {
+  it('shows only the lead beside the photo', async () => {
+    const page = post(
+      { slug: 'about', type: 'page' },
+      '<p>Lead text</p><h2 id="more">More</h2><p>Later</p>',
+    )
     const about = await renderServer(<HomeAbout page={page} />)
     expect(about).toContain('Lead text')
-    expect(about).not.toContain('Story')
-    expect(about).toContain('<img')
+    expect(about).not.toContain('Later')
     expect(about).toContain('aspect-ratio:')
-
-    const bag = await renderServer(<CameraBag page={page} />)
-    expect(bag).toContain('Behind the camera')
-    expect(bag).toContain('alt="A camera and telephoto lens')
-    expect(bag).toContain('aspect-ratio:1707 / 2560')
-    expect(bag).toContain('Camera')
-    expect(bag).toContain('aria-label="Affiliate disclaimer"')
-    expect(bag).not.toContain('Lead text')
   })
 
-  it('handles a page without a photo, sections, or a disclaimer', async () => {
+  it('skips the photo when the page has none', async () => {
     const plain = post({ slug: 'about', type: 'page', featuredImage: undefined }, '')
     expect(await renderServer(<HomeAbout page={plain} />)).not.toContain('<img')
-    expect(await renderServer(<CameraBag page={plain} />)).toBe('')
+  })
+})
 
-    const noNote = post({ slug: 'about' }, '<h2 id="photographer">Photographer</h2><p>Story</p>')
-    expect(await renderServer(<CameraBag page={noNote} />)).not.toContain('role="note"')
+describe('CameraGear', () => {
+  it('puts the gear beside the rig photo and the disclaimer below', async () => {
+    const page = post(
+      { slug: 'gear', type: 'page' },
+      '<p><strong>Kit:</strong></p><ul><li>Camera</li></ul><h2 id="affiliate-disclaimer">Affiliate disclaimer</h2><p>Small print</p>',
+    )
+    const html = (await renderServer(<CameraGear page={page} />)).replace(/<[^>]+>/g, ' ')
+    expect(html).toMatch(/Kit:\s+Camera[\s\S]*Small print/)
+  })
+
+  it('leaves out the note without a disclaimer section', async () => {
+    const page = post({ slug: 'gear', type: 'page' }, '<ul><li>Camera</li></ul>')
+    expect(await renderServer(<CameraGear page={page} />)).not.toContain('role="note"')
   })
 })
 
@@ -122,7 +126,7 @@ describe('CurrentlyReading', () => {
     expect(html).toContain('Bobiverse, #3')
     expect(html).toContain('Dennis E. Taylor')
     expect(html.match(/<img/g)).toHaveLength(1)
-    expect(html).toContain('href="https://www.goodreads.com/author/show/16999736.Greg_Rickaby"')
+    expect(html).toContain('href="https://www.goodreads.com/gregrickaby"')
   })
 
   it('renders nothing when the shelf is empty', async () => {

@@ -12,7 +12,16 @@ const SECTIONS = new Map([
  * Top-level routes a single segment can also reach. Files (anything with a
  * dot) and the root Open Graph image pass through on their own.
  */
-const ROUTES = new Set(['api', 'blog', 'contact', 'geocities', 'photos', 'resume', 'search'])
+const ROUTES = new Set([
+  'api',
+  'blog',
+  'contact',
+  'gear',
+  'geocities',
+  'photos',
+  'resume',
+  'search',
+])
 
 function decode(segment: string): string | null {
   try {

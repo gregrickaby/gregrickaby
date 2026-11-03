@@ -5,6 +5,7 @@ import type { ReactNode } from 'react'
 import { ArrowRightIcon } from '@/components/icons'
 import { Lightbox } from '@/components/islands/lightbox'
 import { SoundRouteLink } from '@/components/islands/sound-route-link'
+import { StripButtons } from '@/components/islands/strip-buttons'
 import { MetaLine } from '@/components/meta-line'
 import { PostCard } from '@/components/post-card'
 import { Prose } from '@/components/prose'
@@ -13,7 +14,7 @@ import type { Book } from '@/lib/goodreads'
 import { splitSections } from '@/lib/html'
 import { aspectRatio, fullImageUrl } from '@/lib/images'
 import { resumeEntries } from '@/lib/resume'
-import { HOME, SITE } from '@/lib/site'
+import { SITE } from '@/lib/site'
 import type { Photo, Post, PostMeta } from '@/lib/types'
 
 import styles from './home-sections.module.css'
@@ -50,10 +51,7 @@ function Band({
   )
 }
 
-/**
- * The About page's opening beside Greg's family photo. Its later sections
- * (the camera bag and the affiliate note) render in {@link CameraBag}.
- */
+/** The About page's opening beside Greg's family photo. */
 export function HomeAbout({ page }: { page: Post }) {
   const [lead] = splitSections(page.html)
   return (
@@ -80,46 +78,6 @@ export function HomeAbout({ page }: { page: Post }) {
   )
 }
 
-/**
- * The About page's photography section as a band: the story and gear lists
- * beside a photo of the moon rig, and the affiliate note in small print.
- */
-export function CameraBag({ page }: { page: Post }) {
-  const sections = splitSections(page.html).slice(1)
-  const photography = sections.find((s) => s.id === 'photographer')
-  const disclaimer = sections.find((s) => s.id === 'affiliate-disclaimer')
-  if (!photography) return null
-
-  return (
-    <Band
-      id="camera-title"
-      label="Photography"
-      more={{ href: '/photos', text: 'All photos' }}
-      title="Behind the camera"
-    >
-      <div className={styles.camera}>
-        <div className={styles.gear}>
-          <Prose html={photography.html} />
-        </div>
-        <Image
-          alt={HOME.cameraPhoto.alt}
-          className={styles.cameraPhoto}
-          height={HOME.cameraPhoto.height}
-          sizes="(max-width: 860px) 384px, 360px"
-          src={HOME.cameraPhoto.src}
-          style={aspectRatio(HOME.cameraPhoto)}
-          width={HOME.cameraPhoto.width}
-        />
-      </div>
-      {disclaimer ? (
-        <div aria-label="Affiliate disclaimer" className={styles.disclaimer} role="note">
-          <Prose html={disclaimer.html} />
-        </div>
-      ) : null}
-    </Band>
-  )
-}
-
 /** Each role as a card in a row that scrolls sideways, newest first. */
 export function CareerStrip() {
   return (
@@ -129,15 +87,24 @@ export function CareerStrip() {
       more={{ href: '/resume', text: 'Full resume' }}
       title="Where I've worked"
     >
-      <ol aria-labelledby="career-title" className={styles.strip} role="list" tabIndex={0}>
-        {resumeEntries.map((entry) => (
-          <li className={styles.role} key={`${entry.company}-${entry.dateRange}`}>
-            <MetaLine items={[entry.dateRange]} />
-            <p className={styles.roleTitle}>{entry.role}</p>
-            <p className={styles.company}>{entry.company}</p>
-          </li>
-        ))}
-      </ol>
+      <div className={styles.stripFrame}>
+        <ol
+          aria-labelledby="career-title"
+          className={styles.strip}
+          id="career-strip"
+          role="list"
+          tabIndex={0}
+        >
+          {resumeEntries.map((entry) => (
+            <li className={styles.role} key={`${entry.company}-${entry.dateRange}`}>
+              <MetaLine items={[entry.dateRange]} />
+              <p className={styles.roleTitle}>{entry.role}</p>
+              <p className={styles.company}>{entry.company}</p>
+            </li>
+          ))}
+        </ol>
+        <StripButtons controls="career-strip" label="roles" />
+      </div>
     </Band>
   )
 }
@@ -171,7 +138,7 @@ export function CurrentlyReading({ books }: { books: Book[] }) {
     <Band
       id="reading-title"
       label="Reading"
-      more={{ href: SITE.author.goodreads, text: 'Goodreads' }}
+      more={{ href: SITE.author.goodreadsProfile, text: 'Goodreads' }}
       title="On my nightstand"
     >
       <ul className={styles.books} role="list">
@@ -219,29 +186,32 @@ export function GalleryStrip({ photos }: { photos: Photo[] }) {
       more={{ href: '/photos', text: 'All photos' }}
       title="Recent photographs"
     >
-      <Lightbox className={styles.gallery}>
-        {photos.map((photo) => (
-          <a
-            className={styles.photo}
-            data-caption={photo.title}
-            data-details={exifSummary(photo) || undefined}
-            data-full={fullImageUrl(photo.src, photo.width, photo.hdr)}
-            data-lightbox=""
-            href={photo.src}
-            key={photo.filename}
-          >
-            <Image
-              alt={photo.title}
-              className={styles.photoImage}
-              height={photo.height}
-              sizes={stripSizes(photo)}
-              src={photo.src}
-              style={aspectRatio(photo)}
-              width={photo.width}
-            />
-          </a>
-        ))}
-      </Lightbox>
+      <div className={styles.stripFrame}>
+        <Lightbox className={styles.gallery} id="gallery-strip">
+          {photos.map((photo) => (
+            <a
+              className={styles.photo}
+              data-caption={photo.title}
+              data-details={exifSummary(photo) || undefined}
+              data-full={fullImageUrl(photo.src, photo.width, photo.hdr)}
+              data-lightbox=""
+              href={photo.src}
+              key={photo.filename}
+            >
+              <Image
+                alt={photo.title}
+                className={styles.photoImage}
+                height={photo.height}
+                sizes={stripSizes(photo)}
+                src={photo.src}
+                style={aspectRatio(photo)}
+                width={photo.width}
+              />
+            </a>
+          ))}
+        </Lightbox>
+        <StripButtons controls="gallery-strip" label="photos" />
+      </div>
     </Band>
   )
 }
