@@ -15,10 +15,11 @@ export async function generateMetadata(
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const name = decodeURIComponent((await params).category)
+  const count = getPostsByCategory(name).length
   return buildPageMetadata(
     {
       title: `Posts in "${name}"`,
-      description: `All posts in the "${name}" category.`,
+      description: `${count} ${count === 1 ? 'post' : 'posts'} by Greg Rickaby in the "${name}" category, newest first.`,
       path: `/category/${encodeURIComponent(name)}`,
     },
     parent,

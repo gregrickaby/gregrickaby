@@ -15,10 +15,11 @@ export async function generateMetadata(
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const name = decodeURIComponent((await params).tag)
+  const count = getPostsByTag(name).length
   return buildPageMetadata(
     {
       title: `Posts tagged "${name}"`,
-      description: `All posts tagged with "${name}".`,
+      description: `${count} ${count === 1 ? 'post' : 'posts'} by Greg Rickaby tagged "${name}", newest first.`,
       path: `/tag/${encodeURIComponent(name)}`,
     },
     parent,

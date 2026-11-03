@@ -9,7 +9,8 @@ export function generateMetadata(_: unknown, parent: ResolvingMetadata): Promise
   return buildPageMetadata(
     {
       title: 'Blog',
-      description: 'Posts by Greg Rickaby about code, photography, and more.',
+      description:
+        'Posts by Greg Rickaby on web development, photography, and family life, from Web Audio and Gamepad API tutorials to behind-the-shot moon photos.',
       path: '/blog',
     },
     parent,
