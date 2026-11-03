@@ -55,7 +55,15 @@ const SWIPE_DISTANCE = 50
  * closes on Escape or a click outside the image. Without JavaScript, gallery
  * links open the original file and post images stay as they are.
  */
-export function Lightbox({ children, className }: { children: ReactNode; className?: string }) {
+export function Lightbox({
+  children,
+  className,
+  id,
+}: {
+  children: ReactNode
+  className?: string
+  id?: string
+}) {
   const dialog = useRef<HTMLDialogElement>(null)
   const touchX = useRef<number | null>(null)
   const [slides, setSlides] = useState<Slide[]>([])
@@ -105,7 +113,7 @@ export function Lightbox({ children, className }: { children: ReactNode; classNa
   const many = slides.length > 1
 
   return (
-    <div className={className} onClick={open}>
+    <div className={className} id={id} onClick={open}>
       {children}
       <dialog
         aria-label="Image viewer"
