@@ -71,7 +71,7 @@
   }
 
   .side {
-    color: var(--accent);
+    color: var(--accent-on-card);
     font-family: var(--font-pixel);
     font-size: var(--label-size);
     font-style: normal;
@@ -80,7 +80,7 @@
   }
 
   .counter {
-    color: var(--accent);
+    color: var(--accent-on-card);
     font-family: var(--font-pixel);
     font-size: var(--label-size);
     font-variant-numeric: tabular-nums;

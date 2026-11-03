@@ -53,6 +53,11 @@
       padding: 0.1em 0.35em;
     }
 
+    /* Linked code sits on the card surface, where the plain accent misses AA contrast. */
+    & a > code {
+      color: var(--accent-on-card);
+    }
+
     & img {
       border-radius: var(--radius-2);
       box-shadow: var(--shadow-2);
