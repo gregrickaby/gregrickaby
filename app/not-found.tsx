@@ -1,5 +1,9 @@
+import type { Metadata } from 'next'
+
 import { MissingPage } from '@/components/missing-page'
 import { SiteShell } from '@/components/site-shell'
+
+export const metadata: Metadata = { title: 'Page not found' }
 
 /*
  * For URLs that match no route. These render in the root layout alone, so

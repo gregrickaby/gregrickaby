@@ -5,19 +5,23 @@ import { JsonLd } from '@/components/json-ld'
 import { PageTitle } from '@/components/page-title'
 import { PhotoGallery } from '@/components/photo-gallery'
 import { getPhotos } from '@/lib/content'
-import { OPEN_GRAPH_BASE } from '@/lib/metadata'
+import { FEED_ALTERNATE, OPEN_GRAPH_BASE } from '@/lib/metadata'
 import { buildWebPageGraph } from '@/lib/schema'
 import { SITE } from '@/lib/site'
 
 import styles from './page.module.css'
 
 const TITLE = 'Photos'
-const DESCRIPTION = 'A collection of my photos.'
+const DESCRIPTION =
+  'Landscape, wildlife, street, and night sky photos by Greg Rickaby, each with its camera, lens, and exposure settings.'
 
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: '/photos', types: { 'text/markdown': '/photos.md' } },
+  alternates: {
+    canonical: '/photos',
+    types: { ...FEED_ALTERNATE, 'text/markdown': '/photos.md' },
+  },
   openGraph: {
     ...OPEN_GRAPH_BASE,
     title: TITLE,
