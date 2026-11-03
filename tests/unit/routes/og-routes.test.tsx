@@ -51,6 +51,25 @@ describe('share image routes', () => {
     })
   })
 
+  it('posts describe their share image with the post title', () => {
+    expect(post.generateImageMetadata({ params: { slug: 'middle' } })).toEqual([
+      {
+        id: 'card',
+        alt: 'Middle Post, by Greg Rickaby',
+        size: { width: 1200, height: 630 },
+        contentType: 'image/png',
+      },
+    ])
+    expect(post.generateImageMetadata({ params: { slug: 'missing' } })[0]?.alt).toBe(
+      'Blog, by Greg Rickaby',
+    )
+  })
+
+  it('photos and the resume name the owner in their alt text', () => {
+    expect(photos.alt).toBe('Photos by Greg Rickaby')
+    expect(resume.alt).toBe("Greg Rickaby's resume: Technical Lead, Mindsize")
+  })
+
   it('the resume shows the current role', async () => {
     expect(await resume.default()).toMatchObject({ title: 'Technical Lead, Mindsize' })
   })

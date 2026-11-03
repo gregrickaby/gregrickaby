@@ -1,7 +1,8 @@
 import { OG_CONTENT_TYPE, OG_SIZE, renderOgImage } from '@/lib/og'
 import { currentRole, resumeSummary } from '@/lib/resume'
+import { SITE } from '@/lib/site'
 
-export const alt = 'Resume'
+export const alt = `${SITE.name}'s resume: ${currentRole.role}, ${currentRole.company}`
 export const size = OG_SIZE
 export const contentType = OG_CONTENT_TYPE
 
