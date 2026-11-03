@@ -171,6 +171,12 @@ describe.each([
     })
   })
 
+  it('counts its posts in the description', async () => {
+    const one = await mod.generateMetadata(props(name), parent)
+    expect(one.description).toMatch(/^1 post by Greg Rickaby /)
+    expect((await mod.generateMetadata(props('nothing'), parent)).description).toMatch(/^0 posts /)
+  })
+
   it('is a 404 with no posts', async () => {
     const Page = mod.default as unknown as (p: object) => React.ReactElement
     await expect(renderServer(<Page {...(props('nothing') as object)} />)).rejects.toBeInstanceOf(
@@ -184,7 +190,7 @@ describe('photos, resume, contact, and gear', () => {
     const html = await renderServer(<photos.default />)
     expect(html).toContain('/content/photos/Castle.jpg')
     expect(photos.metadata.title).toBe('Photos')
-    expect(photos.metadata.alternates?.types).toEqual({ 'text/markdown': '/photos.md' })
+    expect(photos.metadata.alternates?.types).toMatchObject({ 'text/markdown': '/photos.md' })
   })
 
   it('says so when there are no photos', async () => {
@@ -273,6 +279,30 @@ describe('sitemap, robots, feed, health', () => {
     expect(urls).toContain('https://gregrickaby.com/gear')
     expect(urls).toContain('https://gregrickaby.com/middle')
     expect(urls).not.toContain('https://gregrickaby.com/feed.xml')
+    expect(urls).toContain('https://gregrickaby.com/category/Code')
+    expect(urls).toContain('https://gregrickaby.com/tag/PHP')
+  })
+
+  it('dates each entry by its content, not the build', () => {
+    index.posts[0]!.meta.modified = '2025-06-01T00:00:00'
+    index.pages[2]!.meta.modified = '2025-03-01T00:00:00'
+    index.photos[0]!.dateTaken = '2025-02-01T00:00:00.000Z'
+    const at = (path: string) =>
+      sitemap.default().find((e) => e.url === `https://gregrickaby.com${path}`)?.lastModified
+    expect(at('')).toEqual(new Date('2025-06-01T00:00:00'))
+    expect(at('/blog')).toEqual(new Date('2025-06-01T00:00:00'))
+    expect(at('/tag/Moon')).toEqual(new Date('2025-06-01T00:00:00'))
+    expect(at('/contact')).toEqual(new Date('2025-03-01T00:00:00'))
+    expect(at('/photos')).toEqual(new Date('2025-02-01T00:00:00.000Z'))
+  })
+
+  it('falls back to the build time when nothing has a date', () => {
+    const built = new Date(index.generatedAt)
+    index.posts = []
+    index.pages = []
+    index.photos[0]!.dateTaken = undefined
+    const entries = sitemap.default()
+    expect(entries.every((e) => (e.lastModified as Date).getTime() === built.getTime())).toBe(true)
   })
 
   it('keeps search out of the index and signals AI use', async () => {
