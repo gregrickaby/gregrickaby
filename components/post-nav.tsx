@@ -63,7 +63,7 @@ function NavCard({
           alt=""
           className={styles.image}
           image={post.featuredImage}
-          sizes="(max-width: 40rem) 100vw, 550px"
+          sizes="(max-width: 40rem) 100vw, 34rem"
           slug={post.slug}
         />
       ) : null}

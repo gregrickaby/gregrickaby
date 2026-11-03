@@ -28,7 +28,7 @@ export function CameraGear({ page }: { page: Post }) {
           fetchPriority="high"
           height={GEAR_PHOTO.height}
           loading="eager"
-          sizes="(max-width: 860px) 384px, 360px"
+          sizes="(max-width: 53.75rem) 24rem, 22.5rem"
           src={GEAR_PHOTO.src}
           style={aspectRatio(GEAR_PHOTO)}
           width={GEAR_PHOTO.width}

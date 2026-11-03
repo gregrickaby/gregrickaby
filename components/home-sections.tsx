@@ -174,7 +174,12 @@ export function CurrentlyReading({ books }: { books: Book[] }) {
  */
 function stripSizes({ width, height }: Photo) {
   const ratio = width / height
-  return `(max-width: 40rem) ${Math.round(220 * ratio)}px, ${Math.round(280 * ratio)}px`
+  return `(max-width: 40rem) ${toRem(13.75 * ratio)}rem, ${toRem(17.5 * ratio)}rem`
+}
+
+/** A rem length to two decimals. */
+function toRem(value: number) {
+  return Math.round(value * 100) / 100
 }
 
 /** Recent photos in a row that scrolls sideways; each opens in the lightbox. */

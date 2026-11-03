@@ -91,7 +91,7 @@ describe('strips', () => {
     )
     expect(html).toContain('data-lightbox')
     expect(html).toContain('data-details="SONY ILCE-7RM5')
-    expect(html).toContain('sizes="(max-width: 40rem) 330px, 420px"')
+    expect(html).toContain('sizes="(max-width: 40rem) 20.63rem, 26.25rem"')
     expect(html).toMatch(/aspect-ratio:\d+ \/ \d+/)
   })
 })
