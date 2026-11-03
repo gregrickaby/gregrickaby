@@ -71,6 +71,15 @@ describe('Article', () => {
     expect(html).toContain('fetchPriority="high"')
   })
 
+  it('shows the update date only when it falls on another day', async () => {
+    const updated = (await renderServer(<Article post={post()} />)).replaceAll('<!-- -->', '')
+    expect(updated).toContain('Updated <time dateTime="2024-02-01T10:00:00">Feb 1, 2024</time>')
+    const sameDay = await renderServer(
+      <Article post={post({ date: '2024-01-11T08:00:00', modified: '2024-01-11T23:00:00' })} />,
+    )
+    expect(sameDay).not.toContain('Updated')
+  })
+
   it('marks a draft in the meta line', async () => {
     const html = await renderServer(<Article post={post({ draft: true })} />)
     expect(html).toContain('Draft')

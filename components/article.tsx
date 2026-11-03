@@ -12,12 +12,12 @@ import type { Post } from '@/lib/types'
 import styles from './article.module.css'
 
 /**
- * A full post or page: date, reading time, and categories, then the title,
- * hero image, and body. A post also gets a table of contents and its actions
- * (copy, share, and like), in a sticky sidebar on wide screens (the contents
- * above the body and the actions below it on narrow ones), and its tags. On
- * the home page the hero banner owns the `h1`, so the article title drops to
- * `h2` there.
+ * A full post or page: date (and the update date, when it falls on another
+ * day), reading time, and categories, then the title, hero image, and body. A
+ * post also gets a table of contents and its actions (copy, share, and like),
+ * in a sticky sidebar on wide screens (the contents above the body and the
+ * actions below it on narrow ones), and its tags. On the home page the hero
+ * banner owns the `h1`, so the article title drops to `h2` there.
  */
 export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' | 'h2' }) {
   const { meta, html, headings, hero } = post
@@ -34,6 +34,11 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
               <time dateTime={meta.date} key="date">
                 {formatShortDate(meta.date)}
               </time>,
+              formatShortDate(meta.modified) === formatShortDate(meta.date) ? null : (
+                <span key="modified">
+                  Updated <time dateTime={meta.modified}>{formatShortDate(meta.modified)}</time>
+                </span>
+              ),
               meta.readingMinutes ? `${meta.readingMinutes} min read` : null,
               ...(meta.categories ?? []).map((category) => (
                 <Link href={`/category/${encodeURIComponent(category)}`} key={category} prefetch>
