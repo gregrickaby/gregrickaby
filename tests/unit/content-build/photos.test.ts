@@ -6,10 +6,19 @@ const parse = vi.fn()
 vi.mock('exifr', () => ({ default: { parse } }))
 vi.mock('image-size', () => ({ imageSize: () => ({ width: 3000, height: 2000 }) }))
 
-const { comparePhotos, dateFromFilename, fixMojibake, hasGainMap, readPhoto, titleFromFilename } =
-  await import('@/lib/content-build/photos')
+const {
+  comparePhotos,
+  dateFromFilename,
+  fixMojibake,
+  hasGainMap,
+  readCameraSettings,
+  readPhoto,
+  titleFromFilename,
+} = await import('@/lib/content-build/photos')
 
-beforeEach(() => parse.mockReset())
+beforeEach(() => {
+  parse.mockReset()
+})
 
 describe('photo helpers', () => {
   it('detects HDR gain maps', () => {
@@ -99,6 +108,27 @@ describe('readPhoto', () => {
     parse.mockResolvedValue(undefined)
     const result = await readPhoto(Buffer.from(''), 'Orion_Nebula_(M42)_20250323.jpg')
     expect(result.dateTaken).toBe('2025-03-23T00:00:00.000Z')
+  })
+})
+
+describe('readCameraSettings', () => {
+  it('reads the camera, lens, and exposure', async () => {
+    parse.mockResolvedValue({ Model: 'GX85', FNumber: 1.7, ExposureTime: 1 / 250, ISO: 200 })
+    expect(await readCameraSettings(Buffer.from(''))).toEqual({
+      camera: 'GX85',
+      lens: undefined,
+      aperture: 'f/1.7',
+      shutterSpeed: '1/250s',
+      iso: '200',
+      focalLength: undefined,
+    })
+  })
+
+  it('returns no settings when the EXIF does not parse', async () => {
+    parse.mockRejectedValue(new Error('not an image'))
+    expect(Object.values(await readCameraSettings(Buffer.from('')))).toEqual(
+      Array(6).fill(undefined),
+    )
   })
 })
 

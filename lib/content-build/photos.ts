@@ -1,7 +1,7 @@
 import exifr from 'exifr'
 import { imageSize } from 'image-size'
 
-import type { Photo } from '../types.ts'
+import type { CameraSettings, Photo } from '../types.ts'
 
 type Exif = Record<string, unknown>
 
@@ -63,20 +63,9 @@ function camera(exif: Exif | null): string | undefined {
   return model.toLowerCase().startsWith(make.toLowerCase()) ? model : `${make} ${model}`
 }
 
-/**
- * Reads a photo's size, EXIF, and IPTC fields. A photo without EXIF still gets
- * a title from its filename, and a date from a `_YYYYMMDD` suffix.
- *
- * @param buffer - The image file.
- * @param filename - The file's name, used for the URL and as a title fallback.
- * @returns The gallery entry.
- */
-export async function readPhoto(buffer: Buffer, filename: string): Promise<Photo> {
-  const { width = 0, height = 0 } = imageSize(buffer)
-
-  let exif: Exif | null = null
+async function parseExif(buffer: Buffer): Promise<Exif | null> {
   try {
-    exif = await exifr.parse(buffer, {
+    return await exifr.parse(buffer, {
       tiff: true,
       exif: true,
       iptc: true,
@@ -87,14 +76,47 @@ export async function readPhoto(buffer: Buffer, filename: string): Promise<Photo
       reviveValues: true,
     })
   } catch {
-    // Files without EXIF fall back to the filename.
+    return null
   }
+}
 
+function cameraSettings(exif: Exif | null): CameraSettings {
   const num = (key: string) => (typeof exif?.[key] === 'number' ? (exif[key] as number) : undefined)
   const fNumber = num('FNumber')
   const exposure = num('ExposureTime')
   const iso = num('ISO')
   const focal = num('FocalLength')
+  return {
+    camera: camera(exif),
+    lens: text(exif?.LensModel),
+    aperture: fNumber === undefined ? undefined : formatAperture(fNumber),
+    shutterSpeed: exposure === undefined ? undefined : formatShutterSpeed(exposure),
+    iso: iso === undefined ? undefined : String(iso),
+    focalLength: focal === undefined ? undefined : `${Math.round(focal)}mm`,
+  }
+}
+
+/**
+ * Reads the camera, lens, and exposure from an image's EXIF.
+ *
+ * @param buffer - The image file.
+ * @returns The settings it has; an image without EXIF gets none.
+ */
+export async function readCameraSettings(buffer: Buffer): Promise<CameraSettings> {
+  return cameraSettings(await parseExif(buffer))
+}
+
+/**
+ * Reads a photo's size, EXIF, and IPTC fields. A photo without EXIF still gets
+ * a title from its filename, and a date from a `_YYYYMMDD` suffix.
+ *
+ * @param buffer - The image file.
+ * @param filename - The file's name, used for the URL and as a title fallback.
+ * @returns The gallery entry.
+ */
+export async function readPhoto(buffer: Buffer, filename: string): Promise<Photo> {
+  const { width = 0, height = 0 } = imageSize(buffer)
+  const exif = await parseExif(buffer)
   const taken = exif?.DateTimeOriginal
 
   return {
@@ -107,12 +129,7 @@ export async function readPhoto(buffer: Buffer, filename: string): Promise<Photo
       text(exif?.ObjectName ?? exif?.title ?? exif?.Title ?? exif?.Headline) ??
       titleFromFilename(filename),
     caption: text(exif?.Caption ?? exif?.['Caption-Abstract'] ?? exif?.ImageDescription),
-    camera: camera(exif),
-    lens: text(exif?.LensModel),
-    aperture: fNumber === undefined ? undefined : formatAperture(fNumber),
-    shutterSpeed: exposure === undefined ? undefined : formatShutterSpeed(exposure),
-    iso: iso === undefined ? undefined : String(iso),
-    focalLength: focal === undefined ? undefined : `${Math.round(focal)}mm`,
+    ...cameraSettings(exif),
     dateTaken: taken instanceof Date ? taken.toISOString() : dateFromFilename(filename),
   }
 }

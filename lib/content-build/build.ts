@@ -3,9 +3,9 @@ import { join } from 'node:path'
 import matter from 'gray-matter'
 import { imageSize } from 'image-size'
 
-import type { ContentIndex, ImageAsset, KnownPaths, Post, PostMeta } from '../types.ts'
+import type { ContentIndex, HeroImage, ImageAsset, KnownPaths, Post, PostMeta } from '../types.ts'
 import { renderMarkdown, type MeasuredImage } from './markdown.ts'
-import { comparePhotos, hasGainMap, readPhoto } from './photos.ts'
+import { comparePhotos, hasGainMap, readCameraSettings, readPhoto } from './photos.ts'
 import { buildPostMarkdown } from './post-markdown.ts'
 
 const NUMERIC_ENTITY = /&#(\d+);/g
@@ -126,7 +126,15 @@ export async function buildContent(
         readingMinutes: readingMinutes(content),
         ...(draft ? { draft } : {}),
       }
-      const hero = featured && images[0] !== featured.src ? featured : null
+      const hero: HeroImage | null =
+        featured && images[0] !== featured.src
+          ? {
+              ...featured,
+              ...(await readCameraSettings(
+                readFileSync(join(publicDir, decodeURIComponent(featured.src))),
+              )),
+            }
+          : null
       if (type === 'post') {
         markdown[meta.slug] = buildPostMarkdown(content, {
           meta,

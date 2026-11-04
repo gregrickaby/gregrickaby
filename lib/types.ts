@@ -51,20 +51,27 @@ export interface Post {
   /** The body's h2 and h3 headings, in order. */
   headings: Heading[]
   /** The featured image to show above the body, or null when the body already opens with it. */
-  hero: ImageAsset | null
+  hero: HeroImage | null
 }
 
-/** A photo in the /photos gallery, with EXIF and IPTC fields read at build time. */
-export interface Photo extends ImageAsset {
-  filename: string
-  title: string
-  caption?: string
+/** The camera, lens, and exposure read from an image's EXIF. Each is absent when the file lacks it. */
+export interface CameraSettings {
   camera?: string
   lens?: string
   aperture?: string
   shutterSpeed?: string
   iso?: string
   focalLength?: string
+}
+
+/** A post's featured image, with the camera settings from its EXIF. */
+export interface HeroImage extends ImageAsset, CameraSettings {}
+
+/** A photo in the /photos gallery, with EXIF and IPTC fields read at build time. */
+export interface Photo extends ImageAsset, CameraSettings {
+  filename: string
+  title: string
+  caption?: string
   /** ISO 8601 capture time. */
   dateTaken?: string
   /** True when the JPEG carries an HDR gain map, which the image optimizer would strip. */
