@@ -4,9 +4,15 @@
     max-width: var(--measure);
   }
 
+  /* The header breaks out of the text column to the width of the hero, so a
+     long title takes fewer lines on a wide screen. */
   .header {
+    --header-width: min(var(--wide), 100vw - 2 * var(--gutter));
+
     margin-block-end: var(--space-6);
+    margin-inline-start: calc(50% - var(--header-width) / 2);
     text-align: center;
+    width: var(--header-width);
   }
 
   .meta {
