@@ -36,23 +36,32 @@ export interface RenderOptions {
 const SIZES_DEFAULT = '(max-width: 45rem) 100vw, 42.5rem'
 const SIZES_WIDE = '(max-width: 68.75rem) 100vw, 68.75rem'
 const SIZES_FULL = '100vw'
+const SIZES_FLOAT = '(max-width: 40rem) 100vw, 22rem'
 
 const MEDIA_TAGS = new Set(['img', 'source', 'audio', 'video'])
 
+const ALIGN_FRAGMENT = /#(left|right)$/
+
 /**
- * Turns a lone image with a title (`![alt](src "title")`) into a figure with a caption.
+ * Turns a lone image with a title (`![alt](src "title")`) into a figure with a
+ * caption. A `#left` or `#right` on the path (`![alt](./photo.jpg#right)`)
+ * floats the figure to that side, with or without a title.
  */
 function remarkFigureCaption() {
   return (tree: MdastRoot) => {
     visit(tree, 'paragraph', (node: Paragraph, index, parent) => {
       const img = node.children[0]
       const isLone = node.children.length === 1 && img?.type === 'image'
-      if (!isLone || !img.title || !parent || index === undefined) return
+      if (!isLone || !parent || index === undefined) return
+      const align = ALIGN_FRAGMENT.exec(img.url)?.[1]
+      if (!img.title && !align) return
+      const url = img.url.replace(ALIGN_FRAGMENT, '')
+      const caption = img.title ? `\n<figcaption>${escapeText(img.title)}</figcaption>` : ''
       parent.children.splice(index, 1, {
         type: 'html',
         // remark always sets alt to a string; mdast types allow null.
         /* v8 ignore next */
-        value: `<figure>\n<img src="${escapeAttr(img.url)}" alt="${escapeAttr(img.alt ?? '')}" />\n<figcaption>${escapeText(img.title)}</figcaption>\n</figure>`,
+        value: `<figure${align ? ` class="align${align}"` : ''}>\n<img src="${escapeAttr(url)}" alt="${escapeAttr(img.alt ?? '')}" />${caption}\n</figure>`,
       })
     })
   }
@@ -134,7 +143,9 @@ function rehypeLocalMedia({ basePath, measure, images }: RenderOptions & { image
         ? SIZES_FULL
         : classes.includes('alignwide')
           ? SIZES_WIDE
-          : sizes
+          : classes.includes('alignleft') || classes.includes('alignright')
+            ? SIZES_FLOAT
+            : sizes
       if (MEDIA_TAGS.has(node.tagName)) rewrite(node, childSizes)
       walk(node.children, childSizes)
     }
@@ -156,6 +167,7 @@ function rehypeLocalMedia({ basePath, measure, images }: RenderOptions & { image
 
     node.properties.width = size.width
     node.properties.height = size.height
+    if (size.height > size.width) node.properties.dataPortrait = ''
     node.properties.dataFull = fullImageUrl(path, size.width, size.hdr)
     if (size.hdr) return
 
@@ -244,6 +256,30 @@ function rehypeDemos() {
   }
 }
 
+/** A table with this many columns or more breaks out of the text column. */
+const WIDE_TABLE_COLUMNS = 6
+
+/**
+ * Gives a table with {@link WIDE_TABLE_COLUMNS} or more columns the
+ * `alignwide` class, so it breaks out of the text column like a wide image.
+ */
+function rehypeWideTables() {
+  return (tree: HastRoot) => {
+    visit(tree, 'element', (node: Element) => {
+      if (node.tagName !== 'table') return
+      let columns = 0
+      visit(node, 'element', (row: Element) => {
+        if (row.tagName === 'tr' && columns === 0) {
+          columns = row.children.filter((cell) => cell.type === 'element').length
+        }
+      })
+      if (columns >= WIDE_TABLE_COLUMNS) {
+        node.properties.className = [...classesOf(node), 'alignwide']
+      }
+    })
+  }
+}
+
 /** Tags and attributes the pipeline emits, on top of sanitize-html's defaults. */
 const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   allowedTags: [
@@ -271,6 +307,7 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
       'decoding',
       'data-lightbox',
       'data-full',
+      'data-portrait',
     ],
     audio: ['controls', 'src', 'preload'],
     source: ['src', 'type'],
@@ -327,6 +364,7 @@ export async function renderMarkdown(
     })
     .use(rehypeCodeBlocks)
     .use(rehypeDemos)
+    .use(rehypeWideTables)
     .use(rehypeStringify)
     .process(markdown)
   return { html: sanitizeHtml(String(file), SANITIZE_OPTIONS), images, headings }

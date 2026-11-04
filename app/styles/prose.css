@@ -66,6 +66,14 @@
       margin-inline: auto;
     }
 
+    /* Tall photos stop short of a screen's height, centered and uncropped. The
+       lightbox still opens the whole photo. */
+    & img[data-portrait] {
+      max-height: min(70vh, 40rem);
+      max-width: 100%;
+      width: auto;
+    }
+
     /* Several images in one paragraph form a grid. */
     & p:has(> img ~ img) {
       display: grid;
@@ -82,6 +90,50 @@
 
     & figure {
       margin-inline: 0;
+    }
+
+    /* `#left` or `#right` on an image's path floats it, with the text wrapping
+       around it. Narrow screens keep it in the column. */
+    & .alignleft img,
+    & .alignright img {
+      max-height: none;
+      width: 100%;
+    }
+
+    @media (width >= 40rem) {
+      & .alignleft,
+      & .alignright {
+        width: min(45%, 22rem);
+      }
+
+      & .alignleft {
+        float: left;
+        margin-block-end: var(--space-3);
+        margin-inline-end: var(--space-5);
+      }
+
+      & .alignright {
+        float: right;
+        margin-block-end: var(--space-3);
+        margin-inline-start: var(--space-5);
+      }
+    }
+
+    /* Anything that needs the full width starts below a float. */
+    &
+      :is(
+        h2,
+        h3,
+        table,
+        blockquote,
+        .callout,
+        .alignwide,
+        .alignfull,
+        pre,
+        figure[data-rehype-pretty-code-figure],
+        p:has(> img ~ img)
+      ) {
+      clear: both;
     }
 
     & figcaption {
@@ -193,22 +245,64 @@
       }
     }
 
+    /* Tables are a rounded card: a pixel-font header row, hairlines between
+       rows, and a tint on the row under the pointer. Narrow screens scroll
+       the table sideways instead of squeezing it. */
     & table {
-      border-collapse: collapse;
-      display: block;
-      overflow-x: auto;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-collapse: separate;
+      border-radius: var(--radius-2);
+      border-spacing: 0;
+      font-size: var(--step-minus-1);
       width: 100%;
+
+      @media (width < 50rem) {
+        display: block;
+        overflow-x: auto;
+        scrollbar-color: var(--border) transparent;
+        scrollbar-width: thin;
+      }
     }
 
     & th,
     & td {
-      border: 1px solid var(--border);
+      border-block-end: 1px solid var(--border);
+      font-variant-numeric: tabular-nums;
       padding: var(--space-2) var(--space-3);
       text-align: left;
+      vertical-align: baseline;
     }
 
     & th {
-      background: var(--surface-card);
+      color: var(--text-2);
+      font-family: var(--font-pixel);
+      font-size: var(--label-size);
+      font-weight: 400;
+      letter-spacing: var(--label-tracking);
+      text-transform: uppercase;
+    }
+
+    & tbody tr:last-child > :is(th, td),
+    & tfoot tr:last-child > :is(th, td) {
+      border-block-end: 0;
+    }
+
+    & tbody tr:last-child > :first-child {
+      border-end-start-radius: calc(var(--radius-2) - 1px);
+    }
+
+    & tbody tr:last-child > :last-child {
+      border-end-end-radius: calc(var(--radius-2) - 1px);
+    }
+
+    & tbody tr:hover {
+      background: var(--surface-hover);
+    }
+
+    & tfoot td,
+    & tbody tr:last-child:has(strong) {
+      background: var(--accent-soft);
     }
 
     & audio {
@@ -231,6 +325,21 @@
     & .alignwide img,
     & .alignfull img {
       border-radius: 0;
+      width: 100%;
+    }
+
+    /* Two portraits on one line sit side by side at their own proportions. */
+    & p:has(> img[data-portrait]:first-child + img[data-portrait]:last-child) {
+      align-items: start;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    & p:has(> img[data-portrait]:first-child + img[data-portrait]:last-child) img {
+      aspect-ratio: auto;
+      height: auto;
+      max-height: none;
+      max-width: none;
+      object-fit: contain;
       width: 100%;
     }
 
