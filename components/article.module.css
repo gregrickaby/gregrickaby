@@ -19,18 +19,33 @@
 
   /* The hero breaks out of the text column. */
   .hero {
-    border-radius: var(--radius-2);
-    box-shadow: var(--shadow-2);
-    height: auto;
     margin-block: var(--space-6);
     margin-inline-start: calc(50% - min(var(--wide) / 2, 50vw));
-    max-width: none;
     width: min(var(--wide), 100vw);
   }
 
+  .heroImage {
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-2);
+    display: block;
+    height: auto;
+    max-width: none;
+    width: 100%;
+  }
+
+  .credit {
+    font-size: 0.65rem;
+    margin-block-start: var(--space-2);
+    text-align: end;
+  }
+
   @media (width <= 68.75rem) {
-    .hero {
+    .heroImage {
       border-radius: 0;
+    }
+
+    .credit {
+      padding-inline: var(--gutter);
     }
   }
 
