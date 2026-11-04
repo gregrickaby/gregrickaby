@@ -287,9 +287,9 @@ test.describe('platform', () => {
     await expect(page.getByRole('main')).toHaveCount(1)
     await expect(page.getByRole('banner')).toHaveCount(1)
 
-    const gone = await page.goto('/tag/disney')
+    const gone = await page.goto('/tag/ubuntu')
     expect(gone?.status()).toBe(410)
-    await expect(page).toHaveURL(/\/tag\/disney$/)
+    await expect(page).toHaveURL(/\/tag\/ubuntu$/)
     await expect(page.getByRole('heading', { level: 1, name: '404' })).toBeVisible()
   })
 })
