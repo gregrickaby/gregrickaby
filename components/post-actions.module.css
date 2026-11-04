@@ -1,66 +1,87 @@
 @layer components {
-  /* As wide as the icons, with the like button centered under them. The block
-     is centered unless the caller sets --actions-margin, as the post sidebar does. */
-  .actions {
+  /* One row between hairlines, like a news site's article toolbar, with the
+     Markdown button at the far end. */
+  .toolbar {
     align-items: center;
+    border-block: 1px solid var(--border);
     display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    inline-size: fit-content;
-    margin-inline: var(--actions-margin, auto);
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    padding-block: var(--space-1);
   }
 
-  /* Two even rows of three, which fit the sidebar. */
-  .icons {
-    display: grid;
-    gap: var(--space-3);
-    grid-template-columns: repeat(3, auto);
-  }
-
+  .action,
   .icon {
     align-items: center;
-    background: var(--surface-card);
-    border: 1px solid var(--border);
+    background: none;
+    border: 0;
     border-radius: var(--radius-pill);
     color: var(--text-2);
     display: inline-flex;
-    justify-content: center;
-    min-block-size: 3rem;
-    min-inline-size: 3rem;
-    position: relative;
-    transition:
-      border-color var(--duration-exit) ease,
-      color var(--duration-exit) ease;
+    font: inherit;
+    gap: var(--space-2);
+    min-block-size: 2.75rem;
+    padding-inline: var(--space-2);
+    transition: color var(--duration-exit) ease;
 
     &:hover {
-      border-color: var(--accent);
       color: var(--accent);
     }
+  }
 
-    /* The tooltip, a pixel speech bubble like the like button's cue. It also
-       shows while the copy button says "Copied". */
-    &::after {
-      background: var(--accent-fill);
-      border-radius: var(--radius-1);
-      color: var(--accent-contrast);
-      content: attr(data-tip);
-      font-family: var(--font-pixel);
-      font-size: 0.75rem;
-      inset: auto auto calc(100% + var(--space-2)) 50%;
-      opacity: 0;
-      padding: var(--space-1) var(--space-2);
-      pointer-events: none;
-      position: absolute;
-      transition: opacity var(--duration-exit) ease;
-      translate: -50% 0;
-      white-space: nowrap;
-      z-index: 1;
+  .icon {
+    justify-content: center;
+    margin-inline-start: auto;
+    min-inline-size: 2.75rem;
+    padding-inline: 0;
+  }
+
+  /* The share menu drops below its button where the browser can anchor it,
+     and sits in the middle of the screen where it can't. */
+  .menu {
+    background: var(--surface-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-2);
+    color: var(--text-1);
+    min-inline-size: 12rem;
+    padding: var(--space-1);
+
+    & ul {
+      display: grid;
+      margin: 0;
+      padding: 0;
     }
+  }
 
-    &:hover::after,
-    &:focus-visible::after,
-    &[data-copied]::after {
-      opacity: 1;
+  @supports (position-area: bottom) {
+    .menu {
+      inset: auto;
+      margin: var(--space-2) 0;
+      position-area: bottom span-right;
+      position-try-fallbacks: flip-block, flip-inline;
+    }
+  }
+
+  .item {
+    align-items: center;
+    background: none;
+    border: 0;
+    border-radius: var(--radius-1);
+    color: inherit;
+    display: flex;
+    font: inherit;
+    gap: var(--space-3);
+    inline-size: 100%;
+    min-block-size: 2.75rem;
+    padding-inline: var(--space-3);
+    text-align: start;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--surface-hover);
+      color: var(--accent);
     }
   }
 }

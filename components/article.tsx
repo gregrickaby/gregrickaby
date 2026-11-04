@@ -14,9 +14,9 @@ import styles from './article.module.css'
 /**
  * A full post or page: date (and the update date, when it falls on another
  * day), reading time, and categories, then the title, hero image, and body. A
- * post also gets a table of contents and its actions (copy, share, and like),
- * in a sticky sidebar on wide screens (the contents above the body and the
- * actions below it on narrow ones), and its tags. On the home page the hero
+ * post also gets a toolbar above the body (share and copy Markdown) and one
+ * after it that adds the reactions, a table of contents in a sticky sidebar
+ * on wide screens (above the body on narrow ones), and its tags. On the home page the hero
  * banner owns the `h1`, so the article title drops to `h2` there.
  */
 export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' | 'h2' }) {
@@ -64,19 +64,16 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
 
       {meta.type === 'post' ? (
         <div className={styles.body}>
-          <aside className={styles.aside}>
-            <div className={styles.sidebar}>
-              {headings.length > 0 ? <TableOfContents headings={headings} /> : null}
-              <div className={styles.sideActions}>
-                <PostActions meta={meta} />
+          <PostActions meta={meta} placement="top" />
+          {headings.length > 0 ? (
+            <aside className={styles.aside}>
+              <div className={styles.sidebar}>
+                <TableOfContents headings={headings} />
               </div>
-            </div>
-          </aside>
+            </aside>
+          ) : null}
           <Prose html={html} slug={meta.slug} />
-          {/* The narrow-screen copy, after the body so focus order matches what readers see. */}
-          <div className={styles.endActions}>
-            <PostActions meta={meta} />
-          </div>
+          <PostActions meta={meta} placement="end" />
         </div>
       ) : (
         <Prose html={html} />

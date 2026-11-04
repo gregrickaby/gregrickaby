@@ -121,7 +121,7 @@ test.describe('reading', () => {
       'href',
       /\/the-moons-of-2023\.md$/,
     )
-    await page.getByRole('button', { name: 'Copy as Markdown' }).click()
+    await page.getByRole('button', { name: 'Copy as Markdown' }).first().click()
     await expect(page.getByRole('status').filter({ hasText: 'Copied' })).toHaveCount(1)
     const copied = await page.evaluate(() => navigator.clipboard.readText())
     expect(copied).toMatch(/^# The Moons of 2023\n/)
@@ -135,6 +135,7 @@ test.describe('reading', () => {
   test('a post copies its link', async ({ context, page }) => {
     await context.grantPermissions(['clipboard-read', 'clipboard-write'])
     await page.goto('/the-moons-of-2023')
+    await page.getByRole('button', { name: 'Share' }).first().click()
     await page.getByRole('button', { name: 'Copy link' }).click()
     await expect(page.getByRole('status').filter({ hasText: 'Copied' })).toHaveCount(1)
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
@@ -208,22 +209,21 @@ test.describe('search and theme', () => {
   })
 })
 
-test.describe('likes', () => {
-  test('each like fills the heart a tenth, up to ten, and survives a reload', async ({ page }) => {
+test.describe('reactions', () => {
+  test('a reaction counts, swaps, and survives a reload', async ({ page }) => {
     await page.goto('/stable-diffusion-xl-1-0-impresses')
-    const like = page.getByRole('button', { name: /Like this post/ })
+    const toolbar = page.getByRole('form', { name: 'React to this post' })
+    const like = toolbar.getByRole('button', { name: /^Like/ })
+    const fire = toolbar.getByRole('button', { name: /^Fire/ })
     await like.click()
-    await expect(like).toHaveAccessibleName(/\(1 of 10\)/)
-    await expect(like).toContainText(/[1-9]/)
+    await expect(like).toHaveAttribute('aria-pressed', 'true')
+    await expect(like).toHaveAccessibleName(/^Like, \d/)
+    await fire.click()
+    await expect(fire).toHaveAttribute('aria-pressed', 'true')
+    await expect(like).toHaveAttribute('aria-pressed', 'false')
     await page.reload()
-    await expect(like).toHaveAccessibleName(/\(1 of 10\)/)
-    for (let mine = 2; mine <= 9; mine++) {
-      await like.click()
-      await expect(like).toHaveAccessibleName(new RegExp(`\\(${mine} of 10\\)`))
-    }
-    await like.click()
-    const full = page.getByRole('button', { name: /You liked this post 10 times/ })
-    await expect(full).toBeDisabled()
+    await expect(fire).toHaveAttribute('aria-pressed', 'true')
+    await expect(fire).toHaveAccessibleName(/^Fire, \d/)
   })
 })
 
@@ -343,16 +343,19 @@ test.describe('every page', () => {
 })
 
 test.describe('without JavaScript @nojs', () => {
-  test('pages, search, likes, Markdown, contact links, and 404s work without scripts @nojs', async ({
+  test('pages, search, reactions, Markdown, contact links, and 404s work without scripts @nojs', async ({
     page,
   }) => {
     await page.goto('/the-moons-of-2023')
     await expect(page.getByRole('heading', { level: 1, name: 'The Moons of 2023' })).toBeVisible()
     await expect(page.locator('.prose img').first()).toBeVisible()
-    const markdown = page.getByRole('link', { name: 'View as Markdown' })
+    const markdown = page.getByRole('link', { name: 'View as Markdown' }).first()
     await expect(markdown).toHaveAttribute('href', '/the-moons-of-2023.md')
-    await expect(page.getByRole('button', { name: 'Copy as Markdown' })).toBeHidden()
-    await expect(page.getByRole('button', { name: 'Copy link' })).toBeHidden()
+    await expect(page.getByRole('button', { name: 'Copy as Markdown' })).toHaveCount(0)
+    await page.getByRole('button', { name: 'Share' }).first().click()
+    const share = page.getByRole('list', { name: 'Share this post' }).first()
+    await expect(share.getByRole('link', { name: 'Reddit' })).toBeVisible()
+    await expect(share.getByRole('button', { name: 'Copy link' })).toHaveCount(0)
 
     await page.goto('/')
     await expect(page.getByRole('button', { name: /^Scroll / })).toHaveCount(0)
@@ -362,8 +365,10 @@ test.describe('without JavaScript @nojs', () => {
     await expect(page.getByRole('link', { name: /gain maps/i })).toBeVisible()
 
     await page.goto('/how-gain-maps-elevate-hdr-photography')
-    await page.getByRole('button', { name: /Like this post/ }).click()
-    await expect(page.getByRole('button', { name: /Like this post again/ })).toContainText(/[1-9]/)
+    const laugh = page.getByRole('button', { name: /^Laugh/ })
+    await laugh.click()
+    await expect(laugh).toHaveAttribute('aria-pressed', 'true')
+    await expect(laugh).toHaveAccessibleName(/^Laugh, \d/)
 
     await page.goto('/contact')
     await expect(page.getByRole('link', { name: 'greg@gregrickaby.com' })).toHaveAttribute(

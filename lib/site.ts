@@ -1,7 +1,27 @@
 import type { Route } from 'next'
 
-/** How many times one visitor can like a post. Each like fills a tenth of the heart. */
-export const MAX_LIKES = 10
+/**
+ * The emoji a visitor can react to a post with, in the order the toolbar shows
+ * them. A visitor gives a post one. Likes from before reactions count as hearts.
+ */
+export const REACTIONS = [
+  { id: 'heart', emoji: '❤️', name: 'Like' },
+  { id: 'laugh', emoji: '😂', name: 'Laugh' },
+  { id: 'wow', emoji: '🤯', name: 'Wow' },
+  { id: 'fire', emoji: '🔥', name: 'Fire' },
+] as const
+
+export type ReactionId = (typeof REACTIONS)[number]['id']
+
+/** Every reaction this site has, at zero. */
+export function buildEmptyCounts(): Record<ReactionId, number> {
+  return Object.fromEntries(REACTIONS.map(({ id }) => [id, 0])) as Record<ReactionId, number>
+}
+
+/** Narrows form input to a reaction this site has. */
+export function isReactionId(value: unknown): value is ReactionId {
+  return REACTIONS.some((reaction) => reaction.id === value)
+}
 
 /** Site name, copy, and links. */
 export const SITE = {

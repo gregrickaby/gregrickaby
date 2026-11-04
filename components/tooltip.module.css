@@ -1,0 +1,36 @@
+@layer components {
+  /* A pixel speech bubble above its element. `.tip` draws one from the
+     element's `data-tip` on hover and focus, and while it holds
+     `data-copied`. `.bubble` is the same bubble as an element of its own. */
+  .tip {
+    position: relative;
+  }
+
+  .tip::after,
+  .bubble {
+    background: var(--accent-fill);
+    border-radius: var(--radius-1);
+    color: var(--accent-contrast);
+    font-family: var(--font-pixel);
+    font-size: 0.75rem;
+    font-weight: 400;
+    inset: auto auto calc(100% + var(--space-2)) 50%;
+    line-height: 1.4;
+    padding: var(--space-1) var(--space-2);
+    pointer-events: none;
+    position: absolute;
+    translate: -50% 0;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  .tip::after {
+    content: attr(data-tip) / '';
+    opacity: 0;
+    transition: opacity var(--duration-exit) ease;
+  }
+
+  .tip:is(:hover, :focus-visible, [data-copied])::after {
+    opacity: 1;
+  }
+}

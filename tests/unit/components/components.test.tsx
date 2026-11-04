@@ -104,10 +104,10 @@ describe('Article', () => {
     expect(html).not.toContain('<img')
     expect(html).not.toContain('/tag/')
     expect(html).not.toContain('<footer')
-    expect(html).not.toContain('Like this post')
+    expect(html).not.toContain('React to this post')
   })
 
-  it('gives a post a table of contents, a like button, and a reading progress bar', async () => {
+  it('gives a post a toolbar above and after the body, a table of contents, and a reading progress bar', async () => {
     const withHeadings = {
       ...post(),
       headings: [{ id: 'intro', text: 'Intro', depth: 2 as const }],
@@ -116,13 +116,17 @@ describe('Article', () => {
     expect(html).toContain('aria-label="Tags"')
     expect(html).toContain('aria-label="Table of contents"')
     expect(html).toContain('href="#intro"')
-    // One like button in the sidebar, one after the body for narrow screens.
-    expect(html.split('Like this post').length - 1).toBe(2)
-    expect(html.indexOf('Hello moon')).toBeLessThan(html.lastIndexOf('Like this post'))
+    expect(html.split('View as Markdown').length - 1).toBe(4)
+    expect(html.indexOf('View as Markdown')).toBeLessThan(html.indexOf('Hello moon'))
+    // Only the toolbar after the body has the reactions.
+    expect(html.split('React to this post').length - 1).toBe(1)
+    expect(html.indexOf('Hello moon')).toBeLessThan(html.indexOf('React to this post'))
+    expect(html).toContain('id="share-top"')
+    expect(html).toContain('id="share-end"')
     expect(html).toContain('class="progress"')
   })
 
-  it('puts copy and share icons above the like button, with share links for the post', async () => {
+  it('puts every way to share in one Share menu, then the reactions, then the Markdown copy', async () => {
     const html = await renderServer(<Article post={post({ title: 'Moon & Stars' })} />)
     const url = encodeURIComponent('https://gregrickaby.com/first-post')
     const title = encodeURIComponent('Moon & Stars')
@@ -131,17 +135,20 @@ describe('Article', () => {
     expect(html).toContain(`href="https://www.linkedin.com/sharing/share-offsite/?url=${url}"`)
     expect(html).toContain(`href="https://www.facebook.com/sharer/sharer.php?u=${url}"`)
     expect(html).toContain(`href="https://x.com/intent/tweet?url=${url}&amp;text=${title}"`)
-    expect(html).toContain('data-tip="Copy link"')
-    expect(html).toContain('data-tip="Share on Reddit"')
+    expect(html).toContain(`href="mailto:?subject=${title}&amp;body=${url}"`)
+    expect(html).toContain('popoverTarget="share-top"')
+    expect(html).toContain('aria-label="Share this post"')
     expect(html).toContain('rel="noopener noreferrer"')
-    expect(html.indexOf('Share on X')).toBeLessThan(html.indexOf('Like this post'))
+    expect(html.lastIndexOf('Share this post')).toBeLessThan(html.indexOf('React to this post'))
+    expect(html.indexOf('React to this post')).toBeLessThan(html.lastIndexOf('View as Markdown'))
   })
 
-  it('shows the like button without tags or headings', async () => {
+  it('shows the toolbar without tags or headings, and no sidebar', async () => {
     const html = await renderServer(<Article post={post({ tags: undefined })} />)
     expect(html).not.toContain('aria-label="Tags"')
     expect(html).not.toContain('Table of contents')
-    expect(html).toContain('Like this post')
+    expect(html).not.toContain('<aside')
+    expect(html).toContain('React to this post')
   })
 })
 

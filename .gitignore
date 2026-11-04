@@ -65,5 +65,5 @@ certificates
 
 !.env.example
 
-# likes database (lib/likes.ts)
+# reactions database (lib/reactions.ts)
 /.data/
