@@ -211,7 +211,7 @@ test.describe('search and theme', () => {
 
 test.describe('reactions', () => {
   test('a reaction counts, swaps, and survives a reload', async ({ page }) => {
-    await page.goto('/stable-diffusion-xl-1-0-impresses')
+    await page.goto('/displaying-exif-data-in-wordpress')
     const toolbar = page.getByRole('form', { name: 'React to this post' })
     const like = toolbar.getByRole('button', { name: /^Like/ })
     const fire = toolbar.getByRole('button', { name: /^Fire/ })
