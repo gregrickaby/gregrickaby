@@ -1,7 +1,7 @@
 # 0003. Post likes in SQLite, keyed on a hashed IP
 
 - Date: 2026-10-23
-- Status: Accepted
+- Status: Superseded by [0013](0013-emoji-reactions.md)
 
 ## Context
 
