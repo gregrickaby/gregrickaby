@@ -1,5 +1,5 @@
 // @vitest-environment happy-dom
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 let pathname = '/'
@@ -15,17 +15,27 @@ const { CodeCopy } = await import('@/components/islands/code-copy')
 const { CopyLink } = await import('@/components/islands/copy-link')
 const { CopyMarkdown } = await import('@/components/islands/copy-markdown')
 
-const likePost = vi.fn(async (previous: { count: number | null; mine: number }) => ({
-  count: (previous.count ?? 4) + 1,
-  mine: previous.mine + 1,
-}))
-const LIKES: Record<string, { count: number; mine: number }> = {
-  post: { count: 4, mine: 0 },
-  popular: { count: 10000, mine: 0 },
+type Counts = Record<string, number>
+const ZERO: Counts = { fire: 0, heart: 0, laugh: 0, wow: 0 }
+interface Loaded {
+  counts: Counts
+  mine: string | null
 }
-const getLikes = vi.fn(async (slug: string) => LIKES[slug] ?? { count: 12, mine: 10 })
-vi.mock('@/lib/like-post', () => ({ getLikes, likePost }))
-const { LikeButton } = await import('@/components/islands/like-button')
+/** Stands in for the server: one reaction per visitor, toggled like the real one. */
+let server: Loaded
+const reactToPost = vi.fn(async (_previous: unknown, data: FormData) => {
+  const reaction = data.get('reaction') as string
+  const counts = { ...server.counts }
+  if (server.mine) counts[server.mine]! -= 1
+  const mine = server.mine === reaction ? null : reaction
+  if (mine) counts[mine]! += 1
+  server = { counts, mine }
+  return server
+})
+const getReactions = vi.fn(async () => server)
+vi.mock('@/lib/react-to-post', () => ({ getReactions, reactToPost }))
+const { Reactions } = await import('@/components/islands/reactions')
+const { DeviceShare } = await import('@/components/islands/device-share')
 const { TableOfContents } = await import('@/components/islands/table-of-contents')
 
 afterEach(() => {
@@ -437,15 +447,12 @@ describe('CopyLink', () => {
     render(<CopyLink className="icon" url="https://gregrickaby.com/post" />)
     const button = screen.getByRole('button', { name: 'Copy link' })
     expect(button.className).toContain('icon')
-    expect(button.dataset.tip).toBe('Copy link')
     await act(async () => fireEvent.click(button))
     expect(writeText).toHaveBeenCalledWith('https://gregrickaby.com/post')
     expect(playSound).toHaveBeenCalledWith('select')
-    expect(button.dataset.tip).toBe('Copied')
-    expect(button.hasAttribute('data-copied')).toBe(true)
+    expect(button.textContent).toBe('Copied')
     expect(screen.getByRole('status').textContent).toBe('Copied')
     act(() => vi.advanceTimersByTime(2000))
-    expect(button.dataset.tip).toBe('Copy link')
     expect(button.hasAttribute('data-copied')).toBe(false)
     expect(screen.getByRole('status').textContent).toBe('')
   })
@@ -456,88 +463,105 @@ describe('CopyLink', () => {
     await act(async () => fireEvent.click(screen.getByRole('button')))
     expect(playSound).not.toHaveBeenCalled()
     expect(screen.getByRole('status').textContent).toBe('Could not copy')
-    expect(screen.getByRole('button').dataset.tip).toBe('Could not copy')
+    expect(screen.getByRole('button').textContent).toBe('Could not copy')
   })
 })
 
-describe('LikeButton', () => {
-  const fill = (button: HTMLElement) =>
-    (button.querySelector('[style]') as HTMLElement).style.getPropertyValue('--fill')
+describe('Reactions', () => {
+  beforeEach(() => {
+    server = { counts: { ...ZERO, heart: 4, laugh: 2, wow: 1, fire: 1 }, mine: null }
+  })
 
-  it('loads the count, then likes the post with a sound and a burst', async () => {
-    render(<LikeButton slug="post" />)
-    const button = screen.getByRole('button')
-    expect(button.textContent).toBe('Like this post')
-    expect(button.dataset.tip).toBe('Hit the ? block!')
-    expect(await screen.findByText('4')).toBeTruthy()
-    expect(button.textContent).toContain('4 likes. Like this post')
-    expect(fill(button)).toBe('0')
+  const pick = (name: string) =>
+    screen.getByRole('button', { name: new RegExp(`^${name}`) }) as HTMLButtonElement
+  const badge = (name: string) =>
+    pick(name).querySelector('[aria-hidden="true"]:not(:first-child)')?.textContent ?? null
+
+  async function click(element: HTMLElement) {
     await act(async () => {
-      fireEvent.click(button)
+      fireEvent.click(element)
     })
+  }
+
+  it('shows four emoji with their counts, then reacts with a coin and a burst', async () => {
+    server.counts.wow = 0
+    render(<Reactions slug="post" />)
+    const form = screen.getByRole('form', { name: 'React to this post' })
+    expect(within(form).getAllByRole('button')).toHaveLength(4)
+    expect(await screen.findByRole('button', { name: 'Like, 4' })).toBeTruthy()
+    expect(badge('Like')).toBe('4')
+    expect(badge('Wow')).toBeNull()
+    expect(screen.getByRole('button', { name: 'Wow' })).toBeTruthy()
+    await click(pick('Like'))
     expect(playSound).toHaveBeenCalledWith('coin')
-    expect(button.querySelectorAll('[aria-hidden="true"] > [style]')).toHaveLength(10)
-    expect(button.textContent).toContain('5 likes. Like this post again (1 of 10)')
-    expect(fill(button)).toBe('0.1')
-    expect(button.dataset.tip).toBe('x1 coins! Hit it again')
-    expect((button as HTMLButtonElement).disabled).toBe(false)
+    expect(badge('Like')).toBe('5')
+    expect(pick('Like').querySelectorAll('[style]')).toHaveLength(10)
+    expect(pick('Like').getAttribute('aria-pressed')).toBe('true')
+    expect(pick('Like').value).toBe('heart')
+    expect(pick('Like').type).toBe('submit')
   })
 
-  it('groups the thousands in a big count', async () => {
-    render(<LikeButton slug="popular" />)
-    expect(await screen.findByText('10,000')).toBeTruthy()
+  it('swaps the reaction', async () => {
+    render(<Reactions slug="post" />)
+    await screen.findByRole('button', { name: 'Like, 4' })
+    await click(pick('Fire'))
+    expect(badge('Fire')).toBe('2')
+    await click(pick('Laugh'))
+    expect(badge('Fire')).toBe('1')
+    expect(badge('Laugh')).toBe('3')
+    expect(pick('Laugh').getAttribute('aria-pressed')).toBe('true')
+    expect(pick('Fire').getAttribute('aria-pressed')).toBe('false')
+    expect(pick('Fire').querySelectorAll('[style]')).toHaveLength(0)
   })
 
-  it('bursts again on each like', async () => {
-    render(<LikeButton slug="post" />)
-    const button = screen.getByRole('button')
-    await act(async () => {
-      fireEvent.click(button)
-    })
-    const first = button.querySelector('[aria-hidden="true"] > [style]')
-    await act(async () => {
-      fireEvent.click(button)
-    })
-    expect(button.querySelector('[aria-hidden="true"] > [style]')).not.toBe(first)
-    expect(button.textContent).toContain('(2 of 10)')
+  it('takes a reaction back with a closing sound', async () => {
+    server.mine = 'wow'
+    render(<Reactions slug="post" />)
+    await screen.findByRole('button', { name: 'Wow, 1' })
+    await click(pick('Wow'))
+    expect(playSound).toHaveBeenCalledWith('close')
+    expect(badge('Wow')).toBeNull()
+    expect(pick('Wow').getAttribute('aria-pressed')).toBe('false')
+    expect(pick('Wow').querySelectorAll('[style]')).toHaveLength(0)
   })
 
-  it('plays a fanfare for the tenth like', async () => {
-    getLikes.mockResolvedValueOnce({ count: 20, mine: 9 })
-    render(<LikeButton slug="post" />)
-    expect(await screen.findByText('20')).toBeTruthy()
-    await act(async () => {
-      fireEvent.click(screen.getByRole('button'))
-    })
-    expect(playSound).toHaveBeenCalledWith('fanfare')
-    expect(playSound).not.toHaveBeenCalledWith('coin')
+  it('shortens big counts and spells them out for screen readers', async () => {
+    server = { counts: { ...ZERO, heart: 12345 }, mine: null }
+    render(<Reactions slug="post" />)
+    expect(await screen.findByRole('button', { name: 'Like, 12,345' })).toBeTruthy()
+    expect(badge('Like')).toBe('12.3K')
   })
 
-  it('fills the heart and stops at ten likes', async () => {
-    render(<LikeButton slug="other" />)
-    expect(await screen.findByText('12')).toBeTruthy()
-    const button = screen.getByRole('button') as HTMLButtonElement
-    expect(button.textContent).toContain('12 likes. You liked this post 10 times')
-    expect(fill(button)).toBe('1')
-    expect(button.dataset.tip).toBe('Course clear!')
-    expect(button.disabled).toBe(true)
-  })
-
-  it('says one like', async () => {
-    getLikes.mockResolvedValueOnce({ count: 1, mine: 1 })
-    render(<LikeButton slug="post" />)
-    expect(await screen.findByText('1')).toBeTruthy()
-    expect(screen.getByRole('button').textContent).toContain('1 like. Like this post again')
-  })
-
-  it('shows no count when it fails to load, and ignores a count that lands after unmount', async () => {
-    getLikes.mockRejectedValueOnce(new Error('offline'))
-    const { unmount } = render(<LikeButton slug="post" />)
+  it('shows no counts when they fail to load', async () => {
+    getReactions.mockRejectedValueOnce(new Error('offline'))
+    render(<Reactions slug="post" />)
     await act(async () => {})
-    expect(screen.getByRole('button').textContent).toBe('Like this post')
+    expect(screen.getByRole('button', { name: 'Like' })).toBeTruthy()
+  })
+
+  it("shows the action's answer when the counts never loaded", async () => {
+    let finish = (_value: Loaded) => {}
+    getReactions.mockReturnValueOnce(new Promise((resolve) => (finish = resolve)))
+    const { unmount } = render(<Reactions slug="post" />)
+    await click(pick('Wow'))
+    expect(pick('Wow').getAttribute('aria-pressed')).toBe('true')
+    expect(badge('Wow')).toBe('2')
     unmount()
-    render(<LikeButton slug="post" />).unmount()
+    await act(async () => finish(server))
+  })
+
+  it('ignores counts that land after unmount', async () => {
+    render(<Reactions slug="post" />).unmount()
     await act(async () => {})
+  })
+
+  it('keeps the loaded counts when the server does not save a reaction', async () => {
+    reactToPost.mockImplementationOnce(async (previous) => previous as never)
+    render(<Reactions slug="post" />)
+    await screen.findByRole('button', { name: 'Like, 4' })
+    await click(pick('Like'))
+    expect(badge('Like')).toBe('4')
+    expect(pick('Like').getAttribute('aria-pressed')).toBe('false')
   })
 
   describe('like cue', () => {
@@ -562,79 +586,75 @@ describe('LikeButton', () => {
       vi.unstubAllGlobals()
     })
 
-    function renderCued(slug = 'post') {
+    function renderCued() {
       const view = render(
         <article>
           <span data-like-cue="" />
-          <LikeButton slug={slug} />
+          <Reactions slug="post" />
         </article>,
       )
       const marker = view.container.querySelector('[data-like-cue]') as HTMLElement
-      const button = screen.getByRole('button')
-      const place = (element: HTMLElement, top: number, height = 40) => {
-        element.getBoundingClientRect = () => ({ bottom: top + height, height, top }) as DOMRect
+      const form = view.container.querySelector('form') as HTMLElement
+      const place = (element: HTMLElement, top: number) => {
+        element.getBoundingClientRect = () => ({ bottom: top + 40, top }) as DOMRect
       }
-      return { button, marker, place, unmount: view.unmount }
+      return { form, marker, place, unmount: view.unmount }
     }
 
-    it('waves once the reader reaches the cue and the button is on screen, until liked', async () => {
-      const { button, marker, place, unmount } = renderCued()
-      expect(await screen.findByText('4')).toBeTruthy()
+    it('waves once the reader reaches the cue and the reactions are on screen, until a reaction', async () => {
+      const { form, marker, place, unmount } = renderCued()
+      await screen.findByRole('button', { name: 'Like, 4' })
       place(marker, 1200)
-      place(button, 100)
+      place(form, 100)
       act(() => fire())
-      expect(button.hasAttribute('data-cue')).toBe(false)
+      expect(form.hasAttribute('data-cue')).toBe(false)
       place(marker, 400)
-      place(button, 2000)
+      place(form, 2000)
       act(() => fire())
-      expect(button.hasAttribute('data-cue')).toBe(false)
-      place(button, 100, 0)
+      expect(form.hasAttribute('data-cue')).toBe(false)
+      place(form, -100)
       act(() => fire())
-      expect(button.hasAttribute('data-cue')).toBe(false)
-      place(button, -100)
+      expect(form.hasAttribute('data-cue')).toBe(false)
+      place(form, 100)
       act(() => fire())
-      expect(button.hasAttribute('data-cue')).toBe(false)
-      place(button, 100)
-      act(() => fire())
-      expect(button.hasAttribute('data-cue')).toBe(true)
-      expect(button.querySelector('[aria-hidden="true"]')!.textContent).toBe('Psst!')
+      expect(form.hasAttribute('data-cue')).toBe(true)
+      expect(form.querySelector('[aria-hidden="true"]')!.textContent).toBe('Psst!')
       expect(disconnect).toHaveBeenCalled()
-      await act(async () => {
-        fireEvent.click(button)
-      })
-      expect(button.hasAttribute('data-cue')).toBe(false)
-      expect(button.textContent).not.toContain('Psst!')
+      await click(pick('Fire'))
+      expect(form.hasAttribute('data-cue')).toBe(false)
+      expect(form.textContent).not.toContain('Psst!')
       unmount()
     })
 
-    it('only asks readers who have not liked the post yet', async () => {
-      getLikes.mockResolvedValueOnce({ count: 5, mine: 3 })
-      const { button, marker, place } = renderCued()
-      expect(await screen.findByText('5')).toBeTruthy()
+    it('only asks readers who have not reacted yet', async () => {
+      server.mine = 'wow'
+      const { form, marker, place } = renderCued()
+      await screen.findByRole('button', { name: 'Wow, 1' })
       place(marker, 400)
-      place(button, 100)
+      place(form, 100)
       act(() => fire())
-      expect(button.hasAttribute('data-cue')).toBe(false)
-    })
-
-    it('stays still once the post has all ten likes', async () => {
-      const { button, marker, place } = renderCued('other')
-      expect(await screen.findByText('12')).toBeTruthy()
-      place(marker, 400)
-      place(button, 100)
-      act(() => fire())
-      expect(button.hasAttribute('data-cue')).toBe(false)
+      expect(form.hasAttribute('data-cue')).toBe(false)
     })
   })
+})
 
-  it('keeps the loaded count when the server does not save a like', async () => {
-    likePost.mockImplementationOnce(async (previous) => previous as never)
-    render(<LikeButton slug="post" />)
-    expect(await screen.findByText('4')).toBeTruthy()
-    await act(async () => {
-      fireEvent.click(screen.getByRole('button'))
-    })
-    expect(screen.getByRole('button').textContent).toContain('4 likes. Like this post')
+describe('DeviceShare', () => {
+  afterEach(() => vi.unstubAllGlobals())
+
+  it("opens the device's share sheet, and shrugs off a cancel", async () => {
+    const share = vi.fn().mockRejectedValue(new Error('AbortError'))
+    vi.stubGlobal('navigator', { share })
+    render(<DeviceShare className="item" title="Post" url="https://gregrickaby.com/post" />)
+    await act(async () => fireEvent.click(screen.getByRole('button', { name: 'More options' })))
+    expect(share).toHaveBeenCalledWith({ title: 'Post', url: 'https://gregrickaby.com/post' })
+  })
+
+  it('renders nothing without a share sheet', () => {
+    vi.stubGlobal('navigator', {})
+    const { container } = render(
+      <DeviceShare className="item" title="Post" url="https://gregrickaby.com/post" />,
+    )
+    expect(container.innerHTML).toBe('')
   })
 })
 

@@ -119,7 +119,7 @@ describe('post page', () => {
     expect(html).toContain('href="/newest"')
     expect(html).toContain('href="/oldest"')
     expect(html).toContain('BlogPosting')
-    expect(html).toContain('Like this post')
+    expect(html).toContain('React to this post')
   })
 
   it('builds metadata, and none for an unknown post', async () => {

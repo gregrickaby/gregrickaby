@@ -10,9 +10,9 @@ import { playSound } from './sounds'
 const COPIED_FOR = 2000
 
 /**
- * An icon that copies a post's URL. Hidden without JavaScript, since the
- * reader can copy the address bar instead. `data-tip` holds the tooltip text
- * for the caller's styles.
+ * A share menu item that copies a post's URL, and says "Copied" in its place
+ * for a moment. Hidden without JavaScript, since the reader can copy the
+ * address bar instead.
  */
 export function CopyLink({ className, url }: { className: string; url: string }) {
   const [status, setStatus] = useState('')
@@ -30,15 +30,9 @@ export function CopyLink({ className, url }: { className: string; url: string })
 
   return (
     <span className={styles.copy}>
-      <button
-        aria-label="Copy link"
-        className={`${className} ${styles.button}`}
-        data-copied={status ? '' : undefined}
-        data-tip={status || 'Copy link'}
-        onClick={copy}
-        type="button"
-      >
-        <LinkIcon size={22} />
+      <button className={`${className} ${styles.button}`} onClick={copy} type="button">
+        <LinkIcon size={20} />
+        {status || 'Copy link'}
       </button>
       <span className="visually-hidden" role="status">
         {status}

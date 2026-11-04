@@ -34,10 +34,22 @@ export function SearchIcon(props: IconProps) {
   )
 }
 
-export function HeartIcon(props: IconProps) {
+/** An arrow out of a box, the usual share symbol. */
+export function ShareIcon(props: IconProps) {
   return (
     <Icon {...props}>
-      <path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+      <path d="M8 9h-1a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-8a2 2 0 0 0 -2 -2h-1" />
+      <path d="M12 14v-11" />
+      <path d="M9 6l3 -3l3 3" />
+    </Icon>
+  )
+}
+
+export function MailIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
+      <path d="M3 7l9 6l9 -6" />
     </Icon>
   )
 }

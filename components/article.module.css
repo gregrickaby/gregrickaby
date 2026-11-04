@@ -34,8 +34,8 @@
     }
   }
 
-  /* Narrow screens: the sidebar's contents join the body's column above it,
-     and the post's actions show their copy after the body. */
+  /* Narrow screens: the table of contents joins the body's column above it,
+     between the two toolbars. */
   .body {
     display: flex;
     flex-direction: column;
@@ -47,11 +47,7 @@
     display: contents;
   }
 
-  .sideActions {
-    display: none;
-  }
-
-  /* Wide screens: the contents and actions sit in a sidebar in the right margin, which sticks
+  /* Wide screens: the table of contents sits in a sidebar in the right margin, which sticks
      below the header while the body scrolls. The body and footer shift left so the sidebar's right
      edge lines up with the hero's. */
   @media (width >= 80rem) {
@@ -100,28 +96,25 @@
       position: sticky;
     }
 
-    /* A long list scrolls on its own, so the actions stay in view. */
-    .sidebar > :not(.sideActions) {
+    /* A long list scrolls on its own. */
+    .sidebar > * {
       min-block-size: 0;
       overflow-y: auto;
     }
 
-    .sideActions {
-      --actions-margin: 0 auto;
-
-      display: block;
-      flex: none;
+    /* The body's column has no gap here, so the toolbars keep their distance. */
+    .body > :first-child {
+      margin-block-end: var(--space-6);
     }
 
-    .endActions {
-      display: none;
+    .body > :last-child {
+      margin-block-start: var(--space-6);
     }
   }
 
+  /* The toolbar above the tags draws their divider. */
   .footer {
-    border-block-start: 1px solid var(--border);
-    margin-block-start: var(--space-7);
-    padding-block-start: var(--space-4);
+    margin-block-start: var(--space-4);
   }
 
   .tags {

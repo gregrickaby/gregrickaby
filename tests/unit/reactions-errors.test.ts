@@ -9,17 +9,18 @@ vi.mock('next/headers', () => ({ headers: async () => new Headers() }))
 // A file can't hold a folder, so opening the database fails.
 vi.stubEnv('LIKES_DB_PATH', 'package.json/likes.db')
 
-const { likePost } = await import('@/lib/like-post')
+const { reactToPost } = await import('@/lib/react-to-post')
 
-describe('likePost without a database', () => {
-  it('logs and leaves the button as it was', async () => {
+describe('reactToPost without a database', () => {
+  it('logs and leaves the buttons as they were', async () => {
     const log = vi.spyOn(console, 'error').mockImplementation(() => {})
-    const before = { count: 3, mine: 0 }
+    const before = null
     const data = new FormData()
     data.set('slug', index.posts[0]!.meta.slug)
-    expect(await likePost(before, data)).toBe(before)
+    data.set('reaction', 'fire')
+    expect(await reactToPost(before, data)).toBe(before)
     expect(log).toHaveBeenCalledWith(
-      'Could not save a like',
+      'Could not save a reaction',
       expect.objectContaining({ error: expect.any(String) }),
     )
   })
