@@ -5,6 +5,7 @@ const GONE = new Set([
   '/dreamy-milky-way-on-august-8',
   '/ehs-graduation-2023',
   '/faq',
+  '/genesis-code-snippets',
   '/happy-little-trees',
   '/home-networking-upgrade',
   '/how-to-install-lamp-on-ubuntu',

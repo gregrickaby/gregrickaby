@@ -23,11 +23,6 @@ export const redirects = [
   // Old WordPress date-based URLs that map to existing posts. The rest answer
   // 410 from proxy.ts (lib/gone.ts).
   {
-    source: '/2013/05/genesis-code-snippets',
-    destination: '/genesis-code-snippets',
-    permanent: true,
-  },
-  {
     source: '/2013/05/microphone-shootout-behringer-b-1-vs-neumann-tlm-103',
     destination: '/microphone-shootout-behringer-b-1-vs-neumann-tlm-103',
     permanent: true,
