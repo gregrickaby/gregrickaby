@@ -44,7 +44,6 @@ export const redirects = [
 
   // Tags folded into broader ones.
   { source: '/tag/astrophotography', destination: '/tag/photography', permanent: true },
-  { source: '/tag/automatic1111', destination: '/tag/ai', permanent: true },
   { source: '/tag/chase', destination: '/tag/family', permanent: true },
   { source: '/tag/chloe', destination: '/tag/family', permanent: true },
   { source: '/tag/gallery', destination: '/tag/photography', permanent: true },
@@ -63,5 +62,4 @@ export const redirects = [
   // Old tags with spaces in their names.
   { source: '/tag/gain%20map', destination: '/tag/photography', permanent: true },
   { source: '/tag/how%20to', destination: '/tag/tutorials', permanent: true },
-  { source: '/tag/stable%20diffusion', destination: '/tag/ai', permanent: true },
 ]
