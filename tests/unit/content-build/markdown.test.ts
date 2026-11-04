@@ -7,6 +7,7 @@ import { CODE_BACKGROUND, renderMarkdown, type MeasureImage } from '@/lib/conten
 const sizes: Record<string, { width: number; height: number; hdr: boolean }> = {
   '/content/posts/p/big.jpg': { width: 4000, height: 3000, hdr: false },
   '/content/posts/p/small.jpg': { width: 500, height: 400, hdr: false },
+  '/content/posts/p/tall.jpg': { width: 3000, height: 4000, hdr: false },
   '/content/posts/p/hdr.jpg': { width: 3000, height: 2000, hdr: true },
 }
 const measure: MeasureImage = (path) => sizes[path] ?? null
@@ -17,6 +18,15 @@ describe('renderMarkdown', () => {
     const { html } = await render('## Camera Settings\n\n| a | b |\n|---|---|\n| 1 | 2 |')
     expect(html).toContain('<h2 id="camera-settings">Camera Settings</h2>')
     expect(html).toContain('<table>')
+  })
+
+  it('breaks tables with six or more columns out of the text column', async () => {
+    const row = (n: number) => `|${' x |'.repeat(n)}`
+    const rule = (n: number) => `|${'---|'.repeat(n)}`
+    const wide = await render(`${row(6)}\n${rule(6)}\n${row(6)}`)
+    expect(wide.html).toContain('<table class="alignwide">')
+    const narrow = await render(`${row(5)}\n${rule(5)}\n${row(5)}`)
+    expect(narrow.html).toContain('<table>')
   })
 
   it('lists the h2 and h3 headings with their ids and plain text', async () => {
@@ -41,6 +51,30 @@ describe('renderMarkdown', () => {
     const { html } = await render('![](./big.jpg "Caption")')
     expect(html).toContain('alt=""')
     expect(html).toContain('<figcaption>Caption</figcaption>')
+  })
+
+  it('floats a lone image to the side named after a # on its path', async () => {
+    const { html, images } = await render('![A moon](./big.jpg#right)')
+    expect(html).toContain('<figure class="alignright">')
+    expect(html).not.toContain('figcaption')
+    expect(html).not.toContain('#right')
+    expect(html).toContain('sizes="(max-width: 40rem) 100vw, 22rem"')
+    expect(images).toEqual(['/content/posts/p/big.jpg'])
+  })
+
+  it('floats a captioned image left', async () => {
+    const { html } = await render('![A moon](./big.jpg#left "The Wolf Moon")')
+    expect(html).toContain('<figure class="alignleft">')
+    expect(html).toContain('<figcaption>The Wolf Moon</figcaption>')
+  })
+
+  it('marks portrait images, and only portrait images', async () => {
+    const tall = await render('![](./tall.jpg)')
+    expect(tall.html).toContain('data-portrait')
+    const wide = await render('![](./big.jpg)')
+    expect(wide.html).not.toContain('data-portrait')
+    const hdr = await render('![](./hdr.jpg)')
+    expect(hdr.html).not.toContain('data-portrait')
   })
 
   it('sends local images through the optimizer with a srcset and their size', async () => {
