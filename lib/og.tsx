@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { cacheLife } from 'next/cache'
 import { ImageResponse } from 'next/og'
+import sharp from 'sharp'
 
 import { SITE } from '@/lib/site'
 
@@ -22,15 +23,28 @@ export interface OgCard {
   byline?: boolean
 }
 
-const MIME: Record<string, string> = { '.png': 'image/png', '.webp': 'image/webp' }
-
 /** Cached, so the share image routes prerender at build instead of reading files per request. */
-async function dataUrl(publicPath: string): Promise<string> {
+async function avatarUrl(): Promise<string> {
   'use cache'
   cacheLife('max')
-  const buffer = await readFile(join(process.cwd(), 'public', publicPath))
-  const ext = publicPath.slice(publicPath.lastIndexOf('.')).toLowerCase()
-  return `data:${MIME[ext] ?? 'image/jpeg'};base64,${buffer.toString('base64')}`
+  const buffer = await readFile(join(process.cwd(), 'public', 'avatar.jpg'))
+  return `data:image/jpeg;base64,${buffer.toString('base64')}`
+}
+
+/**
+ * A photo cropped to the card in memory. Satori inlines the data URL into an SVG,
+ * and a full-size original pushes that SVG past the 10 MB libxml limit.
+ */
+async function photoUrl(publicPath: string): Promise<string> {
+  'use cache'
+  cacheLife('max')
+  const original = await readFile(join(process.cwd(), 'public', publicPath))
+  const card = await sharp(original)
+    .rotate()
+    .resize(OG_SIZE.width, OG_SIZE.height, { fit: 'cover' })
+    .jpeg({ quality: 82 })
+    .toBuffer()
+  return `data:image/jpeg;base64,${card.toString('base64')}`
 }
 
 /**
@@ -45,8 +59,8 @@ export async function renderOgImage({
   byline = true,
 }: OgCard): Promise<ImageResponse> {
   const [background, avatar] = await Promise.all([
-    photo ? dataUrl(photo) : Promise.resolve(null),
-    dataUrl('/avatar.jpg'),
+    photo ? photoUrl(photo) : Promise.resolve(null),
+    avatarUrl(),
   ])
 
   return new ImageResponse(

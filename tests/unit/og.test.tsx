@@ -10,6 +10,11 @@ vi.mock('next/cache', () => ({ cacheLife: vi.fn() }))
 const readFile = vi.fn(async (path: string) => Buffer.from(`bytes:${path}`))
 vi.mock('node:fs/promises', () => ({ readFile }))
 
+const toBuffer = vi.fn(async () => Buffer.from('card'))
+const resize = vi.fn(() => ({ jpeg: () => ({ toBuffer }) }))
+const rotate = vi.fn(() => ({ resize }))
+vi.mock('sharp', () => ({ default: vi.fn(() => ({ rotate })) }))
+
 class FakeImageResponse {
   constructor(
     readonly element: ReactElement,
@@ -31,7 +36,8 @@ beforeEach(() => readFile.mockClear())
 describe('renderOgImage', () => {
   it('draws the photo, eyebrow, title, and byline', async () => {
     const out = await html({ title: 'Moons', eyebrow: 'Jan 11', photo: '/content/a.jpg' })
-    expect(out).toContain('data:image/jpeg;base64,')
+    expect(out).toContain(`data:image/jpeg;base64,${Buffer.from('card').toString('base64')}`)
+    expect(resize).toHaveBeenCalledWith(OG_SIZE.width, OG_SIZE.height, { fit: 'cover' })
     expect(out).toContain('Jan 11')
     expect(out).toContain('Moons')
     expect(out).toContain('Greg Rickaby')
@@ -46,9 +52,8 @@ describe('renderOgImage', () => {
     expect(out).not.toContain('text-transform:uppercase')
   })
 
-  it('drops the byline when the title is the name, and reads PNG types', async () => {
-    const out = await html({ title: 'Greg Rickaby', photo: '/x.png', byline: false })
-    expect(out).toContain('data:image/png;base64,')
+  it('drops the byline when the title is the name', async () => {
+    const out = await html({ title: 'Greg Rickaby', byline: false })
     expect(out.match(/Greg Rickaby/g)).toHaveLength(1)
   })
 })
