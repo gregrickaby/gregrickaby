@@ -27,7 +27,6 @@ const GONE = new Set([
   '/category/photos',
   '/tag/ai',
   '/tag/automatic1111',
-  '/tag/disney',
   '/tag/gx85',
   '/tag/hosting',
   '/tag/portrait',

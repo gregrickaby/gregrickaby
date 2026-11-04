@@ -36,8 +36,8 @@ describe('isGonePath', () => {
       '/faq',
       '/the-perfect-pan-pizza',
       '/category/photos',
-      '/tag/disney',
-      '/tag/Disney',
+      '/tag/ubuntu',
+      '/tag/Ubuntu',
       '/tag/year%20in%20review',
       '/author/greg',
       '/wp-json',
@@ -83,7 +83,7 @@ describe('isGonePath', () => {
 describe('proxy for gone paths', () => {
   it('runs on every kind of gone path', async () => {
     const { config } = await loadProxy()
-    for (const url of ['/faq', '/tag/disney', '/author/greg', '/wp-json/wp/v2', '/2015/06/x']) {
+    for (const url of ['/faq', '/tag/ubuntu', '/author/greg', '/wp-json/wp/v2', '/2015/06/x']) {
       expect(unstable_doesMiddlewareMatch({ config, nextConfig: {}, url }), url).toBe(true)
     }
   })
@@ -93,7 +93,7 @@ describe('proxy for gone paths', () => {
     vi.stubGlobal('fetch', fetchMock)
     const { proxy } = await loadProxy()
 
-    const first = await proxy(new NextRequest('https://gregrickaby.com/tag/disney'))
+    const first = await proxy(new NextRequest('https://gregrickaby.com/tag/ubuntu'))
     const second = await proxy(new NextRequest('https://gregrickaby.com/faq'))
 
     expect(first.status).toBe(410)

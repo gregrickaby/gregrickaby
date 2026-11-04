@@ -1,0 +1,126 @@
+@layer components {
+  .stepper {
+    align-items: center;
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .label {
+    color: var(--text-2);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+    letter-spacing: var(--label-tracking);
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .people {
+    color: var(--accent-on-card);
+    font-family: var(--font-pixel);
+    min-width: 2ch;
+    text-align: center;
+  }
+
+  /* The answer comes first and is the biggest thing in the frame. */
+  .verdict {
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-2);
+    display: grid;
+    gap: var(--space-1);
+    justify-items: center;
+    padding: var(--space-4);
+    text-align: center;
+  }
+
+  .amount {
+    color: var(--success);
+    font-size: var(--step-3);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .verdict[data-worth-it='false'] .amount {
+    color: var(--warning);
+  }
+
+  .detail {
+    color: var(--text-2);
+    font-size: var(--step-minus-1);
+    margin: 0;
+  }
+
+  .compare {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
+  }
+
+  .cost {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .price {
+    color: var(--text-1);
+    font-size: var(--step-1);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* One pip per park day, like a punch card. */
+  .days {
+    display: grid;
+    gap: var(--space-1);
+    grid-template-columns: repeat(30, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .day {
+    aspect-ratio: 1;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin: 0;
+    transition: background-color var(--duration-enter) var(--ease-pixel);
+  }
+
+  .day[data-state='paying'],
+  .legend [data-state='paying']::before {
+    background: var(--warning-soft);
+    border-color: var(--warning);
+  }
+
+  .day[data-state='free'],
+  .legend [data-state='free']::before {
+    background: var(--success-soft);
+    border-color: var(--success);
+  }
+
+  .legend {
+    color: var(--text-2);
+    display: flex;
+    font-size: var(--step-minus-1);
+    gap: var(--space-4);
+    margin: 0;
+
+    & span {
+      align-items: center;
+      display: inline-flex;
+      gap: var(--space-2);
+    }
+
+    & span::before {
+      border: 1px solid;
+      border-radius: 2px;
+      content: '';
+      height: 0.75rem;
+      width: 0.75rem;
+    }
+  }
+}
