@@ -50,7 +50,7 @@ Keep it earned. One joke that lands beats three that wink. Whimsy never replaces
 - Inline comments in snippets name what each line does in plain words (`// a volume knob`, `// destination = your speakers`).
 - Introduce jargon by doing first, naming second: show the overshoot, then "That overshoot is called the Gibbs phenomenon."
 - Put a side question the reader is already asking in a callout (below), not an `###` heading: "Wait, where does 523 come from?"
-- A closing list of practical lessons is welcome ("What I'd tell you before you try this"), five items max, each a short imperative plus one sentence of why.
+- A closing list of practical lessons is welcome, five items max, each a short imperative plus one sentence of why. Title it with a plain label that names the topic ("Buying checklist", "Before you buy"), never "What I'd tell you...", "What I learned", or any other advice-column framing. That phrasing reads as AI.
 
 ## Callouts
 
@@ -129,6 +129,7 @@ Older posts on this site have patterns the current rules forbid. Don't copy them
 - "Thanks for reading!" as the last line.
 - Bold on several sentences per section, ALL CAPS for emphasis, `Lol!`.
 - "Additionally", "As an aside", "Please note", "TL;DR" blocks.
+- "What I'd tell you before you..." and similar advice-column headings. Never write them.
 
 ## Writing rules
 
