@@ -20,9 +20,17 @@ const DD_API_KEY = process.env.DD_API_KEY
 const LOGS_URL = `https://http-intake.logs.${DD_SITE}/api/v2/logs`
 
 /** The message and stack of a caught value, ready to add to a log entry. */
+/** The message, plus the cause's message when there is one (undici's "fetch failed" hides it there). */
+function describeError(error: unknown): string {
+  if (!(error instanceof Error)) return String(error)
+  const cause = error.cause
+  if (cause === undefined) return error.message
+  return `${error.message}: ${cause instanceof Error ? cause.message : String(cause)}`
+}
+
 export function errorFields(error: unknown): { error: string; stack: string | undefined } {
   return {
-    error: error instanceof Error ? error.message : String(error),
+    error: describeError(error),
     stack: error instanceof Error ? error.stack : undefined,
   }
 }

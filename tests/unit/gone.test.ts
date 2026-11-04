@@ -27,6 +27,7 @@ async function loadProxy() {
 
 afterEach(() => {
   vi.unstubAllGlobals()
+  vi.unstubAllEnvs()
   vi.restoreAllMocks()
 })
 
@@ -103,6 +104,26 @@ describe('proxy for gone paths', () => {
     expect(fetchMock).toHaveBeenCalledTimes(1)
     expect(String((fetchMock.mock.calls[0] as unknown[])[0])).toBe(
       'https://gregrickaby.com/404/missing',
+    )
+  })
+
+  it('fetches the 404 page from the local port in production', async () => {
+    const fetchMock = vi.fn(async () => new Response(PAGE, { status: 404 }))
+    vi.stubGlobal('fetch', fetchMock)
+    vi.stubEnv('NODE_ENV', 'production')
+    vi.stubEnv('PORT', '4000')
+    const { proxy } = await loadProxy()
+    expect((await proxy(new NextRequest('https://gregrickaby.com/faq'))).status).toBe(410)
+    expect(String((fetchMock.mock.calls[0] as unknown[])[0])).toBe(
+      'http://127.0.0.1:4000/404/missing',
+    )
+
+    vi.stubEnv('PORT', '')
+    delete process.env.PORT
+    const again = await loadProxy()
+    await again.proxy(new NextRequest('https://gregrickaby.com/faq'))
+    expect(String((fetchMock.mock.calls[1] as unknown[])[0])).toBe(
+      'http://127.0.0.1:3000/404/missing',
     )
   })
 

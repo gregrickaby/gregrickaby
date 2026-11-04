@@ -115,6 +115,12 @@ describe('server logger', () => {
     const { errorFields } = await import('@/lib/datadog/server')
     const error = new Error('nope')
     expect(errorFields(error)).toEqual({ error: 'nope', stack: error.stack })
+    expect(errorFields(new Error('fetch failed', { cause: new Error('ECONNREFUSED') })).error).toBe(
+      'fetch failed: ECONNREFUSED',
+    )
+    expect(errorFields(new Error('fetch failed', { cause: 'refused' })).error).toBe(
+      'fetch failed: refused',
+    )
     expect(errorFields('plain')).toEqual({ error: 'plain', stack: undefined })
   })
 })
