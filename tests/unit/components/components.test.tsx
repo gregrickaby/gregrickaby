@@ -71,6 +71,18 @@ describe('Article', () => {
     expect(html).toContain('fetchPriority="high"')
   })
 
+  it('captions a hero with its exposure and a credit, and skips the caption without EXIF', async () => {
+    const page = post()
+    const shot = { ...page, hero: { ...page.hero!, camera: 'SONY', aperture: 'f/2.8', iso: '100' } }
+    const html = (await renderServer(<Article post={shot} />)).replaceAll('<!-- -->', '')
+    expect(html).toContain('<figcaption>')
+    expect(html).toContain('f/2.8')
+    expect(html).toContain('ISO 100')
+    expect(html).toContain('Credit: Greg Rickaby')
+    expect(html).not.toContain('SONY')
+    expect(await renderServer(<Article post={page} />)).not.toContain('figcaption')
+  })
+
   it('shows the update date only when it falls on another day', async () => {
     const updated = (await renderServer(<Article post={post()} />)).replaceAll('<!-- -->', '')
     expect(updated).toContain('Updated <time dateTime="2024-02-01T10:00:00">Feb 1, 2024</time>')
