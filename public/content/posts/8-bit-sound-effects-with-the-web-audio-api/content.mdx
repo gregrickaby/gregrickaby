@@ -2,7 +2,7 @@
 title: 'How to make 8-bit sound effects with the Web Audio API'
 slug: '8-bit-sound-effects-with-the-web-audio-api'
 date: '2026-10-24T00:00:00'
-modified: '2026-10-24T00:00:00'
+modified: '2026-11-03T00:00:00'
 type: 'post'
 description: 'How I built NES-style 8-bit sound effects with about 250 lines of Web Audio API code, then pushed it to a four-channel chiptune and a lo-fi tape deck.'
 featuredImage: './_DSC2420__20260719.jpg'
@@ -14,7 +14,7 @@ Before we start, find the little speaker icon in the header and click it.
 
 Go on. I'll wait.
 
-Did you hear that? Four notes, climbing up a C major chord, like you just found a secret in a Zelda dungeon. Now hover over the links in the nav. _Tick, tick, tick._ Open a photo in the gallery and you'll hear a camera shutter. Like this post ten times and... well, you'll see.
+Did you hear that? Four notes, climbing up a C major chord, like you just found a secret in a Zelda dungeon. Now hover over the links in the nav. _Tick, tick, tick._ Open a photo in the gallery and you'll hear a camera shutter. Make it to the end of this post and... well, you'll hear.
 
 Here's the fun part: **every one of those sounds is built from scratch in your browser**, a few milliseconds before you hear it, using the same trick the Nintendo Entertainment System used in 1985.
 
@@ -373,30 +373,31 @@ That `relatedTarget` line handles a sneaky bug. `pointerover` bubbles, and it fi
 
 And there's one listener on the whole `<nav>`, with `closest()` finding which link you're on, instead of a listener on every link. Event delegation: still great, 25 years later.
 
-## The tenth like
+## Why every reaction is a coin
 
-OK, I promised you a secret.
+OK, I promised you something back at the top.
 
-You can like a post up to ten times. Likes one through nine play the coin sound. Number ten plays this:
+Every post on this site has a row of emoji reactions at the bottom. Pick one and you get the coin from earlier:
 
 ```ts
-// The level-clear fanfare: three climbing chords, then a big finish
-fanfare: [
-  [523, 0.07], [659, 0.07], [784, 0.07], [1047, 0.16], ['rest', 0.04], // up a C chord
-  [698, 0.07], [880, 0.07], [1047, 0.07], [1397, 0.16], ['rest', 0.04], // up an F chord
-  [784, 0.07], [988, 0.07], [1175, 0.07], [1568, 0.16], ['rest', 0.06], // up a G chord
-
-  [1047, 0.09], [1047, 0.09], [1047, 0.09], [2093, 0.7], // ta-ta-ta-TAAA
+// Super Mario Bros.' coin: a quick B, then a ringing E
+coin: [
+  [988, 0.08], // B5, barely there
+  [1319, 0.5], // E6, held six times longer
 ],
 ```
 
-Three rising arpeggios (C, F, G, the I-IV-V that powers half of all pop music), then three quick Cs and one big one held for most of a second. It's a level-clear fanfare. You beat the blog. Congratulations.
+Why the coin? Because a reaction is a tiny reward, and that's exactly what the coin was in 1985. You did a small good thing. _Ding._
 
-Want to hear it for yourself? Find the heart that's waving at you and click it ten times. <span data-like-cue></span>
+It works because of two choices. The first is the jump: B up to E is a perfect fourth, and 1319 divided by 988 is almost exactly 4 to 3. Rising intervals sound like "yes." The second is the ring. The B lasts 80 milliseconds, so short your ear hears it as a run-up, not a note. Then the E rings for half a second, which is ancient for this site. Remember the power-up trick from earlier? Shorten that last note and the _ding_ turns into a _blip_.
+
+Change your mind and pick the same emoji again, and the site takes your reaction back with the `close` sound: the `open` sound played backward, E, C, G, walking down. Up means yes. Down means never mind.
+
+Want to hear it for yourself? Find the emoji that are waving at you and pick one. <span data-like-cue></span>
 
 ## Bonus: playing whole songs
 
-The fanfare is 16 notes and a few rests, and it's over in about two seconds. So what would it take to play a whole song?
+The coin is two notes, and it's over in about half a second. So what would it take to play a whole song?
 
 ### A four-channel sequencer
 
