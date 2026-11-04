@@ -5,7 +5,7 @@
   "type": "module",
   "description": "My personal website",
   "scripts": {
-    "dev": "npm run content -- --drafts && next dev --experimental-https",
+    "dev": "npm run content -- --drafts && (node scripts/build-content.ts --drafts --watch & trap 'kill $!' EXIT; next dev --experimental-https)",
     "build": "npm run content && npm run css:types && next build",
     "start": "NODE_OPTIONS='--require dd-trace/init' next start",
     "content": "node scripts/build-content.ts",
