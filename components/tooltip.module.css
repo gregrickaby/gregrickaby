@@ -33,4 +33,11 @@
   .tip:is(:hover, :focus-visible, [data-copied])::after {
     opacity: 1;
   }
+
+  /* At the far end of a row, the tip lines up with its element's end edge,
+     so it stays on a phone's screen. */
+  .end::after {
+    inset-inline: auto 0;
+    translate: none;
+  }
 }

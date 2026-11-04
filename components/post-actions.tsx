@@ -103,7 +103,7 @@ export function PostActions({
         </ul>
       </div>
       {placement === 'end' ? <Reactions slug={meta.slug} /> : null}
-      <CopyMarkdown className={`${tooltip.tip} ${styles.icon}`} slug={meta.slug} />
+      <CopyMarkdown className={`${tooltip.tip} ${tooltip.end} ${styles.icon}`} slug={meta.slug} />
     </div>
   )
 }
