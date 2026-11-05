@@ -278,14 +278,12 @@ The `rest` doesn't play anything. It pushes the start time forward. Same idea as
 
 ## The autoplay policy
 
-Here's the thing that will bite you if you try this:
-
 > [!WARNING] Browsers won't play audio until the visitor interacts with the page.
 > You can create an `AudioContext` whenever you want, but it starts "suspended," and it stays that way until it's created or resumed during a click, tap, or key press.
 
 This is the [autoplay policy](https://developer.chrome.com/blog/autoplay), and it exists because of every website in 2009 that blasted music at you the moment it loaded. We did this to ourselves.
 
-So the context is created lazily, the first time a sound plays. That's usually a click, which the browser trusts. But here's the trap I fell into: if you turned sound on during an earlier visit, the first sound on a fresh page might be a hover tick, and hovering doesn't count as interacting. The context starts suspended and stays that way, silently swallowing every sound after it.
+So the context is created lazily, the first time a sound plays. That's usually a click, which the browser trusts. I fell into a trap here. If you turned sound on during an earlier visit, the first sound on a fresh page might be a hover tick, and hovering doesn't count as interacting. The context starts suspended and stays that way, silently swallowing every sound after it.
 
 The fix is to ask for a resume every time:
 
@@ -310,7 +308,7 @@ Before your first click, the browser ignores the request. After it, the context 
 
 ## Sound is opt-in
 
-The bigger rule, though, isn't technical. **Sound is off until you turn it on.** Nobody wants a website to start beeping at them in a quiet office or at 2 a.m. next to a sleeping partner. The speaker icon is an opt-in, and the site remembers your answer.
+The bigger rule is manners: **sound is off until you turn it on.** Nobody wants a website to start beeping at them in a quiet office or at 2 a.m. next to a sleeping partner. The speaker icon is an opt-in, and the site remembers your answer.
 
 Where to remember it took a little thought. Every page on this site is prerendered at build time, as plain static HTML. If I stored the setting in a cookie and read it on the server, every page would have to render per request just to draw a speaker icon. That's a terrible trade.
 

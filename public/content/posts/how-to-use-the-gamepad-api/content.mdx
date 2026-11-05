@@ -55,7 +55,7 @@ requestAnimationFrame(poll)
 
 That `?.connected` is there because `getGamepads()` doesn't hand back a list of just your controllers. In Chrome, it hands back eight slots, one for each controller it can track, and a slot with nothing plugged into it is `null`. Plug in one controller and you get the controller plus seven `null`s. The `?.` skips the empty ones.
 
-Each button gives you two things: `pressed`, a yes or no, and `value`, from `0` to `1`. On the face buttons, `value` is only ever `0` or `1`. Pull a trigger slowly in the box up top, though, and watch its `value` climb through every number in between. The trigger knows how far you pulled it.
+Each button gives you two things: `pressed`, a yes or no, and `value`, from `0` to `1`. On the face buttons, `value` is only ever `0` or `1`. Pull a trigger slowly in the box up top, though, and watch its `value` climb through every number in between.
 
 > [!NOTE] Why not save the controller and reuse it?
 > In Chrome, each `Gamepad` object is a snapshot, frozen the moment you got it. Hold on to last frame's and it never changes, so the buttons look stuck. That's why `poll` calls `getGamepads()` every time.
@@ -134,8 +134,6 @@ Browsers won't play audio until a visitor clicks, taps, or presses a key on the 
 That's why the level at the bottom asks for one click if it's playing silent.
 
 ## Coyote time, jump buffering, and double jumps
-
-Here's something you've felt in every good platformer without knowing it had a name.
 
 You run off a ledge and press jump a split second too late. In real physics, you're falling, so no jump. In a good game, you jump anyway. That's **coyote time**, named after the cartoon coyote who runs off a cliff and hangs in the air until he looks down. The game keeps letting you jump for a moment after the ground is gone.
 
