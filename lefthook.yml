@@ -6,9 +6,9 @@ pre-commit:
     oxlint:
       glob: '*.{js,mjs,ts,tsx}'
       run: npx oxlint {staged_files} --fix
-    stylelint:
+    biome:
       glob: '*.css'
-      run: npx stylelint {staged_files} --fix
+      run: npx biome lint --write --error-on-warnings {staged_files}
     oxfmt:
       glob: '*.{mjs,cjs,js,ts,tsx,md,css,json,yml,yaml}'
       run: npx oxfmt --no-error-on-unmatched-pattern {staged_files}

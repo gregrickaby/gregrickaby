@@ -3,7 +3,6 @@
    so components and the built post HTML share one set of keyframes. The reduced-motion rule in base.css stops them. */
 
 /* Each selector targets a different data-boop value, so source order never decides a tie. */
-/* stylelint-disable no-descending-specificity */
 @layer base {
   [data-boop] svg,
   [data-boop] svg path {
