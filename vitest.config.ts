@@ -23,6 +23,7 @@ export default defineConfig({
         'lib/**/*.{ts,tsx}',
         'app/**/*.{ts,tsx}',
         'components/**/*.{ts,tsx}',
+        'stylelint/**/*.ts',
         'oxlint/**/*.ts',
       ],
       exclude: ['**/*.d.ts'],

@@ -17,7 +17,7 @@ Review `.ts`, `.tsx`, `.css`, and Markdown under `public/content/`. Skip `.gener
 
 ## 2. Standards
 
-`AGENTS.md` is already loaded. Read `docs/code-standards.md` once per session. Open a config file (`.oxlintrc.json`, `lib/headers.ts`, `scripts/build-content.ts`) only when a finding depends on it.
+`AGENTS.md` is already loaded. Read `docs/code-standards.md` once per session. Open a config file (`.oxlintrc.json`, `stylelint.config.mjs`, `lib/headers.ts`, `scripts/build-content.ts`) only when a finding depends on it.
 
 ## 3. Review
 

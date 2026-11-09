@@ -1,7 +1,7 @@
 # 0011. Lint with Oxlint and format with Oxfmt
 
 - Date: 2026-11-03
-- Status: Accepted (Stylelint removed by [0014](0014-remove-stylelint.md))
+- Status: Accepted
 
 ## Context
 

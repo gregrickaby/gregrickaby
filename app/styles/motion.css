@@ -54,6 +54,7 @@
     }
 
     /* An X looks the same after a quarter turn. */
+    /* stylelint-disable-next-line no-descending-specificity */
     [data-boop='spin']:hover svg {
       animation: boop-spin 500ms var(--ease-pixel);
     }
@@ -90,6 +91,7 @@
     }
 
     /* The icon that appears after a click spins and grows in. */
+    /* stylelint-disable-next-line no-descending-specificity */
     [data-switched] svg {
       animation: boop-swap 500ms var(--ease-pixel);
     }

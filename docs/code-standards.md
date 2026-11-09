@@ -1,6 +1,6 @@
 # Code standards
 
-How code in this repo is written. `AGENTS.md` covers the architecture and what keeps the site static; this file covers the code itself. Oxlint (`.oxlintrc.json`, with the repo's own rules in `oxlint/plugin.ts`) and Oxfmt (`.oxfmtrc.json`) enforce the rules marked (lint). Biome (`biome.json`) lints the CSS for generic problems. Review catches the rest, including the CSS conventions below.
+How code in this repo is written. `AGENTS.md` covers the architecture and what keeps the site static; this file covers the code itself. Oxlint (`.oxlintrc.json`, with the repo's own rules in `oxlint/plugin.ts`), Stylelint, and Oxfmt (`.oxfmtrc.json`) enforce the rules marked (lint). Review catches the rest.
 
 ## TypeScript
 
@@ -29,7 +29,7 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 
 - Files are kebab-case (`post-card.tsx`). A component's CSS Module sits beside it with the same name (`post-card.module.css`).
 - Components are PascalCase, functions and variables camelCase, and module-level constants SCREAMING_SNAKE_CASE (`IMAGE_WIDTHS`, `SITE`).
-- CSS Module classes are camelCase.
+- CSS Module classes are camelCase (lint).
 - Getters start with `get`, predicates with `is` or `has`, and builders with `build`.
 
 ## Comments
@@ -41,8 +41,8 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 
 ## Styles
 
-- CSS Modules, with every rule inside `@layer components`.
-- Colors come from the tokens in `app/styles/tokens.css`, with no hex or named colors elsewhere. `light-dark()` handles the themes. No `!important`, apart from the reduced-motion overrides in `base.css`.
+- CSS Modules, with every rule inside `@layer components` (lint).
+- Colors come from the tokens in `app/styles/tokens.css` (lint). `light-dark()` handles the themes.
 - Inline `style` only for values computed from data, such as an aspect ratio.
 - Sizes are in `rem`: media query breakpoints, the text column (`--measure`), card grids, and `next/image` `sizes` that follow them, so the layout scales with the reader's font size. Spacing comes from the `--space-*` tokens, which are in `rem`. Use `px` only for hairlines and small fixed details: borders, outlines, shadows, and pixel-art offsets.
 
