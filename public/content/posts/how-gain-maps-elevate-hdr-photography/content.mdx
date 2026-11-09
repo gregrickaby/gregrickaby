@@ -2,7 +2,7 @@
 title: 'HDR gain maps, explained with live demos'
 slug: 'how-gain-maps-elevate-hdr-photography'
 date: '2023-10-27T15:00:00'
-modified: '2026-10-24T00:00:00'
+modified: '2026-11-08T00:00:00'
 type: 'post'
 description: 'A gain map packs an HDR photo and its SDR fallback into one JPEG. How it works, how Lightroom exports one, and demos you can drag to compare.'
 featuredImage: './Hollywood-Blvd-Christmas_HDR_20221205.jpg'
@@ -12,7 +12,7 @@ tags: ['photography', 'tutorials']
 
 High Dynamic Range (HDR) photos display a wider range of brightness, contrast, and color than Standard Dynamic Range (SDR). On an HDR-capable screen, that difference is visible: brighter highlights, more detail in shadows, and colors that more closely match what the camera actually captured.
 
-Before we go any further, here's what _your_ screen can show:
+Here's what _your_ screen can show:
 
 <div data-demo="screen"></div>
 
@@ -20,13 +20,13 @@ Three green checks means the photos in this post will glow. Anything else, and y
 
 ## See it for yourself
 
-The glow is the whole point, so let's start there. Drag across the photo to wipe between the SDR and HDR versions. Both are JPGs exported from the same RAW file, and the HDR one carries a gain map:
+The glow is the whole point. Drag across the photo to wipe between the SDR and HDR versions. Both are JPGs exported from the same RAW file, and the HDR one carries a gain map:
 
 <div data-demo="wipe"></div>
 
 The SDR side looks fine until you see the HDR side next to it. Then it looks like someone left a gray filter on the lens.
 
-**If both sides look the same, your browser or display can't show HDR.** The screen check above says which one. The SDR fallback lives in the same file, so you're still seeing a correct version of the photo.
+If both sides look the same, your browser or display can't show HDR. The screen check above says which one. The SDR fallback lives in the same file, so you're still seeing a correct version of the photo.
 
 The rest of this post is how one file pulls that off.
 
@@ -53,19 +53,19 @@ To modern photos captured via [exposure bracketing](https://helpx.adobe.com/ligh
   </figcaption>
 </figure>
 
-This post is not about those HDR pretenders though, because at the end of the day: **those two photos only have 8 bits worth of data and are in the sRGB colorspace**.
+This post isn't about those HDR pretenders. Those two photos carry only 8 bits of data each and use the sRGB colorspace.
 
 This post is about _true_ High Dynamic Range photos, which are in a larger colorspace and are shown at a much higher luminance.
 
 ## The need for more nits and bits
 
-Most images on the web only contain 8 bits worth of information and are in the sRGB color space. That's strictly a technical limitation of older web-based image formats like .jpg. But did you know that cameras have been capturing RAW photos with more than 8 bits (and in larger colorspace) going back 20+ years?! The extra data was there, but it was essentially invisible to photographers and viewers alike.
+Most images on the web only contain 8 bits worth of information and are in the sRGB color space. That's strictly a technical limitation of older web-based image formats like .jpg. Yet cameras have been capturing RAW photos with more than 8 bits (and in larger colorspace) going back 20+ years. The extra data was there, but it was essentially invisible to photographers and viewers alike.
 
 How much bigger is a "larger colorspace"? The horseshoe below is every color a person can see. Each triangle is a color space: a screen set to that space can show the colors inside it. Pick one:
 
 <div data-demo="gamut"></div>
 
-sRGB, the space nearly every JPG on the web uses, covers about a third of what you can see. Display P3 goes further into greens and reds, and Rec. 2020 goes further still. The colors outside the triangle aren't wrong. They're just the ones that space has no numbers for.
+sRGB, the space nearly every JPG on the web uses, covers about a third of what you can see. Display P3 goes further into greens and reds, and Rec. 2020 goes further still. Colors outside a triangle are still real. That space just has no numbers for them.
 
 The problem was that there was no practical way to work with those extra bits or view them on a display. So .jpg and PNG images simply discard everything extra to maximize compression, back when most internet traffic moved over copper.
 
@@ -83,7 +83,7 @@ Apple, Google, and Adobe each started with their own flavor. In July 2025 they b
 
 Because both versions live in one file, you export once and get coverage across HDR and SDR displays without managing separate files. As HDR display support expands, your existing exports are already ready for it.
 
-Here's the clever part: it isn't all or nothing. Every HDR screen has some amount of _headroom_, which is how many times brighter than white it can go right now. That number moves with your brightness setting and the room you're in. The browser scales the gain map to fit whatever headroom the screen has.
+The boost isn't all or nothing. Every HDR screen has some amount of _headroom_, which is how many times brighter than white it can go right now. That number moves with your brightness setting and the room you're in. The browser scales the gain map to fit whatever headroom the screen has.
 
 This is real data: one row of pixels across the Hollywood Blvd photo, right through the marquee lights, with its gain map applied the way the [spec](https://helpx.adobe.com/camera-raw/using/gain-map.html) says to. The line marked White is as bright as an SDR screen gets. Drag the slider:
 
@@ -94,15 +94,55 @@ At 1x, every bulb flattens out at white, because that's the SDR photo. Turn it u
 > [!NOTE] Where do the nits come from?
 > SDR white on an HDR screen is 203 nits, per the ITU's [BT.2408](https://www.itu.int/pub/R-REP-BT.2408) report. Multiply that by the headroom and you get the brightest pixel the screen will show. A MacBook Pro's 1,600 nits works out to about 8x.
 
+## Inside the file
+
+The gain map is a second image stored in the same JPG. Its settings sit in XMP metadata with the `hdrgm` prefix. Here's what Lightroom wrote into the Hollywood Blvd file:
+
+```bash
+grep -ao 'hdrgm:[A-Za-z]*="[^"]*"' Hollywood-Blvd-Christmas_HDR_20221205.jpg
+```
+
+```xml
+hdrgm:Version="1.0"
+hdrgm:BaseRenditionIsHDR="False"
+hdrgm:OffsetSDR="0.015625"
+hdrgm:OffsetHDR="0.015625"
+hdrgm:HDRCapacityMin="0"
+hdrgm:HDRCapacityMax="4.6"
+```
+
+The offsets keep black pixels from dividing by zero. `HDRCapacityMax` is the headroom where the boost is full strength: 2^4.6, about 24x. A browser applies this to every pixel:
+
+```ts
+const OFFSET = 0.015625 // hdrgm:OffsetSDR and hdrgm:OffsetHDR
+const CAPACITY_MAX = 4.6 // hdrgm:HDRCapacityMax
+
+/** How much of the stored boost a screen with this headroom gets, from 0 to 1. */
+function weight(headroom: number): number {
+  return Math.min(Math.max(Math.log2(headroom) / CAPACITY_MAX, 0), 1)
+}
+
+/**
+ * One pixel, in linear light where 1 is SDR white. `gain` is the gain map's
+ * value for that pixel, in stops.
+ */
+function shownLight(sdr: number, gain: number, headroom: number): number {
+  const boosted = (sdr + OFFSET) * 2 ** (gain * weight(headroom)) - OFFSET
+  return Math.min(boosted, headroom)
+}
+```
+
+On a 1x screen, `weight` is 0, so every pixel stays at its SDR value. At 8x, the bulbs get about two-thirds of their stored boost and clip at 8. The headroom slider above runs this same math on one row of the photo.
+
 ## Why can't CSS just glow?
 
 Confession: the glow in that chart is fake. I drew it. The photos on this page can go brighter than white, but the page around them can't.
 
-Every color CSS can name tops out at the page's white. `#fff`, `rgb(255 255 255)`, and `color(display-p3 1 1 1)` all land on the same brightness. Display P3 gets you redder reds and greener greens, not a brighter white. The W3C says so in the [CSS Color HDR module](https://www.w3.org/TR/css-color-hdr-1/): the color spaces in CSS Color 4 are, "By design, these are all Standard Dynamic Range (SDR) color spaces."
+Every color CSS can name tops out at the page's white. `#fff`, `rgb(255 255 255)`, and `color(display-p3 1 1 1)` all land on the same brightness. Display P3 gives you redder reds and greener greens, but its white is no brighter. The W3C says so in the [CSS Color HDR module](https://www.w3.org/TR/css-color-hdr-1/): the color spaces in CSS Color 4 are, "By design, these are all Standard Dynamic Range (SDR) color spaces."
 
 That same HDR module is the fix. It adds HDR color spaces like `rec2100-pq` and `rec2100-hlg`, with diffuse white at 203 nits (the same number from BT.2408). It's still a Working Draft, though; the latest is from October 2026. I asked my copy of Chrome 155, and `CSS.supports('color', 'color(rec2100-pq 1 1 1)')` came back `false`.
 
-One piece has shipped: `dynamic-range-limit`, in Chrome 136 and Safari 26 ([caniuse](https://caniuse.com/mdn-css_properties_dynamic-range-limit)). It goes the other direction. It turns HDR _down_, so a grid of thumbnails doesn't light up your face:
+One piece has shipped: `dynamic-range-limit`, in Chrome 136 and Safari 26 ([caniuse](https://caniuse.com/mdn-css_properties_dynamic-range-limit)). It works the other way: it turns HDR _down_, so a grid of thumbnails doesn't light up your face:
 
 ```css
 /* Thumbnails stay at SDR white; the full-size photo gets the whole screen */
@@ -171,7 +211,7 @@ The result looks processed and artificial, which puts it closer to the 2012-era 
 
 ## But can I print in HDR?
 
-No. This is a physical limitation, not a technical one. Photo paper cannot increase its own brightness the way an HDR display can boost individual pixels.
+No. Photo paper cannot increase its own brightness the way an HDR display boosts individual pixels, so the limit is physical.
 
 ## Browser, app, and CMS support
 
