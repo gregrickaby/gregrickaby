@@ -13,7 +13,7 @@ Greg Rickaby's personal site (<https://gregrickaby.com>): blog, photo gallery, r
 
 ## Stack
 
-Next.js 16.4 (App Router, Cache Components, Partial Prefetching, typed routes, Rust React Compiler) · React 19.3 · TypeScript 7 (strict) · CSS Modules with cascade layers · Vitest 5 + Testing Library + happy-dom · Playwright with `@next/playwright` · Oxlint with a local plugin in `oxlint/`, Oxfmt ([ADR 0011](docs/adr/0011-oxlint-and-oxfmt.md)), Stylelint, lefthook · Datadog (`dd-trace`, browser RUM).
+Next.js 16.4 (App Router, Cache Components, Partial Prefetching, typed routes, Rust React Compiler) · React 19.3 · TypeScript 7 (strict) · CSS Modules with cascade layers · Vitest 5 + Testing Library + happy-dom · Playwright with `@next/playwright` · Oxlint with a local plugin in `oxlint/`, Oxfmt ([ADR 0011](docs/adr/0011-oxlint-and-oxfmt.md)), Biome for CSS ([ADR 0015](docs/adr/0015-biome-css-lint.md)), lefthook · Datadog (`dd-trace`, browser RUM).
 
 ## Commands
 
@@ -86,4 +86,4 @@ Coolify builds `main` and runs `npm start` on port 3000, with a health check on 
 
 ## Decisions
 
-Architecture decision records live in `docs/adr/`, from `docs/adr/template.md`, named `NNNN-short-slug.md`. Write one for each new decision and link it here; `tests/unit/adr.test.ts` fails until you do.
+Architecture decision records live in `docs/adr/`, from `docs/adr/template.md`, named `NNNN-short-slug.md`. Write one for each new decision and link it here; `tests/unit/adr.test.ts` fails until you do. Stylelint was removed in [ADR 0014](docs/adr/0014-remove-stylelint.md). CSS is linted by Biome ([ADR 0015](docs/adr/0015-biome-css-lint.md)), which covers generic rules only. The repo's own CSS conventions are in `docs/code-standards.md` and enforced by review.

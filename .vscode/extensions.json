@@ -2,7 +2,7 @@
   "recommendations": [
     "EditorConfig.EditorConfig",
     "oxc.oxc-vscode",
-    "stylelint.vscode-stylelint",
+    "biomejs.biome",
     "GitHub.copilot-chat"
   ]
 }

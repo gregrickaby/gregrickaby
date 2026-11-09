@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "files": {
+    "includes": ["**", "!**/.next", "!**/coverage", "!**/.generated", "!**/node_modules"]
+  },
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "formatter": { "enabled": false },
+  "linter": { "enabled": false },
+  "css": { "linter": { "enabled": true } },
+  "overrides": [
+    {
+      "includes": ["app/styles/base.css"],
+      "linter": { "rules": { "complexity": { "noImportantStyles": "off" } } }
+    },
+    {
+      "includes": ["app/styles/motion.css"],
+      "linter": { "rules": { "style": { "noDescendingSpecificity": "off" } } }
+    }
+  ]
+}
