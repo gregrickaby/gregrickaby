@@ -1,0 +1,170 @@
+---
+title: 'How to build an equalizer with the Web Audio API'
+slug: 'web-audio-api-equalizer'
+date: '2026-11-10T00:00:00'
+modified: '2026-11-10T00:00:00'
+type: 'post'
+draft: true
+description: 'How I built live spectrum bars and a 10-band graphic equalizer with two Web Audio API nodes, using the chiptune from my 8-bit sound effects post.'
+categories: ['Code']
+tags: ['audio', 'javascript', 'tutorials']
+---
+
+Press Play and watch the bars.
+
+<div data-demo="bars"></div>
+
+Not very exciting, right? Almost everything piles into the first bar while the rest sit there. Now press **Octaves**.
+
+There it is. The bass bounces on the left, the rhythm and melody dance in the middle, and the hi-hat hisses way out on the right. Same song, same data. The only thing that changed is how I sliced it.
+
+That song is the chiptune from my post on [8-bit sound effects with the Web Audio API](/8-bit-sound-effects-with-the-web-audio-api), and it turns out to be a perfect test track. Every part lives on its own channel, so you can switch parts off and see exactly where each one sits.
+
+By the end of this post you'll have a ten-band equalizer with sliders, presets, and a curve that shows what it's doing. And then I'm going to ask you to delete the melody using only the sliders. You can't. I'll tell you why.
+
+## Seeing sound with an `AnalyserNode`
+
+If you read the 8-bit post, you know the mental model: the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) is a bunch of guitar pedals connected by cables. An [`AnalyserNode`](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode) is the strangest pedal on the board. Sound goes in and comes out exactly the same. It doesn't change a thing. It just lets you look inside.
+
+```ts
+const analyser = audio.createAnalyser()
+analyser.fftSize = 2048 // how many samples it looks at at once
+
+// Song into the analyser, analyser into your speakers
+song.connect(analyser).connect(audio.destination)
+
+// One number per frequency slice, from 0 to 255
+const data = new Uint8Array(analyser.frequencyBinCount)
+
+function draw() {
+  analyser.getByteFrequencyData(data) // what's playing right now
+  drawBars(canvas, data)
+  requestAnimationFrame(draw) // again, next frame
+}
+```
+
+Every frame, `getByteFrequencyData` fills `data` with how loud each slice of the spectrum is right now. It gets those slices from a [fast Fourier transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform), which takes a wiggly wave and tells you which pitches it's made of. The same trick works in reverse: the 8-bit post built a square wave by stacking pitches, and an FFT pulls them apart again.
+
+With `fftSize` at 2048, you get 1,024 slices, called _bins_. Each one is the sample rate divided by `fftSize` wide: at 48,000 samples a second, that's about 23 Hz per bin, from 0 Hz all the way up to 24 kHz.
+
+> [!WARNING] Why even bars pile up on the left
+> The obvious move is to draw ten bars and give each one a tenth of the bins. That's what **Even** does in the demo above: at 48 kHz, every bar covers 2.4 kHz. Seems fair.
+>
+> It isn't, because ears don't hear in hertz. They hear in octaves. Going up an octave _doubles_ the frequency, so the jump from 100 Hz to 200 Hz sounds exactly as big as the jump from 5 kHz to 10 kHz. The whole bass line, every rhythm note, and the entire melody of this song fit under 2.4 kHz. Ten even bars squeezes all of it into bar one.
+>
+> The fix is to make each bar twice as wide as the one before it:
+>
+> ```ts
+> // From half an octave below the band to half an octave above
+> const start = Math.floor(center / Math.SQRT2 / binHz)
+> const end = Math.ceil((center * Math.SQRT2) / binHz)
+> ```
+
+## Calming the bars down
+
+The analyser has one more setting that changes how the bars _feel_. [`smoothingTimeConstant`](https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode/smoothingTimeConstant) blends each frame with the one before it. At `0`, every frame stands alone. At the default of `0.8`, each frame keeps 80% of the last one.
+
+Drag it all the way down, then all the way up:
+
+<div data-demo="smoothing"></div>
+
+At 0 the bars twitch like they've had too much coffee. Up near 0.95 they move like syrup, and the kick drum and hi-hat smear into one long blob. The default of `0.8` sits right in the sweet spot: smooth enough to read, quick enough to keep the beat.
+
+## One knob: the `BiquadFilterNode`
+
+Looking is fun. Now let's change something.
+
+A [`BiquadFilterNode`](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode) is the pedal that shapes the tone. It has eight types, and the one an equalizer wants is `peaking`: it puts a bump (or a dip) around one frequency and leaves everything else alone.
+
+```ts
+const filter = audio.createBiquadFilter()
+filter.type = 'peaking'
+filter.frequency.value = 1000 // where the bump is centered
+filter.gain.value = 12 // how big: up 12 dB
+filter.Q.value = 1.4 // how wide: bigger Q, narrower bump
+
+// Song into the filter, filter into the analyser
+song.connect(filter).connect(analyser)
+```
+
+Pick a frequency, crank the gain, and watch the bars under the curve grow:
+
+<div data-demo="knob"></div>
+
+Push 12 dB around 100 Hz and the bass gets big and boomy. Pull 24 dB out around 8 kHz and the hi-hat nearly disappears. The curve on top is the filter's _response_: how much it lifts or cuts every frequency, from 20 Hz on the left to 20 kHz on the right.
+
+> [!NOTE] What's a decibel?
+> A decibel is a ratio, not an amount. Every 6 dB about doubles the height of the wave, so +12 dB is about four times taller and -24 dB is about a sixteenth. Like octaves, it's a log scale, because that's how ears work too: the jump from 1x to 2x sounds as big as the jump from 4x to 8x.
+>
+> ```ts
+> const gain = 10 ** (db / 20) // +6 dB is 1.995. Close enough to double.
+> ```
+
+> [!TIP] The browser will draw the curve for you
+> Every `BiquadFilterNode` has [`getFrequencyResponse()`](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode/getFrequencyResponse), which tells you how loud it makes any frequency. I wanted the curve to show up before you press Play, when there's no filter yet, so my demos run the same formulas the browser does: the [Audio EQ Cookbook](https://www.w3.org/TR/audio-eq-cookbook/), which the Web Audio spec names for every filter type.
+
+## Ten knobs: a graphic equalizer
+
+A graphic equalizer is ten of those filters in a row, one per octave. The standard centers are 31, 62, 125, 250, 500, 1k, 2k, 4k, 8k, and 16k Hz, each double the one before it. (The ISO 266 list rounds the bottom two to 31.5 and 63. Stereo makers tend not to.)
+
+The ends are a little different. The 31 Hz slider is a `lowshelf`, which lifts or cuts _everything_ below it, and the 16k slider is a `highshelf`, which does the same for everything above. Shelves catch whatever falls off the ends of the chart.
+
+```ts
+const filters = BANDS.map((frequency, i) => {
+  const filter = audio.createBiquadFilter()
+  filter.type = i === 0 ? 'lowshelf' : i === BANDS.length - 1 ? 'highshelf' : 'peaking'
+  filter.frequency.value = frequency
+  filter.Q.value = 1.4
+  return filter
+})
+
+// Plug them in a row: preamp, ten filters, analyser
+let node = preamp
+for (const filter of filters) node = node.connect(filter)
+node.connect(analyser).connect(audio.destination)
+```
+
+Filters in a row add up. If two neighbors each push +6 dB where they overlap, that spot gets close to +12. You can see it in the curve when you move two sliders next to each other.
+
+Try the presets, then make your own:
+
+<div data-demo="eq"></div>
+
+**Telephone** keeps only 300 Hz to 3.4 kHz, the range [old phone lines](https://en.wikipedia.org/wiki/Voice_frequency) carried. **Underwater** cuts everything above about 500 Hz, which is about what music sounds like from the bottom of a pool. **Smiley face** is the curve everyone draws on their car stereo the first time: bass up, treble up, middle down. (Admit it. You've done it too.)
+
+Now press **Turn it all up**.
+
+> [!WARNING] Turning everything up makes it worse
+> Every slider at +12 dB sounds like it should make everything four times louder and otherwise the same. Instead, the caption yells _Clipping!_ and the song gets crunchy.
+>
+> Speakers can only move so far. Inside the Web Audio graph, a wave can be as tall as it wants, but at the speakers anything taller than 1 gets chopped flat, and chopped waves sound like distortion. Boosting every band pushes the wave past 1.
+>
+> The fix is the **Preamp** slider. It's one gain node at the front of the chain that turns everything down before the filters turn it back up. Pull it down until the warning goes away, and the crunch goes with it. Real stereos have the same knob, and it's why sound engineers say "cut before you boost."
+
+## Can you delete the melody?
+
+OK, I promised you a challenge.
+
+Every note in the melody of this song falls between E5 and G6: 659 Hz to 1,568 Hz. That's the 500, 1k, and 2k bands. So if you cut those three bands all the way down, the melody should vanish.
+
+Press Play, then **Cut 500 Hz to 2 kHz**:
+
+<div data-demo="ghost"></div>
+
+It gets quieter. Way quieter. But it doesn't go away. There's a thin, buzzy ghost of the melody still playing, and the bars on the right are still bouncing in time with it.
+
+That ghost is the reason square waves sound like Nintendo. Back in the 8-bit post, the [square wave demo](/8-bit-sound-effects-with-the-web-audio-api#why-square-waves-sound-like-nintendo) built a square by stacking pitches: the note itself, plus a quieter copy at 3 times the frequency, 5 times, 7 times, and on up. Those extra pitches are _harmonics_. The melody plays on a pulse wave, which is full of them. Cut the note's own frequency and the harmonics at 4 kHz, 8 kHz, and above sail right through.
+
+A graphic EQ can turn a part down. It can't pull a part out, because the part isn't in one place. **Every note is a whole stack of frequencies, and an equalizer only sees the stack.**
+
+## Equalizer checklist
+
+- Space your bars by octaves. Even bins put the whole song in the first bar.
+- Leave smoothing near `0.8`. Lower twitches, higher blurs the beat.
+- Cut before you boost. Taking out what you don't want sounds cleaner than piling on what you do.
+- Leave room with a preamp. Boosts add up, and the speakers clip at 1.
+- Use shelves on the ends. They catch everything past the first and last bands.
+
+The demos are in [`components/islands/demos/web-audio-api-equalizer/`](https://github.com/gregrickaby/gregrickaby/tree/main/components/islands/demos/web-audio-api-equalizer), and the song comes from [`components/islands/chiptune.ts`](https://github.com/gregrickaby/gregrickaby/blob/main/components/islands/chiptune.ts).
+
+Now scroll back up and push the bass all the way up. The bass player in me insists.
