@@ -10,7 +10,12 @@ export function postMeta(overrides: Partial<PostMeta> = {}): PostMeta {
     modified: '2024-02-01T10:00:00',
     type: 'post',
     description: 'A post about the moon.',
-    featuredImage: { src: `/content/posts/${slug}/hero.jpg`, width: 1600, height: 900 },
+    featuredImage: {
+      src: `/content/posts/${slug}/hero.jpg`,
+      width: 1600,
+      height: 900,
+      alt: `${slug} hero`,
+    },
     categories: ['Blog'],
     tags: ['Moon', 'Astrophotography'],
     readingMinutes: 5,

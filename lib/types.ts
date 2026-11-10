@@ -8,6 +8,11 @@ export interface ImageAsset {
   height: number
 }
 
+/** A post's featured image, with the alt text from `featuredImageAlt` in its frontmatter. */
+export interface FeaturedImage extends ImageAsset {
+  alt: string
+}
+
 /** Frontmatter for a post or page. */
 export interface PostMeta {
   title: string
@@ -18,7 +23,7 @@ export interface PostMeta {
   modified: string
   type: 'post' | 'page'
   description?: string
-  featuredImage?: ImageAsset
+  featuredImage?: FeaturedImage
   categories?: string[]
   tags?: string[]
   /** Estimated minutes to read the body, at 230 words a minute. */
@@ -65,7 +70,7 @@ export interface CameraSettings {
 }
 
 /** A post's featured image, with the camera settings from its EXIF. */
-export interface HeroImage extends ImageAsset, CameraSettings {}
+export interface HeroImage extends FeaturedImage, CameraSettings {}
 
 /** A photo in the /photos gallery, with EXIF and IPTC fields read at build time. */
 export interface Photo extends ImageAsset, CameraSettings {

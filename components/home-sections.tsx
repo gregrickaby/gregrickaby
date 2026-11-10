@@ -58,7 +58,7 @@ export function HomeAbout({ page }: { page: Post }) {
     <section aria-labelledby="about-title" className={styles.about} data-reveal>
       {page.meta.featuredImage ? (
         <Image
-          alt="The Rickaby family"
+          alt={page.meta.featuredImage.alt}
           className={styles.aboutPhoto}
           height={page.meta.featuredImage.height}
           sizes="(max-width: 53.75rem) 100vw, 30rem"
@@ -146,7 +146,7 @@ export function CurrentlyReading({ books }: { books: Book[] }) {
           <li className={styles.book} data-reveal key={book.url}>
             {book.cover ? (
               <Image
-                alt=""
+                alt={`Cover of ${book.title}`}
                 className={styles.cover}
                 height={475}
                 sizes="96px"

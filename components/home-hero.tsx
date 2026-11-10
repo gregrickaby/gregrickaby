@@ -21,7 +21,7 @@ export function HomeHero() {
     <section aria-labelledby="home-title" className={styles.hero}>
       {photo ? (
         <Image
-          alt=""
+          alt={photo.title}
           className={styles.photo}
           fetchPriority="high"
           fill

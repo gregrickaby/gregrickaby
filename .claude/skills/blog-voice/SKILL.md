@@ -102,6 +102,7 @@ type: 'post'
 draft: true                                        # until Greg publishes
 description: 'One specific sentence: what, how, and a concrete number.'
 featuredImage: './file.jpg'
+featuredImageAlt: 'What the photo shows, not the post title'   # required with featuredImage
 categories: ['Code']                               # or ['Blog']
 tags: ['tutorials', 'javascript']                  # reuse existing tags; one lowercase word each
 ---

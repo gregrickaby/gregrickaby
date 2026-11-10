@@ -58,7 +58,7 @@ export function Article({ post, heading = 'h1' }: { post: Post; heading?: 'h1' |
       {hero ? (
         <figure className={styles.hero}>
           <PostImage
-            alt={meta.title}
+            alt={hero.alt}
             className={styles.heroImage}
             image={hero}
             priority
