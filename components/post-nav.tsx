@@ -60,7 +60,7 @@ function NavCard({
     >
       {post.featuredImage ? (
         <PostImage
-          alt=""
+          alt={post.featuredImage.alt}
           className={styles.image}
           image={post.featuredImage}
           sizes="(max-width: 40rem) 100vw, 34rem"

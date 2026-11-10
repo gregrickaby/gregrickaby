@@ -18,7 +18,7 @@ export function SiteHeader() {
       <div className={styles.inner}>
         <Link className={styles.brand} href="/">
           <Image
-            alt=""
+            alt={`Photo of ${SITE.name}`}
             className={styles.avatar}
             height={40}
             preload

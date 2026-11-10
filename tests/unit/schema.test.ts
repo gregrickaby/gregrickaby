@@ -37,7 +37,12 @@ describe('buildBlogPostingGraph', () => {
     modified: '2024-01-02T00:00:00Z',
     type: 'post' as const,
     description: 'A test post description',
-    featuredImage: { src: '/content/posts/test-post/hero.jpg', width: 800, height: 450 },
+    featuredImage: {
+      src: '/content/posts/test-post/hero.jpg',
+      width: 800,
+      height: 450,
+      alt: 'A hero',
+    },
   }
 
   it('includes a BlogPosting node with headline and dates', () => {

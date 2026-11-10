@@ -23,12 +23,12 @@ beforeAll(() => {
   root = mkdtempSync(join(tmpdir(), 'content-'))
   write(
     'content/posts/older/content.mdx',
-    "---\ntitle: 'Old &#38; Gold'\ndate: '2013-05-19T08:03:21'\ntype: 'post'\nfeaturedImage: './cover.png'\ndescription: 'Rock &#38; roll'\ncategories: ['Code']\ntags: ['PHP']\n---\n\n![Cover](./cover.png)\n",
+    "---\ntitle: 'Old &#38; Gold'\ndate: '2013-05-19T08:03:21'\ntype: 'post'\nfeaturedImage: './cover.png'\nfeaturedImageAlt: 'A cover'\ndescription: 'Rock &#38; roll'\ncategories: ['Code']\ntags: ['PHP']\n---\n\n![Cover](./cover.png)\n",
   )
   write('content/posts/older/cover.png', PNG)
   write(
     'content/posts/newer/content.mdx',
-    "---\ntitle: 'Newer'\nslug: 'newer'\ndate: '2024-01-11T16:13:21'\nmodified: '2024-02-01T00:00:00'\nfeaturedImage: './hero.png'\n---\n\nHello\n\n<div data-demo=\"wave\"></div>\n",
+    "---\ntitle: 'Newer'\nslug: 'newer'\ndate: '2024-01-11T16:13:21'\nmodified: '2024-02-01T00:00:00'\nfeaturedImage: './hero.png'\nfeaturedImageAlt: 'A hero'\n---\n\nHello\n\n<div data-demo=\"wave\"></div>\n",
   )
   write('content/posts/newer/hero.png', PNG)
   write('content/posts/empty/notes.txt', 'no content file')
@@ -86,7 +86,7 @@ describe('buildContent', () => {
       title: 'Newer',
       type: 'post',
       modified: '2024-02-01T00:00:00',
-      featuredImage: { src: '/content/posts/newer/hero.png', width: 2, height: 1 },
+      featuredImage: { src: '/content/posts/newer/hero.png', width: 2, height: 1, alt: 'A hero' },
     })
     expect(newer?.hero?.src).toBe('/content/posts/newer/hero.png')
 
@@ -149,5 +149,15 @@ describe('buildContent', () => {
       paths: { posts: [], tags: [], categories: [] },
     })
     rmSync(empty, { recursive: true, force: true })
+  })
+
+  it('fails on a featured image without alt text', async () => {
+    const bare = mkdtempSync(join(tmpdir(), 'bare-'))
+    const file = join(bare, 'content/posts/bare/content.mdx')
+    mkdirSync(join(file, '..'), { recursive: true })
+    writeFileSync(file, "---\ntitle: 'Bare'\nfeaturedImage: './hero.png'\n---\n\nHi\n")
+    writeFileSync(join(bare, 'content/posts/bare/hero.png'), PNG)
+    await expect(buildContent(bare)).rejects.toThrow('featuredImage needs featuredImageAlt')
+    rmSync(bare, { recursive: true, force: true })
   })
 })

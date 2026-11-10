@@ -25,7 +25,7 @@ export function PostCard({
       {post.featuredImage ? (
         <Link aria-hidden="true" className={styles.imageLink} href={href} prefetch tabIndex={-1}>
           <PostImage
-            alt=""
+            alt={post.featuredImage.alt}
             className={styles.image}
             image={post.featuredImage}
             preload={preload}

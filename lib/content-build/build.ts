@@ -3,7 +3,15 @@ import { join } from 'node:path'
 import matter from 'gray-matter'
 import { imageSize } from 'image-size'
 
-import type { ContentIndex, HeroImage, ImageAsset, KnownPaths, Post, PostMeta } from '../types.ts'
+import type {
+  ContentIndex,
+  FeaturedImage,
+  HeroImage,
+  ImageAsset,
+  KnownPaths,
+  Post,
+  PostMeta,
+} from '../types.ts'
 import { renderMarkdown, type MeasuredImage } from './markdown.ts'
 import { comparePhotos, hasGainMap, readCameraSettings, readPhoto } from './photos.ts'
 import { buildPostMarkdown } from './post-markdown.ts'
@@ -108,10 +116,17 @@ export async function buildContent(
       const basePath = `/content/${type === 'post' ? 'posts' : 'pages'}/${slug}`
       const { html, images, headings } = await renderMarkdown(content, { basePath, measure })
 
-      const featured =
+      const image =
         typeof data.featuredImage === 'string'
           ? asset(`${basePath}/${data.featuredImage.replace(/^\.\//, '')}`)
           : undefined
+      if (image && typeof data.featuredImageAlt !== 'string') {
+        throw new Error(`${file}: featuredImage needs featuredImageAlt, describing the photo`)
+      }
+      const featured: FeaturedImage | undefined = image && {
+        ...image,
+        alt: String(data.featuredImageAlt),
+      }
       const meta: PostMeta = {
         title: decodeEntities(String(data.title ?? slug)),
         slug: String(data.slug ?? slug),
