@@ -10,6 +10,7 @@
     "start": "NODE_OPTIONS='--require dd-trace/init' next start",
     "content": "node scripts/build-content.ts",
     "purge-cdn": "node scripts/purge-cdn.ts",
+    "indexnow": "node scripts/indexnow.ts",
     "lint": "oxlint --deny-warnings && stylelint \"**/*.css\"",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
