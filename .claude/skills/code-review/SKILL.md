@@ -1,6 +1,7 @@
 ---
 name: code-review
 description: Review changed code against this repo's standards and fix what it finds before committing. For posts and pages, also reviews voice, AI tells, and on-page SEO. Use when the user says "review my code", "do a code review", or "/code-review".
+agent: claude-opus-5-5
 ---
 
 # Code review
