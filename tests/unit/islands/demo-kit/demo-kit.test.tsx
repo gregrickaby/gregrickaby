@@ -77,6 +77,20 @@ describe('controls', () => {
     expect(onChange).toHaveBeenCalledWith(5)
     expect(screen.getByText('3').tagName).toBe('OUTPUT')
   })
+
+  it('shows a slider value through its format', () => {
+    render(
+      <Slider
+        format={(value) => `${value} dB`}
+        label="Gain"
+        max={8}
+        min={1}
+        onChange={vi.fn()}
+        value={3}
+      />,
+    )
+    expect(screen.getByText('3 dB').tagName).toBe('OUTPUT')
+  })
 })
 
 describe('playing buttons', () => {
