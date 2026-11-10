@@ -21,14 +21,25 @@ export function fakeParam(value = 0) {
 
 export type FakeParam = ReturnType<typeof fakeParam>
 
+/** Every `connect` call as a pair of nodes, so a test can follow the chain. */
+export const connections: [from: unknown, to: unknown][] = []
+
 function fakeNode<T extends object>(extra: T) {
-  return { ...extra, connect: (node: unknown) => node, disconnect: vi.fn() }
+  const node = {
+    ...extra,
+    connect: (to: unknown) => {
+      connections.push([node, to])
+      return to
+    },
+    disconnect: vi.fn(),
+  }
+  return node
 }
 
 export const oscillators: FakeOscillator[] = []
 export const noiseBursts: { buffer: unknown }[] = []
 export const gains: FakeParam[] = []
-export const filters: { type: string; frequency: FakeParam }[] = []
+export const filters: { type: string; frequency: FakeParam; gain: FakeParam; Q: FakeParam }[] = []
 /** Each analyser fills its scope with this value, so a test can draw a line. */
 export const analyserLevel = { value: 0 }
 export const contexts = vi.fn()
@@ -84,13 +95,25 @@ export class FakeAudioContext {
     return fakeNode({ gain })
   }
   createBiquadFilter() {
-    const filter = fakeNode({ type: 'lowpass', frequency: fakeParam(350) })
+    const filter = fakeNode({
+      type: 'lowpass',
+      frequency: fakeParam(350),
+      gain: fakeParam(),
+      Q: fakeParam(1),
+    })
     filters.push(filter)
     return filter
   }
   createAnalyser() {
     return fakeNode({
       fftSize: 2048,
+      smoothingTimeConstant: 0.8,
+      get frequencyBinCount() {
+        return this.fftSize / 2
+      },
+      getByteFrequencyData(data: Uint8Array) {
+        data.fill(Math.round(analyserLevel.value * 255))
+      },
       getFloatTimeDomainData(samples: Float32Array) {
         samples.fill(analyserLevel.value)
       },
@@ -105,6 +128,7 @@ export function stubAudio() {
   noiseBursts.length = 0
   gains.length = 0
   filters.length = 0
+  connections.length = 0
   analyserLevel.value = 0
   contexts.mockClear()
   buffers.mockClear()

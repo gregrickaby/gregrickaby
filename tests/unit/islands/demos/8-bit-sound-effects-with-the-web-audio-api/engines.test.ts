@@ -10,6 +10,7 @@ import {
 import { noteFrequency } from '@/components/islands/sequencer'
 import { lofiSettings } from '@/components/islands/tape'
 import {
+  connections,
   filters,
   gains,
   instances,
@@ -89,6 +90,12 @@ describe('startChiptune', () => {
     song?.stop()
     expect(master?.setTargetAtTime).toHaveBeenCalledWith(0, 0.2, 0.02)
     vi.advanceTimersByTime(300)
+  })
+
+  it('plays into an output node instead of the speakers', () => {
+    const output = {} as AudioNode
+    startChiptune(SONG, () => 150, vi.fn(), new Set(), output)
+    expect(connections.some(([, to]) => to === output)).toBe(true)
   })
 
   it('skips tokens it does not know', () => {

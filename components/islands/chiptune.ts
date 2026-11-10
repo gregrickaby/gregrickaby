@@ -57,20 +57,22 @@ export interface Chiptune {
  * read every step, so a tempo slider works mid-song. `onStep` hears each
  * sixteenth note and the audio-clock time it plays at, for a display to
  * follow. Channels in `muted` start silent. Muting or unmuting waits for the
- * next beat, so a channel comes in on time, like a player in a band. Returns
- * undefined where Web Audio is missing.
+ * next beat, so a channel comes in on time, like a player in a band. The mix
+ * plays into `output`, such as an equalizer, or straight to the speakers.
+ * Returns undefined where Web Audio is missing.
  */
 export function startChiptune(
   song: Song,
   bpm: () => number,
   onStep: (step: number, time: number) => void,
   muted: ReadonlySet<Channel> = new Set(),
+  output?: AudioNode,
 ): Chiptune | undefined {
   const context = getContext()
   if (!context) return undefined
   const audio = context
   const master = audio.createGain()
-  master.connect(audio.destination)
+  master.connect(output ?? audio.destination)
   const lanes = {} as Record<Channel, ReturnType<typeof parseLane>>
   const buses = {} as Record<Channel, GainNode>
   const analysers = {} as Record<Channel, AnalyserNode>
