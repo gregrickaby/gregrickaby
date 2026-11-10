@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review changed code against this repo's standards and fix what it finds before committing. Use when the user says "review my code", "do a code review", or "/code-review".
+description: Review changed code against this repo's standards and fix what it finds before committing. For posts and pages, also reviews voice, AI tells, and on-page SEO. Use when the user says "review my code", "do a code review", or "/code-review".
 ---
 
 # Code review
@@ -38,6 +38,23 @@ Tag each finding:
 - **Blocker:** a page, link, search, or like breaks (with or without JavaScript), a draft or secret ships, a log leaks visitor data, or copy and docs state something the code doesn't do.
 - **Suggestion:** a break from `AGENTS.md` or `docs/code-standards.md`, a missing test on a risky boundary, or a leftover.
 - **Nit:** naming or wording taste. Report at most five.
+
+### Posts
+
+When the diff touches a post or page under `public/content/`, review its prose and its search basics too, in the same pass. Load the `blog-voice` and `humanizer` skills (once per session), and read the post in full, not just the diff.
+
+- **Voice** (`blog-voice`): its self-check list. Every fact, number, and anecdote must come from Greg, the repo, or a source you checked; flag anything you can't trace.
+- **AI tells** (`humanizer`): sections A to E, strongest first. Fix tells in the new prose. In Greg's own sentences, flag instead of rewriting.
+- **SEO**, from "What to look for" in the `seo-audit` skill, for this one post. Read the rendered page's meta with `curl -sk https://localhost:3000/<slug>`; if the dev server isn't up, read the frontmatter. Check:
+  - The title is under about 45 characters, with the searched words first.
+  - The description is 140 to 155 characters and states a concrete detail the post delivers.
+  - The first paragraph after the hook answers the title in words an AI answer could quote.
+  - `##` headings use the words people search for.
+  - Images have alt text that says what's in them.
+  - The post links related posts with anchor text that names the topic, and related posts link back once it's published.
+  - Run `search-console.ts performance --by query --days 90` for the topic's words, to see what people already search for.
+
+Fix what you find, SEO included: write the new title, description, or heading with `blog-voice`, apply the best one, and put the runner-up in the Fix column so Greg can swap it. Keep the hook and Greg's own jokes; work the searched words in around them. Report these in the same table, with the post's path as the File.
 
 Cite the `file:line` each finding is about. A claim about behavior points to the code that does it, not a guess from a name. Re-read that code before fixing, and drop the finding if it doesn't hold up.
 
