@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Commit the working tree as small conventional commits, one per logical chunk of work. Use when the user says "commit", "micro commit", "commit this", or "/commit". Pushes a task branch and opens a pull request that merges itself when CI passes.
+description: Commit the working tree as small conventional commits, one per logical chunk of work. Use when the user says "commit", "micro commit", "commit this", or "/commit". Pushes a task branch and opens a pull request that squash-merges itself when CI passes.
 ---
 
 # Commit
@@ -17,10 +17,12 @@ Group the uncommitted work into micro commits, push the branch, and open a pull 
 ```bash
 git push -u origin HEAD
 [ "$(gh pr view --json state -q .state 2>/dev/null)" = OPEN ] || {
-  gh pr create --base main --title "<main commit subject>" --body "<one line per commit>"
-  gh pr merge --auto --rebase --delete-branch
+  gh pr create --base main --title "<type: subject for the whole pull request>" --body "<one line per commit>"
+  gh pr merge --auto --squash --delete-branch --subject "<the title>" --body "<the body>"
 }
 ```
+
+The pull request squashes into one commit on `main`, which GitHub signs. Its title is that commit's subject, so it follows the format below.
 
 ## Rules
 
