@@ -1,0 +1,66 @@
+@layer components {
+  .spectrum {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .bars {
+    aspect-ratio: 600 / 160;
+    background: var(--surface-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-1);
+    color: var(--accent);
+    width: 100%;
+  }
+
+  /* One label under each bar, spread to match them. */
+  .labels {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    & li {
+      color: var(--text-2);
+      font-family: var(--font-pixel);
+      font-size: var(--label-size);
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  /* Ten upright sliders, like the front of a stereo. */
+  .sliders {
+    display: grid;
+    gap: var(--space-1);
+    grid-template-columns: repeat(10, 1fr);
+  }
+
+  .band {
+    display: grid;
+    gap: var(--space-1);
+    place-items: center;
+
+    & input {
+      accent-color: var(--accent-fill);
+      direction: rtl;
+      height: 8rem;
+      width: 1.5rem;
+      writing-mode: vertical-lr;
+    }
+  }
+
+  .bandLabel {
+    color: var(--text-2);
+    font-family: var(--font-pixel);
+    font-size: var(--label-size);
+  }
+
+  @media (scripting: none) {
+    .spectrum,
+    .sliders {
+      display: none;
+    }
+  }
+}
