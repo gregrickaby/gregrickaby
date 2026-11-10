@@ -51,6 +51,10 @@
     }
   }
 
+  .player {
+    width: 100%;
+  }
+
   .bandLabel {
     color: var(--text-2);
     font-family: var(--font-pixel);

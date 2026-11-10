@@ -46,6 +46,8 @@ export const contexts = vi.fn()
 /** Every context made, so a test can suspend one. */
 export const instances: FakeAudioContext[] = []
 export const buffers = vi.fn()
+/** Every element given its own source. */
+export const mediaSources = vi.fn()
 
 /** Enough of `AudioContext` for `sounds.ts`, recording each node it makes. */
 export class FakeAudioContext {
@@ -104,6 +106,10 @@ export class FakeAudioContext {
     filters.push(filter)
     return filter
   }
+  createMediaElementSource(element: unknown) {
+    mediaSources(element)
+    return fakeNode({ mediaElement: element })
+  }
   createAnalyser() {
     return fakeNode({
       fftSize: 2048,
@@ -132,4 +138,5 @@ export function stubAudio() {
   analyserLevel.value = 0
   contexts.mockClear()
   buffers.mockClear()
+  mediaSources.mockClear()
 }
