@@ -48,7 +48,7 @@ Secrets go in `.env.local` (see `.env.example`). Server logs, traces, and browse
 - **HTML injection** only in `components/prose.tsx`, `components/json-ld.tsx` (`serializeSchema`), and the theme script in `app/layout.tsx`. Oxlint enforces it.
 - **Theme.** Color tokens use `light-dark()` in `app/styles/tokens.css`. A `theme` cookie, applied by an inline script before paint, sets `data-theme` on `<html>`, which only switches `color-scheme`.
 - **View transitions.** Post cards and article heroes share a `<ViewTransition>` name (`components/post-image.tsx`).
-- **Search engines.** After each deploy, `scripts/indexnow.ts` submits posts changed this week to IndexNow ([ADR 0014](docs/adr/0014-indexnow-on-deploy.md)). Coolify runs it after `purge-cdn`.
+- **Search engines.** After each deploy, `scripts/indexnow.ts` submits posts changed this week to IndexNow ([ADR 0014](docs/adr/0014-indexnow-on-deploy.md)). Coolify runs it after `purge-cdn`. `scripts/submit-sitemap.ts` then asks Search Console to re-fetch the sitemap ([ADR 0015](docs/adr/0015-sitemap-submit-on-deploy.md)).
 - **Site config.** Copy, nav, and links in `lib/site.ts`; old WordPress redirects in `lib/redirects.ts`; security headers and CSP in `lib/headers.ts`, whose values match what Cloudflare's managed transform sends ([ADR 0006](docs/adr/0006-deploy.md)).
 
 ## Rules
