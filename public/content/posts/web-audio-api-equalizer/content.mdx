@@ -1,11 +1,12 @@
 ---
-title: 'How to build an equalizer with the Web Audio API'
+title: 'How to build a Web Audio API equalizer'
 slug: 'web-audio-api-equalizer'
 date: '2026-11-10T00:00:00'
 modified: '2026-11-10T00:00:00'
 type: 'post'
 draft: true
-description: 'How I built live spectrum bars and a 10-band graphic equalizer with two Web Audio API nodes, using the chiptune from my 8-bit sound effects post.'
+description: "How I built spectrum bars and a 10-band graphic equalizer with the Web Audio API's AnalyserNode and BiquadFilterNode, then ran a real MP3 through it."
+featuredImage: './lofi-spectrum.jpg'
 categories: ['Code']
 tags: ['audio', 'javascript', 'tutorials']
 ---
@@ -20,7 +21,7 @@ There it is. The bass bounces on the left, the rhythm and melody dance in the mi
 
 That song is the chiptune from my post on [8-bit sound effects with the Web Audio API](/8-bit-sound-effects-with-the-web-audio-api), and it turns out to be a perfect test track. Every part lives on its own channel, so you can switch parts off and see exactly where each one sits.
 
-By the end of this post you'll have a ten-band equalizer with sliders, presets, and a curve that shows what it's doing. And then I'm going to ask you to delete the melody using only the sliders. You can't. I'll tell you why.
+By the end of this post you'll have a ten-band equalizer built from one `AnalyserNode` and ten `BiquadFilterNode`s, with sliders, presets, and a curve that shows what it's doing. And then I'm going to ask you to delete the melody using only the sliders. You can't. I'll tell you why.
 
 ## Seeing sound with an `AnalyserNode`
 
@@ -157,6 +158,30 @@ That ghost is the reason square waves sound like Nintendo. Back in the 8-bit pos
 
 A graphic EQ can turn a part down. It can't pull a part out, because the part isn't in one place. **Every note is a whole stack of frequencies, and an equalizer only sees the stack.**
 
+## Now try a real MP3
+
+The chiptune is a great test track because every part sits in its own place. Real music doesn't work that way. Here's a lo-fi track, and this time the Play button is the browser's own audio player:
+
+<div data-demo="song"></div>
+
+Music by [Marco Conti](https://pixabay.com/users/velariomusic-54515099/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=598427) from [Pixabay](https://pixabay.com/music//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=598427).
+
+You can't switch parts off this time. It's one recording with every instrument mixed together, so the sliders are all you get.
+
+Try **Turn it all up** again, then pull the preamp down until the warning goes away. It takes a lot more preamp this time. A finished song is mastered to be about as loud as it can go, and this one's loudest moment is under 3 dB from the ceiling. Every part of the chiptune plays quietly (the melody at five percent volume), so it had room to spare.
+
+The only new code is the source. Instead of oscillators, an `<audio>` element feeds the same chain:
+
+```ts
+const player = document.querySelector('audio')
+const source = audio.createMediaElementSource(player)
+source.connect(preamp) // then the same ten filters, analyser, and speakers
+```
+
+Once you do that, the element plays _only_ through your graph. You get one source per element, too: call `createMediaElementSource` on the same element twice and it throws.
+
+Here's the trap if you point it at a song on someone else's server: **without CORS, the browser feeds your graph silence.** The player's clock keeps ticking, but you hear nothing, and the bars stay flat. The other server has to send an `Access-Control-Allow-Origin` header, and your tag needs `crossorigin="anonymous"`. Plenty of internet radio streams don't send it, and Spotify or YouTube embeds won't let you near the audio at all. This file lives right next to the post, so it doesn't run into any of that.
+
 ## Equalizer checklist
 
 - Space your bars by octaves. Even bins put the whole song in the first bar.
@@ -165,6 +190,6 @@ A graphic EQ can turn a part down. It can't pull a part out, because the part is
 - Leave room with a preamp. Boosts add up, and the speakers clip at 1.
 - Use shelves on the ends. They catch everything past the first and last bands.
 
-The demos are in [`components/islands/demos/web-audio-api-equalizer/`](https://github.com/gregrickaby/gregrickaby/tree/main/components/islands/demos/web-audio-api-equalizer), and the song comes from [`components/islands/chiptune.ts`](https://github.com/gregrickaby/gregrickaby/blob/main/components/islands/chiptune.ts).
+The demos are in [`components/islands/demos/web-audio-api-equalizer/`](https://github.com/gregrickaby/gregrickaby/tree/main/components/islands/demos/web-audio-api-equalizer), and the chiptune comes from [`components/islands/chiptune.ts`](https://github.com/gregrickaby/gregrickaby/blob/main/components/islands/chiptune.ts).
 
 Now scroll back up and push the bass all the way up. The bass player in me insists.
