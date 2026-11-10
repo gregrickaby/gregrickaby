@@ -11,6 +11,8 @@ import {
   KnobDemo,
   matchPreset,
   SmoothingDemo,
+  SONG_URL,
+  SongDemo,
 } from '@/components/islands/demos/web-audio-api-equalizer/demos'
 import { PRESETS } from '@/components/islands/demos/web-audio-api-equalizer/equalizer'
 import { buildChain, drawBars } from '@/components/islands/demos/web-audio-api-equalizer/player'
@@ -21,6 +23,7 @@ import {
   filters,
   gains,
   instances,
+  mediaSources,
   stubAudio,
 } from '@/tests/helpers/audio'
 
@@ -218,6 +221,50 @@ describe('GhostDemo', () => {
     expect(alone.getAttribute('aria-pressed')).toBe('false')
     fireEvent.click(alone)
     expect(alone.getAttribute('aria-pressed')).toBe('true')
+  })
+})
+
+describe('SongDemo', () => {
+  function player() {
+    return document.querySelector('audio') as HTMLAudioElement
+  }
+
+  it('plays the song through the equalizer, with one source for the element', () => {
+    render(<SongDemo />)
+    expect(player().getAttribute('src')).toBe(SONG_URL)
+    fireEvent.play(player())
+    expect(mediaSources).toHaveBeenCalledWith(player())
+    const [source, input] = connections[connections.length - 1] ?? []
+    expect((source as { mediaElement: unknown }).mediaElement).toBe(player())
+    expect(input).toBe(connections[0]?.[0])
+    fireEvent.play(player())
+    fireEvent.pause(player())
+    expect((source as { disconnect: () => void }).disconnect).toHaveBeenCalled()
+    fireEvent.play(player())
+    expect(mediaSources).toHaveBeenCalledTimes(1)
+  })
+
+  it('warns about clipping and pauses when another demo starts', () => {
+    const pause = vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(() => {})
+    render(
+      <>
+        <SongDemo />
+        <SmoothingDemo />
+      </>,
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Telephone' }))
+    expect(screen.getByText('Preset: Telephone.')).toBeTruthy()
+    fireEvent.play(player())
+    analyserLevel.value = 1.5
+    advance(0.1)
+    expect(screen.getByText(/A finished song/)).toBeTruthy()
+    fireEvent.change(screen.getByRole('slider', { name: /Preamp/ }), { target: { value: '-12' } })
+    fireEvent.change(screen.getByRole('slider', { name: '1 kHz band' }), { target: { value: '0' } })
+    analyserLevel.value = 0.5
+    advance(0.1)
+    expect(screen.getByText('Your own curve.')).toBeTruthy()
+    play()
+    expect(pause).toHaveBeenCalled()
   })
 })
 

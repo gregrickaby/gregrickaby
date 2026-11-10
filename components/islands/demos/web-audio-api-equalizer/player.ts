@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type RefObject } from 'react'
 
 import { startChiptune, type Channel, type Chiptune } from '@/components/islands/chiptune'
 import { claimSpeakers, releaseSpeakers } from '@/components/islands/demo-kit/speakers'
@@ -72,6 +72,9 @@ export function drawBars(canvas: HTMLCanvasElement | null, levels: readonly numb
  * spectrum as bars on `canvas`. Filter, preamp, and smoothing changes glide
  * in while the song plays. `clipping` turns true while the wave goes past
  * what the speakers can play.
+ *
+ * With `media`, the equalizer plays that `<audio>` element instead. Call
+ * `start` when it plays and `stop` when it pauses; stopping pauses it too.
  */
 export function useEqualizer({
   filters,
@@ -79,8 +82,10 @@ export function useEqualizer({
   preamp = 0,
   smoothing = 0.8,
   spacing = 'octaves',
+  media,
 }: {
   filters: readonly FilterSpec[]
+  media?: RefObject<HTMLAudioElement | null>
   muted?: ReadonlySet<Channel>
   preamp?: number
   smoothing?: number
@@ -88,6 +93,7 @@ export function useEqualizer({
 }) {
   const player = useRef<Chiptune | undefined>(undefined)
   const chain = useRef<Chain | undefined>(undefined)
+  const source = useRef<MediaElementAudioSourceNode | undefined>(undefined)
   const canvas = useRef<HTMLCanvasElement | null>(null)
   const settings = useRef({ filters, muted, preamp, smoothing, spacing })
   const [playing, setPlaying] = useState(false)
@@ -109,6 +115,7 @@ export function useEqualizer({
   useEffect(() => {
     const song = player.current
     const nodes = chain.current
+    const element = media?.current
     if (!playing || !nodes) return
     const { analyser, audio } = nodes
     const data = new Uint8Array(analyser.frequencyBinCount)
@@ -125,12 +132,14 @@ export function useEqualizer({
     return () => {
       cancelAnimationFrame(frame)
       song?.stop()
+      element?.pause()
+      source.current?.disconnect()
       setTimeout(() => nodes.disconnect(), 250)
       chain.current = undefined
       setClipping(false)
       releaseSpeakers(player)
     }
-  }, [playing])
+  }, [media, playing])
 
   function start() {
     const audio = getContext()
@@ -138,13 +147,20 @@ export function useEqualizer({
     claimSpeakers(player, () => setPlaying(false))
     const { filters, muted, preamp, smoothing } = settings.current
     chain.current = buildChain(audio, filters, preamp, smoothing)
-    player.current = startChiptune(
-      SONG,
-      () => SONG.bpm,
-      () => undefined,
-      muted,
-      chain.current.input,
-    )
+    const element = media?.current
+    if (element) {
+      // An element gets one source for life, and plays only through it after.
+      source.current ??= audio.createMediaElementSource(element)
+      source.current.connect(chain.current.input)
+    } else {
+      player.current = startChiptune(
+        SONG,
+        () => SONG.bpm,
+        () => undefined,
+        muted,
+        chain.current.input,
+      )
+    }
     setPlaying(true)
   }
 
@@ -157,6 +173,10 @@ export function useEqualizer({
     clipping,
     playing,
     setMuted,
+    start: () => {
+      if (!playing) start()
+    },
+    stop: () => setPlaying(false),
     toggle: playing ? () => setPlaying(false) : start,
   }
 }

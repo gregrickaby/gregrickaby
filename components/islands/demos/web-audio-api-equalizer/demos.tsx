@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type RefObject } from 'react'
+import { useRef, useState, type RefObject } from 'react'
 
 import type { Channel } from '@/components/islands/chiptune'
 import { Caption, Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
@@ -188,22 +188,17 @@ export function matchPreset(gains: readonly number[]): string | undefined {
   return Object.keys(PRESETS).find((name) => PRESETS[name]?.every((value, i) => value === gains[i]))
 }
 
-/** A ten-band graphic equalizer with presets and a preamp. */
-export function EqDemo() {
-  const [gains, setGains] = useState<readonly number[]>(FLAT)
-  const [preamp, setPreamp] = useState(0)
-  const filters = bandFilters(gains)
-  const eq = useEqualizer({ filters, preamp })
+/** Ten upright band sliders, then a button per preset. */
+function Bands({
+  gains,
+  onChange,
+}: {
+  gains: readonly number[]
+  onChange: (gains: readonly number[]) => void
+}) {
   const preset = matchPreset(gains)
-
-  function setBand(index: number, value: number) {
-    setGains(gains.map((gain, i) => (i === index ? value : gain)))
-  }
-
   return (
     <>
-      <Plot label="The equalizer's response curve" values={responseCurve(filters)} />
-      <Spectrum canvas={eq.canvas} labels={barLabels('octaves')} />
       <div className={styles.sliders}>
         {BANDS.map((band, i) => (
           <label className={styles.band} key={band}>
@@ -212,7 +207,9 @@ export function EqDemo() {
               max={12}
               min={-24}
               name={`${formatBand(band)} band`}
-              onChange={(event) => setBand(i, Number(event.target.value))}
+              onChange={(event) =>
+                onChange(gains.map((gain, j) => (j === i ? Number(event.target.value) : gain)))
+              }
               type="range"
               value={gains[i]}
             />
@@ -227,13 +224,30 @@ export function EqDemo() {
           <DemoButton
             aria-pressed={preset === name}
             key={name}
-            onClick={() => setGains(PRESETS[name] as readonly number[])}
+            onClick={() => onChange(PRESETS[name] as readonly number[])}
             variant="secondary"
           >
             {name}
           </DemoButton>
         ))}
       </Controls>
+    </>
+  )
+}
+
+/** A ten-band graphic equalizer with presets and a preamp. */
+export function EqDemo() {
+  const [gains, setGains] = useState<readonly number[]>(FLAT)
+  const [preamp, setPreamp] = useState(0)
+  const filters = bandFilters(gains)
+  const eq = useEqualizer({ filters, preamp })
+  const preset = matchPreset(gains)
+
+  return (
+    <>
+      <Plot label="The equalizer's response curve" values={responseCurve(filters)} />
+      <Spectrum canvas={eq.canvas} labels={barLabels('octaves')} />
+      <Bands gains={gains} onChange={setGains} />
       <Controls>
         <DemoButton onClick={eq.toggle} playing={eq.playing} />
         <Slider
@@ -248,6 +262,57 @@ export function EqDemo() {
       <Caption>
         {eq.clipping
           ? 'Clipping! The wave is louder than your speakers can play. Pull the preamp down.'
+          : preset
+            ? `Preset: ${preset}.`
+            : 'Your own curve.'}
+      </Caption>
+    </>
+  )
+}
+
+/** Where the lo-fi track lives, beside the post. */
+export const SONG_URL = '/content/posts/web-audio-api-equalizer/lofi-relaxing.mp3'
+
+/**
+ * The same equalizer on a real recording, played by an `<audio>` element.
+ * Without Web Audio, the player still plays the song, just without the EQ.
+ */
+export function SongDemo() {
+  const [gains, setGains] = useState<readonly number[]>(FLAT)
+  const [preamp, setPreamp] = useState(0)
+  const media = useRef<HTMLAudioElement | null>(null)
+  const filters = bandFilters(gains)
+  const eq = useEqualizer({ filters, media, preamp })
+  const preset = matchPreset(gains)
+
+  return (
+    <>
+      <Plot label="The equalizer's response curve" values={responseCurve(filters)} />
+      <Spectrum canvas={eq.canvas} labels={barLabels('octaves')} />
+      {/* oxlint-disable-next-line jsx-a11y/media-has-caption -- An instrumental has no words to caption. */}
+      <audio
+        className={styles.player}
+        controls
+        onPause={eq.stop}
+        onPlay={eq.start}
+        preload="none"
+        ref={media}
+        src={SONG_URL}
+      />
+      <Bands gains={gains} onChange={setGains} />
+      <Controls>
+        <Slider
+          format={formatDb}
+          label="Preamp"
+          max={0}
+          min={-24}
+          onChange={setPreamp}
+          value={preamp}
+        />
+      </Controls>
+      <Caption>
+        {eq.clipping
+          ? 'Clipping! A finished song is already about as loud as it can go. Pull the preamp down.'
           : preset
             ? `Preset: ${preset}.`
             : 'Your own curve.'}
