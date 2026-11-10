@@ -66,16 +66,19 @@ export function DemoButton({
 }
 
 /**
- * A labeled range input that shows its value. The shown value is hidden from
- * screen readers, which already announce the slider's own value.
+ * A labeled range input that shows its value, through `format` when the raw
+ * number needs a unit. The shown value is hidden from screen readers, which
+ * already announce the slider's own value.
  */
 export function Slider({
+  format = String,
   label,
   max,
   min,
   onChange,
   value,
 }: {
+  format?: (value: number) => string
   label: string
   max: number
   min: number
@@ -94,7 +97,7 @@ export function Slider({
         value={value}
       />
       <output aria-hidden="true" className={styles.value}>
-        {value}
+        {format(value)}
       </output>
     </label>
   )
