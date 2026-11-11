@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { GHOST } from '@/components/ghost'
-import { LofiRadio } from '@/components/islands/lofi-radio'
+import { LofiRadio } from '@/components/islands/audio/lofi-radio'
 
 import styles from './missing-page.module.css'
 

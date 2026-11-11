@@ -3,9 +3,9 @@
 import { useState } from 'react'
 
 import { LinkIcon } from '@/components/icons'
+import { playSound } from '@/components/islands/audio/sounds'
 
 import styles from './copy-link.module.css'
-import { playSound } from './sounds'
 
 const COPIED_FOR = 2000
 

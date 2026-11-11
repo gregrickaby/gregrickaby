@@ -2,7 +2,7 @@
 
 import type { HTMLAttributes, MouseEvent, PointerEvent } from 'react'
 
-import { playSound, type SoundName } from './sounds'
+import { playSound, type SoundName } from '@/components/islands/audio/sounds'
 
 /**
  * A `<nav>` (or `as` another wrapper) that ticks when a mouse moves onto one

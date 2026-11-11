@@ -1,6 +1,6 @@
 'use client'
 
-import { TapeDeck } from '@/components/islands/tape-deck'
+import { TapeDeck } from '@/components/islands/audio/tape-deck'
 
 import { startTape, TRACKS } from './lofi'
 

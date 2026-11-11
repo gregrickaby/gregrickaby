@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-import { startChiptune, type Channel, type Chiptune } from '@/components/islands/chiptune'
+import { startChiptune, type Channel, type Chiptune } from '@/components/islands/audio/chiptune'
 import { Caption, Controls, DemoButton } from '@/components/islands/demo-kit/controls'
 import { claimSpeakers, releaseSpeakers } from '@/components/islands/demo-kit/speakers'
 

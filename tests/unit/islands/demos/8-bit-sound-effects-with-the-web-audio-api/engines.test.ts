@@ -1,14 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { CHANNELS, pulseTerms, startChiptune, type Song } from '@/components/islands/chiptune'
+import { CHANNELS, pulseTerms, startChiptune, type Song } from '@/components/islands/audio/chiptune'
+import { noteFrequency } from '@/components/islands/audio/sequencer'
+import { lofiSettings } from '@/components/islands/audio/tape'
 import { SONG } from '@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/chiptune'
 import {
   startTape,
   TRACKS,
   type Track,
 } from '@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/lofi'
-import { noteFrequency } from '@/components/islands/sequencer'
-import { lofiSettings } from '@/components/islands/tape'
 import {
   connections,
   filters,
@@ -116,7 +116,7 @@ describe('startChiptune', () => {
   it('stays silent where Web Audio is missing', async () => {
     vi.resetModules()
     vi.stubGlobal('AudioContext', undefined)
-    const fresh = await import('@/components/islands/chiptune')
+    const fresh = await import('@/components/islands/audio/chiptune')
     expect(
       fresh.startChiptune(
         SONG,

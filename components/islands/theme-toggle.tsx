@@ -3,8 +3,8 @@
 import type { MouseEvent } from 'react'
 
 import { MoonIcon, SunIcon } from '@/components/icons'
+import { playSound } from '@/components/islands/audio/sounds'
 
-import { playSound } from './sounds'
 import styles from './theme-toggle.module.css'
 
 /** Cookie the root layout's theme script reads before first paint. */

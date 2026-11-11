@@ -3,8 +3,8 @@
 import Image from 'next/image'
 import { useId, useState, useSyncExternalStore, type CSSProperties } from 'react'
 
+import { playNotes, playSound, soundEnabled } from '@/components/islands/audio/sounds'
 import { Caption, Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
-import { playNotes, playSound, soundEnabled } from '@/components/islands/sounds'
 
 import styles from './demos.module.css'
 import { CHART_HEIGHT, coverage, LOCUS, paintChart, SPACES, type Point, type Space } from './gamut'

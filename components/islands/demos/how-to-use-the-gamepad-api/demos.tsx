@@ -3,10 +3,10 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react'
 
 import { GHOST } from '@/components/ghost'
-import { startChiptune } from '@/components/islands/chiptune'
+import { startChiptune } from '@/components/islands/audio/chiptune'
+import { playNotes, type Note, type PlayOptions } from '@/components/islands/audio/sounds'
 import { Caption, Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
 import { claimSpeakers, releaseSpeakers } from '@/components/islands/demo-kit/speakers'
-import { playNotes, type Note, type PlayOptions } from '@/components/islands/sounds'
 
 import styles from './demos.module.css'
 import {

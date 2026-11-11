@@ -5,7 +5,7 @@
 
 ## Context
 
-The site is a Node server (likes, `/search`, runtime revalidation), so it needs a host that runs `npm start`, keeps a volume for SQLite and `.next/cache`, and runs a Datadog Agent beside it.
+The site is a Node server (reactions, `/search`, runtime revalidation), so it needs a host that runs `npm start`, keeps a volume for SQLite and `.next/cache`, and runs a Datadog Agent beside it.
 
 ## Decision
 
@@ -16,5 +16,5 @@ The site is a Node server (likes, `/search`, runtime revalidation), so it needs 
 
 ## Consequences
 
-- The origin answers on 443 with no Cloudflare in front when asked directly. Until the host firewall is narrowed to Cloudflare's published ranges (or moved to a tunnel), `cf-connecting-ip` can be forged and like counts are only best-effort ([0003](0003-likes.md)).
+- The origin answers on 443 with no Cloudflare in front when asked directly. Until the host firewall is narrowed to Cloudflare's published ranges (or moved to a tunnel), `cf-connecting-ip` can be forged and reaction counts are only best-effort ([0013](0013-emoji-reactions.md)).
 - Browser RUM values inline at build time, so Coolify needs them set before a build.

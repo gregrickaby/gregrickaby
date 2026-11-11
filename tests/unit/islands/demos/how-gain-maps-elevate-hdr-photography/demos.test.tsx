@@ -3,6 +3,7 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { renderToString } from 'react-dom/server'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { playNotes, playSound, soundEnabled } from '@/components/islands/audio/sounds'
 import {
   blip,
   buildPath,
@@ -32,9 +33,8 @@ import {
   SRGB_MATRIX,
 } from '@/components/islands/demos/how-gain-maps-elevate-hdr-photography/gamut'
 import { HDR, SDR } from '@/components/islands/demos/how-gain-maps-elevate-hdr-photography/scanline'
-import { playNotes, playSound, soundEnabled } from '@/components/islands/sounds'
 
-vi.mock('@/components/islands/sounds', () => ({
+vi.mock('@/components/islands/audio/sounds', () => ({
   playNotes: vi.fn(),
   playSound: vi.fn(),
   soundEnabled: vi.fn(() => true),

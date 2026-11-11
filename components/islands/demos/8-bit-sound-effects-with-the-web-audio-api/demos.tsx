@@ -2,11 +2,11 @@
 
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 
+import { startTone, type Note } from '@/components/islands/audio/sounds'
 import { Caption, Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
 import { usePlayback } from '@/components/islands/demo-kit/playback'
 import { Plot } from '@/components/islands/demo-kit/plot'
 import { claimSpeakers, releaseSpeakers } from '@/components/islands/demo-kit/speakers'
-import { startTone, type Note } from '@/components/islands/sounds'
 
 import styles from './demos.module.css'
 

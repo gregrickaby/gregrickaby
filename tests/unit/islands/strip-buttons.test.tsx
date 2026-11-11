@@ -3,7 +3,7 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 const playSound = vi.fn()
-vi.mock('@/components/islands/sounds', () => ({ playSound }))
+vi.mock('@/components/islands/audio/sounds', () => ({ playSound }))
 
 const { StripButtons } = await import('@/components/islands/strip-buttons')
 

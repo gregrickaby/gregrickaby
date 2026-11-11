@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import type { ComponentProps, PointerEvent } from 'react'
 
-import { playSound } from './sounds'
+import { playSound } from '@/components/islands/audio/sounds'
 
 /**
  * A `next/link` that ticks when a mouse moves onto it and blips when clicked,

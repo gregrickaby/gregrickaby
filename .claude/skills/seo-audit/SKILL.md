@@ -91,10 +91,10 @@ They use only Node built-ins, and the app's checks skip `.claude/`. After a chan
 
 - An old path to a live post (`/blog/<slug>`, a date path, a language prefix), or an old tag name, redirects to its new home.
 - Files other software asks for (`/sitemap_index.xml`, `/rss.xml`) redirect to the real ones.
-- A removed post with a few hits a week or more redirects to `/`, as `lib/redirects.ts` does for the rest. Old image URLs stay 404s.
+- A removed post with no replacement goes in `lib/gone.ts`, which answers 410 (`docs/adr/0012-gone-paths-410.md`); never redirect it to `/`. Old image URLs stay 404s.
 - Old subdomains in the domain property (such as `tvratings.gregrickaby.com`) answer 526 through the wildcard. Google retries 5xx for weeks; a Cloudflare rule that answers 410, plus a Removals request in Search Console, clears them.
 
-**Links inside posts** (`pages.ts`). A link to a 404 is a dead end for readers and crawlers: point it at the live page, or remove it. A link through a redirect still works but wastes a hop: link to the destination. A link to a removed post that redirects to `/` should go.
+**Links inside posts** (`pages.ts`). A link to a 404 is a dead end for readers and crawlers: point it at the live page, or remove it. A link through a redirect still works but wastes a hop: link to the destination. A link to a removed post (a 410) should go.
 
 **Thin pages** (`pages.ts`). A post under 300 words rarely ranks, and is the usual cause of "Crawled - currently not indexed". Short pages like `/contact` are fine when they do their job.
 
@@ -118,15 +118,15 @@ They use only Node built-ins, and the app's checks skip `.claude/`. After a chan
 - Specific numbers and steps get cited; vague ones don't.
 - Each post's Markdown copy is in `llms.txt`.
 
-**Accessibility** (`pages.ts`). CI runs axe's WCAG AA rules, in light and dark mode, on the ten key pages listed in `e2e/site.spec.ts`. `pages.ts` covers the rest of the sitemap with what a static read can find, plus heading order, which axe files under best practice and CI skips. A finding on a key page that CI passed is a gap in the static check, not a Fix. Contrast and focus on the other pages aren't checked; if a page draws traffic, the finding is adding it to the axe list.
+**Accessibility** (`pages.ts`). CI runs axe's WCAG AA rules, in light and dark mode, on the ten key pages listed in `tests/e2e/site.spec.ts`. `pages.ts` covers the rest of the sitemap with what a static read can find, plus heading order, which axe files under best practice and CI skips. A finding on a key page that CI passed is a gap in the static check, not a Fix. Contrast and focus on the other pages aren't checked; if a page draws traffic, the finding is adding it to the axe list.
 
 **Health** (`pages.ts`, Coolify, Datadog). Missing basics, 5xx in the window, and slow Core Web Vitals on high-impression pages.
 
 **Already covered elsewhere.** Don't repeat these; check that the last CI run on `main` passed (`gh run list --branch main --limit 1`) and report a failure as a Fix:
 
-- Every sitemap page loading with a 200 and no console errors or CSP violations, and axe's WCAG AA checks on the key pages: `e2e/site.spec.ts`.
+- Every sitemap page loading with a 200 and no console errors or CSP violations, and axe's WCAG AA checks on the key pages: `tests/e2e/site.spec.ts`.
 - Pages working without JavaScript (the server-rendered HTML Google reads first): the `chromium-nojs` Playwright project.
-- Security headers and CSP values: `tests/unit/headers.test.ts`. Core Web Vitals come from real visitors in Datadog RUM, not a lab run.
+- Security headers and CSP values: `tests/unit/lib/headers.test.ts`. Core Web Vitals come from real visitors in Datadog RUM, not a lab run.
 
 Out of scope for this site: hreflang (one language), cookie consent (a legal question), keyword density and reading-level scores (Google doesn't use them), FAQ schema (Google dropped those results for most sites), and a 0 to 100 score (the ranked findings say more).
 
@@ -149,7 +149,7 @@ Start with the count, such as `6 findings: 2 Fix, 3 Improve, 1 Watch`, and one s
 
 Plain English: what's wrong, the number behind it, and the change. Draft new titles and descriptions with the `blog-voice` skill, two options each. Then one line on what wasn't checked.
 
-Follow `~/.claude/rules/writing-style.md`. Brevity rules apply: no preamble, no recap.
+Follow the writing rules in `docs/code-standards.md`. No preamble, no recap.
 
 ## Issues and hand-off
 

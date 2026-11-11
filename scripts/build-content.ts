@@ -16,8 +16,8 @@
 import { existsSync, mkdirSync, readFileSync, watch, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-import { buildContent } from '../lib/content-build/build.ts'
-import { buildDemoRegistry, readDemoTitles } from '../lib/content-build/demos.ts'
+import { buildContent } from './content-build/build.ts'
+import { buildDemoRegistry, readDemoTitles } from './content-build/demos.ts'
 
 const root = process.cwd()
 const demosDir = join(root, 'components', 'islands', 'demos')

@@ -88,6 +88,8 @@ Rules for each demo:
 
 Mechanics follow `AGENTS.md` ("Demos"): `<div data-demo="name"></div>` on its own line in the post, components in `components/islands/demos/<slug>/demos.tsx`, names and titles in `registry.ts`, built from `components/islands/demo-kit/` (`Plot`, `Controls`, `DemoButton`, `Slider`, `Caption`). Sound goes through `playNotes`. Run `npm run content -- --drafts` after adding a demo. Put pure helpers (wave math, formatters) in exported functions so unit tests can cover them.
 
+To ask for a reaction, put `<span data-like-cue></span>` in a paragraph: once the reader passes it, the reactions wave until they react.
+
 When drafting a post, list proposed demos (name, title, control, what the reader learns) and get approval before building them.
 
 ## Shape of a post
@@ -104,7 +106,7 @@ description: 'One specific sentence: what, how, and a concrete number.'
 featuredImage: './file.jpg'
 featuredImageAlt: 'What the photo shows, not the post title'   # required with featuredImage
 categories: ['Code']                               # or ['Blog']
-tags: ['tutorials', 'javascript']                  # reuse existing tags; one lowercase word each
+tags: ['tutorials', 'javascript']                  # reuse existing tags; lowercase, digits, hyphens
 ---
 ```
 

@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { getContext, playNotes, type Note, type PlayOptions } from '@/components/islands/sounds'
+import {
+  getContext,
+  playNotes,
+  type Note,
+  type PlayOptions,
+} from '@/components/islands/audio/sounds'
 
 import { claimSpeakers, releaseSpeakers } from './speakers'
 

@@ -2,7 +2,7 @@
 
 import { useState, type MouseEvent, type ReactNode } from 'react'
 
-import { playSound } from './sounds'
+import { playSound } from '@/components/islands/audio/sounds'
 
 const COPIED_FOR = 2000
 

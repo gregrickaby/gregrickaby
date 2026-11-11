@@ -1,4 +1,4 @@
-import type { Channel, Song } from '@/components/islands/chiptune'
+import type { Channel, Song } from '@/components/islands/audio/chiptune'
 
 export const CHANNEL_NAMES: Record<Channel, string> = {
   pulse1: 'Pulse 1',
