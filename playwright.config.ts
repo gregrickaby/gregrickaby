@@ -5,7 +5,7 @@ const PORT = 3200
 export const APP_URL = `http://localhost:${PORT}`
 
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './tests/e2e',
   testMatch: '**/*.spec.ts',
   fullyParallel: true,
   retries: process.env.CI ? 1 : 0,
