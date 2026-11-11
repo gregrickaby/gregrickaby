@@ -71,11 +71,13 @@ export function parseShelf(html: string): Book[] | null {
  * (Goodreads dropped the shelf RSS feeds). Cached for four hours, so pages
  * stay prerendered and refresh in the background. A failed fetch logs, shows
  * no books, and caches that for 15 minutes so the next refresh retries soon.
+ * The fetch gives up after 10 seconds, so a slow Goodreads can't stall the
+ * build's prerender.
  */
 export async function getCurrentlyReading(): Promise<Book[]> {
   'use cache'
   try {
-    const response = await fetch(PROFILE_URL)
+    const response = await fetch(PROFILE_URL, { signal: AbortSignal.timeout(10_000) })
     if (!response.ok) throw new Error(`Goodreads responded ${response.status}`)
     const books = parseShelf(await response.text())
     if (!books) throw new Error('Goodreads profile has no Currently Reading box')
