@@ -11,7 +11,7 @@ import type {
   KnownPaths,
   Post,
   PostMeta,
-} from '../types.ts'
+} from '../../lib/types.ts'
 import { renderMarkdown, type MeasuredImage } from './markdown.ts'
 import { comparePhotos, hasGainMap, readCameraSettings, readPhoto } from './photos.ts'
 import { buildPostMarkdown } from './post-markdown.ts'

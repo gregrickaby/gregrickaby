@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { contrastRatio, readableColor } from '@/lib/content-build/contrast'
+import { contrastRatio, readableColor } from '@/scripts/content-build/contrast'
 
 describe('contrastRatio', () => {
   it('measures the WCAG ratio either way round', () => {

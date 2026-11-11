@@ -14,7 +14,7 @@ const {
   readCameraSettings,
   readPhoto,
   titleFromFilename,
-} = await import('@/lib/content-build/photos')
+} = await import('@/scripts/content-build/photos')
 
 beforeEach(() => {
   parse.mockReset()

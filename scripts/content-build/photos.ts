@@ -1,7 +1,7 @@
 import exifr from 'exifr'
 import { imageSize } from 'image-size'
 
-import type { CameraSettings, Photo } from '../types.ts'
+import type { CameraSettings, Photo } from '../../lib/types.ts'
 
 type Exif = Record<string, unknown>
 

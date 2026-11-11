@@ -1,5 +1,5 @@
-import { SITE } from '../site.ts'
-import type { PostMeta } from '../types.ts'
+import { SITE } from '../../lib/site.ts'
+import type { PostMeta } from '../../lib/types.ts'
 
 /** Inputs for {@link buildPostMarkdown}. */
 export interface PostMarkdownOptions {

@@ -11,8 +11,8 @@ import sanitizeHtml from 'sanitize-html'
 import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
 
-import { fullImageUrl, IMAGE_WIDTHS, optimizedImageUrl } from '../images.ts'
-import type { Heading } from '../types.ts'
+import { fullImageUrl, IMAGE_WIDTHS, optimizedImageUrl } from '../../lib/images.ts'
+import type { Heading } from '../../lib/types.ts'
 import { readableColor } from './contrast.ts'
 
 /** What the build knows about a local image file. */

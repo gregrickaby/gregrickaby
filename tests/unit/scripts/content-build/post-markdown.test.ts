@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { buildPostMarkdown } from '@/lib/content-build/post-markdown'
+import { buildPostMarkdown } from '@/scripts/content-build/post-markdown'
 
 const meta = {
   title: 'First Post',

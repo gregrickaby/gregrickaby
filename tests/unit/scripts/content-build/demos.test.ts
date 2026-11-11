@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { buildDemoRegistry, readDemoTitles } from '@/lib/content-build/demos'
+import { buildDemoRegistry, readDemoTitles } from '@/scripts/content-build/demos'
 
 const dirs: string[] = []
 
