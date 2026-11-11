@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "jsx-a11y", "nextjs", "import"],
-  "jsPlugins": ["./oxlint/plugin.ts"],
+  "jsPlugins": ["./lint/oxlint-plugin.ts"],
   "categories": { "correctness": "error" },
   "settings": { "react": { "version": "19.3" } },
   "env": { "browser": true, "node": true, "es2024": true },
@@ -52,7 +52,7 @@
   },
   "overrides": [
     {
-      "files": ["{app,components,lib,scripts,stylelint,oxlint}/**/*.{ts,tsx}"],
+      "files": ["{app,components,lib,scripts,lint}/**/*.{ts,tsx}"],
       "rules": {
         "gregrickaby/function-declarations": "error",
         "gregrickaby/no-react-namespace": "error"
@@ -62,13 +62,12 @@
       "files": [
         "app/**/{page,layout,template,default,error,global-error,not-found,opengraph-image,icon,sitemap,manifest}.{ts,tsx}",
         "*.config.{ts,mjs}",
-        "stylelint/**/*.ts",
-        "oxlint/**/*.ts"
+        "lint/**/*.ts"
       ],
       "rules": { "no-restricted-exports": "off" }
     },
     {
-      "files": ["lib/content-build/**/*.ts", "scripts/**/*.ts"],
+      "files": ["scripts/**/*.ts"],
       "rules": { "no-restricted-imports": "off" }
     },
     {
@@ -85,7 +84,7 @@
             "patterns": [
               { "group": ["../**"], "message": "Import from another folder with `@/`." },
               {
-                "group": ["@/lib/content", "@/lib/content-build/*"],
+                "group": ["@/lib/content", "@/scripts/**"],
                 "allowTypeImports": true,
                 "message": "Islands may only import types from server modules."
               }

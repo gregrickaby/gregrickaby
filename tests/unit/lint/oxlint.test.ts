@@ -1,7 +1,7 @@
 import { RuleTester } from 'oxlint/plugins-dev'
 import { describe, it } from 'vitest'
 
-import plugin from '@/oxlint/plugin.ts'
+import plugin from '@/lint/oxlint-plugin.ts'
 
 RuleTester.describe = describe
 RuleTester.it = it

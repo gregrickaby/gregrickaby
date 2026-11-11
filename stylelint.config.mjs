@@ -1,7 +1,7 @@
 /** @type {import('stylelint').Config} */
 const config = {
   extends: ['stylelint-config-standard'],
-  plugins: ['./stylelint/require-components-layer.ts'],
+  plugins: ['./lint/stylelint-components-layer.ts'],
   ignoreFiles: ['.next/**', 'coverage/**', 'node_modules/**'],
   rules: {
     'gregrickaby/require-components-layer': true,
