@@ -60,6 +60,8 @@ Look for:
 - **Design:** an abstraction with one caller, the same logic in three places, a module doing two jobs, config read in many places instead of one.
 - **Tests:** tests that only check their mocks, risky branches covered without asserting the outcome, tests that read the developer's shell environment or the network.
 - **Performance:** client JavaScript a Server Component could replace, work repeated per request that could happen at build time.
+- **Documented standards:** code follows `AGENTS.md`, `docs/code-standards.md`, and the ADRs, including rules no linter enforces. Where the code and a standard disagree, fix the code, or bring the standard to the user if the code is right.
+- **Code comments:** they follow the Comments section of `docs/code-standards.md`. Flag comments that restate the code, describe behavior the code no longer has, point at tickets or plans, or call a choice temporary or surprising. Flag exports whose purpose isn't clear from their name and types and that have no `/** */` summary. Delete stale comments; rewrite misleading ones.
 
 Be discerning. Raise a finding only if you'd block a pull request over it, or if it will cost real time later. Verify each one against the code at a `file:line` before reporting it, and drop it if it doesn't hold up. No findings about style the tools already enforce.
 
