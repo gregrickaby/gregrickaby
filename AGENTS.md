@@ -75,7 +75,7 @@ Ask before adding dependencies, committing, or pushing.
 
 ## Testing
 
-Unit tests live in `tests/unit/`. They run in Node; component tests add `// @vitest-environment happy-dom`. Render server components with `tests/helpers/render-server.tsx` and build content with `tests/helpers/content.ts` plus `vi.mock('@/.generated/content.json')`. E2E builds the site and runs it with and without JavaScript. Coverage is 100% (95% enforced): keep it at 100%.
+Unit tests live in `tests/unit/`. They run in Node; component tests add `// @vitest-environment happy-dom`. Render server components with `tests/helpers/render-server.tsx` and build content with `tests/helpers/content.ts` plus `vi.mock('@/.generated/content.json')`. E2E builds the site and runs it with and without JavaScript. In CI it runs in the Playwright Docker image, tagged from `package-lock.json`, so it never touches apt ([ADR 0016](docs/adr/0016-e2e-in-playwright-image.md)). Coverage is 100% (95% enforced): keep it at 100%.
 
 ## Definition of done
 
