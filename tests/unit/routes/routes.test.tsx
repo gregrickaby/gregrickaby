@@ -205,7 +205,7 @@ describe('photos, resume, contact, and gear', () => {
       alternates: { types: { 'text/markdown': '/resume.md' } },
     })
     const html = await renderServer(<contact.default />)
-    expect(html).toContain('href="mailto:greg@gregrickaby.com"')
+    expect(html).toContain('href="mailto:gregrickaby@duck.com"')
     expect(html).toContain('WebPage')
     expect(await contact.generateMetadata({}, parent)).toMatchObject({ title: 'Contact' })
     expect(await renderServer(<gear.default />)).toContain('Sony a7RV')

@@ -31,7 +31,7 @@ export const SITE = {
   author: {
     name: 'Greg Rickaby',
     url: 'https://gregrickaby.com',
-    email: 'greg@gregrickaby.com',
+    email: 'gregrickaby@duck.com',
     linkedin: 'https://www.linkedin.com/in/gregrickaby/',
     github: 'https://github.com/gregrickaby',
     goodreads: 'https://www.goodreads.com/author/show/16999736.Greg_Rickaby',

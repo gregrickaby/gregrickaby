@@ -371,9 +371,9 @@ test.describe('without JavaScript @nojs', () => {
     await expect(laugh).toHaveAccessibleName(/^Laugh, \d/)
 
     await page.goto('/contact')
-    await expect(page.getByRole('link', { name: 'greg@gregrickaby.com' })).toHaveAttribute(
+    await expect(page.getByRole('link', { name: 'gregrickaby@duck.com' })).toHaveAttribute(
       'href',
-      'mailto:greg@gregrickaby.com',
+      'mailto:gregrickaby@duck.com',
     )
 
     for (const path of ['/no-such-post', '/tag/zzz-none']) {
