@@ -2,8 +2,8 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import type * as Subspace from '@/components/islands/subspace'
-import type { HangUp, Phase } from '@/components/islands/subspace'
+import type * as Subspace from '@/components/islands/audio/subspace'
+import type { HangUp, Phase } from '@/components/islands/audio/subspace'
 
 const hangUp = vi.fn()
 let report: (phase: Phase) => void = () => undefined
@@ -12,12 +12,12 @@ const startTransmission = vi.fn((onPhase: (phase: Phase) => void) => {
   onPhase('dialing')
   return hangUp as HangUp | undefined
 })
-vi.mock('@/components/islands/subspace', async (original) => ({
+vi.mock('@/components/islands/audio/subspace', async (original) => ({
   ...(await original<typeof Subspace>()),
   startTransmission,
 }))
 
-const { SubspacePlayer } = await import('@/components/islands/subspace-player')
+const { SubspacePlayer } = await import('@/components/islands/audio/subspace-player')
 
 function status() {
   return document.querySelector('[aria-live]')?.textContent ?? ''

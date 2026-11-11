@@ -1,5 +1,5 @@
-import { noteAt, parseLane, startSequencer, toneAt } from '@/components/islands/sequencer'
-import { getContext, noiseBuffer } from '@/components/islands/sounds'
+import { noteAt, parseLane, startSequencer, toneAt } from './sequencer'
+import { getContext, noiseBuffer } from './sounds'
 
 /** The NES's four music channels, in the order a tracker lists them. */
 export const CHANNELS = ['pulse1', 'pulse2', 'triangle', 'noise'] as const

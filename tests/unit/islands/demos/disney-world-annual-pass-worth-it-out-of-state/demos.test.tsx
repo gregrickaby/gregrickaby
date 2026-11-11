@@ -3,6 +3,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { renderToString } from 'react-dom/server'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { playSound } from '@/components/islands/audio/sounds'
 import {
   formatDollars,
   getBreakEven,
@@ -19,9 +20,8 @@ import {
   MAX_PEOPLE,
 } from '@/components/islands/demos/disney-world-annual-pass-worth-it-out-of-state/demos'
 import { DEMOS } from '@/components/islands/demos/disney-world-annual-pass-worth-it-out-of-state/registry'
-import { playSound } from '@/components/islands/sounds'
 
-vi.mock('@/components/islands/sounds', () => ({ playSound: vi.fn() }))
+vi.mock('@/components/islands/audio/sounds', () => ({ playSound: vi.fn() }))
 
 afterEach(() => {
   cleanup()

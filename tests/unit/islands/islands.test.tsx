@@ -6,7 +6,7 @@ let pathname = '/'
 vi.mock('next/navigation', () => ({ usePathname: () => pathname }))
 
 const playSound = vi.fn()
-vi.mock('@/components/islands/sounds', () => ({ playSound }))
+vi.mock('@/components/islands/audio/sounds', () => ({ playSound }))
 
 const { ThemeToggle } = await import('@/components/islands/theme-toggle')
 const { MobileMenu } = await import('@/components/islands/mobile-menu')

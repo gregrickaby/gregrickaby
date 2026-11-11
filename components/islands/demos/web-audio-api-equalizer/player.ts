@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState, type RefObject } from 'react'
 
-import { startChiptune, type Channel, type Chiptune } from '@/components/islands/chiptune'
+import { startChiptune, type Channel, type Chiptune } from '@/components/islands/audio/chiptune'
+import { getContext } from '@/components/islands/audio/sounds'
 import { claimSpeakers, releaseSpeakers } from '@/components/islands/demo-kit/speakers'
 import { SONG } from '@/components/islands/demos/8-bit-sound-effects-with-the-web-audio-api/chiptune'
-import { getContext } from '@/components/islands/sounds'
 
 import { bandLevels, binRanges, dbToGain, type FilterSpec } from './equalizer'
 

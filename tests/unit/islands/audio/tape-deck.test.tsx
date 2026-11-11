@@ -2,8 +2,8 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { startTape, TRACKS } from '@/components/islands/lofi'
-import { describeLofi, formatTime, nextTrack, TapeDeck } from '@/components/islands/tape-deck'
+import { startTape, TRACKS } from '@/components/islands/audio/lofi'
+import { describeLofi, formatTime, nextTrack, TapeDeck } from '@/components/islands/audio/tape-deck'
 import { gains, instances, oscillators, stubAudio } from '@/tests/helpers/audio'
 
 beforeEach(() => {
@@ -113,8 +113,8 @@ describe('TapeDeck', () => {
   it('stays stopped where Web Audio is missing', async () => {
     vi.resetModules()
     vi.stubGlobal('AudioContext', undefined)
-    const engine = await import('@/components/islands/lofi')
-    const fresh = await import('@/components/islands/tape-deck')
+    const engine = await import('@/components/islands/audio/lofi')
+    const fresh = await import('@/components/islands/audio/tape-deck')
     render(<fresh.TapeDeck startTape={engine.startTape} tracks={engine.TRACKS} />)
     fireEvent.click(screen.getByRole('button', { name: 'Play' }))
     expect(screen.getByRole('button', { name: 'Play' })).toBeTruthy()

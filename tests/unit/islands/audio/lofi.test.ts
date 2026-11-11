@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { startTape, TRACKS, type Track } from '@/components/islands/lofi'
-import { noteFrequency } from '@/components/islands/sequencer'
-import { lofiSettings } from '@/components/islands/tape'
+import { startTape, TRACKS, type Track } from '@/components/islands/audio/lofi'
+import { noteFrequency } from '@/components/islands/audio/sequencer'
+import { lofiSettings } from '@/components/islands/audio/tape'
 import { filters, gains, instances, oscillators, stubAudio } from '@/tests/helpers/audio'
 
 beforeEach(() => {

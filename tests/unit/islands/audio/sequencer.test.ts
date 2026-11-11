@@ -6,7 +6,7 @@ import {
   parseLane,
   startSequencer,
   toneAt,
-} from '@/components/islands/sequencer'
+} from '@/components/islands/audio/sequencer'
 
 afterEach(() => {
   vi.useRealTimers()

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { GHOST } from '@/components/ghost'
+import { noteFrequency } from '@/components/islands/audio/sequencer'
 import {
   CASSETTE,
   CRACKLE,
@@ -19,7 +20,6 @@ import {
 } from '@/components/islands/demos/how-to-use-the-gamepad-api/game'
 import { JUMP_CUT, JUMP_SPEED } from '@/components/islands/demos/how-to-use-the-gamepad-api/gamepad'
 import { LEVEL_SONG } from '@/components/islands/demos/how-to-use-the-gamepad-api/music'
-import { noteFrequency } from '@/components/islands/sequencer'
 
 const FRAME = 1 / 60
 const IDLE: Input = { x: 0, held: false, pressed: false }

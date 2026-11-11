@@ -2,7 +2,6 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { SoundToggle } from '@/components/islands/sound-toggle'
 import {
   playNotes,
   playSound,
@@ -10,7 +9,8 @@ import {
   soundEnabled,
   startTone,
   subscribeSound,
-} from '@/components/islands/sounds'
+} from '@/components/islands/audio/sounds'
+import { SoundToggle } from '@/components/islands/sound-toggle'
 import {
   buffers,
   contexts,
@@ -129,7 +129,7 @@ describe('playNotes', () => {
   it('makes no context before the page has had a click, tap, or key press', async () => {
     vi.resetModules()
     vi.stubGlobal('navigator', { userActivation: { hasBeenActive: false } })
-    const fresh = await import('@/components/islands/sounds')
+    const fresh = await import('@/components/islands/audio/sounds')
     expect(fresh.playNotes([[440, 0.1]])).toBe(0)
     expect(contexts).not.toHaveBeenCalled()
     vi.stubGlobal('navigator', { userActivation: { hasBeenActive: true } })
@@ -147,7 +147,7 @@ describe('playNotes', () => {
         }
       },
     )
-    const fresh = await import('@/components/islands/sounds')
+    const fresh = await import('@/components/islands/audio/sounds')
     expect(fresh.playNotes([[440, 0.1]])).toBe(0)
     expect(oscillators).toEqual([])
   })
@@ -182,7 +182,7 @@ describe('startTone', () => {
         }
       },
     )
-    const fresh = await import('@/components/islands/sounds')
+    const fresh = await import('@/components/islands/audio/sounds')
     expect(fresh.startTone(440)).toBeUndefined()
   })
 })

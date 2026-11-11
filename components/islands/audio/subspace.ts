@@ -3,8 +3,8 @@
  * a dial-up modem handshake, then an original space fanfare.
  */
 
-import { parseLane, toneAt } from '@/components/islands/sequencer'
-import { getContext, noiseBuffer } from '@/components/islands/sounds'
+import { parseLane, toneAt } from './sequencer'
+import { getContext, noiseBuffer } from './sounds'
 
 /** The number the modem dials, after the Enterprise-D's registry, NCC-1701-D. */
 export const DIAL_NUMBER = '551-701D'

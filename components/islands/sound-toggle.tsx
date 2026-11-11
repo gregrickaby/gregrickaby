@@ -3,9 +3,14 @@
 import { useSyncExternalStore, type MouseEvent } from 'react'
 
 import { VolumeIcon, VolumeOffIcon } from '@/components/icons'
+import {
+  playSound,
+  setSoundEnabled,
+  soundEnabled,
+  subscribeSound,
+} from '@/components/islands/audio/sounds'
 
 import styles from './sound-toggle.module.css'
-import { playSound, setSoundEnabled, soundEnabled, subscribeSound } from './sounds'
 
 /**
  * Turns the 8-bit sound effects on and off. Off by default, and the server

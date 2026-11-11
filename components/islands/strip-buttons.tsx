@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 
 import { ArrowLeftIcon, ArrowRightIcon } from '@/components/icons'
+import { playSound } from '@/components/islands/audio/sounds'
 
-import { playSound } from './sounds'
 import styles from './strip-buttons.module.css'
 
 /** A step scrolls most of the visible width, so the card at the edge stays in view. */

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { lofiSettings, playTape, swungStep, type TapeTrack } from '@/components/islands/tape'
+import { lofiSettings, playTape, swungStep, type TapeTrack } from '@/components/islands/audio/tape'
 import { filters, gains, instances, oscillators, stubAudio } from '@/tests/helpers/audio'
 
 beforeEach(() => {
@@ -95,7 +95,7 @@ describe('playTape', () => {
   it('stays quiet where Web Audio is missing', async () => {
     vi.resetModules()
     vi.stubGlobal('AudioContext', undefined)
-    const fresh = await import('@/components/islands/tape')
+    const fresh = await import('@/components/islands/audio/tape')
     expect(fresh.playTape(bar, 0.5, vi.fn(), vi.fn(), beeps([]))).toBeUndefined()
   })
 })

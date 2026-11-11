@@ -2,10 +2,10 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import type { Note } from '@/components/islands/audio/sounds'
 import { Caption, Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
 import { usePlayback } from '@/components/islands/demo-kit/playback'
 import { Plot, toPath } from '@/components/islands/demo-kit/plot'
-import type { Note } from '@/components/islands/sounds'
 import { FakeAudioContext, stubAudio } from '@/tests/helpers/audio'
 
 afterEach(() => {

@@ -1,9 +1,9 @@
 'use client'
 
 import { DownloadIcon } from '@/components/icons'
+import { playSound } from '@/components/islands/audio/sounds'
 
 import styles from './print-button.module.css'
-import { playSound } from './sounds'
 
 /**
  * Opens the browser's print dialog, where "Save as PDF" uses the resume's

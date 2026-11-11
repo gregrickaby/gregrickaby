@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from 'react'
 
 import { Caption, Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
 import { claimSpeakers, releaseSpeakers } from '@/components/islands/demo-kit/speakers'
-import { createFollower, type Follower } from '@/components/islands/follow'
-import { lofiSettings, type StartTape, type Tape, type TapeTrack } from '@/components/islands/tape'
 
+import { createFollower, type Follower } from './follow'
+import { lofiSettings, type StartTape, type Tape, type TapeTrack } from './tape'
 import styles from './tape-deck.module.css'
 
 /** Seconds as `m:ss`, like a tape counter. */

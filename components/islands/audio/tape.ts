@@ -1,5 +1,5 @@
-import { startSequencer } from '@/components/islands/sequencer'
-import { getContext, noiseBuffer } from '@/components/islands/sounds'
+import { startSequencer } from './sequencer'
+import { getContext, noiseBuffer } from './sounds'
 
 /**
  * What every tape deck track has, whatever plays it. `swing` stretches each

@@ -1,7 +1,7 @@
 // @vitest-environment happy-dom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { noteFrequency, parseLane } from '@/components/islands/sequencer'
+import { noteFrequency, parseLane } from '@/components/islands/audio/sequencer'
 import {
   buildHandshake,
   FANFARE,
@@ -9,7 +9,7 @@ import {
   getScoreSeconds,
   startTransmission,
   VOICES,
-} from '@/components/islands/subspace'
+} from '@/components/islands/audio/subspace'
 import { filters, gains, noiseBursts, oscillators, stubAudio } from '@/tests/helpers/audio'
 
 beforeEach(() => {
@@ -127,7 +127,7 @@ describe('startTransmission', () => {
         }
       },
     )
-    const fresh = await import('@/components/islands/subspace')
+    const fresh = await import('@/components/islands/audio/subspace')
     const onPhase = vi.fn()
     expect(fresh.startTransmission(onPhase)).toBeUndefined()
     expect(onPhase).not.toHaveBeenCalled()

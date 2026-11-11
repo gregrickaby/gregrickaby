@@ -3,9 +3,9 @@
 import { useState } from 'react'
 
 import { MarkdownIcon } from '@/components/icons'
+import { playSound } from '@/components/islands/audio/sounds'
 
 import styles from './copy-markdown.module.css'
-import { playSound } from './sounds'
 
 const COPIED_FOR = 2000
 

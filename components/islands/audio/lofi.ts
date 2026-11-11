@@ -1,6 +1,6 @@
-import { noteAt, noteFrequency, parseLane, toneAt } from '@/components/islands/sequencer'
-import { noiseBuffer } from '@/components/islands/sounds'
-import { playTape, type StartTape, type TapeTrack } from '@/components/islands/tape'
+import { noteAt, noteFrequency, parseLane, toneAt } from './sequencer'
+import { noiseBuffer } from './sounds'
+import { playTape, type StartTape, type TapeTrack } from './tape'
 
 /** A keyboard sound, built from sine or sawtooth partials. */
 export type Voice = 'rhodes' | 'pad' | 'vibes'

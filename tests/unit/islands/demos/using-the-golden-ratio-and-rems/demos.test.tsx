@@ -3,6 +3,7 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { renderToString } from 'react-dom/server'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { playSound } from '@/components/islands/audio/sounds'
 import {
   buildSystemCss,
   getTypeSystem,
@@ -35,9 +36,8 @@ import {
   round,
   toRem,
 } from '@/components/islands/demos/using-the-golden-ratio-and-rems/scale'
-import { playSound } from '@/components/islands/sounds'
 
-vi.mock('@/components/islands/sounds', () => ({ playSound: vi.fn() }))
+vi.mock('@/components/islands/audio/sounds', () => ({ playSound: vi.fn() }))
 
 afterEach(() => {
   cleanup()

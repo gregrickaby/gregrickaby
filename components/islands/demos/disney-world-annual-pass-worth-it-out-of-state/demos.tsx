@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 
+import { playSound } from '@/components/islands/audio/sounds'
 import { Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
-import { playSound } from '@/components/islands/sounds'
 
 import { DEFAULT_PASS, formatDollars, getBreakEven, PASSES, type Pass } from './break-even'
 import styles from './demos.module.css'

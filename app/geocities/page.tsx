@@ -3,7 +3,7 @@ import { Antonio } from 'next/font/google'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { SubspacePlayer } from '@/components/islands/subspace-player'
+import { SubspacePlayer } from '@/components/islands/audio/subspace-player'
 
 import styles from './page.module.css'
 

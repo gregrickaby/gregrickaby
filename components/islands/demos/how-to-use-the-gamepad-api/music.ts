@@ -1,4 +1,4 @@
-import type { Song } from '@/components/islands/chiptune'
+import type { Song } from '@/components/islands/audio/chiptune'
 
 /** A pulse chord stab on the "and" of every beat, the bounce under an overworld tune. */
 function stabs(low: string, high: string): string {

@@ -2,8 +2,8 @@
 
 import { useRef, useState } from 'react'
 
+import { playSound } from '@/components/islands/audio/sounds'
 import { Caption, Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
-import { playSound } from '@/components/islands/sounds'
 
 import { buildSystemCss, getTypeSystem } from './calculator'
 import styles from './demos.module.css'

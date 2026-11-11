@@ -2,7 +2,7 @@
 
 import { useRef, useState, type RefObject } from 'react'
 
-import type { Channel } from '@/components/islands/chiptune'
+import type { Channel } from '@/components/islands/audio/chiptune'
 import { Caption, Controls, DemoButton, Slider } from '@/components/islands/demo-kit/controls'
 import { Plot } from '@/components/islands/demo-kit/plot'
 import {

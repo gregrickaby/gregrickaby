@@ -2,12 +2,12 @@
 
 import { useActionState, useEffect, useRef, useState, type CSSProperties } from 'react'
 
+import { playSound } from '@/components/islands/audio/sounds'
 import tooltip from '@/components/tooltip.module.css'
 import { getReactions, reactToPost, type PostReactions } from '@/lib/react-to-post'
 import { REACTIONS, type ReactionId } from '@/lib/site'
 
 import styles from './reactions.module.css'
-import { playSound } from './sounds'
 
 const SPARKLE_COUNT = 10
 const SPARKLE_TONES = ['--tomato-2', '--tomato-3', '--tomato-4', '--tomato-5', '--tomato-6']
