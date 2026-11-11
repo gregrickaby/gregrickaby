@@ -26,9 +26,28 @@ jobs:
       - run: npm run format:check
       - run: npm run check
 
+  # The Playwright image tag must match the installed @playwright/test, so read it from the lockfile.
+  playwright-version:
+    name: Playwright version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: package-lock.json
+          sparse-checkout-cone-mode: false
+      - id: version
+        run: echo "version=$(jq -r '.packages["node_modules/@playwright/test"].version' package-lock.json)" >> "$GITHUB_OUTPUT"
+
   e2e:
     name: E2E (Playwright)
+    needs: playwright-version
     runs-on: ubuntu-latest
+    # Chromium and its system libraries ship in the image, so the job never touches apt.
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.playwright-version.outputs.version }}-noble
+      options: --user 1001
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -36,18 +55,16 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - id: playwright
-        run: echo "version=$(npx playwright --version | cut -d' ' -f2)" >> "$GITHUB_OUTPUT"
-      - id: browsers
-        uses: actions/cache@v6
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
-      - if: steps.browsers.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium
-      # The browsers came from the cache, but the system libraries they need didn't.
-      - if: steps.browsers.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium
+      - name: Check the image has this Playwright's Chromium
+        run: |
+          node -e "
+            const { existsSync } = require('node:fs')
+            const { chromium } = require('playwright-core')
+            if (!existsSync(chromium.executablePath())) {
+              console.error('::error::The Playwright image has no Chromium for the installed @playwright/test. Its tag and package-lock.json disagree.')
+              process.exit(1)
+            }
+          "
       - uses: actions/cache@v6
         with:
           path: .next/cache
