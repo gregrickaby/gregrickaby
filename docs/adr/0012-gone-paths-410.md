@@ -17,7 +17,7 @@ Redirects run before the proxy, so a gone pattern can overlap a redirect: the da
 
 ## Consequences
 
-- Retire a post or tag with no replacement by adding it to `lib/gone.ts`, not by redirecting it to `/`. `tests/unit/redirects.test.ts` fails on a new redirect to `/`.
+- Retire a post or tag with no replacement by adding it to `lib/gone.ts`, not by redirecting it to `/`. `tests/unit/lib/redirects.test.ts` fails on a new redirect to `/`.
 - A new gone pattern outside the proxy matcher needs a matching entry in `config.matcher` in `proxy.ts`.
 - The first gone request after a deploy makes one extra request for the 404 page. It goes straight to the local port: through the public hostname the request loops via Cloudflare and failed, which turned every 410 into a 404.
 - The 410 body is the HTML from the process's first fetch. In development, edits to the 404 page show at gone paths only after a restart.

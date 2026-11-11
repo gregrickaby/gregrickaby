@@ -16,10 +16,10 @@ Oxlint and Oxfmt come from the Oxc project, the same group behind Vite and Vites
 
 - `npm run lint` runs `oxlint --deny-warnings` with `.oxlintrc.json`, then Stylelint. Lefthook runs `oxlint --fix` on staged files.
 - `.oxlintrc.json` turns on the `correctness` category and repeats every rule and per-file override from the old `eslint.config.ts`.
-- `oxlint/plugin.ts` holds the three rules Oxlint doesn't have: `function-declarations` (top-level functions are declarations), `no-react-namespace`, and `jsx-sort-props` (with a fix). `tests/unit/oxlint.test.ts` tests them with Oxlint's `RuleTester`.
+- `lint/oxlint-plugin.ts` holds the three rules Oxlint doesn't have: `function-declarations` (top-level functions are declarations), `no-react-namespace`, and `jsx-sort-props` (with a fix). `tests/unit/lint/oxlint.test.ts` tests them with Oxlint's `RuleTester`.
 - `npm run format` runs Oxfmt with `.oxfmtrc.json`, which carries over the Prettier options and the import groups from `@ianvs/prettier-plugin-sort-imports`. Oxfmt reads `.gitignore`; `ignorePatterns` adds `.claude/`, `public/`, and `package-lock.json`. Lefthook formats staged files.
 - TypeScript is on 7.x. `next build` runs the project's `tsc`, which TypeScript 7 supports.
-- The Stylelint config is `stylelint.config.mjs`: Stylelint loads configs through cosmiconfig, which calls TypeScript's JavaScript API, and TypeScript 7 doesn't have one. Node still loads the plugin in `stylelint/` from TypeScript.
+- The Stylelint config is `stylelint.config.mjs`: Stylelint loads configs through cosmiconfig, which calls TypeScript's JavaScript API, and TypeScript 7 doesn't have one. Node still loads the plugin in `lint/` from TypeScript.
 
 ## Consequences
 

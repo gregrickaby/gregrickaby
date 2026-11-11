@@ -13,5 +13,5 @@ The content build writes every post, tag, and category path to `.generated/paths
 
 ## Consequences
 
-- A new top-level route must be added to `ROUTES` in `lib/missing-path.ts`, or the proxy rewrites it to a 404. `tests/unit/missing-path.test.ts` fails until it is.
+- A new top-level route must be added to `ROUTES` in `lib/missing-path.ts`, or the proxy rewrites it to a 404. `tests/unit/lib/missing-path.test.ts` fails until it is.
 - 404s on unknown post, tag, and category paths are expected in logs and traces.

@@ -1,6 +1,6 @@
 # Code standards
 
-How code in this repo is written. `AGENTS.md` covers the architecture and what keeps the site static; this file covers the code itself. Oxlint (`.oxlintrc.json`, with the repo's own rules in `oxlint/plugin.ts`), Stylelint, and Oxfmt (`.oxfmtrc.json`) enforce the rules marked (lint). Review catches the rest.
+How code in this repo is written. `AGENTS.md` covers the architecture and what keeps the site static; this file covers the code itself. Oxlint (`.oxlintrc.json`, with the repo's own rules in `lint/oxlint-plugin.ts`), Stylelint, and Oxfmt (`.oxfmtrc.json`) enforce the rules marked (lint). Review catches the rest.
 
 ## TypeScript
 
@@ -14,7 +14,7 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 - Named exports only (lint). Default exports are for files Next.js or a tool loads by default: route files (`page`, `layout`, `opengraph-image`, `sitemap`, and the rest) and `*.config.ts`.
 - No barrel files. Import from the module that defines the thing.
 - Imports sort into three groups, separated by a blank line: packages (Node built-ins, then `next` and `react`, then the rest), `@/` paths, and `./` siblings. Oxfmt sorts them on format (lint). Side-effect imports (`import 'server-only'`, global CSS) go first, in the order written.
-- Import from another folder with `@/`, and from the same folder with `./` (lint bans `../`). `lib/content-build/` and `scripts/` are the exception: Node runs them directly, so they import by relative path with the `.ts` extension.
+- Import from another folder with `@/`, and from the same folder with `./` (lint bans `../`). `scripts/` is the exception: Node runs it directly, so it imports by relative path with the `.ts` extension.
 - Modules that must never reach the browser start with `import 'server-only'`.
 
 ## Functions and components
@@ -44,6 +44,7 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 - CSS Modules, with every rule inside `@layer components` (lint).
 - Colors come from the tokens in `app/styles/tokens.css` (lint). `light-dark()` handles the themes.
 - Inline `style` only for values computed from data, such as an aspect ratio.
+- Tooltips use the shared bubble in `components/tooltip.module.css`.
 - Sizes are in `rem`: media query breakpoints, the text column (`--measure`), card grids, and `next/image` `sizes` that follow them, so the layout scales with the reader's font size. Spacing comes from the `--space-*` tokens, which are in `rem`. Use `px` only for hairlines and small fixed details: borders, outlines, shadows, and pixel-art offsets.
 
 ## Errors
@@ -55,7 +56,7 @@ How code in this repo is written. `AGENTS.md` covers the architecture and what k
 
 ## Tests
 
-- Unit tests live in `tests/unit/`, grouped like the source. Component tests start with `// @vitest-environment happy-dom`.
+- Unit tests live in `tests/unit/`, in folders that mirror the source (`tests/unit/lib/` for `lib/`, `tests/unit/islands/audio/` for `components/islands/audio/`). Component tests start with `// @vitest-environment happy-dom`.
 - Name tests by behavior: `it('falls back to the site description for a page without one')`.
 - Assert on output (rendered HTML, return values), not on which internal functions ran.
 - A test that changes shared fixtures resets them in `afterEach`, so a failed assertion can't leak into the next test.

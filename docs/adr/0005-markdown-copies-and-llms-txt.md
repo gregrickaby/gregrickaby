@@ -9,7 +9,7 @@ AI answer engines and agents read the site. They parse Markdown more reliably th
 
 ## Decision
 
-- The content build writes each post's source to `.generated/markdown.json` (`lib/content-build/post-markdown.ts`): a header with the title, URL, date, and description, then the body with relative media made absolute, demo markers swapped for a link to the post (titles read from each `registry.ts`), and like cues removed.
+- The content build writes each post's source to `.generated/markdown.json` (`scripts/content-build/post-markdown.ts`): a header with the title, URL, date, and description, then the body with relative media made absolute, demo markers swapped for a link to the post (titles read from each `registry.ts`), and like cues removed.
 - `app/md/[slug]/route.ts` serves it, `next.config.ts` rewrites `/<slug>.md` to it, and post metadata links it as `text/markdown`. It stays out of `content.json`, so post pages don't load it.
 - `/llms.txt` lists every post's `.md` URL, plus `/resume.md` and `/photos.md`, which `lib/llms.ts` builds from the same data as their pages.
 - Every response sends `Link: </llms.txt>; rel="describedby"` and the same `Content-Signal` value (`lib/headers.ts`, `lib/content-signal.ts`).
