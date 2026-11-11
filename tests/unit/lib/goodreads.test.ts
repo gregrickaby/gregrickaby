@@ -93,6 +93,18 @@ describe('getCurrentlyReading', () => {
     expect(error).toHaveBeenCalled()
   })
 
+  it('gives up on a slow Goodreads and shows no books', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const fetch = vi.fn(async (_url: string, init?: RequestInit) => {
+      expect(init?.signal).toBeInstanceOf(AbortSignal)
+      throw new DOMException('The operation timed out.', 'TimeoutError')
+    })
+    vi.stubGlobal('fetch', fetch)
+    expect(await getCurrentlyReading()).toEqual([])
+    expect(fetch).toHaveBeenCalledOnce()
+    expect(error).toHaveBeenCalled()
+  })
+
   it('shows no books when the profile page has changed', async () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {})
     vi.stubGlobal(
