@@ -1,7 +1,6 @@
 ---
 name: code-review
 description: Review changed code against this repo's standards and fix what it finds before committing. For posts and pages, also reviews voice, AI tells, and on-page SEO. Use when the user says "review my code", "do a code review", or "/code-review".
-agent: claude-opus-5-5
 ---
 
 # Code review
@@ -28,15 +27,15 @@ Check for:
 
 - **Architecture rules** in `AGENTS.md` (static by contract, islands, `prefetch={true}`, HTML injection, `next/image`, no `memo`/`useCallback`/`useMemo`/barrels/`any`/`NEXT_PUBLIC_`, styles in `@layer components` with tokens).
 - **Correctness:** boundary inputs (dates, empty values, missing images or EXIF, first and last post), and whether tests pin the risky boundary.
-- **Without JavaScript:** pages, links, search, and likes still work.
+- **Without JavaScript:** pages, links, search, and reactions still work.
 - **Security:** unsanitized HTML, JSON-LD not through `serializeSchema`, CSP or header regressions.
 - **Conventions and prose:** naming, comments, tests, and the writing rules in `docs/code-standards.md`.
-- **E2E specs:** CI runs them, not you, so grep `e2e/` for every title, heading, label, selector, and file name the diff changed or moved, and update the specs that depend on them.
+- **E2E specs:** CI runs them, not you, so grep `tests/e2e/` for every title, heading, label, selector, and file name the diff changed or moved, and update the specs that depend on them.
 - **Leftovers:** images, modules, styles, or tests nothing references after the diff (grep for the file name). Delete them.
 
 Tag each finding:
 
-- **Blocker:** a page, link, search, or like breaks (with or without JavaScript), a draft or secret ships, a log leaks visitor data, or copy and docs state something the code doesn't do.
+- **Blocker:** a page, link, search, or reaction breaks (with or without JavaScript), a draft or secret ships, a log leaks visitor data, or copy and docs state something the code doesn't do.
 - **Suggestion:** a break from `AGENTS.md` or `docs/code-standards.md`, a missing test on a risky boundary, or a leftover.
 - **Nit:** naming or wording taste. Report at most five.
 

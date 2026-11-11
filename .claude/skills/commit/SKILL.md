@@ -1,7 +1,6 @@
 ---
 name: commit
 description: Commit the working tree as small conventional commits, one per logical chunk of work. Use when the user says "commit", "micro commit", "commit this", or "/commit". Pushes a task branch and opens a pull request that squash-merges itself when CI passes.
-agent: claude-haiku-5-5
 ---
 
 # Commit
@@ -22,6 +21,8 @@ git push -u origin HEAD
   gh pr merge --auto --squash --delete-branch --subject "<the title>" --body "<the body>"
 }
 ```
+
+Skip the `gh pr merge --auto` line when the work is a post under `public/content/` (or its demos) that Greg hasn't called finished; he turns auto-merge on when it's ready to publish.
 
 The pull request squashes into one commit on `main`, which GitHub signs. Its title is that commit's subject, so it follows the format below.
 

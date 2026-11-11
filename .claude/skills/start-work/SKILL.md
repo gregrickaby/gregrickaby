@@ -5,7 +5,7 @@ description: Read a GitHub issue and start working on it on a new branch. Use wh
 
 # Start work
 
-Take an issue from read to a finished, checked change. Runs in this session; `code-review` and `commit` ship it afterward, only when the user asks.
+Take an issue from read to a shipped pull request. Runs in this session. Invoking it is approval to ship: once the checks pass, run `code-review`, then `commit`, without waiting for "commit this".
 
 ## Steps
 
@@ -23,4 +23,4 @@ Take an issue from read to a finished, checked change. Runs in this session; `co
 - What CI or the user should check: the E2E specs CI will run, and pages to open on the dev server.
 - Assumptions and open questions.
 
-Use `Fixes #<number>` in the pull request body when `commit` opens it.
+Then run `code-review`, and `commit` once it ends with `Ready to commit: yes`. Use `Fixes #<number>` in the pull request body.
