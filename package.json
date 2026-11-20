@@ -36,7 +36,7 @@
     "@datadog/browser-logs": "7.18.0",
     "@datadog/browser-rum-nextjs": "7.18.0",
     "@datadog/browser-rum-slim": "7.18.0",
-    "dd-trace": "6.25.0",
+    "dd-trace": "6.26.0",
     "next": "16.4.6",
     "react": "19.3.1",
     "react-dom": "19.3.1",
@@ -57,7 +57,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@types/sanitize-html": "2.16.2",
-    "@vitest/coverage-v8": "5.1.0",
+    "@vitest/coverage-v8": "5.1.1",
     "exifr": "7.1.3",
     "gray-matter": "4.0.3",
     "happy-css-modules": "5.0.2",
@@ -74,13 +74,13 @@
     "remark-rehype": "11.1.2",
     "sanitize-html": "2.18.2",
     "shiki": "4.6.0",
-    "stylelint": "18.0.0",
-    "stylelint-config-standard": "41.0.0",
+    "stylelint": "18.1.0",
+    "stylelint-config-standard": "41.1.0",
     "typescript": "7.0.2",
     "unified": "11.0.5",
     "unist-util-visit": "5.2.0",
     "vite": "8.3.8",
-    "vitest": "5.1.0"
+    "vitest": "5.1.1"
   },
   "engines": {
     "node": "^26.13.0"
